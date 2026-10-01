@@ -15,20 +15,20 @@ function qtrad_has_lang_tags( $text ) {
 	if ( ! is_string( $text ) || $text === '' ) {
 		return false;
 	}
-	return (bool) preg_match( '/(<!--:[a-z]{2}-->|\[:[a-z]{2}\]|\{:[a-z]{2}\})/i', $text );
+	return (bool) preg_match( '/(<!--:[a-z]{2,3}-->|\[:[a-z]{2,3}\]|\{:[a-z]{2,3}\})/i', $text );
 }
 
 function qtrad_detect_format( $text ) {
 	if ( ! is_string( $text ) || $text === '' ) {
 		return null;
 	}
-	if ( preg_match( '/<!--:[a-z]{2}-->/i', $text ) ) {
+	if ( preg_match( '/<!--:[a-z]{2,3}-->/i', $text ) ) {
 		return 'comment';
 	}
-	if ( preg_match( '/\{:[a-z]{2}\}/i', $text ) ) {
+	if ( preg_match( '/\{:[a-z]{2,3}\}/i', $text ) ) {
 		return 'swirly';
 	}
-	if ( preg_match( '/\[:[a-z]{2}\]/i', $text ) ) {
+	if ( preg_match( '/\[:[a-z]{2,3}\]/i', $text ) ) {
 		return 'bracket';
 	}
 	return null;
@@ -39,7 +39,7 @@ function qtrad_language_blocks( $text, $comments_only = false ) {
 		return array( $text );
 	}
 	$parts = preg_split(
-		$comments_only ? '/(<!--:[a-z]{2}-->|<!--:-->)/i' : '/(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/i',
+		$comments_only ? '/(<!--:[a-z]{2,3}-->|<!--:-->)/i' : '/(<!--:[a-z]{2,3}-->|<!--:-->|\[:[a-z]{2,3}\]|\[:\]|\{:[a-z]{2,3}\}|\{:\})/i',
 		$text,
 		-1,
 		PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE
@@ -51,7 +51,7 @@ function qtrad_language_blocks( $text, $comments_only = false ) {
 }
 
 function qtrad_split_blocks( $blocks, $enabled, &$found = null, $trim = true, $comments_only = false ) {
-	$open_pattern = $comments_only ? '/^<!--:([a-z]{2})-->$/i' : '/^(?:<!--:|\[:|\{:)([a-z]{2})(?:-->|\]|\})$/i';
+	$open_pattern = $comments_only ? '/^<!--:([a-z]{2,3})-->$/i' : '/^(?:<!--:|\[:|\{:)([a-z]{2,3})(?:-->|\]|\})$/i';
 	$found  = array();
 	$texts  = array();
 	$enabled = array_values( $enabled );

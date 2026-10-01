@@ -5,15 +5,15 @@
   else root.qtradCodec = codec;
 })(typeof window === "undefined" ? globalThis : window, function () {
   "use strict";
-  var marker = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/i;
-  var open = /^(?:<!--:|\[:|\{:)([a-z]{2})(?:-->|\]|\})$/i;
+  var marker = /(<!--:[a-z]{2,3}-->|<!--:-->|\[:[a-z]{2,3}\]|\[:\]|\{:[a-z]{2,3}\}|\{:\})/i;
+  var open = /^(?:<!--:|\[:|\{:)([a-z]{2,3})(?:-->|\]|\})$/i;
   function hasTags(text) {
-    return /(<!--:[a-z]{2}-->|\[:[a-z]{2}\]|\{:[a-z]{2}\})/i.test(text || "");
+    return /(<!--:[a-z]{2,3}-->|\[:[a-z]{2,3}\]|\{:[a-z]{2,3}\})/i.test(text || "");
   }
   function detect(text) {
-    if (/<!--:[a-z]{2}-->/i.test(text || "")) return "comment";
-    if (/\{:[a-z]{2}\}/i.test(text || "")) return "swirly";
-    if (/\[:[a-z]{2}\]/i.test(text || "")) return "bracket";
+    if (/<!--:[a-z]{2,3}-->/i.test(text || "")) return "comment";
+    if (/\{:[a-z]{2,3}\}/i.test(text || "")) return "swirly";
+    if (/\[:[a-z]{2,3}\]/i.test(text || "")) return "bracket";
     return null;
   }
   function split(text, enabled, trim) {

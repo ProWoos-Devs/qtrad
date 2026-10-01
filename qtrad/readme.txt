@@ -24,7 +24,7 @@ The classic and block editors show one language at a time. Saving preserves the 
 
 Language controls use full names, keyboard-operable buttons, announced selection changes, visible focus, generous targets and right-to-left editing. Public switchers offer links, flags with accessible names, short codes, or a labelled dropdown with an explicit Go button. Dropdowns fall back to ordinary links without JavaScript.
 
-The qtranslate_* language, locale, flag, URL, term and fallback settings are reused as they are. Existing qTranslate and qTranslate-X widgets keep their place in the sidebar. Imported custom languages remain available in Settings → Languages, where you can edit their names and locales and add new two-letter language codes.
+The qtranslate_* language, locale, flag, URL, term and fallback settings are reused as they are. Existing qTranslate and qTranslate-X widgets keep their place in the sidebar. Imported custom languages remain available in Settings → Languages, where you can edit their names and locales and add new two- or three-letter language codes.
 
 qTrad offers content compatibility and a documented subset of the qtrans_* and qtranxf_* public functions. It does not include every feature of its predecessors or their third-party integration modules.
 

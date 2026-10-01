@@ -148,8 +148,8 @@ function qtrad_seo_description() {
 
 function qtrad_seo_og_locale( $unused = '' ) {
 	$tag = qtrad_seo_language_tag( qtrad_current_language() );
-	if ( preg_match( '/^([a-z]{2})(?:-[A-Za-z]{4})?-([A-Z]{2})$/D', $tag, $match ) ) { return $match[1] . '_' . $match[2]; }
-	return preg_match( '/^[a-z]{2}_[A-Z]{2}$/D', $unused ) && substr( $unused, 0, 2 ) === $tag ? $unused : '';
+	if ( preg_match( '/^([a-z]{2,3})(?:-[A-Za-z]{4})?-([A-Z]{2})$/D', $tag, $match ) ) { return $match[1] . '_' . $match[2]; }
+	return preg_match( '/^([a-z]{2,3})_[A-Z]{2}$/D', $unused, $match ) && $match[1] === $tag ? $unused : '';
 }
 
 /** Native fallback output; SEO plugins remain responsible for their own tags. */

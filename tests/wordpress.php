@@ -176,6 +176,16 @@ qtrad_parse_request_end();
 check_case('home_url is localized outside request parsing', true, $qtrad_localized_home !== $qtrad_home && strpos($qtrad_localized_home, '/de') !== false);
 check_case('home_url stays unlocalized while core parses the request (subdirectory installs)', $qtrad_home, $qtrad_parsing_home);
 check_case('home_url is localized again after parsing', $qtrad_localized_home, qtrad_filter_home_url($qtrad_home, ''));
+
+settings(array('qtranslate_enabled_languages' => array('en', 'de', 'fil'), 'qtranslate_language_names' => array('fil' => 'Filipino'), 'qtranslate_locales' => array('fil' => 'fil')));
+check_case('three-letter code is an enabled language', true, qtrad_is_enabled('fil'));
+check_case('three-letter path prefix is stripped', '/sample/', qtrad_strip_path_language('/fil/sample/'));
+check_case('three-letter path prefix leaves look-alike segments', '/file/', qtrad_strip_path_language('/file/'));
+check_case('URL conversion adds three-letter prefix', 'http://127.0.0.1:8931/fil/sample/', qtrad_convert_url('http://127.0.0.1:8931/de/sample/', 'fil'));
+$id = fixture(array('post_title' => '[:en]Hi[:fil]Kumusta[:]'));
+qtrad_set_language('fil');
+check_case('three-letter title is displayed', 'Kumusta', qtrad_use_current(get_post($id)->post_title));
+settings();
 check_case('URL conversion leaves anchor unchanged', '#section', qtrad_convert_url('#section', 'de'));
 check_case('URL conversion preserves signed/repeated query bytes', 'http://127.0.0.1:8931/de/path?a=1&a=2&v=a%20b', qtrad_convert_url('http://127.0.0.1:8931/path?a=1&a=2&v=a%20b', 'de'));
 settings(array('qtranslate_hide_default_language' => '0'));

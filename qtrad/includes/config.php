@@ -110,7 +110,7 @@ function qtrad_load_config() {
 	$clean = array();
 	foreach ( $enabled as $code ) {
 		$code = is_string( $code ) ? strtolower( sanitize_key( $code ) ) : '';
-		if ( preg_match( '/^[a-z]{2}$/D', $code ) && ! in_array( $code, $clean, true ) ) {
+		if ( preg_match( '/^[a-z]{2,3}$/D', $code ) && ! in_array( $code, $clean, true ) ) {
 			$clean[] = $code;
 			if ( empty( $names[ $code ] ) ) {
 				$names[ $code ] = strtoupper( $code );
@@ -277,8 +277,8 @@ function qtrad_switch_blog( $new_blog_id, $previous_blog_id, $context = 'switch'
 function qtrad_save_settings( $input ) {
 	$new = isset( $input['new_language'] ) && is_array( $input['new_language'] ) ? $input['new_language'] : array();
 	if ( ! empty( $new['code'] ) || ! empty( $new['name'] ) || ! empty( $new['locale'] ) ) {
-		if ( ! isset( $new['code'], $new['name'], $new['locale'] ) || ! is_string( $new['code'] ) || ! is_string( $new['name'] ) || ! is_string( $new['locale'] ) || ! preg_match( '/^[a-z]{2}$/iD', trim( $new['code'] ) ) || trim( $new['name'] ) === '' || ! preg_match( '/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*$/D', $new['locale'] ) || isset( qtrad_available_catalog()[ strtolower( trim( $new['code'] ) ) ] ) ) {
-			return new WP_Error( 'qtrad_language', __( 'Enter a new two-letter language code, a native name and a valid locale. Existing codes cannot be added again.', 'qtrad' ) );
+		if ( ! isset( $new['code'], $new['name'], $new['locale'] ) || ! is_string( $new['code'] ) || ! is_string( $new['name'] ) || ! is_string( $new['locale'] ) || ! preg_match( '/^[a-z]{2,3}$/iD', trim( $new['code'] ) ) || trim( $new['name'] ) === '' || ! preg_match( '/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*$/D', $new['locale'] ) || isset( qtrad_available_catalog()[ strtolower( trim( $new['code'] ) ) ] ) ) {
+			return new WP_Error( 'qtrad_language', __( 'Enter a new two- or three-letter language code, a native name and a valid locale. Existing codes cannot be added again.', 'qtrad' ) );
 		}
 	}
 	if ( isset( $input['languages'] ) && is_array( $input['languages'] ) ) {
@@ -310,7 +310,7 @@ function qtrad_save_settings( $input ) {
 	}
 	$new = isset( $input['new_language'] ) && is_array( $input['new_language'] ) ? $input['new_language'] : array();
 	$code = isset( $new['code'] ) && is_string( $new['code'] ) ? strtolower( trim( $new['code'] ) ) : '';
-	if ( preg_match( '/^[a-z]{2}$/D', $code ) && ! isset( $catalog[ $code ] ) && ! empty( $new['name'] ) && is_string( $new['name'] ) && ! empty( $new['locale'] ) && is_string( $new['locale'] ) && preg_match( '/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*$/D', $new['locale'] ) ) {
+	if ( preg_match( '/^[a-z]{2,3}$/D', $code ) && ! isset( $catalog[ $code ] ) && ! empty( $new['name'] ) && is_string( $new['name'] ) && ! empty( $new['locale'] ) && is_string( $new['locale'] ) && preg_match( '/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*$/D', $new['locale'] ) ) {
 		$names[ $code ] = sanitize_text_field( $new['name'] );
 		$locales[ $code ] = $new['locale'];
 		$flags[ $code ] = '';

@@ -22,8 +22,8 @@ function qtrad_relative_path( $path ) {
 }
 
 function qtrad_strip_path_language( $path ) {
-	if ( preg_match( '#^/([a-z]{2})(/|$)#i', $path, $match ) && qtrad_is_enabled( strtolower( $match[1] ) ) ) {
-		return substr( $path, 3 ) ?: '/';
+	if ( preg_match( '#^/([a-z]{2,3})(/|$)#i', $path, $match ) && qtrad_is_enabled( strtolower( $match[1] ) ) ) {
+		return substr( $path, strlen( $match[1] ) + 1 ) ?: '/';
 	}
 	return $path;
 }
@@ -247,8 +247,8 @@ function qtrad_normalize_request() {
 	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only language selection from a public URL.
 	$query_lang = isset( $_GET['lang'] ) && is_string( $_GET['lang'] ) ? sanitize_key( wp_unslash( $_GET['lang'] ) ) : '';
 	if ( qtrad_is_enabled( $query_lang ) ) { $lang = $query_lang; $explicit = true; }
-	if ( ! $lang && $bare !== $rel ) { $lang = strtolower( substr( $rel, 1, 2 ) ); $explicit = true; }
-	if ( ! $lang && $mode === QTRAD_URL_DOMAIN && preg_match( '/^([a-z]{2})\./', $parts['host'], $match ) && qtrad_is_enabled( $match[1] ) ) { $lang = $match[1]; $explicit = true; }
+	if ( ! $lang && $bare !== $rel && preg_match( '#^/([a-z]{2,3})(/|$)#i', $rel, $match ) ) { $lang = strtolower( $match[1] ); $explicit = true; }
+	if ( ! $lang && $mode === QTRAD_URL_DOMAIN && preg_match( '/^([a-z]{2,3})\./', $parts['host'], $match ) && qtrad_is_enabled( $match[1] ) ) { $lang = $match[1]; $explicit = true; }
 	if ( ! $lang && $mode === QTRAD_URL_DOMAINS ) {
 		foreach ( (array) qtrad_config( 'domains' ) as $code => $domain ) {
 			$origin = qtrad_domain_parts( $domain );
@@ -394,11 +394,11 @@ function qtrad_hide_untranslated_where( $where, $query ) {
 /** SQL availability shared by archive filtering and language-neutral sitemaps. */
 function qtrad_available_language_where( $lang ) {
 	global $wpdb;
-	$marker = '(\\[:[a-z]{2}\\]|<!--:[a-z]{2}-->|\\{:[a-z]{2}\\})';
+	$marker = '(\\[:[a-z]{2,3}\\]|<!--:[a-z]{2,3}-->|\\{:[a-z]{2,3}\\})';
 	// Exclude whitespace and immediately following markers, including empty blocks.
 	$content = '(\\[:' . $lang . '\\][[:space:]]*([^[:space:]\\[]|\\[[^:])|<!--:' . $lang . '-->[[:space:]]*([^[:space:]<]|<[^!]|<![^-]|<!-[^-]|<!--[^:])|\\{:' . $lang . '\\}[[:space:]]*([^[:space:]{}]|\\{[^:]))';
 	$field = "CASE WHEN {$wpdb->posts}.post_content REGEXP %s THEN {$wpdb->posts}.post_content ELSE {$wpdb->posts}.post_title END";
-	// $field holds one %s placeholder and appears twice, so five values fill five placeholders. $lang is an enabled two-letter code.
+	// $field holds one %s placeholder and appears twice, so five values fill five placeholders. $lang is an enabled two- or three-letter code.
 	// phpcs:disable WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
 	$where = $wpdb->prepare(
 		" AND (EXISTS (SELECT 1 FROM {$wpdb->postmeta} qtrad_available WHERE qtrad_available.post_id = {$wpdb->posts}.ID AND qtrad_available.meta_key = '_qtrad_available_languages' AND (qtrad_available.meta_value = '*' OR qtrad_available.meta_value LIKE %s))

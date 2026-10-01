@@ -4,6 +4,24 @@
  */
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
+const http = require('node:http');
+// node:http rather than fetch(): the bundled undici client intermittently aborts
+// with assert(!this.paused) when PHP's built-in server closes a connection.
+function get(url, headers = {}) {
+  return new Promise((resolve, reject) => {
+    const request = http.get(url, {headers, agent: false}, response => {
+      let body = '';
+      response.setEncoding('utf8');
+      response.on('data', chunk => { body += chunk; });
+      response.on('end', () => resolve({
+        status: response.statusCode,
+        headers: {get: name => { const value = response.headers[name.toLowerCase()]; return value === undefined ? null : (Array.isArray(value) ? value.join(', ') : value); }},
+        text: async () => body,
+      }));
+    });
+    request.on('error', reject);
+  });
+}
 let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} = require('/usr/lib/node_modules/playwright')); }
 (async () => {
   const fixture = JSON.parse(fs.readFileSync(process.argv[2], 'utf8'));
@@ -31,14 +49,14 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
     ['Sitemap', '/wp-sitemap.xml', {}, 200],
     ['Unknown host redirects to configured home', '/?lang=de', {Host:'untrusted.example:8931'}, 302]
   ]) {
-    const response = await fetch(base + path, {headers, redirect:'manual'});
+    const response = await get(base + path, headers);
     check(name + ' status', response.status, status);
     const body = await response.text();
     if (name.includes('REST')) { check(name + ' rendered value', JSON.parse(body).title.rendered, 'Hallo'); check(name + ' no language cookie', response.headers.get('set-cookie'), null); }
     if (name.includes('host')) check(name + ' destination', response.headers.get('location'), base + '/de/');
     if (name === 'German page') check('English alternate is canonical', body.includes('hreflang="en-US" href="' + url + '"'));
   }
-  const homepage = await fetch(base + '/', {headers:{'Accept-Language':'en'}});
+  const homepage = await get(base + '/', {'Accept-Language':'en'});
   check('Default homepage remains uncacheable', homepage.headers.get('cache-control').includes('no-cache'));
   check('Default homepage varies with language preferences', homepage.headers.get('vary').includes('Accept-Language') && homepage.headers.get('vary').includes('Cookie'));
   await page.goto(url);

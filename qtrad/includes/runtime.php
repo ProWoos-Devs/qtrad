@@ -263,8 +263,24 @@ function qtrad_normalize_request() {
 	$_SERVER['REQUEST_URI'] = wp_slash( qtrad_home_parts()['path'] . $bare . ( qtrad_strip_query_lang( $parts['query'] ) !== '' ? '?' . qtrad_strip_query_lang( $parts['query'] ) : '' ) );
 }
 
+/**
+ * WP::parse_request() strips the path of home_url() from the request URI.
+ * Normalization already removed the language segment, so the home path must
+ * stay unlocalized while core parses, or subdirectory installs 404.
+ */
+function qtrad_parse_request_start( $parse ) {
+	if ( $parse ) {
+		$GLOBALS['qtrad_parsing_request'] = true;
+	}
+	return $parse;
+}
+
+function qtrad_parse_request_end() {
+	unset( $GLOBALS['qtrad_parsing_request'] );
+}
+
 function qtrad_filter_home_url( $url, $path = '' ) {
-	if ( is_admin() || wp_doing_ajax() || wp_doing_cron() || qtrad_is_rest_request() || ! empty( $GLOBALS['qtrad_seo_neutral_url'] ) || qtrad_is_sitemap_request() ) {
+	if ( is_admin() || wp_doing_ajax() || wp_doing_cron() || qtrad_is_rest_request() || ! empty( $GLOBALS['qtrad_seo_neutral_url'] ) || ! empty( $GLOBALS['qtrad_parsing_request'] ) || qtrad_is_sitemap_request() ) {
 		return $url;
 	}
 	$path = (string) $path;
@@ -430,6 +446,8 @@ function qtrad_register_front_filters() {
 		add_filter( 'option_blogdescription', $title, 0 );
 	}
 	add_filter( 'home_url', 'qtrad_filter_home_url', 0, 2 );
+	add_filter( 'do_parse_request', 'qtrad_parse_request_start', PHP_INT_MAX );
+	add_action( 'parse_request', 'qtrad_parse_request_end', 0 );
 	add_filter( 'redirect_canonical', 'qtrad_filter_redirect_canonical', 10, 2 );
 	add_filter( 'language_attributes', 'qtrad_filter_language_attributes' );
 	add_filter( 'determine_locale', 'qtrad_filter_locale' );

@@ -444,12 +444,29 @@ function qtrad_skip_term_translate( $term ) {
 	return ! wp_doing_ajax();
 }
 
+/**
+ * Core splits <!--nextpage--> pages from the raw multilingual content before
+ * the_content runs, which leaves language blocks cut across pages. Select the
+ * language on the whole content first, then split it again.
+ */
+function qtrad_filter_content_pagination( $pages ) {
+	if ( ! is_array( $pages ) ) {
+		return $pages;
+	}
+	$content = implode( '<!--nextpage-->', $pages );
+	if ( ! qtrad_has_lang_tags( $content ) ) {
+		return $pages;
+	}
+	return explode( '<!--nextpage-->', qtrad_use_current( $content, true, false ) );
+}
+
 function qtrad_register_front_filters() {
 	$title = 'qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage';
 	$body  = 'qtranxf_useCurrentLanguageIfNotFoundShowAvailable';
 	foreach ( array( 'the_content', 'the_excerpt', 'category_description', 'term_description' ) as $filter ) {
 		add_filter( $filter, $body, 0 );
 	}
+	add_filter( 'content_pagination', 'qtrad_filter_content_pagination', 0 );
 	foreach (
 		array(
 			'the_title',

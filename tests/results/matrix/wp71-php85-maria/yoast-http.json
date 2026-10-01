@@ -200,7 +200,7 @@
       "pass": true
     },
     {
-      "case": "Sitemap file has unique locs http://127.0.0.1:8931/qtn_book-sitemap.xml",
+      "case": "Sitemap file has unique locs http://127.0.0.1:8931/qtrad_book-sitemap.xml",
       "pass": true
     },
     {

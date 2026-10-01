@@ -92,14 +92,14 @@
     },
     {
       "name": "Dropdown selection does not navigate",
-      "actual": "http://127.0.0.1:8931/qtn-audit-browser-2/",
-      "expected": "http://127.0.0.1:8931/qtn-audit-browser-2/",
+      "actual": "http://127.0.0.1:8931/qtrad-audit-browser-2/",
+      "expected": "http://127.0.0.1:8931/qtrad-audit-browser-2/",
       "pass": true
     },
     {
       "name": "Dropdown Go navigates",
-      "actual": "http://127.0.0.1:8931/de/qtn-audit-browser-2/",
-      "expected": "http://127.0.0.1:8931/de/qtn-audit-browser-2/",
+      "actual": "http://127.0.0.1:8931/de/qtrad-audit-browser-2/",
+      "expected": "http://127.0.0.1:8931/de/qtrad-audit-browser-2/",
       "pass": true
     },
     {
@@ -230,8 +230,8 @@
     },
     {
       "name": "Settings error receives focus",
-      "actual": "qtn-errors",
-      "expected": "qtn-errors",
+      "actual": "qtrad-errors",
+      "expected": "qtrad-errors",
       "pass": true
     },
     {
@@ -264,7 +264,7 @@
       "name": "Editor language controls",
       "violations": [],
       "incomplete": [],
-      "passes": 15
+      "passes": 2
     },
     {
       "name": "SEO translation fields",

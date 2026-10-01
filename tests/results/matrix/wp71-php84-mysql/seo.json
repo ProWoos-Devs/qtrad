@@ -45,14 +45,14 @@
         {
             "case": "Stable English URL from German context",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/qtn-seo-translated/",
-            "actual": "http://127.0.0.1:8931/qtn-seo-translated/"
+            "expected": "http://127.0.0.1:8931/qtrad-seo-translated/",
+            "actual": "http://127.0.0.1:8931/qtrad-seo-translated/"
         },
         {
             "case": "Canonical uses requested language",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/de/qtn-seo-translated/",
-            "actual": "http://127.0.0.1:8931/de/qtn-seo-translated/"
+            "expected": "http://127.0.0.1:8931/de/qtrad-seo-translated/",
+            "actual": "http://127.0.0.1:8931/de/qtrad-seo-translated/"
         },
         {
             "case": "External canonical is respected",
@@ -247,8 +247,8 @@
         {
             "case": "Schema identifiers translated",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/de/qtn-seo-translated/#webpage",
-            "actual": "http://127.0.0.1:8931/de/qtn-seo-translated/#webpage"
+            "expected": "http://127.0.0.1:8931/de/qtrad-seo-translated/#webpage",
+            "actual": "http://127.0.0.1:8931/de/qtrad-seo-translated/#webpage"
         },
         {
             "case": "Legacy flag alias en",
@@ -401,19 +401,19 @@
             "actual": false
         },
         {
-            "case": "Internal sitemap data removed qtn_book/1",
+            "case": "Internal sitemap data removed qtrad_book/1",
             "pass": true,
             "expected": false,
             "actual": false
         },
         {
-            "case": "Internal sitemap data removed qtn_book/1",
+            "case": "Internal sitemap data removed qtrad_book/1",
             "pass": true,
             "expected": false,
             "actual": false
         },
         {
-            "case": "Internal sitemap data removed qtn_book/1",
+            "case": "Internal sitemap data removed qtrad_book/1",
             "pass": true,
             "expected": false,
             "actual": false
@@ -499,54 +499,54 @@
     ],
     "fixtures": {
         "translated": {
-            "id": 26,
-            "slug": "qtn-seo-translated",
-            "url": "http://127.0.0.1:8931/qtn-seo-translated/"
+            "id": 28,
+            "slug": "qtrad-seo-translated",
+            "url": "http://127.0.0.1:8931/qtrad-seo-translated/"
         },
         "missing": {
-            "id": 27,
-            "slug": "qtn-seo-missing",
-            "url": "http://127.0.0.1:8931/qtn-seo-missing/"
+            "id": 29,
+            "slug": "qtrad-seo-missing",
+            "url": "http://127.0.0.1:8931/qtrad-seo-missing/"
         },
         "german": {
-            "id": 28,
-            "slug": "qtn-seo-german",
-            "url": "http://127.0.0.1:8931/qtn-seo-german/"
+            "id": 30,
+            "slug": "qtrad-seo-german",
+            "url": "http://127.0.0.1:8931/qtrad-seo-german/"
         },
         "zero": {
-            "id": 29,
-            "slug": "qtn-seo-zero",
-            "url": "http://127.0.0.1:8931/qtn-seo-zero/"
+            "id": 31,
+            "slug": "qtrad-seo-zero",
+            "url": "http://127.0.0.1:8931/qtrad-seo-zero/"
         },
         "empty": {
-            "id": 30,
-            "slug": "qtn-seo-empty",
-            "url": "http://127.0.0.1:8931/qtn-seo-empty/"
+            "id": 32,
+            "slug": "qtrad-seo-empty",
+            "url": "http://127.0.0.1:8931/qtrad-seo-empty/"
         },
         "disabled": {
-            "id": 31,
-            "slug": "qtn-seo-disabled",
-            "url": "http://127.0.0.1:8931/qtn-seo-disabled/"
+            "id": 33,
+            "slug": "qtrad-seo-disabled",
+            "url": "http://127.0.0.1:8931/qtrad-seo-disabled/"
         },
         "draft": {
-            "id": 32,
-            "slug": "qtn-seo-draft",
-            "url": "http://127.0.0.1:8931/?p=32"
+            "id": 34,
+            "slug": "qtrad-seo-draft",
+            "url": "http://127.0.0.1:8931/?p=34"
         },
         "private": {
-            "id": 33,
-            "slug": "qtn-seo-private",
-            "url": "http://127.0.0.1:8931/qtn-seo-private/"
+            "id": 35,
+            "slug": "qtrad-seo-private",
+            "url": "http://127.0.0.1:8931/qtrad-seo-private/"
         },
         "password": {
-            "id": 34,
-            "slug": "qtn-seo-password",
-            "url": "http://127.0.0.1:8931/qtn-seo-password/"
+            "id": 36,
+            "slug": "qtrad-seo-password",
+            "url": "http://127.0.0.1:8931/qtrad-seo-password/"
         },
         "book": {
-            "id": 35,
-            "slug": "qtn-seo-book",
-            "url": "http://127.0.0.1:8931/qtn_book/qtn-seo-book/"
+            "id": 37,
+            "slug": "qtrad-seo-book",
+            "url": "http://127.0.0.1:8931/qtrad_book/qtrad-seo-book/"
         }
     }
 }

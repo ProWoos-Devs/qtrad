@@ -3,13 +3,13 @@
         "wordpress": "5.8",
         "php": "7.4.33"
     },
-    "browser_post_id": 57,
-    "browser_post_slug": "qtn-audit-browser-2",
+    "browser_post_id": 61,
+    "browser_post_slug": "qtrad-audit-browser-2",
     "passed": 85,
     "total": 85,
     "cases": [
         {
-            "case": "Former bootstraps keep canonical activation file",
+            "case": "Canonical activation file is qtrad.php",
             "pass": true,
             "expected": "qtrad.php",
             "actual": "qtrad.php"
@@ -18,10 +18,10 @@
             "case": "WordPress discovers only one activatable entry",
             "pass": true,
             "expected": {
-                "qtrad.php": "qTrad — Multilingual Content"
+                "qtrad.php": "qTrad"
             },
             "actual": {
-                "qtrad.php": "qTrad — Multilingual Content"
+                "qtrad.php": "qTrad"
             }
         },
         {
@@ -83,6 +83,18 @@
             "pass": true,
             "expected": "<p>C:\\temp</p>",
             "actual": "<p>C:\\temp</p>"
+        },
+        {
+            "case": "posted edit language without nonce is ignored",
+            "pass": true,
+            "expected": {
+                "en": "Neu",
+                "de": "Alt"
+            },
+            "actual": {
+                "en": "Neu",
+                "de": "Alt"
+            }
         },
         {
             "case": "secondary insert does not inherit main form payload",
@@ -373,16 +385,10 @@
             "actual": "qtranslate"
         },
         {
-            "case": "former Next widget class preserves sidebar identity",
+            "case": "qTranslate-X widget class preserves sidebar identity",
             "pass": true,
             "expected": "qtranslate",
             "actual": "qtranslate"
-        },
-        {
-            "case": "qTrad switcher matches legacy shortcode output",
-            "pass": true,
-            "expected": "<nav class=\"qtu-switcher\" aria-label=\"Language\"><ul class=\"qtrans_language_chooser qtranxs-lang-switcher qtu-style-both\" id=\"branding\"><li class=\"lang-en active\"><a href=\"http://127.0.0.1:8931/en/\" hreflang=\"en-US\" lang=\"en-US\" aria-current=\"true\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/gb.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">English</bdi></a></li><li class=\"lang-de\"><a href=\"http://127.0.0.1:8931/de/\" hreflang=\"de-DE\" lang=\"de-DE\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/de.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">Deutsch</bdi></a></li></ul></nav>",
-            "actual": "<nav class=\"qtu-switcher\" aria-label=\"Language\"><ul class=\"qtrans_language_chooser qtranxs-lang-switcher qtu-style-both\" id=\"branding\"><li class=\"lang-en active\"><a href=\"http://127.0.0.1:8931/en/\" hreflang=\"en-US\" lang=\"en-US\" aria-current=\"true\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/gb.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">English</bdi></a></li><li class=\"lang-de\"><a href=\"http://127.0.0.1:8931/de/\" hreflang=\"de-DE\" lang=\"de-DE\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/de.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">Deutsch</bdi></a></li></ul></nav>"
         },
         {
             "case": "widget retains unimplemented legacy options for rollback",
@@ -550,20 +556,20 @@
             "case": "indexed zero translation remains visible",
             "pass": true,
             "expected": [
-                54
+                58
             ],
             "actual": [
-                54
+                58
             ]
         },
         {
             "case": "legacy zero translation remains visible",
             "pass": true,
             "expected": [
-                54
+                58
             ],
             "actual": [
-                54
+                58
             ]
         },
         {

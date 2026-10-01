@@ -27,8 +27,8 @@
         {
             "case": "Child URLs use child origin/path",
             "pass": true,
-            "expected": "http://qtn.example.test/child/en/page/",
-            "actual": "http://qtn.example.test/child/en/page/"
+            "expected": "http://qtrad.example.test/child/en/page/",
+            "actual": "http://qtrad.example.test/child/en/page/"
         },
         {
             "case": "Restore keeps caller selected language",

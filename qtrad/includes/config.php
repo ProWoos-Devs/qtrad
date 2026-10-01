@@ -45,7 +45,6 @@ function qtrad_catalog() {
 		'ko' => array( 'name' => '한국어', 'locale' => 'ko_KR', 'flag' => 'kr.svg' ),
 		'tw' => array( 'name' => '繁體中文', 'locale' => 'zh_TW', 'flag' => 'tw.svg' ),
 		// Built into qTranslate-XT.
-		'uk' => array( 'name' => 'Українська', 'locale' => 'uk', 'flag' => 'ua.svg' ),
 		'md' => array( 'name' => 'Moldovenească', 'locale' => 'ro_RO', 'flag' => 'md.svg' ),
 		'lt' => array( 'name' => 'Lietuvių', 'locale' => 'lt_LT', 'flag' => 'lt.svg' ),
 		'kk' => array( 'name' => 'Қазақ тілі', 'locale' => 'kk', 'flag' => 'kz.svg' ),

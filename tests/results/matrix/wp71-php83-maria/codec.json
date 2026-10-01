@@ -5,9 +5,9 @@
         "parts": {
             "en": "Hello",
             "de": "Hallo",
-            "fr": "Bonjour"
+            "es": "Hola"
         },
-        "joined": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:--><!--:fr-->Bonjour<!--:-->"
+        "joined": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:--><!--:es-->Hola<!--:-->"
     },
     {
         "name": "brackets and disabled language",
@@ -15,9 +15,9 @@
         "parts": {
             "en": "Hello",
             "de": "Hallo",
-            "fr": "Bonjour"
+            "es": "Hola"
         },
-        "joined": "[:en]Hello[:de]Hallo[:fr]Bonjour[:]"
+        "joined": "[:en]Hello[:de]Hallo[:es]Hola[:]"
     },
     {
         "name": "swirly and disabled language",
@@ -25,9 +25,9 @@
         "parts": {
             "en": "Hello",
             "de": "Hallo",
-            "fr": "Bonjour"
+            "es": "Hola"
         },
-        "joined": "{:en}Hello{:de}Hallo{:fr}Bonjour{:}"
+        "joined": "{:en}Hello{:de}Hallo{:es}Hola{:}"
     },
     {
         "name": "untouched whitespace and backslashes",
@@ -89,36 +89,36 @@
         "parts": {
             "en": "Intro<!--more-->End",
             "de": "Anfang<!--more-->Ende",
-            "fr": "Début<!--more-->Fin"
+            "es": "Inicio<!--more-->Fin"
         },
-        "joined": "[:en]Intro<!--more-->End[:de]Anfang<!--more-->Ende[:fr]Début<!--more-->Fin[:]"
+        "joined": "[:en]Intro<!--more-->End[:de]Anfang<!--more-->Ende[:es]Inicio<!--more-->Fin[:]"
     },
     {
         "name": "three-letter codes in brackets",
         "pass": true,
         "parts": {
             "en": "Hi",
-            "fil": "Kumusta",
+            "spa": "Hola",
             "de": "Hallo"
         },
-        "joined": "[:en]Hi[:fil]Kumusta[:de]Hallo[:]"
+        "joined": "[:en]Hi[:spa]Hola[:de]Hallo[:]"
     },
     {
         "name": "three-letter code first, disabled",
         "pass": true,
         "parts": {
             "en": "Hi",
-            "fil": "Kumusta"
+            "spa": "Hola"
         },
-        "joined": "<!--:en-->Hi<!--:--><!--:fil-->Kumusta<!--:-->"
+        "joined": "<!--:en-->Hi<!--:--><!--:spa-->Hola<!--:-->"
     },
     {
         "name": "three-letter swirly",
         "pass": true,
         "parts": {
             "en": "Hi",
-            "haw": "Aloha"
+            "deu": "Hallo"
         },
-        "joined": "{:en}Hi{:haw}Aloha{:}"
+        "joined": "{:en}Hi{:deu}Hallo{:}"
     }
 ]

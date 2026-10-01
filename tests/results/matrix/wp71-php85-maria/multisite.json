@@ -7,22 +7,22 @@
     "total": 10,
     "cases": [
         {
-            "case": "Child site languages are separate",
+            "case": "Child site languages are separate, default first",
             "pass": true,
             "expected": [
-                "en",
-                "fr"
+                "es",
+                "en"
             ],
             "actual": [
-                "en",
-                "fr"
+                "es",
+                "en"
             ]
         },
         {
             "case": "Child site default language is separate",
             "pass": true,
-            "expected": "fr",
-            "actual": "fr"
+            "expected": "es",
+            "actual": "es"
         },
         {
             "case": "Child URLs use child origin/path",
@@ -51,14 +51,14 @@
         {
             "case": "Repeated switch reloads child settings",
             "pass": true,
-            "expected": "fr",
-            "actual": "fr"
+            "expected": "es",
+            "actual": "es"
         },
         {
             "case": "Nested restore keeps child context",
             "pass": true,
-            "expected": "fr",
-            "actual": "fr"
+            "expected": "es",
+            "actual": "es"
         },
         {
             "case": "Nested restore keeps original context",

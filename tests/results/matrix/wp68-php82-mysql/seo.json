@@ -3,8 +3,8 @@
         "wordpress": "6.8",
         "php": "8.2.34"
     },
-    "passed": 75,
-    "total": 75,
+    "passed": 76,
+    "total": 76,
     "cases": [
         {
             "case": "Legacy Brazilian code has valid hreflang",
@@ -203,10 +203,10 @@
             ]
         },
         {
-            "case": "SEO field retains disabled French",
+            "case": "SEO field retains disabled language",
             "pass": true,
-            "expected": "Ancien",
-            "actual": "Ancien"
+            "expected": "Antiguo",
+            "actual": "Antiguo"
         },
         {
             "case": "SEO field selects requested translation",
@@ -217,14 +217,14 @@
         {
             "case": "SEO field rejects invalid nonce",
             "pass": true,
-            "expected": "[:en]qTrad English title[:de]qTrad German title[:fr]Ancien[:]",
-            "actual": "[:en]qTrad English title[:de]qTrad German title[:fr]Ancien[:]"
+            "expected": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]",
+            "actual": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]"
         },
         {
             "case": "SEO field rejects mismatched identity",
             "pass": true,
-            "expected": "[:en]qTrad English title[:de]qTrad German title[:fr]Ancien[:]",
-            "actual": "[:en]qTrad English title[:de]qTrad German title[:fr]Ancien[:]"
+            "expected": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]",
+            "actual": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]"
         },
         {
             "case": "Schema text translated",
@@ -300,6 +300,12 @@
         },
         {
             "case": "Internal sitemap data removed post/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/2",
             "pass": true,
             "expected": false,
             "actual": false
@@ -481,8 +487,8 @@
         {
             "case": "Paginated sitemap has no duplicates",
             "pass": true,
-            "expected": 21,
-            "actual": 21
+            "expected": 22,
+            "actual": 22
         },
         {
             "case": "XML expansion retains extensions",

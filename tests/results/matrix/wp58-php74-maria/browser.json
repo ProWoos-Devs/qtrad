@@ -169,15 +169,15 @@
       "pass": true
     },
     {
-      "name": "Saved title retains disabled French",
-      "actual": "[:en]Hello[:de]Updated German title[:fr]Bonjour[:]",
-      "expected": "[:en]Hello[:de]Updated German title[:fr]Bonjour[:]",
+      "name": "Saved title retains disabled Spanish",
+      "actual": "[:en]Hello[:de]Updated German title[:es]Hola[:]",
+      "expected": "[:en]Hello[:de]Updated German title[:es]Hola[:]",
       "pass": true
     },
     {
       "name": "Second language save retains first edit",
-      "actual": "[:en]Updated English title[:de]Updated German title[:fr]Bonjour[:]",
-      "expected": "[:en]Updated English title[:de]Updated German title[:fr]Bonjour[:]",
+      "actual": "[:en]Updated English title[:de]Updated German title[:es]Hola[:]",
+      "expected": "[:en]Updated English title[:de]Updated German title[:es]Hola[:]",
       "pass": true
     },
     {
@@ -218,14 +218,14 @@
     },
     {
       "name": "Classic save retains other and disabled translations",
-      "actual": "[:en]Updated English title[:de]Classic German title[:fr]Bonjour[:]",
-      "expected": "[:en]Updated English title[:de]Classic German title[:fr]Bonjour[:]",
+      "actual": "[:en]Updated English title[:de]Classic German title[:es]Hola[:]",
+      "expected": "[:en]Updated English title[:de]Classic German title[:es]Hola[:]",
       "pass": true
     },
     {
       "name": "Settings stylesheet loads",
-      "actual": "inline-flex",
-      "expected": "inline-flex",
+      "actual": "grid",
+      "expected": "grid",
       "pass": true
     },
     {
@@ -247,9 +247,9 @@
       "pass": true
     },
     {
-      "name": "Settings preserve disabled French site title",
-      "actual": "Titre français",
-      "expected": "Titre français",
+      "name": "Settings preserve disabled Spanish site title",
+      "actual": "Título español",
+      "expected": "Título español",
       "pass": true
     }
   ],

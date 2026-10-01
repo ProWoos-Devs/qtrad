@@ -5,8 +5,8 @@
     },
     "browser_post_id": 64,
     "browser_post_slug": "qtrad-audit-browser-2",
-    "passed": 109,
-    "total": 109,
+    "passed": 110,
+    "total": 110,
     "cases": [
         {
             "case": "Canonical activation file is qtrad.php",
@@ -67,7 +67,7 @@
             "actual": "[:en]Hello[:de]Neu[:]"
         },
         {
-            "case": "classic save retains disabled French translation",
+            "case": "classic save retains disabled Spanish translation",
             "pass": true,
             "expected": true,
             "actual": true
@@ -173,10 +173,10 @@
             "actual": false
         },
         {
-            "case": "term rename retains disabled French",
+            "case": "term rename retains disabled Spanish",
             "pass": true,
-            "expected": "Ancien",
-            "actual": "Ancien"
+            "expected": "Antiguo",
+            "actual": "Antiguo"
         },
         {
             "case": "AJAX-style term save keeps default-language database name",
@@ -185,15 +185,29 @@
             "actual": "News"
         },
         {
-            "case": "settings retain custom legacy language",
+            "case": "settings retain custom legacy language, default first",
+            "pass": true,
+            "expected": [
+                "xx",
+                "en"
+            ],
+            "actual": [
+                "xx",
+                "en"
+            ]
+        },
+        {
+            "case": "languages show default first, then A to Z by native name",
             "pass": true,
             "expected": [
                 "en",
-                "xx"
+                "de",
+                "es"
             ],
             "actual": [
                 "en",
-                "xx"
+                "de",
+                "es"
             ]
         },
         {
@@ -353,20 +367,20 @@
         {
             "case": "three-letter path prefix leaves look-alike segments",
             "pass": true,
-            "expected": "/file/",
-            "actual": "/file/"
+            "expected": "/space/",
+            "actual": "/space/"
         },
         {
             "case": "URL conversion adds three-letter prefix",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/fil/sample/",
-            "actual": "http://127.0.0.1:8931/fil/sample/"
+            "expected": "http://127.0.0.1:8931/spa/sample/",
+            "actual": "http://127.0.0.1:8931/spa/sample/"
         },
         {
             "case": "three-letter title is displayed",
             "pass": true,
-            "expected": "Kumusta",
-            "actual": "Kumusta"
+            "expected": "Hola",
+            "actual": "Hola"
         },
         {
             "case": "URL conversion leaves anchor unchanged",
@@ -491,14 +505,14 @@
         {
             "case": "use disabled language leaves complete source intact",
             "pass": true,
-            "expected": "[:en]Hello[:fr]Bonjour[:]",
-            "actual": "[:en]Hello[:fr]Bonjour[:]"
+            "expected": "[:en]Hello[:es]Hola[:]",
+            "actual": "[:en]Hello[:es]Hola[:]"
         },
         {
             "case": "shared footer survives in disabled language",
             "pass": true,
-            "expected": "Bonjour footer",
-            "actual": "Bonjour footer"
+            "expected": "Hola footer",
+            "actual": "Hola footer"
         },
         {
             "case": "new translated field uses original-compatible comments",
@@ -512,12 +526,12 @@
             "expected": {
                 "en": "Intro<!--more-->End",
                 "de": "Anfang<!--more-->Ende",
-                "fr": "Début<!--more-->Fin"
+                "es": "Inicio<!--more-->Fin"
             },
             "actual": {
                 "en": "Intro<!--more-->End",
                 "de": "Anfang<!--more-->Ende",
-                "fr": "Début<!--more-->Fin"
+                "es": "Inicio<!--more-->Fin"
             }
         },
         {
@@ -735,8 +749,8 @@
         {
             "case": "custom post type REST preserves disabled language",
             "pass": true,
-            "expected": "[:en]Hello[:de]REST title[:fr]Bonjour[:]",
-            "actual": "[:en]Hello[:de]REST title[:fr]Bonjour[:]"
+            "expected": "[:en]Hello[:de]REST title[:es]Hola[:]",
+            "actual": "[:en]Hello[:de]REST title[:es]Hola[:]"
         },
         {
             "case": "custom post type REST autosave succeeds",

@@ -270,6 +270,9 @@ function qtrad_reset_config() {
 /** Language/options belong to a site; restore the caller's context after switching. */
 function qtrad_switch_blog( $new_blog_id, $previous_blog_id, $context = 'switch' ) {
 	global $q_config; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- qTranslate's public configuration global.
+	if ( function_exists( 'qtrad_login_admin_paths' ) ) {
+		qtrad_login_admin_paths( true );
+	}
 	if ( $context === 'restore' && ! empty( $GLOBALS['qtrad_blog_configs'] ) ) {
 		$previous = array_pop( $GLOBALS['qtrad_blog_configs'] );
 		if ( $previous['blog_id'] === (int) $new_blog_id ) { $q_config = $previous['config']; return; }

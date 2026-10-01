@@ -176,6 +176,20 @@ $output = ob_get_clean();
 check_case('legacy chooser echoes output', true, strlen($output) > 0);
 check_case('URL conversion leaves external host unchanged', 'https://other.example/path?x=1', qtrad_convert_url('https://other.example/path?x=1', 'de'));
 check_case('URL conversion leaves mailto unchanged', 'mailto:user@example.test', qtrad_convert_url('mailto:user@example.test', 'de'));
+foreach (array('/wp-comments-post.php', '/wp-cron.php', '/wp-signup.php', '/wp-activate.php', '/oauth/authorize', '/media/clip.mp4', '/files/archive.7z') as $qtrad_path) {
+    check_case('neutral path ' . $qtrad_path, true, qtrad_is_neutral_path($qtrad_path));
+}
+check_case('ordinary page is not neutral', false, qtrad_is_neutral_path('/wp-guide/'));
+$qtrad_login_filter = function () { return home_url('/secret-entry/'); };
+add_filter('login_url', $qtrad_login_filter);
+qtrad_login_admin_paths(true);
+check_case('moved login page is neutral', true, in_array('/secret-entry', qtrad_login_admin_paths(), true));
+remove_filter('login_url', $qtrad_login_filter);
+qtrad_login_admin_paths(true);
+$_SERVER['HTTP_X_REQUESTED_WITH'] = 'XMLHttpRequest';
+check_case('XMLHttpRequest is recognized as a script request', true, qtrad_is_api_request());
+unset($_SERVER['HTTP_X_REQUESTED_WITH']);
+check_case('ordinary request is not a script request', false, qtrad_is_api_request());
 qtrad_set_language('de');
 $qtrad_home = get_option('home');
 $qtrad_localized_home = qtrad_filter_home_url($qtrad_home, '');

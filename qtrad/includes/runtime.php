@@ -53,7 +53,55 @@ function qtrad_strip_path_info_language() {
 
 function qtrad_is_neutral_path( $path ) {
 	$path = qtrad_strip_path_language( qtrad_relative_path( $path ) );
-	return (bool) preg_match( '#^/(?:wp-admin|wp-login\.php|wp-json|wp-content|wp-includes|xmlrpc\.php|feed)(?:/|$)|/(?:feed|rss2?|atom|rdf)/?$|^/(?:[a-z0-9_-]*sitemap[a-z0-9_-]*\.(?:xml|xsl)|robots\.txt|favicon\.ico)$|\.(?:css|js|png|gif|jpe?g|svg|webp|woff2?|ico|pdf|zip)$#i', $path );
+	if ( preg_match( '#^/(?:wp-admin|wp-json|wp-content|wp-includes|wp-[a-z0-9_-]+\.php|xmlrpc\.php|oauth|feed)(?:/|$)|/(?:feed|rss2?|atom|rdf)/?$|^/(?:[a-z0-9_-]*sitemap[a-z0-9_-]*\.(?:xml|xsl)|robots\.txt|favicon\.ico)$|\.(?:css|js|png|gif|jpe?g|svg|webp|tiff?|ico|woff2?|pdf|zip|rar|7z|swf|mpe?g|divx|avi|mp3|mp4|apk)$#i', $path ) ) {
+		return true;
+	}
+	foreach ( qtrad_login_admin_paths() as $neutral ) {
+		if ( $path === $neutral || strpos( $path, $neutral . '/' ) === 0 ) {
+			return true;
+		}
+	}
+	return false;
+}
+
+/**
+ * Admin and login paths as WordPress reports them, which covers plugins that
+ * move the login page. Available after init, once those plugins have loaded.
+ */
+function qtrad_login_admin_paths( $reset = false ) {
+	static $paths = null, $busy = false;
+	if ( $reset ) {
+		$paths = null;
+		return array();
+	}
+	if ( $paths !== null ) {
+		return $paths;
+	}
+	if ( $busy || ! did_action( 'init' ) ) {
+		return array();
+	}
+	$busy = true;
+	$found = array();
+	foreach ( array( wp_login_url(), admin_url() ) as $url ) {
+		$path = (string) wp_parse_url( $url, PHP_URL_PATH );
+		$path = untrailingslashit( qtrad_strip_path_language( qtrad_relative_path( $path ) ) );
+		if ( $path !== '' && $path !== '/' ) {
+			$found[] = $path;
+		}
+	}
+	$busy = false;
+	$paths = array_values( array_unique( $found ) );
+	return $paths;
+}
+
+/** Requests from scripts (XMLHttpRequest, GraphQL) get no redirect and no language cookie. */
+function qtrad_is_api_request() {
+	foreach ( array( 'HTTP_X_REQUESTED_WITH', 'HTTP_REQUESTED_WITH' ) as $header ) {
+		if ( isset( $_SERVER[ $header ] ) && is_string( $_SERVER[ $header ] ) && 'xmlhttprequest' === strtolower( sanitize_text_field( wp_unslash( $_SERVER[ $header ] ) ) ) ) {
+			return true;
+		}
+	}
+	return function_exists( 'is_graphql_http_request' ) && is_graphql_http_request();
 }
 
 /** Request URI as received, unslashed and stripped of characters a URL cannot contain. */
@@ -108,7 +156,7 @@ function qtrad_cookie_front() {
 }
 
 function qtrad_set_front_cookie( $lang ) {
-	if ( headers_sent() || wp_doing_ajax() || wp_doing_cron() || qtrad_is_rest_request() || qtrad_cookie_front() === $lang ) { return; }
+	if ( headers_sent() || wp_doing_ajax() || wp_doing_cron() || qtrad_is_rest_request() || qtrad_is_api_request() || qtrad_cookie_front() === $lang ) { return; }
 	$path = defined( 'COOKIEPATH' ) && COOKIEPATH ? COOKIEPATH : '/';
 	setcookie( 'qtrans_front_language', $lang, array( 'expires' => time() + YEAR_IN_SECONDS, 'path' => $path, 'domain' => COOKIE_DOMAIN, 'secure' => is_ssl(), 'httponly' => true, 'samesite' => 'Lax' ) );
 	$_COOKIE['qtrans_front_language'] = $lang;
@@ -280,7 +328,7 @@ function qtrad_normalize_request() {
 		nocache_headers();
 		header( 'Vary: Accept-Language, Cookie', false );
 	}
-	if ( in_array( $method, array( 'GET', 'HEAD' ), true ) && $current !== $target ) {
+	if ( in_array( $method, array( 'GET', 'HEAD' ), true ) && $current !== $target && ! qtrad_is_api_request() ) {
 		// Target host can only come from qtrad_allowed_origins() or the canonical home.
 		add_filter( 'allowed_redirect_hosts', 'qtrad_allowed_redirect_hosts' );
 		wp_safe_redirect( $target, 302, 'qTrad' );

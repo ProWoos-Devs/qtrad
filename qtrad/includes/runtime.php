@@ -28,6 +28,29 @@ function qtrad_strip_path_language( $path ) {
 	return $path;
 }
 
+/**
+ * Servers that pass the path in PATH_INFO (PHP's built-in server, some
+ * PHP-FPM setups, /index.php/ permalinks) make core prefer it over
+ * REQUEST_URI, so the language segment is removed there as well.
+ */
+function qtrad_strip_path_info_language() {
+	if ( empty( $_SERVER['PATH_INFO'] ) || ! is_string( $_SERVER['PATH_INFO'] ) ) {
+		return;
+	}
+	$info = sanitize_text_field( wp_unslash( $_SERVER['PATH_INFO'] ) );
+	$stripped = qtrad_strip_path_language( $info );
+	if ( $stripped === $info ) {
+		return;
+	}
+	if ( isset( $_SERVER['PHP_SELF'] ) && is_string( $_SERVER['PHP_SELF'] ) ) {
+		$self = sanitize_text_field( wp_unslash( $_SERVER['PHP_SELF'] ) );
+		if ( substr( $self, -strlen( $info ) ) === $info ) {
+			$_SERVER['PHP_SELF'] = wp_slash( substr( $self, 0, -strlen( $info ) ) . $stripped );
+		}
+	}
+	$_SERVER['PATH_INFO'] = wp_slash( $stripped );
+}
+
 function qtrad_is_neutral_path( $path ) {
 	$path = qtrad_strip_path_language( qtrad_relative_path( $path ) );
 	return (bool) preg_match( '#^/(?:wp-admin|wp-login\.php|wp-json|wp-content|wp-includes|xmlrpc\.php|feed)(?:/|$)|/(?:feed|rss2?|atom|rdf)/?$|^/(?:[a-z0-9_-]*sitemap[a-z0-9_-]*\.(?:xml|xsl)|robots\.txt|favicon\.ico)$|\.(?:css|js|png|gif|jpe?g|svg|webp|woff2?|ico|pdf|zip)$#i', $path );
@@ -232,7 +255,10 @@ function qtrad_normalize_request() {
 			if ( $origin && $origin['host'] === $parts['host'] && qtrad_effective_port( $origin + array( 'scheme' => $parts['scheme'] ) ) === qtrad_effective_port( $parts ) && qtrad_is_enabled( $code ) ) { $lang = $code; $explicit = true; break; }
 		}
 	}
-	if ( $bare !== $rel ) { $_SERVER['REQUEST_URI'] = wp_slash( qtrad_home_parts()['path'] . $bare . ( $parts['query'] !== '' ? '?' . $parts['query'] : '' ) ); }
+	if ( $bare !== $rel ) {
+		$_SERVER['REQUEST_URI'] = wp_slash( qtrad_home_parts()['path'] . $bare . ( $parts['query'] !== '' ? '?' . $parts['query'] : '' ) );
+		qtrad_strip_path_info_language();
+	}
 	if ( qtrad_is_rest_request() || qtrad_is_neutral_path( $parts['path'] ) || qtrad_is_sitemap_request() ) { qtrad_set_language( qtrad_is_sitemap_request() ? qtrad_default_language() : ( $lang ?: qtrad_default_language() ) ); return; }
 	$is_home = $bare === '/';
 	$negotiated = false;

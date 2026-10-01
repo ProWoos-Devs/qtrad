@@ -90,9 +90,15 @@ check_case('classic save preserves JSON escaping and backslashes', $json, qtrad_
 
 settings();
 $id = fixture(array('post_content' => '[:en]<p>C:\\temp</p>[:de]Alt[:]'));
-$_POST = array('qtrad_edit_lang' => 'de', 'post_ID' => $id);
+$_POST = array('qtrad_edit_lang' => 'de', 'post_ID' => $id, 'qtrad_field_post_id' => $id, 'qtrad_field_nonce' => wp_create_nonce('qtrad_field_' . $id));
 wp_update_post(wp_slash(array('ID' => $id, 'post_content' => 'Neu')));
 check_case('plain merge preserves backslash in untouched English', '<p>C:\\temp</p>', qtrad_split(get_post($id)->post_content)['en']);
+
+settings();
+$id = fixture(array('post_content' => '[:en]English[:de]Alt[:]'));
+$_POST = array('qtrad_edit_lang' => 'de', 'post_ID' => $id);
+wp_update_post(wp_slash(array('ID' => $id, 'post_content' => 'Neu')));
+check_case('posted edit language without nonce is ignored', array('en' => 'Neu', 'de' => 'Alt'), array_intersect_key(qtrad_split(get_post($id)->post_content), array('en' => 1, 'de' => 1)));
 
 settings();
 classic_payload(array('en' => 'Main title', 'de' => 'Haupttitel'), array('en' => 'Main body', 'de' => 'Haupttext'));

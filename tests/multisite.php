@@ -17,7 +17,7 @@ update_option('qtranslate_enabled_languages',array('en','fr'));
 update_option('qtranslate_default_language','fr');
 update_option('qtranslate_url_mode',2); update_option('qtranslate_hide_default_language','1');
 qtrad_reset_config();
-network_check('Child site languages are separate',array('en','fr'),qtrad_enabled_languages());
+network_check('Child site languages are separate, default first',array('fr','en'),qtrad_enabled_languages());
 network_check('Child site default language is separate','fr',qtrad_current_language());
 $home=get_option('home');
 network_check('Child URLs use child origin/path',$home.'/en/page/',qtrad_convert_url($home.'/page/','en',true));

@@ -159,7 +159,9 @@ remove_filter('get_term', 'qtrad_filter_get_term');
 
 settings(array('qtranslate_enabled_languages' => array('en', 'xx'), 'qtranslate_default_language' => 'xx'));
 qtrad_save_settings(array('enabled' => array('en', 'xx'), 'default' => 'xx'));
-check_case('settings retain custom legacy language', array('en', 'xx'), qtrad_enabled_languages());
+check_case('settings retain custom legacy language, default first', array('xx', 'en'), qtrad_enabled_languages());
+settings(array('qtranslate_enabled_languages' => array('es', 'en', 'de')));
+check_case('languages show default first, then A to Z by native name', array('en', 'de', 'es'), qtrad_enabled_languages());
 
 settings(array('qtranslate_editor_mode' => 2, 'qtranslate_enabled_languages' => array('en', 'de', 'lt')));
 check_case('qTranslate-XT built-in Lithuanian has its locale', 'lt_LT', qtrad_config('locale')['lt']);

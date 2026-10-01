@@ -126,6 +126,11 @@ function qtrad_load_config() {
 	if ( ! in_array( $default, $clean, true ) ) {
 		$default = $clean[0];
 	}
+	// Display order everywhere: the default language first, then A to Z by native name.
+	// The stored option keeps its own order; marker order does not matter to readers.
+	$others = array_values( array_diff( $clean, array( $default ) ) );
+	usort( $others, function ( $a, $b ) use ( $names ) { return strnatcasecmp( remove_accents( $names[ $a ] ), remove_accents( $names[ $b ] ) ); } );
+	$clean = array_merge( array( $default ), $others );
 
 	$url_mode = (int) get_option( 'qtranslate_url_mode', 2 );
 	if ( $url_mode < 1 || $url_mode > 4 ) {

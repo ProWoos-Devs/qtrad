@@ -131,7 +131,7 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   check('Classic save retains other and disabled translations', raw, '[:en]Updated English title[:de]Classic German title[:fr]Bonjour[:]');
   await page.goto(base + '/wp-admin/options-general.php?page=qtrad');
   await axe('.qtrad-settings', 'Language settings');
-  check('Settings stylesheet loads', await page.locator('.qtrad-lang-choice').first().evaluate(n => getComputedStyle(n).display), 'inline-flex');
+  check('Settings stylesheet loads', await page.locator('.qtrad-lang-grid').first().evaluate(n => getComputedStyle(n).display), 'grid');
   await page.locator('#qtrad-new-code').fill('invalid');
   await page.locator('#qtrad-new-name').fill('Invalid language');
   await page.locator('#qtrad-new-locale').fill('invalid!');

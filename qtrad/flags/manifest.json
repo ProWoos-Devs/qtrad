@@ -335,14 +335,6 @@
       "modifications": "none"
     },
     {
-      "file": "ua.svg",
-      "source_path": "flags/4x3/ua.svg",
-      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ua.svg",
-      "sha256": "2d869c23ebfefb2ae0a633297c11dee06fcb666ce7b3ca75eba09b7a1a3a03ac",
-      "license": "MIT",
-      "modifications": "none"
-    },
-    {
       "file": "us.svg",
       "source_path": "flags/4x3/us.svg",
       "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/us.svg",
@@ -395,7 +387,6 @@
     "sk.png": "sk.svg",
     "tr.png": "tr.svg",
     "tw.png": "tw.svg",
-    "ua.png": "ua.svg",
     "us.png": "us.svg",
     "vn.png": "vn.svg",
     "catalonia.png": "es-ct.svg",

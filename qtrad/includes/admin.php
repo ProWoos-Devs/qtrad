@@ -417,7 +417,7 @@ function qtrad_settings_page() {
 		}
 		echo '</fieldset>';
 	}
-	echo '</details><fieldset><legend><h2>' . esc_html__( 'Add a language', 'qtrad' ) . '</h2></legend><p>' . esc_html__( 'Provide a two- or three-letter code, native name and WordPress locale, for example: uk, Українська, uk. The language will be enabled when you save.', 'qtrad' ) . '</p>';
+	echo '</details><fieldset><legend><h2>' . esc_html__( 'Add a language', 'qtrad' ) . '</h2></legend><p>' . esc_html__( 'Provide a two- or three-letter code, native name and WordPress locale, for example: is, Íslenska, is_IS. The language will be enabled when you save.', 'qtrad' ) . '</p>';
 	foreach ( array( 'code' => __( 'Language code', 'qtrad' ), 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
 		echo '<p><label for="qtrad-new-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-new-' . esc_attr( $key ) . '" name="new_language[' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['new_language'][ $key ] ) && is_string( $_POST['new_language'][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['new_language'][ $key ] ) ) : '' ) . '" /></p>';
 	}

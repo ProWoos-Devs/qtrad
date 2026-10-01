@@ -44,7 +44,6 @@ if (is_wp_error($term)) { $term_id = (int) $term->get_error_data('term_exists');
 wp_set_post_terms($id,array($term_id),'category');
 seo_check('Legacy Brazilian code has valid hreflang','pt-BR',qtrad_seo_language_tag('pb'));
 seo_check('Legacy Taiwanese code has valid hreflang','zh-TW',qtrad_seo_language_tag('tw'));
-seo_check('Legacy Ukrainian code has valid hreflang','uk',qtrad_seo_language_tag('ua'));
 update_option('qtranslate_locales',array('en'=>'en_US_formal','xx'=>'xxx_BAD','zz'=>'en_GB')); qtrad_reset_config();
 seo_check('WordPress locale suffix is omitted','en-US',qtrad_seo_language_tag('en'));
 seo_check('Unknown ISO language is omitted','',qtrad_seo_language_tag('xx'));

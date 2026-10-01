@@ -24,7 +24,6 @@ function qtrad_catalog() {
 		'zh' => array( 'name' => '中文', 'locale' => 'zh_CN', 'flag' => 'cn.svg' ),
 		'ja' => array( 'name' => '日本語', 'locale' => 'ja', 'flag' => 'jp.svg' ),
 		'el' => array( 'name' => 'Ελληνικά', 'locale' => 'el', 'flag' => 'gr.svg' ),
-		'ua' => array( 'name' => 'Українська', 'locale' => 'uk', 'flag' => 'ua.svg' ),
 		'tr' => array( 'name' => 'Türkçe', 'locale' => 'tr_TR', 'flag' => 'tr.svg' ),
 		'ro' => array( 'name' => 'Română', 'locale' => 'ro_RO', 'flag' => 'ro.svg' ),
 		'hu' => array( 'name' => 'Magyar', 'locale' => 'hu_HU', 'flag' => 'hu.svg' ),
@@ -72,9 +71,6 @@ function qtrad_language_from_locale( $locale ) {
 	}
 	if ( stripos( $locale, 'zh_TW' ) === 0 ) {
 		return 'tw';
-	}
-	if ( stripos( $locale, 'uk' ) === 0 ) {
-		return 'ua';
 	}
 	$code = strtolower( substr( $locale, 0, 2 ) );
 	return isset( qtrad_catalog()[ $code ] ) ? $code : 'en';

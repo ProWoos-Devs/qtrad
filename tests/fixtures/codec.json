@@ -1,15 +1,15 @@
 [
- {"name":"comments and disabled language", "text":"<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:--><!--:fr-->Bonjour<!--:-->", "enabled":["en","de"], "parts":{"en":"Hello","de":"Hallo","fr":"Bonjour"}, "format":"comment"},
- {"name":"brackets and disabled language", "text":"[:en]Hello[:de]Hallo[:fr]Bonjour[:]", "enabled":["en","de"], "parts":{"en":"Hello","de":"Hallo","fr":"Bonjour"}, "format":"bracket"},
- {"name":"swirly and disabled language", "text":"{:en}Hello{:de}Hallo{:fr}Bonjour{:}", "enabled":["en","de"], "parts":{"en":"Hello","de":"Hallo","fr":"Bonjour"}, "format":"swirly"},
+ {"name":"comments and disabled language", "text":"<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:--><!--:es-->Hola<!--:-->", "enabled":["en","de"], "parts":{"en":"Hello","de":"Hallo","es":"Hola"}, "format":"comment"},
+ {"name":"brackets and disabled language", "text":"[:en]Hello[:de]Hallo[:es]Hola[:]", "enabled":["en","de"], "parts":{"en":"Hello","de":"Hallo","es":"Hola"}, "format":"bracket"},
+ {"name":"swirly and disabled language", "text":"{:en}Hello{:de}Hallo{:es}Hola{:}", "enabled":["en","de"], "parts":{"en":"Hello","de":"Hallo","es":"Hola"}, "format":"swirly"},
  {"name":"untouched whitespace and backslashes", "text":"[:en]  C:\\temp\n[:de] Hallo [:]", "enabled":["en","de"], "parts":{"en":"  C:\\temp\n","de":" Hallo "}, "format":"bracket"},
  {"name":"zero", "text":"0", "enabled":["en","de"], "parts":{"en":"0","de":"0"}, "format":"bracket", "joined":"0"},
  {"name":"empty", "text":"", "enabled":["en","de"], "parts":{"en":"","de":""}, "format":"bracket", "joined":""},
  {"name":"identical forced", "text":"[:en]Same[:de]Same[:]", "enabled":["en","de"], "parts":{"en":"Same","de":"Same"}, "format":"bracket", "force":true},
  {"name":"empty German", "text":"[:en]Hello[:]", "enabled":["en","de"], "parts":{"en":"Hello","de":""}, "format":"bracket"},
  {"name":"shared chunk", "text":"Shared [:en]Hello[:de]Hallo[:] footer", "enabled":["en","de"], "parts":{"en":"Shared Hello footer","de":"Shared Hallo footer"}, "format":"bracket", "joined":"[:en]Shared Hello footer[:de]Shared Hallo footer[:]"},
- {"name":"more and disabled language", "text":"[:en]Intro[:de]Anfang[:fr]Début[:fr]<!--more-->Fin[:en]<!--more-->End[:de]<!--more-->Ende[:]", "enabled":["en","de"], "parts":{"en":"Intro<!--more-->End","de":"Anfang<!--more-->Ende","fr":"Début<!--more-->Fin"}, "format":"bracket", "joined":"[:en]Intro[:de]Anfang[:fr]Début[:fr]<!--more-->Fin[:en]<!--more-->End[:de]<!--more-->Ende[:]", "skipRoundTrip":true},
- {"name":"three-letter codes in brackets", "text":"[:en]Hi[:fil]Kumusta[:de]Hallo[:]", "enabled":["en","fil","de"], "parts":{"en":"Hi","fil":"Kumusta","de":"Hallo"}, "format":"bracket"},
- {"name":"three-letter code first, disabled", "text":"<!--:fil-->Kumusta<!--:--><!--:en-->Hi<!--:-->", "enabled":["en"], "parts":{"en":"Hi","fil":"Kumusta"}, "format":"comment", "joined":"<!--:en-->Hi<!--:--><!--:fil-->Kumusta<!--:-->"},
- {"name":"three-letter swirly", "text":"{:en}Hi{:haw}Aloha{:}", "enabled":["en","haw"], "parts":{"en":"Hi","haw":"Aloha"}, "format":"swirly"}
+ {"name":"more and disabled language", "text":"[:en]Intro[:de]Anfang[:es]Inicio[:es]<!--more-->Fin[:en]<!--more-->End[:de]<!--more-->Ende[:]", "enabled":["en","de"], "parts":{"en":"Intro<!--more-->End","de":"Anfang<!--more-->Ende","es":"Inicio<!--more-->Fin"}, "format":"bracket", "joined":"[:en]Intro[:de]Anfang[:es]Inicio[:es]<!--more-->Fin[:en]<!--more-->End[:de]<!--more-->Ende[:]", "skipRoundTrip":true},
+ {"name":"three-letter codes in brackets", "text":"[:en]Hi[:spa]Hola[:de]Hallo[:]", "enabled":["en","spa","de"], "parts":{"en":"Hi","spa":"Hola","de":"Hallo"}, "format":"bracket"},
+ {"name":"three-letter code first, disabled", "text":"<!--:spa-->Hola<!--:--><!--:en-->Hi<!--:-->", "enabled":["en"], "parts":{"en":"Hi","spa":"Hola"}, "format":"comment", "joined":"<!--:en-->Hi<!--:--><!--:spa-->Hola<!--:-->"},
+ {"name":"three-letter swirly", "text":"{:en}Hi{:deu}Hallo{:}", "enabled":["en","deu"], "parts":{"en":"Hi","deu":"Hallo"}, "format":"swirly"}
 ]

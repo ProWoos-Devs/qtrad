@@ -25,7 +25,7 @@ $definitions = array(
     'german'=>array('post_title'=>'[:en][:de]Nur Deutsch[:es][:]', 'post_content'=>'[:de]Nur deutscher Inhalt[:]'),
     'zero'=>array('post_title'=>'[:en]Zero[:de]Null[:]', 'post_content'=>'[:en]Value[:de]0[:]'),
     'empty'=>array('post_title'=>'[:en][:de][:es][:]', 'post_content'=>'[:en][:de][:es][:]'),
-    'disabled'=>array('post_title'=>'[:fr]Français[:]', 'post_content'=>'[:fr]Seulement français[:]'),
+    'disabled'=>array('post_title'=>'[:spa]Solo español[:]', 'post_content'=>'[:spa]Contenido solo en español[:]'),
     'draft'=>array('post_status'=>'draft'), 'private'=>array('post_status'=>'private'),
     'password'=>array('post_password'=>'fixture-only'), 'book'=>array('post_type'=>'qtrad_book'),
 );
@@ -74,11 +74,11 @@ seo_check('Rank Math description adapter selects raw translation','Deutsche SEO 
 seo_check('SEO reads leave stored metadata intact',$before,qtrad_raw_post_meta($id,'_yoast_wpseo_title'));
 // Language SEO fields use their own nonce and retain disabled translations.
 $seo_id=$posts['book']['id'];
-update_post_meta($seo_id,'_qtrad_seo_title','[:en]Original[:de]Alt[:fr]Ancien[:]');
+update_post_meta($seo_id,'_qtrad_seo_title','[:en]Original[:de]Alt[:spa]Antiguo[:]');
 $_POST=wp_slash(array('qtrad_seo_post_id'=>$seo_id,'qtrad_seo_nonce'=>wp_create_nonce('qtrad_seo_'.$seo_id),
     'qtrad_seo_fields'=>array('title'=>array('en'=>'qTrad English title','de'=>'qTrad German title','es'=>''),'description'=>array('en'=>'qTrad English description','de'=>'qTrad German description','es'=>''))));
 qtrad_seo_save_meta_box($seo_id);
-seo_check('SEO field retains disabled French','Ancien',qtrad_split(qtrad_seo_raw_meta($seo_id,'_qtrad_seo_title'))['fr']);
+seo_check('SEO field retains disabled language','Antiguo',qtrad_split(qtrad_seo_raw_meta($seo_id,'_qtrad_seo_title'))['spa']);
 seo_check('SEO field selects requested translation','qTrad German title',qtrad_seo_override($seo_id,'title','de'));
 $saved=qtrad_seo_raw_meta($seo_id,'_qtrad_seo_title');
 $_POST['qtrad_seo_nonce']='invalid'; $_POST['qtrad_seo_fields']['title']['de']='Wrong'; qtrad_seo_save_meta_box($seo_id);

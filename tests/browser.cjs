@@ -100,12 +100,12 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   await page.evaluate(() => wp.data.dispatch('core/editor').savePost());
   check('Successful save leaves editor clean', await page.evaluate(() => wp.data.select('core/editor').isEditedPostDirty()), false);
   let raw = await page.evaluate(async id => (await wp.apiFetch({path:'/wp/v2/posts/' + id + '?context=edit'})).title.raw, fixture.browser_post_id);
-  check('Saved title retains disabled French', raw, '[:en]Hello[:de]Updated German title[:fr]Bonjour[:]');
+  check('Saved title retains disabled Spanish', raw, '[:en]Hello[:de]Updated German title[:es]Hola[:]');
   await page.getByRole('button', {name:'English', exact:true}).click();
   await page.evaluate(() => wp.data.dispatch('core/editor').editPost({title:'Updated English title'}));
   await page.evaluate(() => wp.data.dispatch('core/editor').savePost());
   raw = await page.evaluate(async id => (await wp.apiFetch({path:'/wp/v2/posts/' + id + '?context=edit'})).title.raw, fixture.browser_post_id);
-  check('Second language save retains first edit', raw, '[:en]Updated English title[:de]Updated German title[:fr]Bonjour[:]');
+  check('Second language save retains first edit', raw, '[:en]Updated English title[:de]Updated German title[:es]Hola[:]');
   await page.getByRole('button', {name:'العربية', exact:true}).click();
   const canvasTitle = await page.locator('iframe[name="editor-canvas"]').count()
     ? page.frameLocator('iframe[name="editor-canvas"]').locator('.editor-post-title__input')
@@ -128,7 +128,7 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   await page.goto(base + '/wp-admin/post.php?post=' + fixture.browser_post_id + '&action=edit');
   await page.locator('.qtrad-lsb__btn[data-qtrad-lang="en"]:enabled').waitFor();
   raw = await page.evaluate(async id => (await wp.apiFetch({path:'/wp/v2/posts/' + id + '?context=edit'})).title.raw, fixture.browser_post_id);
-  check('Classic save retains other and disabled translations', raw, '[:en]Updated English title[:de]Classic German title[:fr]Bonjour[:]');
+  check('Classic save retains other and disabled translations', raw, '[:en]Updated English title[:de]Classic German title[:es]Hola[:]');
   await page.goto(base + '/wp-admin/options-general.php?page=qtrad');
   await axe('.qtrad-settings', 'Language settings');
   check('Settings stylesheet loads', await page.locator('.qtrad-lang-grid').first().evaluate(n => getComputedStyle(n).display), 'grid');
@@ -147,10 +147,10 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   await page.getByRole('button', {name:'Save languages', exact:true}).click();
   await page.locator('input[name="enabled[]"][value="zz"]').waitFor();
   check('New language becomes enabled', await page.locator('input[name="enabled[]"][value="zz"]').isChecked());
-  await page.locator('input[name="enabled[]"][value="fr"]').check();
+  await page.locator('input[name="enabled[]"][value="es"]').check();
   await page.getByRole('button', {name:'Save languages', exact:true}).click();
-  await page.locator('input[name="blogname[fr]"]').waitFor();
-  check('Settings preserve disabled French site title', await page.locator('input[name="blogname[fr]"]').inputValue(), 'Titre français');
+  await page.locator('input[name="blogname[es]"]').waitFor();
+  check('Settings preserve disabled Spanish site title', await page.locator('input[name="blogname[es]"]').inputValue(), 'Título español');
   await page.screenshot({path: 'tests/results/settings.png', fullPage:true});
   await page.goto(base + '/wp-admin/edit-tags.php?taxonomy=category');
   await axe('.qtrad-term-field', 'Taxonomy translation fields');

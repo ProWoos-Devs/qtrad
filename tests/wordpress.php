@@ -77,10 +77,10 @@ foreach (array('bracket', 'comment', 'swirly') as $format) {
     check_case('codec round trip ' . $format, array('en' => 'Hello', 'de' => 'Hallo'), qtrad_split($value));
 }
 check_case('plain language merge preserves existing translation', '[:en]Hello[:de]Neu[:]', qtrad_merge_field('Neu', '[:en]Hello[:de]Hallo[:]', 'de'));
-$id = fixture(array('post_title' => '[:en]Hello[:de]Hallo[:fr]Bonjour[:]'));
+$id = fixture(array('post_title' => '[:en]Hello[:de]Hallo[:es]Hola[:]'));
 classic_payload(array('en' => 'Hello', 'de' => 'Neu'), array('en' => 'Body', 'de' => 'Inhalt'));
 wp_update_post(wp_slash(array('ID' => $id, 'post_title' => 'Neu')));
-check_case('classic save retains disabled French translation', true, strpos(get_post($id)->post_title, '[:fr]Bonjour') !== false);
+check_case('classic save retains disabled Spanish translation', true, strpos(get_post($id)->post_title, '[:es]Hola') !== false);
 
 settings();
 $id = fixture(array('post_title' => '[:en]Hello[:de]Hallo[:]'));
@@ -138,14 +138,14 @@ qtrad_set_language('de');
 check_case('legacy term library translates string', 'Nachrichten', qtrans_useTermLib('News'));
 check_case('legacy term library translates array', array('Nachrichten'), qtrans_useTermLib(array('News')));
 
-settings(array('qtranslate_term_name' => array('Old' => array('en' => 'Old', 'de' => 'Alt', 'fr' => 'Ancien'))));
+settings(array('qtranslate_term_name' => array('Old' => array('en' => 'Old', 'de' => 'Alt', 'es' => 'Antiguo'))));
 $current_screen = WP_Screen::get('term');
 $term = wp_insert_term('Old', 'category', array('slug' => uniqid('audit-old-')));
 $_POST = array('qtrad_term' => array('en' => 'New', 'de' => 'Neu'), 'qtrad_term_nonce' => wp_create_nonce('qtrad_term'), 'qtrad_term_id' => $term['term_id']);
 wp_update_term($term['term_id'], 'category', array('name' => 'New'));
 $library = get_option('qtranslate_term_name');
 check_case('term rename removes obsolete library key', false, isset($library['Old']));
-check_case('term rename retains disabled French', 'Ancien', $library['New']['fr'] ?? null);
+check_case('term rename retains disabled Spanish', 'Antiguo', $library['New']['es'] ?? null);
 
 settings(array('qtranslate_term_name' => array('News' => array('en' => 'News', 'de' => 'Nachrichten'))));
 $current_screen = WP_Screen::get('edit-tags');
@@ -203,14 +203,14 @@ check_case('home_url is localized outside request parsing', true, $qtrad_localiz
 check_case('home_url stays unlocalized while core parses the request (subdirectory installs)', $qtrad_home, $qtrad_parsing_home);
 check_case('home_url is localized again after parsing', $qtrad_localized_home, qtrad_filter_home_url($qtrad_home, ''));
 
-settings(array('qtranslate_enabled_languages' => array('en', 'de', 'fil'), 'qtranslate_language_names' => array('fil' => 'Filipino'), 'qtranslate_locales' => array('fil' => 'fil')));
-check_case('three-letter code is an enabled language', true, qtrad_is_enabled('fil'));
-check_case('three-letter path prefix is stripped', '/sample/', qtrad_strip_path_language('/fil/sample/'));
-check_case('three-letter path prefix leaves look-alike segments', '/file/', qtrad_strip_path_language('/file/'));
-check_case('URL conversion adds three-letter prefix', 'http://127.0.0.1:8931/fil/sample/', qtrad_convert_url('http://127.0.0.1:8931/de/sample/', 'fil'));
-$id = fixture(array('post_title' => '[:en]Hi[:fil]Kumusta[:]'));
-qtrad_set_language('fil');
-check_case('three-letter title is displayed', 'Kumusta', qtrad_use_current(get_post($id)->post_title));
+settings(array('qtranslate_enabled_languages' => array('en', 'de', 'spa'), 'qtranslate_language_names' => array('spa' => 'Español'), 'qtranslate_locales' => array('spa' => 'es_ES')));
+check_case('three-letter code is an enabled language', true, qtrad_is_enabled('spa'));
+check_case('three-letter path prefix is stripped', '/sample/', qtrad_strip_path_language('/spa/sample/'));
+check_case('three-letter path prefix leaves look-alike segments', '/space/', qtrad_strip_path_language('/space/'));
+check_case('URL conversion adds three-letter prefix', 'http://127.0.0.1:8931/spa/sample/', qtrad_convert_url('http://127.0.0.1:8931/de/sample/', 'spa'));
+$id = fixture(array('post_title' => '[:en]Hi[:spa]Hola[:]'));
+qtrad_set_language('spa');
+check_case('three-letter title is displayed', 'Hola', qtrad_use_current(get_post($id)->post_title));
 settings();
 check_case('URL conversion leaves anchor unchanged', '#section', qtrad_convert_url('#section', 'de'));
 check_case('URL conversion preserves signed/repeated query bytes', 'http://127.0.0.1:8931/de/path?a=1&a=2&v=a%20b', qtrad_convert_url('http://127.0.0.1:8931/path?a=1&a=2&v=a%20b', 'de'));
@@ -275,10 +275,10 @@ settings();
 // Regression coverage for additional storage, API and routing boundaries.
 settings();
 check_case('quicktags=false keeps bracket markers literal', array('en'=>'[:en]Hello[:de]Hallo[:]', 'de'=>'[:en]Hello[:de]Hallo[:]'), qtrans_split('[:en]Hello[:de]Hallo[:]', false));
-check_case('use disabled language leaves complete source intact', '[:en]Hello[:fr]Bonjour[:]', qtranxf_use('fr', '[:en]Hello[:fr]Bonjour[:]'));
-check_case('shared footer survives in disabled language', 'Bonjour footer', qtrad_split('[:en]Hello[:fr]Bonjour[:] footer')['fr']);
+check_case('use disabled language leaves complete source intact', '[:en]Hello[:es]Hola[:]', qtranxf_use('es', '[:en]Hello[:es]Hola[:]'));
+check_case('shared footer survives in disabled language', 'Hola footer', qtrad_split('[:en]Hello[:es]Hola[:] footer')['es']);
 check_case('new translated field uses original-compatible comments', '<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->', qtrad_merge_field('Hallo', 'Hello', 'de'));
-$parts = array('en'=>'Intro<!--more-->End', 'de'=>'Anfang<!--more-->Ende', 'fr'=>'Début<!--more-->Fin');
+$parts = array('en'=>'Intro<!--more-->End', 'de'=>'Anfang<!--more-->Ende', 'es'=>'Inicio<!--more-->Fin');
 check_case('more separator survives disabled language', $parts, qtrad_split(qtrad_join_content($parts, 'comment', array('en','de')), null, false));
 check_case('chooser supports legacy options array', true, strpos(qtrad_language_chooser(array('type'=>'dropdown','id'=>'example')), 'id="example"') !== false);
 check_case('chooser boolean requests flags', true, strpos(qtrad_language_chooser(true), 'qtrad-style-image') !== false);
@@ -354,18 +354,18 @@ check_case('legacy zero translation remains visible', array($id), $query->posts)
 remove_filter('posts_where_request','qtrad_hide_untranslated_where',10);
 settings();
 register_post_type('qtrad_book',array('public'=>true,'show_in_rest'=>true,'rest_base'=>'books','supports'=>array('title','editor','excerpt')));
-$id = fixture(array('post_type'=>'qtrad_book','post_title'=>'[:en]Hello[:de]Hallo[:fr]Bonjour[:]', 'post_content'=>'[:en]Body[:de]Inhalt[:]'));
+$id = fixture(array('post_type'=>'qtrad_book','post_title'=>'[:en]Hello[:de]Hallo[:es]Hola[:]', 'post_content'=>'[:en]Body[:de]Inhalt[:]'));
 $request = new WP_REST_Request('POST','/wp/v2/books/'.$id);
 $request->set_param('id',$id); $request->set_param('qtrad_language','de'); $request->set_param('title','REST title');
 $response = rest_do_request($request);
 check_case('custom post type REST update succeeds', 200, $response->get_status());
-check_case('custom post type REST preserves disabled language', '[:en]Hello[:de]REST title[:fr]Bonjour[:]', get_post($id)->post_title);
+check_case('custom post type REST preserves disabled language', '[:en]Hello[:de]REST title[:es]Hola[:]', get_post($id)->post_title);
 $request = new WP_REST_Request('POST','/wp/v2/books/'.$id.'/autosaves');
 $request->set_param('id',$id); $request->set_param('qtrad_language','de'); $request->set_param('title','Autosave title');
 $response = rest_do_request($request);
 check_case('custom post type REST autosave succeeds', 200, $response->get_status());
 $autosave = $response->get_data();
-check_case('autosave retains multilingual title', true, isset($autosave['title']['raw']) && strpos($autosave['title']['raw'],'[:fr]Bonjour') !== false);
+check_case('autosave retains multilingual title', true, isset($autosave['title']['raw']) && strpos($autosave['title']['raw'],'[:es]Hola') !== false);
 settings(array('qtrad_settings'=>array('editor_mode'=>'raw','extra_fields'=>'audit_field','write_format'=>'keep')));
 $request = new WP_REST_Request('POST','/wp/v2/books/'.$id);
 $request->set_param('id',$id); $request->set_param('title','Raw replacement');
@@ -387,7 +387,7 @@ check_case('root custom language attribute survives', 'data-lang="custom" lang="
 check_case('root language attributes retain unrelated and XHTML attributes', 'data-test="kept" lang="de-DE" xml:lang="de-DE" dir="ltr"', qtrad_filter_language_attributes('data-test="kept" lang="en-US" xml:lang="en-US" dir="ltr"'));
 settings();
 if (in_array('--prepare-browser', $argv, true)) {
-    update_option('blogname', '[:en]qTrad Audit[:de]qTrad Audit DE[:fr]Titre français[:]');
+    update_option('blogname', '[:en]qTrad Audit[:de]qTrad Audit DE[:es]Título español[:]');
     $themes = wp_get_themes();
     $theme = isset($themes['twentytwentyone']) ? 'twentytwentyone' : (isset($themes['twentytwentyfive']) ? 'twentytwentyfive' : key($themes));
     update_option('template', $theme);
@@ -402,8 +402,8 @@ if (in_array('--prepare-browser', $argv, true)) {
     if (is_wp_error($auditor_id)) { fwrite(STDERR,$auditor_id->get_error_message()); exit(2); }
     update_user_meta($auditor_id, 'qtrad_edit_language', 'en');
     $browser_id = fixture(array('post_name' => 'qtrad-audit-browser', 'post_status' => 'publish',
-        'post_title' => '[:en]Hello[:de]Hallo[:fr]Bonjour[:]',
-        'post_content' => '[qtrad_switcher style="both"] [qtrad_switcher style="image"] [qtrad_switcher style="short"] [qtrad_switcher style="dropdown"] [:en]<!-- wp:paragraph --><p>English body</p><!-- /wp:paragraph -->[:de]<!-- wp:paragraph --><p>German body</p><!-- /wp:paragraph -->[:fr]<!-- wp:paragraph --><p>French body</p><!-- /wp:paragraph -->[:]'));
+        'post_title' => '[:en]Hello[:de]Hallo[:es]Hola[:]',
+        'post_content' => '[qtrad_switcher style="both"] [qtrad_switcher style="image"] [qtrad_switcher style="short"] [qtrad_switcher style="dropdown"] [:en]<!-- wp:paragraph --><p>English body</p><!-- /wp:paragraph -->[:de]<!-- wp:paragraph --><p>German body</p><!-- /wp:paragraph -->[:es]<!-- wp:paragraph --><p>Spanish body</p><!-- /wp:paragraph -->[:]'));
     flush_rewrite_rules(false);
 }
 

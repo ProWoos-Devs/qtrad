@@ -110,8 +110,8 @@
       },
       "browser_post_id": 27,
       "browser_post_slug": "qtrad-audit-browser",
-      "passed": 85,
-      "total": 85,
+      "passed": 88,
+      "total": 88,
       "cases": [
         {
           "case": "Canonical activation file is qtrad.php",
@@ -318,6 +318,24 @@
           "pass": true,
           "expected": "mailto:user@example.test",
           "actual": "mailto:user@example.test"
+        },
+        {
+          "case": "home_url is localized outside request parsing",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "home_url stays unlocalized while core parses the request (subdirectory installs)",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931",
+          "actual": "http://127.0.0.1:8931"
+        },
+        {
+          "case": "home_url is localized again after parsing",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/",
+          "actual": "http://127.0.0.1:8931/de/"
         },
         {
           "case": "URL conversion leaves anchor unchanged",
@@ -2112,7 +2130,7 @@
     "qtrad/includes/compat.php": "dc58fe3dd4c2affa0f85a208221a141e12d42e1ec055d86687e47f9646fbeb98",
     "qtrad/includes/config.php": "cd9bf8ac8872b34f934d6e949c75eb310f3bbb6a89cb39c02312dd73ad5fcff7",
     "qtrad/includes/fields.php": "7a4142437b41184db5ba8649e358a2a540ee731120642799d4a0bff6b42f3ac8",
-    "qtrad/includes/runtime.php": "fa7cf6f5f872313963b416ea9c994bb695e299f172ab8454dfd6fd90a6123800",
+    "qtrad/includes/runtime.php": "0dfd82a95f1acddb8f417aa42d5f181371b7fa0f80f2263ab11b95adf66c79d1",
     "qtrad/includes/seo.php": "7dcaf981d86b47db74b4e920aed17176910b9002b36e968505404d2d2d3bb3e0",
     "qtrad/includes/tokens.php": "9b8416e54866e3c8dec72124951a9ac0168b4befcc500790602daf58e0ccf307",
     "qtrad/includes/widget.php": "3109b2629ed442ee9eadd5c17fd03bb6bee69874ac1fd0972bbc5b68dcdfcd64",
@@ -2121,7 +2139,7 @@
     "qtrad/readme.txt": "f195968635c16ce29736b1cc88113e6770c1d5d35d5f395d2b230b1b47a94a1e",
     "qtrad/uninstall.php": "e4aeaebf3a3089c0f3e29c9562f5df69de19753a9c6aa82cf6706b964fb16896"
   },
-  "started_utc": "2026-10-01T11:39:22.792621+00:00",
+  "started_utc": "2026-10-01T13:45:20.355827+00:00",
   "test_sha256": {
     "tests/README.md": "7293ea3b3fde29f56f9fb1ea4bb369a165e25bec1c88ba7ca5b5d2c873ac3075",
     "tests/assets.py": "895ad9a4f6c3b9fe862c438dc8eb93355a0cfe3980747a52efd479933a8221b9",
@@ -2145,9 +2163,9 @@
     "tests/package.json": "66040a252a8a89c57a5d233d5d1123a45b38376365cd3737410c1a6d5c2a5b7d",
     "tests/seo-http.py": "2f518e71bf5f510758f3f00465c55ded5fc98a644b8618fb8b6fdc4f725f8406",
     "tests/seo.php": "b241213610408ac07476a01767dd73fa532ec5057a9cda13f1bb1254152329c8",
-    "tests/wordpress.php": "90a4972724a8da343a0491a7f5b989b1cb486a36c347054518f610270a477e0e"
+    "tests/wordpress.php": "f5506923e3169917232469c2584dbf1c317e670ca6d28de58cc8f0b72d920925"
   },
-  "php_image": "sha256:53ad1a272b2fd3c49e97c090860138162d2c715bc4fb3de0a1a319725c797d56",
+  "php_image": "sha256:04fc2acbab491cfd934a0427324238828154b5fbd666e9c5cd0c7c77294e5f15",
   "wordpress_archive_sha256": "c0c666689d66b870d8825500bb8e402ed04de52602c61a6f516c6236b8c9ac67",
   "database_image": "sha256:6cd09145362dfe6831b14545de3d5fd6cc75c37cfd6ef8561429c1fc73518b39",
   "seo_plugins": {
@@ -2160,5 +2178,5 @@
       "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
     }
   },
-  "completed_utc": "2026-10-01T11:40:30.066888+00:00"
+  "completed_utc": "2026-10-01T13:46:50.932940+00:00"
 }

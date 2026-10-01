@@ -5,8 +5,8 @@
     },
     "browser_post_id": 61,
     "browser_post_slug": "qtrad-audit-browser-2",
-    "passed": 85,
-    "total": 85,
+    "passed": 88,
+    "total": 88,
     "cases": [
         {
             "case": "Canonical activation file is qtrad.php",
@@ -213,6 +213,24 @@
             "pass": true,
             "expected": "mailto:user@example.test",
             "actual": "mailto:user@example.test"
+        },
+        {
+            "case": "home_url is localized outside request parsing",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "home_url stays unlocalized while core parses the request (subdirectory installs)",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931",
+            "actual": "http://127.0.0.1:8931"
+        },
+        {
+            "case": "home_url is localized again after parsing",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/de/",
+            "actual": "http://127.0.0.1:8931/de/"
         },
         {
             "case": "URL conversion leaves anchor unchanged",

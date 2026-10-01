@@ -915,8 +915,8 @@
         "wordpress": "5.8",
         "php": "7.4.33"
       },
-      "passed": 76,
-      "total": 76,
+      "passed": 75,
+      "total": 75,
       "cases": [
         {
           "case": "Legacy Brazilian code has valid hreflang",
@@ -929,12 +929,6 @@
           "pass": true,
           "expected": "zh-TW",
           "actual": "zh-TW"
-        },
-        {
-          "case": "Legacy Ukrainian code has valid hreflang",
-          "pass": true,
-          "expected": "uk",
-          "actual": "uk"
         },
         {
           "case": "WordPress locale suffix is omitted",
@@ -2662,7 +2656,7 @@
     "qtrad/flags/kr.svg": "7a6cd5b51d0e2841ed8b79b1147ad8a66cf3c09f6344d4a63b5e4413ffa5d15b",
     "qtrad/flags/kz.svg": "ce0f495ae2039b6ed850a21b0c9501bc13f29fa566c02b123ccafab4c6dbd693",
     "qtrad/flags/lt.svg": "dc0401993f6e14b3a58fa496d874b95dfcb58614052a868b14492166782c1006",
-    "qtrad/flags/manifest.json": "8396c59204548133e26c08320d648e34600985b98aef1ba552948efb1a3e02a0",
+    "qtrad/flags/manifest.json": "78d9a082f1bb4bfabd1baf514ae563d619a5320c9629aef0ef0a21d002947145",
     "qtrad/flags/md.svg": "987ca12a752ec2b3594c115923d50160343a7d30af8ea5e316ae04fb12b8e9dd",
     "qtrad/flags/mx.svg": "bf69fcf0118ebf04d391c522883b36da521d44169163c290435192930d28a109",
     "qtrad/flags/nl.svg": "8f691f17fe70894537af8e92f2ca47761d353639b0defc15cbe561eb503ab010",
@@ -2675,28 +2669,27 @@
     "qtrad/flags/sk.svg": "578d0693bc95214334248b47c5719dd01cfc9839bd909a726df045d499fabbb6",
     "qtrad/flags/tr.svg": "256a1d6afbedb9f731566982331a1cd1ad14aba211b8a61d338855879505e74f",
     "qtrad/flags/tw.svg": "931757f06b9ee751fd1a0cc8dd7cf862e21fdcaf894d10ed7bcc68dabcca59ad",
-    "qtrad/flags/ua.svg": "2d869c23ebfefb2ae0a633297c11dee06fcb666ce7b3ca75eba09b7a1a3a03ac",
     "qtrad/flags/us.svg": "e7be4240cf57987926673708f09233be1ab6bdf35acc7b86bd32a263f197a2a7",
     "qtrad/flags/vn.svg": "2355037201315d74581ab0ad60b5587a29a087d26b0525bdeb8676e64fae5b86",
-    "qtrad/includes/admin.php": "98a752ec71f28d1b32c0c7f82c4955eaa7566b705c6287addcd12a4c6fd14cea",
+    "qtrad/includes/admin.php": "0c03c8e97480413bd5ec68351ed94099103c888859e35f370fbbde1431766c88",
     "qtrad/includes/compat.php": "dc58fe3dd4c2affa0f85a208221a141e12d42e1ec055d86687e47f9646fbeb98",
-    "qtrad/includes/config.php": "8d93b1ed4d2e76d922a320d8e5754574484ceff9eb46167dc725a50ada7c8bbf",
+    "qtrad/includes/config.php": "166c264e2c236c8a9a9c187f15cddcca91b9a8eabaa56b3c1cd15ac19f5a3281",
     "qtrad/includes/fields.php": "7a4142437b41184db5ba8649e358a2a540ee731120642799d4a0bff6b42f3ac8",
     "qtrad/includes/migration.php": "4aff5b3bafe7f2d91c51dd2e3a3dc656c74dea0faec92e07b4ae879af6437d47",
     "qtrad/includes/runtime.php": "1ed3c979c45b91d449ef93d69ab4024aff98f6822a61a885f89d9767c75d6361",
-    "qtrad/includes/seo.php": "257f58c19ba579715ae0b75b0566d174d9d168629dc73b38158e52efc7d83109",
+    "qtrad/includes/seo.php": "4144a09e968be87bf2bbb9eba6f00a6e9062b6c71227da7549eea696c9375ff3",
     "qtrad/includes/tokens.php": "e5d61f1f91706d1087afb198491d25ce8dbcf351fa8d7f4f06d65d1ee067a7eb",
     "qtrad/includes/widget.php": "3109b2629ed442ee9eadd5c17fd03bb6bee69874ac1fd0972bbc5b68dcdfcd64",
-    "qtrad/languages/qtrad.pot": "41a9dc4a7a2192ebcdc2278380a7bea3618983002406884748f5892848b7698b",
+    "qtrad/languages/qtrad.pot": "d007f9b31896c5d14814414523219d614dd53c868eaa2b0b4cc06c6fd666c259",
     "qtrad/qtrad.php": "ea06e786e0cc518ad59b1099d6582a3d7a5e5a92f1a850551aa8e25afd696740",
-    "qtrad/readme.txt": "d31a1785b4314292e6592dee857097a1d9f1dbc73722ce2d04a2516ab656c1aa",
+    "qtrad/readme.txt": "0294b8ee21f1b7615752adfcd9ca3b2a6dfa90b7c4edfaa7d2c0c8185a125d2f",
     "qtrad/uninstall.php": "5510a1061241ccfb0433f1694af51b695631a6f8298d521acf195ab3f564dfb8"
   },
-  "started_utc": "2026-10-01T14:33:23.370779+00:00",
+  "started_utc": "2026-10-01T15:33:38.743219+00:00",
   "test_sha256": {
     "tests/README.md": "7293ea3b3fde29f56f9fb1ea4bb369a165e25bec1c88ba7ca5b5d2c873ac3075",
     "tests/assets.py": "895ad9a4f6c3b9fe862c438dc8eb93355a0cfe3980747a52efd479933a8221b9",
-    "tests/browser.cjs": "58c4d629286a9ccffa4ddb633d0aad2734714774026a2ffc0c5fb0829993292a",
+    "tests/browser.cjs": "77cbb119ef8209699284e02847705004e3631905ff7e4a675e85b25a47f3028e",
     "tests/codec.cjs": "61195c06b9388d02277dc2e42cbb4e7eeee3f408ea3d8f278d7927ba9bd5b808",
     "tests/codec.php": "4b7ed40d7376bda706f10c193241f806e94160815dc01154ea22eb627872d5b0",
     "tests/editor.cjs": "06a472cc2328c0135f35be61af4f9c228d5b746d3eac27bc70ed4047bd936cc8",
@@ -2715,10 +2708,10 @@
     "tests/package-lock.json": "c4b56815cd229a7fdcf28e4f4866915d1a2aa817adc630cd57b95ffa16a9f20e",
     "tests/package.json": "66040a252a8a89c57a5d233d5d1123a45b38376365cd3737410c1a6d5c2a5b7d",
     "tests/seo-http.py": "2f518e71bf5f510758f3f00465c55ded5fc98a644b8618fb8b6fdc4f725f8406",
-    "tests/seo.php": "b241213610408ac07476a01767dd73fa532ec5057a9cda13f1bb1254152329c8",
+    "tests/seo.php": "d5655d5eb0024631c7be3a1ba31f7112504cb04916da416aa2b2ad421c28dab4",
     "tests/wordpress.php": "3c7cac778b9919c615b604bc5ae64d97d113916706c5cb99f77170a88c946bd7"
   },
-  "php_image": "sha256:b192eb960031f3da8b1f42677aa0a770374ebdbd38f4d61c06134930ac88c7d4",
+  "php_image": "sha256:eaddf0038dc116f7b4f2ce3a76e83232125a237eeb8256a4592887a8afdf5a75",
   "wordpress_archive_sha256": "d29813ab55361318f519f2a8fa6631126a0a8f91ac30f62cb6002c108577e87f",
   "database_image": "sha256:70867812f39c1e386104450bd6cf3bf9f6fb31ee4d771a10f7ea900950d53e71",
   "seo_plugins": {
@@ -2731,5 +2724,5 @@
       "archive_sha256": "1f9fed1d1a027079e34bbf63c53cfe04bb23e3c1f180c7c7d5a2e1b7fbb66606"
     }
   },
-  "completed_utc": "2026-10-01T14:34:26.261789+00:00"
+  "completed_utc": "2026-10-01T15:34:41.569501+00:00"
 }

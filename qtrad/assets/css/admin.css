@@ -14,3 +14,10 @@
 .qtrad-settings .qtrad-choice, .qtrad-settings .qtrad-lang-choice { display:inline-flex; align-items:center; gap:4px; min-height:44px; box-sizing:border-box; padding:4px; }
 #qtrad-seo fieldset { margin-block-end:1rem; }
 #qtrad-seo input[type="text"], #qtrad-seo textarea { min-height:44px; max-width:100%; }
+
+.qtrad-lang-group { margin-block-end:16px; }
+.qtrad-lang-group legend { font-weight:600; margin-block-end:4px; }
+.qtrad-lang-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 260px), 1fr)); column-gap:16px; }
+.qtrad-settings .qtrad-lang-grid .qtrad-lang-choice { display:flex; align-items:center; gap:6px; margin:0; }
+.qtrad-lang-text { flex:1; min-width:0; }
+.qtrad-lang-code { color:#50575e; }

@@ -280,6 +280,66 @@ function qtrad_term_fields( $term ) {
 	echo '</td></tr>';
 }
 
+/** English language names, translatable so admins see them in their own language. */
+function qtrad_language_admin_names() {
+	return array(
+		'en' => __( 'English', 'qtrad' ),
+		'de' => __( 'German', 'qtrad' ),
+		'fr' => __( 'French', 'qtrad' ),
+		'es' => __( 'Spanish', 'qtrad' ),
+		'it' => __( 'Italian', 'qtrad' ),
+		'pt' => __( 'Portuguese', 'qtrad' ),
+		'pb' => __( 'Portuguese (Brazil)', 'qtrad' ),
+		'nl' => __( 'Dutch', 'qtrad' ),
+		'sv' => __( 'Swedish', 'qtrad' ),
+		'pl' => __( 'Polish', 'qtrad' ),
+		'ru' => __( 'Russian', 'qtrad' ),
+		'zh' => __( 'Chinese (Simplified)', 'qtrad' ),
+		'ja' => __( 'Japanese', 'qtrad' ),
+		'el' => __( 'Greek', 'qtrad' ),
+		'tr' => __( 'Turkish', 'qtrad' ),
+		'ro' => __( 'Romanian', 'qtrad' ),
+		'hu' => __( 'Hungarian', 'qtrad' ),
+		'fi' => __( 'Finnish', 'qtrad' ),
+		'hr' => __( 'Croatian', 'qtrad' ),
+		'sk' => __( 'Slovak', 'qtrad' ),
+		'sr' => __( 'Serbian', 'qtrad' ),
+		'vi' => __( 'Vietnamese', 'qtrad' ),
+		'ar' => __( 'Arabic', 'qtrad' ),
+		'et' => __( 'Estonian', 'qtrad' ),
+		'cs' => __( 'Czech', 'qtrad' ),
+		'da' => __( 'Danish', 'qtrad' ),
+		'ca' => __( 'Catalan', 'qtrad' ),
+		'gl' => __( 'Galician', 'qtrad' ),
+		'eu' => __( 'Basque', 'qtrad' ),
+		'cy' => __( 'Welsh', 'qtrad' ),
+		'he' => __( 'Hebrew', 'qtrad' ),
+		'ko' => __( 'Korean', 'qtrad' ),
+		'tw' => __( 'Chinese (Traditional)', 'qtrad' ),
+		'md' => __( 'Moldovan', 'qtrad' ),
+		'lt' => __( 'Lithuanian', 'qtrad' ),
+		'kk' => __( 'Kazakh', 'qtrad' ),
+	);
+}
+
+/** Name in the admin's language, or the native name for custom languages. */
+function qtrad_language_admin_name( $code ) {
+	$names = qtrad_language_admin_names();
+	return isset( $names[ $code ] ) ? $names[ $code ] : qtrad_language_name( $code );
+}
+
+/** "German – Deutsch (de)", with the native name isolated for right-to-left scripts. Returns escaped HTML. */
+function qtrad_language_choice_label( $code, $meta ) {
+	$admin  = qtrad_language_admin_name( $code );
+	$native = isset( $meta['name'] ) && $meta['name'] !== '' ? $meta['name'] : $admin;
+	$locale = isset( $meta['locale'] ) ? str_replace( '_', '-', $meta['locale'] ) : $code;
+	$html   = esc_html( $admin );
+	if ( $native !== $admin ) {
+		$html .= ' – <bdi lang="' . esc_attr( $locale ) . '">' . esc_html( $native ) . '</bdi>';
+	}
+	return '<span class="qtrad-lang-text">' . $html . ' <span class="qtrad-lang-code">(' . esc_html( $code ) . ')</span></span>';
+}
+
 function qtrad_settings_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
@@ -329,12 +389,19 @@ function qtrad_settings_page() {
 	echo '<input type="hidden" name="qtrad_settings" value="1" />';
 	echo '<table class="form-table" role="presentation">';
 
-	echo '<tr><th scope="row">' . esc_html__( 'Enabled', 'qtrad' ) . '</th><td><fieldset><legend class="screen-reader-text">' . esc_html__( 'Enabled languages', 'qtrad' ) . '</legend>';
-	foreach ( $catalog as $code => $meta ) {
-		echo '<label class="qtrad-lang-choice"><input type="checkbox" name="enabled[]" value="' . esc_attr( $code ) . '"' . checked( in_array( $code, $enabled, true ), true, false ) . ' /> ';
-		echo esc_html( $meta['name'] . ' (' . $code . ')' ) . '</label>';
+	// Enabled languages first, in their stored order; the rest A to Z by name in the admin's language.
+	$available = array_diff( array_keys( $catalog ), $enabled );
+	usort( $available, function ( $a, $b ) { return strnatcasecmp( qtrad_language_admin_name( $a ), qtrad_language_admin_name( $b ) ); } );
+	echo '<tr><th scope="row">' . esc_html__( 'Languages', 'qtrad' ) . '</th><td>';
+	foreach ( array( 'enabled' => array( __( 'Your languages', 'qtrad' ), array_values( array_intersect( $enabled, array_keys( $catalog ) ) ) ), 'available' => array( __( 'Add languages', 'qtrad' ), $available ) ) as $group => $list ) {
+		echo '<fieldset class="qtrad-lang-group qtrad-lang-group--' . esc_attr( $group ) . '"><legend>' . esc_html( $list[0] ) . '</legend><div class="qtrad-lang-grid">';
+		foreach ( $list[1] as $code ) {
+			echo '<label class="qtrad-lang-choice"><input type="checkbox" name="enabled[]" value="' . esc_attr( $code ) . '"' . checked( 'enabled' === $group, true, false ) . ' /> ';
+			echo qtrad_language_choice_label( $code, $catalog[ $code ] ) . '</label>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in qtrad_language_choice_label().
+		}
+		echo '</div></fieldset>';
 	}
-	echo '</fieldset></td></tr>';
+	echo '</td></tr>';
 
 	echo '<tr><th scope="row"><label for="qtrad-default">' . esc_html__( 'Default language', 'qtrad' ) . '</label></th><td><select name="default" id="qtrad-default">';
 	foreach ( array_keys( $catalog ) as $code ) {

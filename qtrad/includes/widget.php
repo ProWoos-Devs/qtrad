@@ -8,49 +8,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function qtu_register_widget() {
-	add_action( 'widgets_init', 'qtu_widgets_init' );
-	add_action( 'admin_bar_menu', 'qtu_admin_bar', 80 );
+function qtrad_register_widget() {
+	add_action( 'widgets_init', 'qtrad_widgets_init' );
+	add_action( 'admin_bar_menu', 'qtrad_admin_bar', 80 );
 }
 
-function qtu_widgets_init() {
+function qtrad_widgets_init() {
 	register_widget( 'qTradWidget' );
 }
 
-function qtu_register_shortcodes() {
-	add_shortcode( 'qtrad_switcher', 'qtu_shortcode_switcher' );
-	add_shortcode( 'qtranslate_switcher', 'qtu_shortcode_switcher' );
-	add_shortcode( 'qtu_switcher', 'qtu_shortcode_switcher' );
+function qtrad_register_shortcodes() {
+	add_shortcode( 'qtrad_switcher', 'qtrad_shortcode_switcher' );
+	add_shortcode( 'qtranslate_switcher', 'qtrad_shortcode_switcher' );
+	add_shortcode( 'qtrad_switcher', 'qtrad_shortcode_switcher' );
 }
 
-function qtu_shortcode_switcher( $atts ) {
+function qtrad_shortcode_switcher( $atts ) {
 	$atts = shortcode_atts( array( 'style' => 'both', 'id' => '' ), $atts, 'qtranslate_switcher' );
-	return qtu_language_chooser( $atts['style'], $atts['id'] );
+	return qtrad_language_chooser( $atts['style'], $atts['id'] );
 }
 
-function qtu_admin_bar( $bar ) {
+function qtrad_admin_bar( $bar ) {
 	if ( ! $bar instanceof WP_Admin_Bar ) {
 		return;
 	}
-	$editing = is_admin() ? qtu_admin_language() : qtu_current_language();
+	$editing = is_admin() ? qtrad_admin_language() : qtrad_current_language();
 	$bar->add_node(
 		array(
-			'id'    => 'qtu-lang',
-			'title' => esc_html( qtu_language_name( $editing ) ),
-			'href'  => is_admin() ? admin_url( 'options-general.php?page=qtrad' ) : qtu_convert_url( '', $editing, false, true ),
+			'id'    => 'qtrad-lang',
+			'title' => esc_html( qtrad_language_name( $editing ) ),
+			'href'  => is_admin() ? admin_url( 'options-general.php?page=qtrad' ) : qtrad_convert_url( '', $editing, false, true ),
 		)
 	);
-	foreach ( qtu_enabled_languages() as $lang ) {
+	foreach ( qtrad_enabled_languages() as $lang ) {
 		if ( is_admin() ) {
-			$url = wp_nonce_url( add_query_arg( 'qtu_lang', $lang ), 'qtu_language' );
+			$url = wp_nonce_url( add_query_arg( 'qtrad_lang', $lang ), 'qtrad_language' );
 		} else {
-			$url = qtu_convert_url( '', $lang, false, true );
+			$url = qtrad_convert_url( '', $lang, false, true );
 		}
 		$bar->add_node(
 			array(
-				'id'     => 'qtu-lang-' . $lang,
-				'parent' => 'qtu-lang',
-				'title'  => esc_html( qtu_language_name( $lang ) ),
+				'id'     => 'qtrad-lang-' . $lang,
+				'parent' => 'qtrad-lang',
+				'title'  => esc_html( qtrad_language_name( $lang ) ),
 				'href'   => esc_url( $url ),
 			)
 		);
@@ -75,7 +75,7 @@ class qTradWidget extends WP_Widget {
 		if ( $title !== '' && empty( $instance['hide-title'] ) ) {
 			echo $args['before_title'] . esc_html( qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $title ) ) . $args['after_title'];
 		}
-		echo qtu_language_chooser( $style, $this->id );
+		echo qtrad_language_chooser( $style, $this->id );
 		echo $args['after_widget'];
 	}
 

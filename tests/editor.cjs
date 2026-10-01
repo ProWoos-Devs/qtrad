@@ -41,7 +41,7 @@ function editor(config = {}) {
     blocks: { serialize: value => value.map(block => block.attributes.content).join(''), parse: value => [{name:'core/freeform',clientId:'parsed-'+(++parsedId),attributes:{content:value},innerBlocks:[]}] },
     apiFetch: { use: handler => { middleware = handler; } },
   };
-  const context = { window: { URL, location: {href:'http://example.test/wp-admin/post.php'}, qtuCodec: codec, qtuEditorConfig: { enabled: ['en', 'de'], editLang: 'en', writeFormat: 'keep', restRoot: 'http://example.test/wp-json/', title: attrs.title, content: attrs.content, excerpt: '', ...config }, wp }, document, wp };
+  const context = { window: { URL, location: {href:'http://example.test/wp-admin/post.php'}, qtradCodec: codec, qtradEditorConfig: { enabled: ['en', 'de'], editLang: 'en', writeFormat: 'keep', restRoot: 'http://example.test/wp-json/', title: attrs.title, content: attrs.content, excerpt: '', ...config }, wp }, document, wp };
   if (config.preloaded) { attrs.title = 'Hello'; attrs.content = '<p>Hello</p>'; blocks[0].attributes.content = attrs.content; }
   vm.runInNewContext(code, context);
   return {
@@ -101,15 +101,15 @@ check('full local REST URL packs only its current post', true, e.requestFull('ht
 const classicEvents = {}, nodes = {
   title:{value:'[:en]Hello[:de]Hallo[:fr]Bonjour[:]'},
   post:{addEventListener:(name,fn)=>{classicEvents[name]=fn;}},
-  qtu_js:{value:''}, qtu_edit_lang:{value:'en'}
+  qtrad_js:{value:''}, qtrad_edit_lang:{value:'en'}
 };
 const classicDocument = {readyState:'complete', getElementById:key=>nodes[key] || null, querySelectorAll:()=>[], addEventListener:(name,fn)=>{classicEvents[name]=fn;}};
-vm.runInNewContext(code, {window:{qtuCodec:codec, qtuEditorConfig:{enabled:['en','de'], editLang:'en', writeFormat:'keep', title:nodes.title.value, content:'', excerpt:''}}, document:classicDocument});
+vm.runInNewContext(code, {window:{qtradCodec:codec, qtradEditorConfig:{enabled:['en','de'], editLang:'en', writeFormat:'keep', title:nodes.title.value, content:'', excerpt:''}}, document:classicDocument});
 check('title-only classic editor initializes', 'Hello', nodes.title.value);
 classicEvents.click({target:{closest:()=>({getAttribute:()=> 'de'})}});
 check('title-only classic editor switches language', 'Hallo', nodes.title.value);
 classicEvents.submit();
-check('title-only classic editor submits scoped stores', '1', nodes.qtu_js.value);
+check('title-only classic editor submits scoped stores', '1', nodes.qtrad_js.value);
 console.log(JSON.stringify({ passed: results.filter(r => r.pass).length, total: results.length, cases: results }, null, 2));
 
 process.exitCode = results.some(r => !r.pass) ? 1 : 0;

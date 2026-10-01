@@ -22,7 +22,7 @@ qTrad reads comment, bracket and swirly markers and retains shared `qtranslate_*
 | `qtrans_useTermLib`, `qtranxf_useTermLib` | Strings, term objects and recursive arrays. |
 | `qtrans_generateLanguageSelectCode`, `qtranxf_generateLanguageSelectCode` | Echo markup. Accept style strings, legacy boolean flag selection and an options array with `type`/`style` and `id`. |
 
-Internal `qtu_language_chooser()` returns markup for shortcodes/widgets. Chooser HTML and widget CSS differ from the legacy implementations to support accessible controls. The widget ID remains `qtranslate`; old class names remain aliases. Existing unsupported widget options survive updates, but custom format/CSS execution is not supported.
+Internal `qtrad_language_chooser()` returns markup for shortcodes/widgets. Chooser HTML and widget CSS differ from the legacy implementations to support accessible controls. The widget ID remains `qtranslate`; old class names remain aliases. Existing unsupported widget options survive updates, but custom format/CSS execution is not supported.
 
 ## Persistence
 
@@ -32,15 +32,15 @@ Internal `qtu_language_chooser()` returns markup for shortcodes/widgets. Chooser
 wp_update_post( wp_slash( array(
     'ID'           => $post_id,
     'post_title'   => 'Hallo',
-    'qtu_language' => 'de',
+    'qtrad_language' => 'de',
 ) ) );
 ```
 
-REST plain writes in language-button mode merge into `qtu_language`, `lang`, or the request's selected language. Full marker strings and raw-editor writes replace complete supplied fields. Classic form translations require an own nonce and matching post ID; unrelated inserts cannot inherit them. Content sanitization remains subject to WordPress capabilities.
+REST plain writes in language-button mode merge into `qtrad_language`, `lang`, or the request's selected language. Full marker strings and raw-editor writes replace complete supplied fields. Classic form translations require an own nonce and matching post ID; unrelated inserts cannot inherit them. Content sanitization remains subject to WordPress capabilities.
 
-Configured scalar custom metadata translates on public reads and merges plain updates in the selected edit/request language. Raw arrays/objects are not translated as scalar fields. Repeated rows and previous-value conditions are respected. Use a complete marker string for a complete multilingual metadata replacement. `_qtn_*` keys are reserved for internal metadata.
+Configured scalar custom metadata translates on public reads and merges plain updates in the selected edit/request language. Raw arrays/objects are not translated as scalar fields. Repeated rows and previous-value conditions are respected. Use a complete marker string for a complete multilingual metadata replacement. `_qtrad_*` keys are reserved for internal metadata.
 
-Term translations update the shared name library and `_qtn_translations` metadata. Metadata distinguishes terms with identical names in different taxonomies; the legacy name-only library cannot express that distinction. Old-name entries are removed only when no other term uses the name.
+Term translations update the shared name library and `_qtrad_translations` metadata. Metadata distinguishes terms with identical names in different taxonomies; the legacy name-only library cannot express that distinction. Old-name entries are removed only when no other term uses the name.
 
 ## Boundaries
 
@@ -58,4 +58,4 @@ Multisite language/options caches follow each site and restore the caller’s se
 
 The canonical package is `qtrad/qtrad.php`, previously `qtranslate-next/qtranslate-next.php`. Deactivate the former distribution before activating qTrad. Bootstrap shims inside the new folder preserve `qtranslate-next.php` and `qtranslate-unified.php` for direct includes; integrations hardcoding a former folder path must update it. The text domain and settings page slug are now `qtrad`. Shared options and the existing `qtranslate_next_settings`/`qtranslate_unified_settings` keys retain their contracts. The `qtranslate_next_seo_*` filter names remain supported.
 
-`qTradWidget` is the registered widget class; the former `qTranslateNextWidget`, `qTranslateUnifiedWidget`, `qTranslateWidget` and `qTranslateXWidget` classes remain compatible. The widget ID base remains `qtranslate`. The new `[qtrad_switcher]` shortcode shares the legacy `[qtranslate_switcher]`/`[qtu_switcher]` renderer.
+`qTradWidget` is the registered widget class; the former `qTranslateNextWidget`, `qTranslateUnifiedWidget`, `qTranslateWidget` and `qTranslateXWidget` classes remain compatible. The widget ID base remains `qtranslate`. The new `[qtrad_switcher]` shortcode shares the legacy `[qtranslate_switcher]`/`[qtrad_switcher]` renderer.

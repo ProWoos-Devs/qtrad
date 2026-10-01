@@ -31,7 +31,7 @@ This is content compatibility and a documented subset of the legacy public APIs.
 
 Keep preserves the format already in each field and uses comments for newly translated post fields. Select comments if a site needs to return to original qTranslate. Original qTranslate cannot correctly read qTranslate-X closing brackets or swirly syntax. Site title and tagline use brackets because WordPress sanitizes comments out of those options; returning those settings to original qTranslate requires deliberate conversion. Activation never rewrites posts.
 
-Disabled translations are retained until you intentionally replace a complete field in raw mode or through a full programmatic update. Ordinary wp_update_post() calls replace supplied fields; pass qtu_language to request a partial language update. REST saves in language-button mode merge plain values into the requested qtu_language or lang, otherwise the request language. Complete marker strings replace complete fields.
+Disabled translations are retained until you intentionally replace a complete field in raw mode or through a full programmatic update. Ordinary wp_update_post() calls replace supplied fields; pass qtrad_language to request a partial language update. REST saves in language-button mode merge plain values into the requested qtrad_language or lang, otherwise the request language. Complete marker strings replace complete fields.
 
 = URLs =
 
@@ -57,7 +57,7 @@ Styles: text, image, both, short, dropdown. Prefer text or both so visitors can 
 
 The canonical entry point is qtrad/qtrad.php. When upgrading qTranslate Next or Unified, deactivate the former plugin, upload the qtrad folder and activate qTrad. The folder/entry-point change requires manual activation; existing content and settings need no conversion. Do not activate both distributions together.
 
-qtranslate-next.php and qtranslate-unified.php remain bootstrap shims inside the qtrad folder for direct integrations; neither has a plugin header. Integrations using an absolute path to a former folder must update that path. Existing qtranslate_unified_settings and qtranslate_next_settings, qtranslate_* shared settings, legacy widget identity and [qtranslate_switcher]/[qtu_switcher] shortcodes remain supported. New settings saves keep the existing qtranslate_next_settings key. Uninstall deliberately retains translations/settings.
+qtranslate-next.php and qtranslate-unified.php remain bootstrap shims inside the qtrad folder for direct integrations; neither has a plugin header. Integrations using an absolute path to a former folder must update that path. Existing qtranslate_unified_settings and qtranslate_next_settings, qtranslate_* shared settings, legacy widget identity and [qtranslate_switcher]/[qtrad_switcher] shortcodes remain supported. New settings saves keep the existing qtranslate_next_settings key. Uninstall deliberately retains translations/settings.
 
 == Frequently Asked Questions ==
 

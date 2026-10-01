@@ -4,7 +4,7 @@ qTrad uses the same URL and translation-availability rules for canonical tags, H
 
 ## Editing
 
-The **SEO translations** panel supplies optional titles and descriptions for every enabled language in classic and block editors. Native labelled controls require no JavaScript and include each field's language/direction. Saving is post/nonce/capability scoped and preserves disabled translations. Blank values fall back to existing SEO settings or generated metadata. Overrides are stored separately in `_qtn_seo_title` and `_qtn_seo_description`; activation does not rewrite content or predecessor metadata.
+The **SEO translations** panel supplies optional titles and descriptions for every enabled language in classic and block editors. Native labelled controls require no JavaScript and include each field's language/direction. Saving is post/nonce/capability scoped and preserves disabled translations. Blank values fall back to existing SEO settings or generated metadata. Overrides are stored separately in `_qtrad_seo_title` and `_qtrad_seo_description`; activation does not rewrite content or predecessor metadata.
 
 With no supported SEO plugin active, qTrad adds translated descriptions, OpenGraph/Twitter metadata and a basic WebPage JSON-LD graph. WordPress continues to own singular canonical tags; qTrad adjusts their URLs and adds archive canonicals. The SEO panel's title override participates in WordPress document-title generation.
 

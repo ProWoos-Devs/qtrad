@@ -2,7 +2,7 @@
 (function (root, factory) {
   var codec = factory();
   if (typeof module === "object" && module.exports) module.exports = codec;
-  else root.qtuCodec = codec;
+  else root.qtradCodec = codec;
 })(typeof window === "undefined" ? globalThis : window, function () {
   "use strict";
   var marker = /(<!--:[a-z]{2}-->|<!--:-->|\[:[a-z]{2}\]|\[:\]|\{:[a-z]{2}\}|\{:\})/i;

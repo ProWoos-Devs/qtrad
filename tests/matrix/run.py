@@ -39,16 +39,16 @@ def run_cell(cell, browser=False):
         for p in sorted((ROOT / 'tests').rglob('*')) if p.is_file()
         and not set(p.relative_to(ROOT / 'tests').parts).intersection({'results', 'node_modules', '__pycache__', 'unloaded-plugins'})
     }
-    token = 'qtn-' + uuid.uuid4().hex[:12]
+    token = 'qtrad-' + uuid.uuid4().hex[:12]
     work = Path(tempfile.mkdtemp(prefix=token + '-'))
     network, db, server = token + '-net', token + '-db', token + '-http'
-    image = 'qtn-matrix-php:' + cell['php']
+    image = 'qtrad-matrix-php:' + cell['php']
     try:
         print(f"{cell['id']}: preparing isolated runtime", flush=True)
         build = command(['docker', 'build', '--build-arg', 'PHP_VERSION=' + cell['php'], '-t', image, str(ROOT / 'tests/matrix')])
         (output / 'build.log').write_text(build.stdout + build.stderr)
         report['php_image'] = command(['docker', 'image', 'inspect', image, '--format', '{{.Id}}']).stdout.strip()
-        cache = Path(tempfile.gettempdir()) / 'qtn-matrix-downloads'
+        cache = Path(tempfile.gettempdir()) / 'qtrad-matrix-downloads'
         cache.mkdir(exist_ok=True)
         archive = cache / ('wordpress-' + cell['wordpress'] + '.tar.gz')
         if not archive.exists():
@@ -61,28 +61,28 @@ def run_cell(cell, browser=False):
                     raise RuntimeError('Unexpected archive member: ' + entry.name)
             package.extractall(work)
         site = work / 'wordpress'
-        (site / '.qtn-disposable').touch()
+        (site / '.qtrad-disposable').touch()
         shutil.copytree(ROOT / 'qtrad', site / 'wp-content/plugins/qtrad')
         (site / 'wp-content/mu-plugins').mkdir(exist_ok=True)
-        shutil.copy(ROOT / 'tests/fixtures/wordpress-mu.php', site / 'wp-content/mu-plugins/qtn-test.php')
+        shutil.copy(ROOT / 'tests/fixtures/wordpress-mu.php', site / 'wp-content/mu-plugins/qtrad-test.php')
         (site / 'wp-config.php').write_text("""<?php
-define('DB_NAME', 'qtn'); define('DB_USER', 'qtn'); define('DB_PASSWORD', 'qtn-disposable-only');
+define('DB_NAME', 'qtrad'); define('DB_USER', 'qtrad'); define('DB_PASSWORD', 'qtrad-disposable-only');
 define('DB_HOST', 'db:3306'); define('DB_CHARSET', 'utf8mb4'); define('DB_COLLATE', '');
 define('WP_DEBUG', true); define('WP_DEBUG_DISPLAY', false); define('WP_DEBUG_LOG', '/site/debug.log');
 define('DISABLE_WP_CRON', true); define('WP_ENVIRONMENT_TYPE', 'local');
-define('AUTH_KEY', 'qtn-fixture-auth'); define('SECURE_AUTH_KEY', 'qtn-fixture-secure');
-define('LOGGED_IN_KEY', 'qtn-fixture-login'); define('NONCE_KEY', 'qtn-fixture-nonce');
-define('AUTH_SALT', 'qtn-fixture-auth-salt'); define('SECURE_AUTH_SALT', 'qtn-fixture-secure-salt');
-define('LOGGED_IN_SALT', 'qtn-fixture-login-salt'); define('NONCE_SALT', 'qtn-fixture-nonce-salt');
-$table_prefix = 'qtn_'; if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '/'); require ABSPATH . 'wp-settings.php';
+define('AUTH_KEY', 'qtrad-fixture-auth'); define('SECURE_AUTH_KEY', 'qtrad-fixture-secure');
+define('LOGGED_IN_KEY', 'qtrad-fixture-login'); define('NONCE_KEY', 'qtrad-fixture-nonce');
+define('AUTH_SALT', 'qtrad-fixture-auth-salt'); define('SECURE_AUTH_SALT', 'qtrad-fixture-secure-salt');
+define('LOGGED_IN_SALT', 'qtrad-fixture-login-salt'); define('NONCE_SALT', 'qtrad-fixture-nonce-salt');
+$table_prefix = 'qtrad_'; if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '/'); require ABSPATH . 'wp-settings.php';
 """)
         command(['docker', 'network', 'create', network])
         command(['docker', 'run', '-d', '--name', db, '--network', network, '--network-alias', 'db',
-                 '-e', 'MYSQL_RANDOM_ROOT_PASSWORD=yes', '-e', 'MYSQL_DATABASE=qtn',
-                 '-e', 'MYSQL_USER=qtn', '-e', 'MYSQL_PASSWORD=qtn-disposable-only', cell['database']])
+                 '-e', 'MYSQL_RANDOM_ROOT_PASSWORD=yes', '-e', 'MYSQL_DATABASE=qtrad',
+                 '-e', 'MYSQL_USER=qtrad', '-e', 'MYSQL_PASSWORD=qtrad-disposable-only', cell['database']])
         client = 'mariadb' if cell['database'].startswith('mariadb') else 'mysql'
         for attempt in range(90):
-            ready = command(['docker', 'exec', db, client, '-uqtn', '-pqtn-disposable-only', '-e', 'SELECT 1'], check=False)
+            ready = command(['docker', 'exec', db, client, '-uqtrad', '-pqtrad-disposable-only', '-e', 'SELECT 1'], check=False)
             if ready.returncode == 0: break
             time.sleep(1)
         else: raise RuntimeError('Disposable database did not become ready')
@@ -134,7 +134,7 @@ $table_prefix = 'qtn_'; if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '/'
             # SEO fixtures deliberately change site options; recreate browser context.
             result = command(php + ['tests/wordpress.php', '/site', '--prepare-browser'])
             (output / 'wordpress.json').write_text(result.stdout)
-            axe = os.environ.get('QTN_AXE_PATH', str(ROOT / 'tests/node_modules/axe-core/axe.min.js'))
+            axe = os.environ.get('QTRAD_AXE_PATH', str(ROOT / 'tests/node_modules/axe-core/axe.min.js'))
             result = command(['node', str(ROOT / 'tests/browser.cjs'), str(output / 'wordpress.json'), axe], check=False)
             (output / 'browser.json').write_text(result.stdout)
             (output / 'browser.stderr.log').write_text(result.stderr)

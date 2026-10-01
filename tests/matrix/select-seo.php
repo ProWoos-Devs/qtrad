@@ -2,7 +2,7 @@
 // Enable exactly one real SEO plugin on the disposable matrix fixture.
 $root = isset($argv[1]) ? $argv[1] : '';
 $owner = isset($argv[2]) ? $argv[2] : '';
-if (!is_file($root . '/.qtn-disposable') || !in_array($owner,array('core','yoast','rankmath'),true)) { exit(2); }
+if (!is_file($root . '/.qtrad-disposable') || !in_array($owner,array('core','yoast','rankmath'),true)) { exit(2); }
 define('WP_CLI',false);
 $_SERVER['HTTP_HOST']='127.0.0.1:8931'; $_SERVER['REQUEST_URI']='/';
 require $root.'/wp-load.php';
@@ -20,7 +20,7 @@ if ($owner === 'yoast') {
 } elseif ($owner === 'rankmath') {
     update_option('rank_math_registration_skip',true);
     update_option('rank_math_modules',array('sitemap','rich-snippet','link-counter'));
-    update_option('rank-math-options-sitemap',array('items_per_page'=>200,'pt_post_sitemap'=>true,'pt_page_sitemap'=>true,'pt_qtn_book_sitemap'=>true,'tax_category_sitemap'=>true));
+    update_option('rank-math-options-sitemap',array('items_per_page'=>200,'pt_post_sitemap'=>true,'pt_page_sitemap'=>true,'pt_qtrad_book_sitemap'=>true,'tax_category_sitemap'=>true));
     $result=activate_plugin('seo-by-rank-math/rank-math.php','',false,false);
     if (is_wp_error($result)) { fwrite(STDERR,$result->get_error_message()); exit(1); }
 }

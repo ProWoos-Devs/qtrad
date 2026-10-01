@@ -22,7 +22,7 @@ The recorded environment uses official WordPress 6.8, PHP 8.5.10 and MariaDB 12.
 php tests/wordpress.php /path/to/disposable/wordpress --prepare-browser > tests/results/wordpress-6.8.json
 ```
 
-The suite returns nonzero if an assertion fails. `--prepare-browser` activates the installed qTrad copy and creates a published browser fixture and the local-only `qtn_auditor` account. Copy changed workspace source to that disposable plugin directory before browser runs. Re-running fixture preparation resets language settings; browser tests intentionally change/save them.
+The suite returns nonzero if an assertion fails. `--prepare-browser` activates the installed qTrad copy and creates a published browser fixture and the local-only `qtrad_auditor` account. Copy changed workspace source to that disposable plugin directory before browser runs. Re-running fixture preparation resets language settings; browser tests intentionally change/save them.
 
 Serve the site on localhost port 8931 with a WordPress-aware router. Install Playwright/Chromium and axe-core 4.10.3 separately (these are development tools, not plugin dependencies). Run:
 

@@ -1,6 +1,6 @@
 (function () {
   'use strict';
-  var cfg = window.qtuEditorConfig, codec = window.qtuCodec;
+  var cfg = window.qtradEditorConfig, codec = window.qtradCodec;
   if (!cfg || !codec || cfg.editorMode === 'raw') return;
   var enabled = cfg.enabled || [], fields = ['title', 'content', 'excerpt'];
   var state = { active: enabled.indexOf(cfg.editLang) >= 0 ? cfg.editLang : enabled[0], formats: {}, ready: false, presenting: false };
@@ -10,10 +10,10 @@
   });
   function mark(lang, announce) {
     state.active = lang;
-    var hidden = document.getElementById('qtu_edit_lang');
+    var hidden = document.getElementById('qtrad_edit_lang');
     if (hidden) hidden.value = lang;
-    document.querySelectorAll('.qtu-lsb__btn').forEach(function (button) {
-      var selected = button.getAttribute('data-qtu-lang') === lang;
+    document.querySelectorAll('.qtrad-lsb__btn').forEach(function (button) {
+      var selected = button.getAttribute('data-qtrad-lang') === lang;
       button.classList.toggle('is-active', selected);
       button.setAttribute('aria-pressed', selected ? 'true' : 'false');
       button.disabled = false;
@@ -33,12 +33,12 @@
           apply(frame.contentDocument, true);
           observeDocument(frame.contentDocument);
         }
-        if (!frame.qtnLanguageBound) { frame.qtnLanguageBound = true; frame.addEventListener('load', function () { mark(state.active); }); }
+        if (!frame.qtradLanguageBound) { frame.qtradLanguageBound = true; frame.addEventListener('load', function () { mark(state.active); }); }
       } catch (error) { /* A third-party cross-origin canvas cannot be accessed. */ }
     });
     var ed = window.tinymce && window.tinymce.get('content');
     if (ed && ed.getBody()) { ed.getBody().setAttribute('lang', locale); ed.getBody().setAttribute('dir', dir); }
-    var status = document.getElementById('qtu-language-status');
+    var status = document.getElementById('qtrad-language-status');
     if (status && announce) status.textContent = (cfg.languageMessage || 'Editing %s.').replace('%s', cfg.names[lang] || lang);
   }
   var observedDocuments = [];
@@ -48,8 +48,8 @@
     new window.MutationObserver(function () { if (state.ready) mark(state.active); }).observe(doc.body, {childList:true, subtree:true});
   }
   function writeStores() {
-    document.querySelectorAll('textarea.qtu-store').forEach(function (node) {
-      var field = node.getAttribute('data-qtu-store'), lang = node.getAttribute('data-qtu-lang');
+    document.querySelectorAll('textarea.qtrad-store').forEach(function (node) {
+      var field = node.getAttribute('data-qtrad-store'), lang = node.getAttribute('data-qtrad-lang');
       node.value = state[field][lang] || '';
     });
   }
@@ -147,8 +147,8 @@
           var value = typeof data[key] === 'object' && data[key] !== null ? data[key].raw : data[key];
           if (!codec.hasTags(value)) data[key] = payload[key];
         });
-        data.qtu_language = state.active;
-        if (cfg.fieldNonce) data.qtu_editor_nonce = cfg.fieldNonce;
+        data.qtrad_language = state.active;
+        if (cfg.fieldNonce) data.qtrad_editor_nonce = cfg.fieldNonce;
         options = Object.assign({}, options, { data: data });
       }
       var result = next(options);
@@ -174,8 +174,8 @@
     state.classic = state.ready = true;
     present(state.active, true);
     function bindRichEditor(ed) {
-      if (!ed || ed.id !== 'content' || ed.qtnLanguageBound) return;
-      ed.qtnLanguageBound = true;
+      if (!ed || ed.id !== 'content' || ed.qtradLanguageBound) return;
+      ed.qtradLanguageBound = true;
       ed.on('init', function () { ed.setContent(state.content[state.active] || ''); mark(state.active); });
     }
     if (window.tinymce && window.tinymce.on) {
@@ -184,7 +184,7 @@
     }
     form.addEventListener('submit', function () {
       capture();
-      var flag = document.getElementById('qtu_js');
+      var flag = document.getElementById('qtrad_js');
       if (flag) flag.value = '1';
     });
     if (window.wp && wp.autosave && wp.autosave.getPostData) {
@@ -192,7 +192,7 @@
       wp.autosave.getPostData = function () {
         var data = original.apply(this, arguments), values = packed();
         data.post_title = values.title; data.content = values.content; data.excerpt = values.excerpt;
-        data.qtu_edit_lang = state.active;
+        data.qtrad_edit_lang = state.active;
         return data;
       };
     }
@@ -232,9 +232,9 @@
     return true;
   }
   document.addEventListener('click', function (event) {
-    var button = event.target.closest && event.target.closest('.qtu-lsb__btn');
+    var button = event.target.closest && event.target.closest('.qtrad-lsb__btn');
     if (!button || !state.ready) return;
-    var lang = button.getAttribute('data-qtu-lang');
+    var lang = button.getAttribute('data-qtrad-lang');
     if (enabled.indexOf(lang) < 0 || lang === state.active) return;
     capture(); present(lang, true);
     // Keep keyboard focus on the activated language button.

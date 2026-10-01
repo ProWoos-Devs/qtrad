@@ -80,7 +80,7 @@ try:
     check('Sitemap contains German-only version',base+'/de/'+fixtures['german']['slug']+'/' in urls)
     check('Sitemap omits missing translation',missing not in urls)
     for slug in ('draft','private','password','empty','disabled'):check('Sitemap omits '+slug,not any(fixtures[slug]['slug']+'/' in url for url in urls))
-    check('Sitemap translated custom post type',base+'/de/qtn_book/'+fixtures['book']['slug']+'/' in urls or base+'/de/'+fixtures['book']['slug']+'/' in urls)
+    check('Sitemap translated custom post type',base+'/de/qtrad_book/'+fixtures['book']['slug']+'/' in urls or base+'/de/'+fixtures['book']['slug']+'/' in urls)
     Path(sys.argv[1]).with_name(owner+'-sitemap-urls.json').write_text(json.dumps(urls,indent=2))
     # Yoast includes the homepage in both its post-archive and page providers.
     content_urls=[url for url in urls if url not in (base+'/',base+'/de/',base+'/es/')]

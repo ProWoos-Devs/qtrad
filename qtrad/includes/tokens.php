@@ -11,14 +11,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function qtu_has_lang_tags( $text ) {
+function qtrad_has_lang_tags( $text ) {
 	if ( ! is_string( $text ) || $text === '' ) {
 		return false;
 	}
 	return (bool) preg_match( '/(<!--:[a-z]{2}-->|\[:[a-z]{2}\]|\{:[a-z]{2}\})/i', $text );
 }
 
-function qtu_detect_format( $text ) {
+function qtrad_detect_format( $text ) {
 	if ( ! is_string( $text ) || $text === '' ) {
 		return null;
 	}
@@ -34,7 +34,7 @@ function qtu_detect_format( $text ) {
 	return null;
 }
 
-function qtu_language_blocks( $text, $comments_only = false ) {
+function qtrad_language_blocks( $text, $comments_only = false ) {
 	if ( ! is_string( $text ) || $text === '' ) {
 		return array( $text );
 	}
@@ -50,7 +50,7 @@ function qtu_language_blocks( $text, $comments_only = false ) {
 	return $parts;
 }
 
-function qtu_split_blocks( $blocks, $enabled, &$found = null, $trim = true, $comments_only = false ) {
+function qtrad_split_blocks( $blocks, $enabled, &$found = null, $trim = true, $comments_only = false ) {
 	$open_pattern = $comments_only ? '/^<!--:([a-z]{2})-->$/i' : '/^(?:<!--:|\[:|\{:)([a-z]{2})(?:-->|\]|\})$/i';
 	$found  = array();
 	$texts  = array();
@@ -94,15 +94,15 @@ function qtu_split_blocks( $blocks, $enabled, &$found = null, $trim = true, $com
 	return $texts;
 }
 
-function qtu_split( $text, $enabled = null, $trim = true ) {
+function qtrad_split( $text, $enabled = null, $trim = true ) {
 	if ( $enabled === null ) {
-		$enabled = qtu_enabled_languages();
+		$enabled = qtrad_enabled_languages();
 	}
 	$found = array();
-	return qtu_split_blocks( qtu_language_blocks( $text ), $enabled, $found, $trim );
+	return qtrad_split_blocks( qtrad_language_blocks( $text ), $enabled, $found, $trim );
 }
 
-function qtu_all_the_same( $texts, $force_markers ) {
+function qtrad_all_the_same( $texts, $force_markers ) {
 	if ( $force_markers ) {
 		return null;
 	}
@@ -125,7 +125,7 @@ function qtu_all_the_same( $texts, $force_markers ) {
 	return $text;
 }
 
-function qtu_ordered_keys( $texts, $order ) {
+function qtrad_ordered_keys( $texts, $order ) {
 	if ( ! $order ) {
 		return array_keys( $texts );
 	}
@@ -143,16 +143,16 @@ function qtu_ordered_keys( $texts, $order ) {
 	return $keys;
 }
 
-function qtu_join( $texts, $format = 'bracket', $order = null, $force_markers = null ) {
+function qtrad_join( $texts, $format = 'bracket', $order = null, $force_markers = null ) {
 	if ( $force_markers === null ) {
-		$force_markers = (bool) qtu_setting( 'force_markers', false );
+		$force_markers = (bool) qtrad_setting( 'force_markers', false );
 	}
-	$same = qtu_all_the_same( $texts, $force_markers );
+	$same = qtrad_all_the_same( $texts, $force_markers );
 	if ( $same !== null ) {
 		return $same;
 	}
 	$out = '';
-	foreach ( qtu_ordered_keys( $texts, $order ) as $lang ) {
+	foreach ( qtrad_ordered_keys( $texts, $order ) as $lang ) {
 		$value = isset( $texts[ $lang ] ) ? $texts[ $lang ] : '';
 		if ( $value === '' ) {
 			continue;
@@ -174,8 +174,8 @@ function qtu_join( $texts, $format = 'bracket', $order = null, $force_markers = 
 	return $out;
 }
 
-function qtu_join_content( $texts, $format, $order ) {
-	$keys   = qtu_ordered_keys( $texts, $order );
+function qtrad_join_content( $texts, $format, $order ) {
+	$keys   = qtrad_ordered_keys( $texts, $order );
 	$chunks = array();
 	$max    = 0;
 	foreach ( $keys as $lang ) {
@@ -183,7 +183,7 @@ function qtu_join_content( $texts, $format, $order ) {
 		$max             = max( $max, count( $chunks[ $lang ] ) );
 	}
 	if ( $max <= 1 ) {
-		return qtu_join( $texts, $format, $order );
+		return qtrad_join( $texts, $format, $order );
 	}
 	$out = '';
 	for ( $i = 0; $i < $max; $i++ ) {
@@ -194,34 +194,34 @@ function qtu_join_content( $texts, $format, $order ) {
 		foreach ( $keys as $lang ) {
 			$slice[ $lang ] = isset( $chunks[ $lang ][ $i ] ) ? $chunks[ $lang ][ $i ] : '';
 		}
-		$out .= qtu_join( $slice, $format, $keys );
+		$out .= qtrad_join( $slice, $format, $keys );
 	}
 	return $out;
 }
 
-function qtu_resolve_format( $existing, $preferred ) {
+function qtrad_resolve_format( $existing, $preferred ) {
 	if ( $preferred && $preferred !== 'keep' ) {
 		return $preferred;
 	}
-	$detected = qtu_detect_format( $existing );
+	$detected = qtrad_detect_format( $existing );
 	return $detected ? $detected : 'comment';
 }
 
-function qtu_merge_field( $incoming, $existing, $lang, $kind = 'text' ) {
+function qtrad_merge_field( $incoming, $existing, $lang, $kind = 'text' ) {
 	$incoming = is_string( $incoming ) ? $incoming : '';
 	$existing = is_string( $existing ) ? $existing : '';
-	if ( qtu_has_lang_tags( $incoming ) ) {
+	if ( qtrad_has_lang_tags( $incoming ) ) {
 		return $incoming;
 	}
-	$enabled = qtu_enabled_languages();
+	$enabled = qtrad_enabled_languages();
 	if ( ! in_array( $lang, $enabled, true ) ) {
-		$lang = qtu_default_language();
+		$lang = qtrad_default_language();
 	}
-	$preferred = qtu_setting( 'write_format', 'keep' );
-	$format    = qtu_resolve_format( $existing, $preferred );
+	$preferred = qtrad_setting( 'write_format', 'keep' );
+	$format    = qtrad_resolve_format( $existing, $preferred );
 	$order     = $enabled;
-	$default   = qtu_default_language();
-	if ( ! qtu_has_lang_tags( $existing ) ) {
+	$default   = qtrad_default_language();
+	if ( ! qtrad_has_lang_tags( $existing ) ) {
 		if ( $lang === $default || $incoming === $existing ) {
 			return $incoming;
 		}
@@ -231,33 +231,33 @@ function qtu_merge_field( $incoming, $existing, $lang, $kind = 'text' ) {
 		}
 		$texts[ $default ] = $existing;
 		$texts[ $lang ]    = $incoming;
-		return $kind === 'content' ? qtu_join_content( $texts, $format, $order ) : qtu_join( $texts, $format, $order );
+		return $kind === 'content' ? qtrad_join_content( $texts, $format, $order ) : qtrad_join( $texts, $format, $order );
 	}
-	$texts          = qtu_split( $existing, $enabled, false );
+	$texts          = qtrad_split( $existing, $enabled, false );
 	$texts[ $lang ] = $incoming;
 	$keys           = array_keys( $texts );
-	return $kind === 'content' ? qtu_join_content( $texts, $format, $keys ) : qtu_join( $texts, $format, $keys );
+	return $kind === 'content' ? qtrad_join_content( $texts, $format, $keys ) : qtrad_join( $texts, $format, $keys );
 }
 
-function qtu_use_language( $text, $lang, $show_available = false, $show_empty = false ) {
+function qtrad_use_language( $text, $lang, $show_available = false, $show_empty = false ) {
 	if ( is_array( $text ) ) {
 		foreach ( $text as $key => $value ) {
-			$text[ $key ] = qtu_use_language( $value, $lang, $show_available, $show_empty );
+			$text[ $key ] = qtrad_use_language( $value, $lang, $show_available, $show_empty );
 		}
 		return $text;
 	}
 	if ( is_object( $text ) ) {
 		foreach ( get_object_vars( $text ) as $key => $value ) {
-			$text->$key = qtu_use_language( $value, $lang, $show_available, $show_empty );
+			$text->$key = qtrad_use_language( $value, $lang, $show_available, $show_empty );
 		}
 		return $text;
 	}
-	if ( ! is_string( $text ) || $text === '' || ! qtu_has_lang_tags( $text ) ) {
+	if ( ! is_string( $text ) || $text === '' || ! qtrad_has_lang_tags( $text ) ) {
 		return $text;
 	}
-	$enabled = qtu_enabled_languages();
+	$enabled = qtrad_enabled_languages();
 	$found   = array();
-	$texts   = qtu_split_blocks( qtu_language_blocks( $text ), $enabled, $found );
+	$texts   = qtrad_split_blocks( qtrad_language_blocks( $text ), $enabled, $found );
 	if ( ! empty( $found[ $lang ] ) ) {
 		return $texts[ $lang ];
 	}
@@ -273,15 +273,15 @@ function qtu_use_language( $text, $lang, $show_available = false, $show_empty = 
 	if ( ! $available ) {
 		return '';
 	}
-	$default = qtu_default_language();
+	$default = qtrad_default_language();
 	$alt     = $available[0];
 	$alt_text = isset( $texts[ $alt ] ) ? $texts[ $alt ] : '';
-	$show_prefix = (bool) qtu_setting( 'show_prefix', true );
-	if ( $show_available && qtu_setting( 'show_alt_message', false ) ) {
+	$show_prefix = (bool) qtrad_setting( 'show_prefix', true );
+	if ( $show_available && qtrad_setting( 'show_alt_message', false ) ) {
 		$list = array();
 		foreach ( $available as $code ) {
-			$url    = qtu_convert_url( '', $code, false, true );
-			$name   = qtu_language_name( $code );
+			$url    = qtrad_convert_url( '', $code, false, true );
+			$name   = qtrad_language_name( $code );
 			$list[] = '<a href="' . esc_url( $url ) . '">' . esc_html( $name ) . '</a>';
 		}
 		$message = sprintf(
@@ -289,40 +289,40 @@ function qtu_use_language( $text, $lang, $show_available = false, $show_empty = 
 			__( 'Sorry, this entry is only available in %s.', 'qtrad' ),
 			implode( ', ', $list )
 		);
-		$prefix = $show_prefix ? '(' . esc_html( qtu_language_name( $alt ) ) . ') ' : '';
-		$templates = qtu_config( 'not_available' );
+		$prefix = $show_prefix ? '(' . esc_html( qtrad_language_name( $alt ) ) . ') ' : '';
+		$templates = qtrad_config( 'not_available' );
 		if ( is_array( $templates ) && ! empty( $templates[ $lang ] ) ) {
 			$message = preg_replace_callback( '/%LANG:([^:]*):([^%]*)%/', function ( $match ) use ( $list ) {
 				$last = array_pop( $list );
 				return $list ? implode( $match[1], $list ) . $match[2] . $last : $last;
 			}, wp_kses_post( $templates[ $lang ] ) );
 		}
-		$output = '<p class="qtu-not-available">' . $message . '</p>';
-		if ( qtu_setting( 'show_alt_content', false ) ) {
-			$locale = qtu_config( 'locale' );
-			$output .= '<div lang="' . esc_attr( str_replace( '_', '-', $locale[ $alt ] ) ) . '" dir="' . esc_attr( qtu_language_direction( $alt ) ) . '">' . $prefix . $alt_text . '</div>';
+		$output = '<p class="qtrad-not-available">' . $message . '</p>';
+		if ( qtrad_setting( 'show_alt_content', false ) ) {
+			$locale = qtrad_config( 'locale' );
+			$output .= '<div lang="' . esc_attr( str_replace( '_', '-', $locale[ $alt ] ) ) . '" dir="' . esc_attr( qtrad_language_direction( $alt ) ) . '">' . $prefix . $alt_text . '</div>';
 		}
 		return $output;
 	}
 	if ( $show_prefix ) {
-		return '(' . qtu_language_name( $alt ) . ') ' . $alt_text;
+		return '(' . qtrad_language_name( $alt ) . ') ' . $alt_text;
 	}
 	return $alt_text;
 }
 
-function qtu_use_current( $text, $show_available = false, $show_empty = false ) {
-	return qtu_use_language( $text, qtu_current_language(), $show_available, $show_empty );
+function qtrad_use_current( $text, $show_available = false, $show_empty = false ) {
+	return qtrad_use_language( $text, qtrad_current_language(), $show_available, $show_empty );
 }
 
-function qtu_translate_term_name( $name ) {
+function qtrad_translate_term_name( $name ) {
 	if ( ! is_string( $name ) || $name === '' ) {
 		return $name;
 	}
-	if ( qtu_has_lang_tags( $name ) ) {
-		return qtu_use_current( $name );
+	if ( qtrad_has_lang_tags( $name ) ) {
+		return qtrad_use_current( $name );
 	}
-	$library = qtu_config( 'term_name' );
-	$lang    = qtu_current_language();
+	$library = qtrad_config( 'term_name' );
+	$lang    = qtrad_current_language();
 	if ( is_array( $library ) && isset( $library[ $name ][ $lang ] ) && $library[ $name ][ $lang ] !== '' ) {
 		return $library[ $name ][ $lang ];
 	}

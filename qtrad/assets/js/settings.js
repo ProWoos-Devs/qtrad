@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   function focusErrors() {
-    var errors = document.getElementById('qtn-errors');
+    var errors = document.getElementById('qtrad-errors');
     if (errors && document.activeElement === document.body) errors.focus();
   }
   // WordPress common.js moves notices in its ready callback. Focus afterwards.

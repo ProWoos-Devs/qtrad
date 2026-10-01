@@ -1,7 +1,7 @@
 (function () {
   'use strict';
   function enhance() {
-    document.querySelectorAll('.qtu-language-form').forEach(function (form) {
+    document.querySelectorAll('.qtrad-language-form').forEach(function (form) {
       form.addEventListener('submit', function (event) {
         event.preventDefault();
         var url = form.querySelector('select').value;

@@ -3,7 +3,7 @@
 // php tests/load-order.php original|x|renamed|network|loaded|next|unified /path/to/upstream/qtranslate_core.php
 $kind = $argv[1];
 define('ABSPATH', __DIR__ . '/');
-define('WP_PLUGIN_DIR', sys_get_temp_dir() . '/qtn-guard-plugins');
+define('WP_PLUGIN_DIR', sys_get_temp_dir() . '/qtrad-guard-plugins');
 class WP_Widget {}
 function plugin_dir_path($file) { return dirname($file) . '/'; }
 function add_action() {}

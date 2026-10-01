@@ -160,6 +160,15 @@ settings(array('qtranslate_enabled_languages' => array('en', 'xx'), 'qtranslate_
 qtrad_save_settings(array('enabled' => array('en', 'xx'), 'default' => 'xx'));
 check_case('settings retain custom legacy language', array('en', 'xx'), qtrad_enabled_languages());
 
+settings(array('qtranslate_editor_mode' => 2, 'qtranslate_enabled_languages' => array('en', 'de', 'lt')));
+check_case('qTranslate-XT built-in Lithuanian has its locale', 'lt_LT', qtrad_config('locale')['lt']);
+qtrad_save_settings(array('qtrad_settings' => 1, 'enabled' => array('en', 'de', 'lt'), 'default' => 'en', 'editor_mode' => 'lsb', 'languages' => array('en' => array('name' => 'English', 'locale' => 'en_US'), 'lt' => array('name' => 'Lietuvių', 'locale' => 'lt_LT'))));
+check_case('unchanged qTranslate-XT editor mode 2 is kept', 2, (int) get_option('qtranslate_editor_mode'));
+check_case('unchanged language names and locales are not written', array(array(), array()), array(get_option('qtranslate_language_names', array()), get_option('qtranslate_locales', array())));
+qtrad_save_settings(array('qtrad_settings' => 1, 'enabled' => array('en', 'de', 'lt'), 'default' => 'en', 'editor_mode' => 'raw', 'languages' => array('lt' => array('name' => 'Lithuanian', 'locale' => 'lt_LT'))));
+check_case('changed editor mode is written', 1, (int) get_option('qtranslate_editor_mode'));
+check_case('only the changed language name is written', array('lt' => 'Lithuanian'), get_option('qtranslate_language_names'));
+
 settings();
 ob_start();
 $ret = qtrans_generateLanguageSelectCode('text');

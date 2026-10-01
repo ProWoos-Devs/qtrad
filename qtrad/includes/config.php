@@ -44,6 +44,11 @@ function qtrad_catalog() {
 		'he' => array( 'name' => 'עברית', 'locale' => 'he_IL', 'flag' => 'il.svg', 'rtl' => true ),
 		'ko' => array( 'name' => '한국어', 'locale' => 'ko_KR', 'flag' => 'kr.svg' ),
 		'tw' => array( 'name' => '繁體中文', 'locale' => 'zh_TW', 'flag' => 'tw.svg' ),
+		// Built into qTranslate-XT.
+		'uk' => array( 'name' => 'Українська', 'locale' => 'uk', 'flag' => 'ua.svg' ),
+		'md' => array( 'name' => 'Moldovenească', 'locale' => 'ro_RO', 'flag' => 'md.svg' ),
+		'lt' => array( 'name' => 'Lietuvių', 'locale' => 'lt_LT', 'flag' => 'lt.svg' ),
+		'kk' => array( 'name' => 'Қазақ тілі', 'locale' => 'kk', 'flag' => 'kz.svg' ),
 	);
 }
 
@@ -289,21 +294,27 @@ function qtrad_save_settings( $input ) {
 		}
 	}
 	$catalog = qtrad_available_catalog();
-	$names = qtrad_config( 'language_name' );
-	$locales = qtrad_config( 'locale' );
-	$flags = qtrad_config( 'flag' );
+	// Shared qtranslate_* arrays only receive values the admin changed, so
+	// defaults that differ between qTrad and qTranslate-XT are never written.
+	$effective = array( 'name' => qtrad_config( 'language_name' ), 'locale' => qtrad_config( 'locale' ), 'flag' => qtrad_config( 'flag' ) );
+	$names = get_option( 'qtranslate_language_names', array() );
+	$locales = get_option( 'qtranslate_locales', array() );
+	$flags = get_option( 'qtranslate_flags', array() );
+	$names = is_array( $names ) ? $names : array();
+	$locales = is_array( $locales ) ? $locales : array();
+	$flags = is_array( $flags ) ? $flags : array();
 	if ( ! empty( $input['languages'] ) && is_array( $input['languages'] ) ) {
 		foreach ( $input['languages'] as $code => $meta ) {
 			if ( ! isset( $catalog[ $code ] ) || ! is_array( $meta ) ) {
 				continue;
 			}
-			if ( isset( $meta['name'] ) && is_string( $meta['name'] ) && trim( $meta['name'] ) !== '' ) {
+			if ( isset( $meta['name'] ) && is_string( $meta['name'] ) && trim( $meta['name'] ) !== '' && sanitize_text_field( $meta['name'] ) !== $effective['name'][ $code ] ) {
 				$names[ $code ] = sanitize_text_field( $meta['name'] );
 			}
-			if ( isset( $meta['locale'] ) && is_string( $meta['locale'] ) && preg_match( '/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*$/D', $meta['locale'] ) ) {
+			if ( isset( $meta['locale'] ) && is_string( $meta['locale'] ) && preg_match( '/^[A-Za-z]{2,3}(?:_[A-Za-z0-9]+)*$/D', $meta['locale'] ) && $meta['locale'] !== $effective['locale'][ $code ] ) {
 				$locales[ $code ] = $meta['locale'];
 			}
-			if ( isset( $meta['flag'] ) && is_string( $meta['flag'] ) && ( $meta['flag'] === '' || preg_match( '/^[a-z0-9_.-]+\.(?:png|gif|jpe?g|svg)$/iD', $meta['flag'] ) ) ) {
+			if ( isset( $meta['flag'] ) && is_string( $meta['flag'] ) && ( $meta['flag'] === '' || preg_match( '/^[a-z0-9_.-]+\.(?:png|gif|jpe?g|svg)$/iD', $meta['flag'] ) ) && basename( $meta['flag'] ) !== $effective['flag'][ $code ] ) {
 				$flags[ $code ] = basename( $meta['flag'] );
 			}
 		}
@@ -373,7 +384,11 @@ function qtrad_save_settings( $input ) {
 	update_option( 'qtranslate_hide_untranslated', empty( $input['hide_untranslated'] ) ? '0' : '1' );
 	update_option( 'qtranslate_show_displayed_language_prefix', empty( $input['show_prefix'] ) ? '0' : '1' );
 	update_option( 'qtranslate_domains', $domains );
-	update_option( 'qtranslate_editor_mode', $editor_mode === 'raw' ? 1 : 0 );
+	// qTranslate-XT also has mode 2 (single language); keep any stored mode the admin did not change.
+	$stored_mode = (int) get_option( 'qtranslate_editor_mode', 0 );
+	if ( $editor_mode !== ( $stored_mode === 1 ? 'raw' : 'lsb' ) ) {
+		update_option( 'qtranslate_editor_mode', $editor_mode === 'raw' ? 1 : 0 );
+	}
 	if ( isset( $input['qtrad_settings'] ) ) {
 		update_option( 'qtranslate_force_markers', ! empty( $input['force_markers'] ) );
 		update_option( 'qtranslate_show_alternative_content', ! empty( $input['show_alt_content'] ) );

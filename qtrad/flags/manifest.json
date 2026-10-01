@@ -223,6 +223,30 @@
       "modifications": "none"
     },
     {
+      "file": "kz.svg",
+      "source_path": "flags/4x3/kz.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/kz.svg",
+      "sha256": "ce0f495ae2039b6ed850a21b0c9501bc13f29fa566c02b123ccafab4c6dbd693",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "lt.svg",
+      "source_path": "flags/4x3/lt.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/lt.svg",
+      "sha256": "dc0401993f6e14b3a58fa496d874b95dfcb58614052a868b14492166782c1006",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "md.svg",
+      "source_path": "flags/4x3/md.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/md.svg",
+      "sha256": "987ca12a752ec2b3594c115923d50160343a7d30af8ea5e316ae04fb12b8e9dd",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
       "file": "mx.svg",
       "source_path": "flags/4x3/mx.svg",
       "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/mx.svg",
@@ -376,6 +400,9 @@
     "vn.png": "vn.svg",
     "catalonia.png": "es-ct.svg",
     "basque.png": "es-pv.svg",
-    "wales.png": "gb-wls.svg"
+    "wales.png": "gb-wls.svg",
+    "md.png": "md.svg",
+    "lt.png": "lt.svg",
+    "kz.png": "kz.svg"
   }
 }

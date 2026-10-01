@@ -21,6 +21,7 @@ foreach ( $qtrad_sites as $qtrad_site ) {
 	}
 	delete_metadata( 'post', 0, '_qtrad_available_languages', '', true );
 	delete_transient( 'qtrad_conflict_scan' );
+	delete_option( 'qtrad_migration_report' );
 	if ( is_multisite() ) {
 		restore_current_blog();
 	}

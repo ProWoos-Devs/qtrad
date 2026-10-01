@@ -54,6 +54,7 @@ require_once QTRAD_DIR . 'includes/fields.php';
 require_once QTRAD_DIR . 'includes/seo.php';
 require_once QTRAD_DIR . 'includes/admin.php';
 require_once QTRAD_DIR . 'includes/widget.php';
+require_once QTRAD_DIR . 'includes/migration.php';
 
 /**
  * Language has to be known before WordPress parses the request.
@@ -72,6 +73,7 @@ function qtrad_boot() {
 	qtrad_register_field_hooks();
 	qtrad_register_seo_hooks();
 	qtrad_register_admin_hooks();
+	qtrad_register_migration_hooks();
 	qtrad_register_widget();
 	add_action( 'init', 'qtrad_refresh_admin_language', 0 );
 	add_action( 'switch_blog', 'qtrad_switch_blog', 0, 3 );

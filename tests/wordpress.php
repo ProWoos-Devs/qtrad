@@ -54,6 +54,7 @@ function settings($overrides = array()) {
         'qtranslate_force_markers' => false,
         'qtranslate_show_alternative_content_message' => false,
         'qtranslate_show_alternative_content' => false,
+        'qtranslate_editor_mode' => 0,
         'qtrad_settings' => array('write_format' => 'keep', 'extra_fields' => 'audit_field'),
     );
     foreach (array_merge($defaults, $overrides) as $key => $value) update_option($key, $value);

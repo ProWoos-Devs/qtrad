@@ -99,7 +99,7 @@ $_GET['sitemap']='posts'; seo_check('Plain sitemap query is neutral',true,qtrad_
 add_filter('wp_sitemaps_max_urls',function(){return 6;},1);
 $GLOBALS['wp_sitemaps'] = new WP_Sitemaps(); $GLOBALS['wp_sitemaps']->register_sitemaps();
 $provider = $GLOBALS['wp_sitemaps']->registry->get_provider('posts');
-seo_check('Core provider wrapped',true,$provider instanceof QTranslateNextSitemapProvider);
+seo_check('Core provider wrapped',true,$provider instanceof Qtrad_Sitemap_Provider);
 $urls = array(); $page_sizes = array();
 foreach (array('post','page','qtrad_book') as $type) {
     for ($page=1;$page<=$provider->get_max_num_pages($type);$page++) {

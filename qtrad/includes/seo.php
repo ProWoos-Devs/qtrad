@@ -3,9 +3,9 @@
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 
 function qtrad_is_sitemap_request() {
-	$uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '/';
-	$path = qtrad_strip_path_language( qtrad_relative_path( (string) wp_parse_url( $uri, PHP_URL_PATH ) ) );
-	return isset( $_GET['sitemap'] ) || ( isset( $_GET['stylesheet'] ) && $_GET['stylesheet'] === 'sitemap' )
+	$path = qtrad_strip_path_language( qtrad_relative_path( (string) wp_parse_url( qtrad_request_uri(), PHP_URL_PATH ) ) );
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only sitemap detection.
+	return isset( $_GET['sitemap'] ) || ( isset( $_GET['stylesheet'] ) && is_string( $_GET['stylesheet'] ) && sanitize_key( wp_unslash( $_GET['stylesheet'] ) ) === 'sitemap' )
 		|| (bool) preg_match( '#^/[a-z0-9_-]*sitemap[a-z0-9_-]*\.(?:xml|xsl)$#iD', $path );
 }
 
@@ -32,7 +32,7 @@ function qtrad_seo_language_tag( $language ) {
 	}
 	$regions = explode( ' ', 'AD AE AF AG AI AL AM AO AQ AR AS AT AU AW AX AZ BA BB BD BE BF BG BH BI BJ BL BM BN BO BQ BR BS BT BV BW BY BZ CA CC CD CF CG CH CI CK CL CM CN CO CR CU CV CW CX CY CZ DE DJ DK DM DO DZ EC EE EG EH ER ES ET FI FJ FK FM FO FR GA GB GD GE GF GG GH GI GL GM GN GP GQ GR GS GT GU GW GY HK HM HN HR HT HU ID IE IL IM IN IO IQ IR IS IT JE JM JO JP KE KG KH KI KM KN KP KR KW KY KZ LA LB LC LI LK LR LS LT LU LV LY MA MC MD ME MF MG MH MK ML MM MN MO MP MQ MR MS MT MU MV MW MX MY MZ NA NC NE NF NG NI NL NO NP NR NU NZ OM PA PE PF PG PH PK PL PM PN PR PS PT PW PY QA RE RO RS RU RW SA SB SC SD SE SG SH SI SJ SK SL SM SN SO SR SS ST SV SX SY SZ TC TD TF TG TH TJ TK TL TM TN TO TR TT TV TW TZ UA UG UM US UY UZ VA VC VE VG VI VN VU WF WS YE YT ZA ZM ZW' );
 	if ( isset( $parts[ $position ] ) && in_array( strtoupper( $parts[ $position ] ), $regions, true ) ) { $tag .= '-' . strtoupper( $parts[ $position ] ); }
-	return apply_filters( 'qtranslate_next_seo_language_tag', $tag, $language );
+	return apply_filters( 'qtrad_seo_language_tag', $tag, $language );
 }
 
 function qtrad_seo_text( $value ) {
@@ -63,7 +63,7 @@ function qtrad_seo_post_indexable( $post, $language ) {
 		$custom = qtrad_use_language( qtrad_seo_raw_meta( $post->ID, $key ), $language, false, true );
 		if ( is_string( $custom ) && $custom !== '' && qtrad_convert_url( $custom, $language, true, false ) !== qtrad_seo_post_url( $post, $language ) ) { return false; }
 	}
-	return (bool) apply_filters( 'qtranslate_next_seo_post_indexable', true, $post, $language );
+	return (bool) apply_filters( 'qtrad_seo_post_indexable', true, $post, $language );
 }
 
 function qtrad_seo_post_languages( $post ) {
@@ -165,8 +165,8 @@ function qtrad_seo_native_head() {
 	foreach ( array( 'og:title' => $title, 'og:description' => $description, 'og:url' => $url, 'og:locale' => qtrad_seo_og_locale(), 'og:type' => 'website' ) as $name => $value ) {
 		if ( $value !== '' ) { echo '<meta property="' . esc_attr( $name ) . '" content="' . esc_attr( $value ) . '" />' . "\n"; }
 	}
-	$schema = apply_filters( 'qtranslate_next_seo_schema', array( '@context' => 'https://schema.org', '@type' => 'WebPage', '@id' => $url . '#webpage', 'url' => $url, 'name' => $title, 'description' => $description, 'inLanguage' => qtrad_seo_language_tag( qtrad_current_language() ) ) );
-	echo '<script type="application/ld+json">' . wp_json_encode( $schema, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ) . '</script>' . "\n";
+	$schema = apply_filters( 'qtrad_seo_schema', array( '@context' => 'https://schema.org', '@type' => 'WebPage', '@id' => $url . '#webpage', 'url' => $url, 'name' => $title, 'description' => $description, 'inLanguage' => qtrad_seo_language_tag( qtrad_current_language() ) ) );
+	wp_print_inline_script_tag( wp_json_encode( $schema, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE ), array( 'type' => 'application/ld+json' ) );
 }
 
 /** Read multilingual SEO overrides from raw storage, independent of indexable caches. */
@@ -242,7 +242,7 @@ function qtrad_seo_document_title( $parts ) {
 function qtrad_seo_add_meta_box( $post_type, $post ) {
 	$type = get_post_type_object( $post_type );
 	if ( $type && $type->public && $post_type !== 'attachment' && current_user_can( 'edit_post', $post->ID ) ) {
-		add_meta_box( 'qtrad-seo', __( 'SEO translations', 'qtrad' ), 'qtrad_seo_meta_box', $post_type, 'normal', 'default' );
+		add_meta_box( 'qtrad-seo', esc_html__( 'SEO translations', 'qtrad' ), 'qtrad_seo_meta_box', $post_type, 'normal', 'default' );
 	}
 }
 
@@ -256,9 +256,19 @@ function qtrad_seo_meta_box( $post ) {
 			$id = 'qtrad-seo-' . $kind . '-' . $language;
 			$value = qtrad_seo_override( $post->ID, $kind, $language );
 			echo '<p><label for="' . esc_attr( $id ) . '">' . esc_html( $label ) . '</label><br />';
-			$attributes = ' id="' . esc_attr( $id ) . '" name="qtrad_seo_fields[' . esc_attr( $kind ) . '][' . esc_attr( $language ) . ']" class="widefat" lang="' . esc_attr( str_replace( '_', '-', qtrad_config( 'locale' )[ $language ] ) ) . '" dir="' . esc_attr( qtrad_language_direction( $language ) ) . '"';
-			if ( $kind === 'title' ) { echo '<input type="text"' . $attributes . ' value="' . esc_attr( $value ) . '" />'; }
-			else { echo '<textarea rows="3"' . $attributes . '>' . esc_textarea( $value ) . '</textarea>'; }
+			$attributes = array(
+				'id'    => $id,
+				'name'  => 'qtrad_seo_fields[' . $kind . '][' . $language . ']',
+				'class' => 'widefat',
+				'lang'  => str_replace( '_', '-', qtrad_config( 'locale' )[ $language ] ),
+				'dir'   => qtrad_language_direction( $language ),
+			);
+			echo $kind === 'title' ? '<input type="text"' : '<textarea rows="3"';
+			foreach ( $attributes as $attribute => $attribute_value ) {
+				echo ' ' . esc_attr( $attribute ) . '="' . esc_attr( $attribute_value ) . '"';
+			}
+			if ( $kind === 'title' ) { echo ' value="' . esc_attr( $value ) . '" />'; }
+			else { echo '>' . esc_textarea( $value ) . '</textarea>'; }
 			echo '</p>';
 		}
 		echo '</fieldset>';
@@ -277,8 +287,7 @@ function qtrad_seo_save_meta_box( $post_id ) {
 		$texts = qtrad_split( is_string( $raw ) ? $raw : '', null, false );
 		foreach ( qtrad_enabled_languages() as $language ) {
 			if ( isset( $_POST['qtrad_seo_fields'][ $kind ][ $language ] ) && is_string( $_POST['qtrad_seo_fields'][ $kind ][ $language ] ) ) {
-				$value = wp_unslash( $_POST['qtrad_seo_fields'][ $kind ][ $language ] );
-				$texts[ $language ] = $kind === 'description' ? sanitize_textarea_field( $value ) : sanitize_text_field( $value );
+				$texts[ $language ] = $kind === 'description' ? sanitize_textarea_field( wp_unslash( $_POST['qtrad_seo_fields'][ $kind ][ $language ] ) ) : sanitize_text_field( wp_unslash( $_POST['qtrad_seo_fields'][ $kind ][ $language ] ) );
 			}
 		}
 		update_post_meta( $post_id, $key, wp_slash( qtrad_join( $texts, 'bracket', qtrad_enabled_languages() ) ) );
@@ -355,11 +364,11 @@ function qtrad_seo_sitemap_xml( $xml, $entry ) {
 
 /** Wrap core providers, retaining their exclusions, filters and paging calculations. */
 function qtrad_seo_core_provider( $provider, $name ) {
-	if ( qtrad_seo_owner() || ! $provider || ! in_array( $name, array( 'posts', 'taxonomies', 'users' ), true ) || $provider instanceof QTranslateNextSitemapProvider ) { return $provider; }
-	return new QTranslateNextSitemapProvider( $provider, $name );
+	if ( qtrad_seo_owner() || ! $provider || ! in_array( $name, array( 'posts', 'taxonomies', 'users' ), true ) || $provider instanceof Qtrad_Sitemap_Provider ) { return $provider; }
+	return new Qtrad_Sitemap_Provider( $provider, $name );
 }
 
-class QTranslateNextSitemapProvider extends WP_Sitemaps_Provider {
+class Qtrad_Sitemap_Provider extends WP_Sitemaps_Provider {
 	private $provider;
 	public function __construct( $provider, $name ) {
 		$this->provider = $provider;

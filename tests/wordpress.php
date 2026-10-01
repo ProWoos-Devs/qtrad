@@ -19,8 +19,6 @@ require_once ABSPATH . 'wp-admin/includes/class-wp-screen.php';
 require_once ABSPATH . 'wp-admin/includes/screen.php';
 require_once ABSPATH . 'wp-admin/includes/template.php';
 require_once dirname(__DIR__) . '/qtrad/qtrad.php';
-require_once dirname(__DIR__) . '/qtrad/qtranslate-next.php';
-require_once dirname(__DIR__) . '/qtrad/qtranslate-unified.php';
 wp_set_current_user(1);
 qtrad_register_field_hooks();
 $results = array();
@@ -33,8 +31,8 @@ foreach (glob(QTRAD_DIR . '*.php') as $entry) {
     $header = get_file_data($entry, array('name'=>'Plugin Name'));
     if ($header['name'] !== '') $entries[basename($entry)] = $header['name'];
 }
-check_case('Former bootstraps keep canonical activation file', 'qtrad.php', basename(QTRAD_FILE));
-check_case('WordPress discovers only one activatable entry', array('qtrad.php'=>'qTrad — Multilingual Content'), $entries);
+check_case('Canonical activation file is qtrad.php', 'qtrad.php', basename(QTRAD_FILE));
+check_case('WordPress discovers only one activatable entry', array('qtrad.php'=>'qTrad'), $entries);
 function settings($overrides = array()) {
     global $q_config, $current_screen;
     $current_screen = null;
@@ -56,7 +54,7 @@ function settings($overrides = array()) {
         'qtranslate_force_markers' => false,
         'qtranslate_show_alternative_content_message' => false,
         'qtranslate_show_alternative_content' => false,
-        'qtranslate_next_settings' => array('write_format' => 'keep', 'extra_fields' => 'audit_field'),
+        'qtrad_settings' => array('write_format' => 'keep', 'extra_fields' => 'audit_field'),
     );
     foreach (array_merge($defaults, $overrides) as $key => $value) update_option($key, $value);
     qtrad_reset_config();
@@ -233,11 +231,10 @@ $parts = array('en'=>'Intro<!--more-->End', 'de'=>'Anfang<!--more-->Ende', 'fr'=
 check_case('more separator survives disabled language', $parts, qtrad_split(qtrad_join_content($parts, 'comment', array('en','de')), null, false));
 check_case('chooser supports legacy options array', true, strpos(qtrad_language_chooser(array('type'=>'dropdown','id'=>'example')), 'id="example"') !== false);
 check_case('chooser boolean requests flags', true, strpos(qtrad_language_chooser(true), 'qtrad-style-image') !== false);
-$widget = new qTradWidget();
+$widget = new Qtrad_Widget();
 check_case('qTrad widget preserves existing sidebar identity', 'qtranslate', $widget->id_base);
-check_case('former Next widget class preserves sidebar identity', $widget->id_base, (new qTranslateNextWidget())->id_base);
+check_case('qTranslate-X widget class preserves sidebar identity', $widget->id_base, (new qTranslateXWidget())->id_base);
 qtrad_register_shortcodes();
-check_case('qTrad switcher matches legacy shortcode output', do_shortcode('[qtranslate_switcher style="both" id="branding"]'), do_shortcode('[qtrad_switcher style="both" id="branding"]'));
 $updated = $widget->update(array('title'=>'New','type'=>'text','hide-title'=>true), array('format'=>'legacy-format','widget-css'=>'legacy-css'));
 check_case('widget retains unimplemented legacy options for rollback', 'legacy-format', $updated['format']);
 check_case('widget updates hide-title', true, $updated['hide-title']);
@@ -318,7 +315,7 @@ $response = rest_do_request($request);
 check_case('custom post type REST autosave succeeds', 200, $response->get_status());
 $autosave = $response->get_data();
 check_case('autosave retains multilingual title', true, isset($autosave['title']['raw']) && strpos($autosave['title']['raw'],'[:fr]Bonjour') !== false);
-settings(array('qtranslate_next_settings'=>array('editor_mode'=>'raw','extra_fields'=>'audit_field','write_format'=>'keep')));
+settings(array('qtrad_settings'=>array('editor_mode'=>'raw','extra_fields'=>'audit_field','write_format'=>'keep')));
 $request = new WP_REST_Request('POST','/wp/v2/books/'.$id);
 $request->set_param('id',$id); $request->set_param('title','Raw replacement');
 $response = rest_do_request($request);
@@ -355,7 +352,7 @@ if (in_array('--prepare-browser', $argv, true)) {
     update_user_meta($auditor_id, 'qtrad_edit_language', 'en');
     $browser_id = fixture(array('post_name' => 'qtrad-audit-browser', 'post_status' => 'publish',
         'post_title' => '[:en]Hello[:de]Hallo[:fr]Bonjour[:]',
-        'post_content' => '[qtrad_switcher style="both"] [qtranslate_switcher style="image"] [qtranslate_switcher style="short"] [qtranslate_switcher style="dropdown"] [:en]<!-- wp:paragraph --><p>English body</p><!-- /wp:paragraph -->[:de]<!-- wp:paragraph --><p>German body</p><!-- /wp:paragraph -->[:fr]<!-- wp:paragraph --><p>French body</p><!-- /wp:paragraph -->[:]'));
+        'post_content' => '[qtrad_switcher style="both"] [qtrad_switcher style="image"] [qtrad_switcher style="short"] [qtrad_switcher style="dropdown"] [:en]<!-- wp:paragraph --><p>English body</p><!-- /wp:paragraph -->[:de]<!-- wp:paragraph --><p>German body</p><!-- /wp:paragraph -->[:fr]<!-- wp:paragraph --><p>French body</p><!-- /wp:paragraph -->[:]'));
     flush_rewrite_rules(false);
 }
 

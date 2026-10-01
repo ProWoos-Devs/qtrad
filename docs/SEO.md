@@ -18,9 +18,9 @@ Core, Yoast and Rank Math sitemap endpoints remain language-neutral, including p
 
 A tagged body determines post availability; a tagged title is used when the body is untagged. Nonempty plain fields are deliberately shared content under qTrad's existing availability policy. Empty marked translations are excluded; the string `0` is content. Disabled languages are retained in storage but omitted from alternates/sitemaps.
 
-Missing-language pages retain the site's existing visitor fallback behavior and receive `noindex`. They do not claim reciprocal alternates or appear as translated sitemap entries. Draft/private/password-protected posts are excluded. Vendor noindex metadata and canonical overrides pointing away from the current post are respected. `qtranslate_next_seo_post_indexable` allows a site to exclude additional post/language pairs.
+Missing-language pages retain the site's existing visitor fallback behavior and receive `noindex`. They do not claim reciprocal alternates or appear as translated sitemap entries. Draft/private/password-protected posts are excluded. Vendor noindex metadata and canonical overrides pointing away from the current post are respected. `qtrad_seo_post_indexable` allows a site to exclude additional post/language pairs.
 
-Taxonomy/author archives are treated as shared archive views; individual translated slugs, archive-level translation availability and per-language robots settings are not introduced. Existing SEO plugin templates, images, breadcrumbs and schema types remain the vendor's responsibility. Yoast breadcrumb links are localized; custom integrations can filter `qtranslate_next_seo_language_tag` or `qtranslate_next_seo_schema`. Other SEO plugins and premium extensions need their own adapters/validation.
+Taxonomy/author archives are treated as shared archive views; individual translated slugs, archive-level translation availability and per-language robots settings are not introduced. Existing SEO plugin templates, images, breadcrumbs and schema types remain the vendor's responsibility. Yoast breadcrumb links are localized; custom integrations can filter `qtrad_seo_language_tag` or `qtrad_seo_schema`. Other SEO plugins and premium extensions need their own adapters/validation.
 
 ## Validation
 

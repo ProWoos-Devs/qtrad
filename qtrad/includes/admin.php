@@ -95,8 +95,8 @@ function qtrad_enqueue_editor( $hook ) {
 	}
 	$screen = get_current_screen();
 	$post   = null;
-	if ( $screen && $screen->base === 'post' && isset( $_GET['post'] ) ) {
-		$post = get_post( (int) $_GET['post'] );
+	if ( $screen && $screen->base === 'post' && isset( $_GET['post'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Reads the post being edited; core checks edit_post.
+		$post = get_post( absint( wp_unslash( $_GET['post'] ) ) ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- As above.
 	}
 	$type = $screen ? get_post_type_object( $screen->post_type ) : null;
 	wp_localize_script(
@@ -129,7 +129,7 @@ function qtrad_add_meta_boxes() {
 	foreach ( $types as $type ) {
 		add_meta_box(
 			'qtrad-languages',
-			__( 'Languages', 'qtrad' ),
+			esc_html__( 'Languages', 'qtrad' ),
 			'qtrad_languages_box',
 			$type,
 			'side',
@@ -186,7 +186,7 @@ function qtrad_languages_box( $post ) {
 }
 
 function qtrad_language_column( $columns ) {
-	$columns['qtrad_langs'] = __( 'Languages', 'qtrad' );
+	$columns['qtrad_langs'] = esc_html__( 'Languages', 'qtrad' );
 	return $columns;
 }
 
@@ -293,7 +293,7 @@ function qtrad_settings_page() {
 			$domain_lines .= $code . ' = ' . $host . "\n";
 		}
 	}
-	if ( $invalid && isset( $_POST['domains'] ) && is_string( $_POST['domains'] ) ) { $domain_lines = wp_unslash( $_POST['domains'] ); }
+	if ( $invalid && isset( $_POST['domains'] ) && is_string( $_POST['domains'] ) ) { $domain_lines = sanitize_textarea_field( wp_unslash( $_POST['domains'] ) ); }
 	$names = qtrad_split( (string) get_option( 'blogname' ), $enabled );
 	$descs = qtrad_split( (string) get_option( 'blogdescription' ), $enabled );
 
@@ -389,13 +389,13 @@ function qtrad_settings_page() {
 		if ( ! in_array( $code, $enabled, true ) ) { continue; }
 		echo '<fieldset><legend>' . esc_html( $meta['name'] . ' (' . $code . ')' ) . '</legend>';
 		foreach ( array( 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
-			echo '<p><label for="qtrad-' . esc_attr( $code . '-' . $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-' . esc_attr( $code . '-' . $key ) . '" name="languages[' . esc_attr( $code ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['languages'][ $code ][ $key ] ) && is_string( $_POST['languages'][ $code ][ $key ] ) ? wp_unslash( $_POST['languages'][ $code ][ $key ] ) : $meta[ $key ] ) . '" /></p>';
+			echo '<p><label for="qtrad-' . esc_attr( $code . '-' . $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-' . esc_attr( $code . '-' . $key ) . '" name="languages[' . esc_attr( $code ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['languages'][ $code ][ $key ] ) && is_string( $_POST['languages'][ $code ][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['languages'][ $code ][ $key ] ) ) : $meta[ $key ] ) . '" /></p>';
 		}
 		echo '</fieldset>';
 	}
 	echo '</details><fieldset><legend><h2>' . esc_html__( 'Add a language', 'qtrad' ) . '</h2></legend><p>' . esc_html__( 'Provide a two-letter code, native name and WordPress locale, for example: uk, Українська, uk. The language will be enabled when you save.', 'qtrad' ) . '</p>';
 	foreach ( array( 'code' => __( 'Two-letter code', 'qtrad' ), 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
-		echo '<p><label for="qtrad-new-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-new-' . esc_attr( $key ) . '" name="new_language[' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['new_language'][ $key ] ) && is_string( $_POST['new_language'][ $key ] ) ? wp_unslash( $_POST['new_language'][ $key ] ) : '' ) . '" /></p>';
+		echo '<p><label for="qtrad-new-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-new-' . esc_attr( $key ) . '" name="new_language[' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['new_language'][ $key ] ) && is_string( $_POST['new_language'][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['new_language'][ $key ] ) ) : '' ) . '" /></p>';
 	}
 	echo '</fieldset>';
 	submit_button( __( 'Save languages', 'qtrad' ) );

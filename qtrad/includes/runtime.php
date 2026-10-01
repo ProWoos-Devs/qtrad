@@ -33,17 +33,34 @@ function qtrad_is_neutral_path( $path ) {
 	return (bool) preg_match( '#^/(?:wp-admin|wp-login\.php|wp-json|wp-content|wp-includes|xmlrpc\.php|feed)(?:/|$)|/(?:feed|rss2?|atom|rdf)/?$|^/(?:[a-z0-9_-]*sitemap[a-z0-9_-]*\.(?:xml|xsl)|robots\.txt|favicon\.ico)$|\.(?:css|js|png|gif|jpe?g|svg|webp|woff2?|ico|pdf|zip)$#i', $path );
 }
 
+/** Request URI as received, unslashed and stripped of characters a URL cannot contain. */
+function qtrad_request_uri() {
+	return isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/';
+}
+
+function qtrad_request_host() {
+	return isset( $_SERVER['HTTP_HOST'] ) && is_string( $_SERVER['HTTP_HOST'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_HOST'] ) ) : '';
+}
+
+/** Hosts qTrad itself may redirect to: the home host plus configured language origins. */
+function qtrad_allowed_redirect_hosts( $hosts ) {
+	foreach ( qtrad_allowed_origins() as $origin ) {
+		$hosts[] = $origin['host'];
+	}
+	return array_unique( $hosts );
+}
+
 function qtrad_is_rest_request() {
 	if ( defined( 'REST_REQUEST' ) && REST_REQUEST ) { return true; }
-	if ( isset( $_GET['rest_route'] ) ) { return true; }
-	$uri = isset( $_SERVER['REQUEST_URI'] ) ? (string) $_SERVER['REQUEST_URI'] : '/';
+	if ( isset( $_GET['rest_route'] ) ) { return true; } // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request routing.
+	$uri = qtrad_request_uri();
 	$path = qtrad_strip_path_language( qtrad_relative_path( (string) wp_parse_url( $uri, PHP_URL_PATH ) ) );
 	$prefix = function_exists( 'rest_get_url_prefix' ) ? rest_get_url_prefix() : 'wp-json';
 	return (bool) preg_match( '#^/(?:index\.php/)?' . preg_quote( $prefix, '#' ) . '(?:/|$)#', $path );
 }
 
 function qtrad_browser_language() {
-	$header = isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) && is_string( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ? $_SERVER['HTTP_ACCEPT_LANGUAGE'] : '';
+	$header = isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) && is_string( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ? sanitize_text_field( wp_unslash( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ) : '';
 	$ranked = array();
 	foreach ( explode( ',', $header ) as $i => $entry ) {
 		if ( ! preg_match( '/^\s*([a-z]{2,8}(?:-[a-z0-9]{1,8})*)\s*(?:;\s*q=(0(?:\.[0-9]{1,3})?|1(?:\.0{1,3})?))?\s*$/iD', $entry, $match ) ) { continue; }
@@ -124,10 +141,10 @@ function qtrad_is_local_url( $parts ) {
 function qtrad_parse_local_url( $url ) {
 	$home = qtrad_home_parts();
 	if ( $url === '' ) {
-		$uri = isset( $GLOBALS['qtrad_original_uri'] ) ? $GLOBALS['qtrad_original_uri'] : ( isset( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '/' );
+		$uri = isset( $GLOBALS['qtrad_original_uri'] ) ? $GLOBALS['qtrad_original_uri'] : qtrad_request_uri();
 		$parts = wp_parse_url( $uri );
 		// Host input is accepted only if it is a configured origin.
-		$incoming = isset( $_SERVER['HTTP_HOST'] ) ? qtrad_domain_parts( $_SERVER['HTTP_HOST'] ) : false;
+		$incoming = qtrad_request_host() !== '' ? qtrad_domain_parts( qtrad_request_host() ) : false;
 		if ( $incoming ) {
 			$incoming['scheme'] = is_ssl() ? 'https' : 'http';
 			foreach ( qtrad_allowed_origins() as $origin ) {
@@ -196,7 +213,7 @@ function qtrad_convert_url( $url = '', $lang = '', $forceadmin = false, $show_de
 function qtrad_normalize_request() {
 	if ( is_admin() ) { qtrad_set_language( qtrad_default_language() ); return; }
 	if ( wp_doing_ajax() || wp_doing_cron() || ( defined( 'WP_CLI' ) && WP_CLI ) ) { qtrad_set_language( qtrad_default_language() ); return; }
-	$uri = isset( $_SERVER['REQUEST_URI'] ) && is_string( $_SERVER['REQUEST_URI'] ) ? $_SERVER['REQUEST_URI'] : '/';
+	$uri = qtrad_request_uri();
 	$GLOBALS['qtrad_original_uri'] = $uri;
 	$parts = qtrad_parse_local_url( '' );
 	$rel = qtrad_relative_path( $parts['path'] );
@@ -204,7 +221,9 @@ function qtrad_normalize_request() {
 	$mode = (int) qtrad_config( 'url_mode' );
 	$lang = '';
 	$explicit = false;
-	if ( isset( $_GET['lang'] ) && is_string( $_GET['lang'] ) && qtrad_is_enabled( strtolower( $_GET['lang'] ) ) ) { $lang = strtolower( $_GET['lang'] ); $explicit = true; }
+	// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only language selection from a public URL.
+	$query_lang = isset( $_GET['lang'] ) && is_string( $_GET['lang'] ) ? sanitize_key( wp_unslash( $_GET['lang'] ) ) : '';
+	if ( qtrad_is_enabled( $query_lang ) ) { $lang = $query_lang; $explicit = true; }
 	if ( ! $lang && $bare !== $rel ) { $lang = strtolower( substr( $rel, 1, 2 ) ); $explicit = true; }
 	if ( ! $lang && $mode === QTRAD_URL_DOMAIN && preg_match( '/^([a-z]{2})\./', $parts['host'], $match ) && qtrad_is_enabled( $match[1] ) ) { $lang = $match[1]; $explicit = true; }
 	if ( ! $lang && $mode === QTRAD_URL_DOMAINS ) {
@@ -213,7 +232,7 @@ function qtrad_normalize_request() {
 			if ( $origin && $origin['host'] === $parts['host'] && qtrad_effective_port( $origin + array( 'scheme' => $parts['scheme'] ) ) === qtrad_effective_port( $parts ) && qtrad_is_enabled( $code ) ) { $lang = $code; $explicit = true; break; }
 		}
 	}
-	if ( $bare !== $rel ) { $_SERVER['REQUEST_URI'] = qtrad_home_parts()['path'] . $bare . ( $parts['query'] !== '' ? '?' . $parts['query'] : '' ); }
+	if ( $bare !== $rel ) { $_SERVER['REQUEST_URI'] = wp_slash( qtrad_home_parts()['path'] . $bare . ( $parts['query'] !== '' ? '?' . $parts['query'] : '' ) ); }
 	if ( qtrad_is_rest_request() || qtrad_is_neutral_path( $parts['path'] ) || qtrad_is_sitemap_request() ) { qtrad_set_language( qtrad_is_sitemap_request() ? qtrad_default_language() : ( $lang ?: qtrad_default_language() ) ); return; }
 	$is_home = $bare === '/';
 	$negotiated = false;
@@ -226,10 +245,10 @@ function qtrad_normalize_request() {
 	$lang = qtrad_current_language();
 	if ( $explicit || $negotiated ) { qtrad_set_front_cookie( $lang ); }
 	$target = qtrad_url_for_language( '', $lang, ! qtrad_config( 'hide_default_language' ) || $lang !== qtrad_default_language() );
-	global $q_config;
+	global $q_config; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- qTranslate's public configuration global.
 	$q_config['url_info'] = array_merge( $parts, array( 'url' => $target, 'original_url' => qtrad_assemble_url( $parts ), 'wp-path' => $bare, 'language' => $lang, 'doing_front_end' => true ) );
-	$method = isset( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( $_SERVER['REQUEST_METHOD'] ) : 'GET';
-	$current = ( is_ssl() ? 'https' : 'http' ) . '://' . ( isset( $_SERVER['HTTP_HOST'] ) ? $_SERVER['HTTP_HOST'] : '' ) . $uri;
+	$method = isset( $_SERVER['REQUEST_METHOD'] ) && is_string( $_SERVER['REQUEST_METHOD'] ) ? strtoupper( sanitize_key( wp_unslash( $_SERVER['REQUEST_METHOD'] ) ) ) : 'GET';
+	$current = ( is_ssl() ? 'https' : 'http' ) . '://' . qtrad_request_host() . $uri;
 	if ( $is_home && ! $explicit ) {
 		// The default-language 200 response is personalized too, not just redirects.
 		nocache_headers();
@@ -237,10 +256,11 @@ function qtrad_normalize_request() {
 	}
 	if ( in_array( $method, array( 'GET', 'HEAD' ), true ) && $current !== $target ) {
 		// Target host can only come from qtrad_allowed_origins() or the canonical home.
-		wp_redirect( $target, 302, 'qTrad' );
+		add_filter( 'allowed_redirect_hosts', 'qtrad_allowed_redirect_hosts' );
+		wp_safe_redirect( $target, 302, 'qTrad' );
 		exit;
 	}
-	$_SERVER['REQUEST_URI'] = qtrad_home_parts()['path'] . $bare . ( qtrad_strip_query_lang( $parts['query'] ) !== '' ? '?' . qtrad_strip_query_lang( $parts['query'] ) : '' );
+	$_SERVER['REQUEST_URI'] = wp_slash( qtrad_home_parts()['path'] . $bare . ( qtrad_strip_query_lang( $parts['query'] ) !== '' ? '?' . qtrad_strip_query_lang( $parts['query'] ) : '' ) );
 }
 
 function qtrad_filter_home_url( $url, $path = '' ) {
@@ -283,18 +303,6 @@ function qtrad_filter_language_attributes( $output ) {
 	$xml = strpos( $output, 'xml:lang=' ) !== false;
 	$output = preg_replace( '/(?:^|\s+)(?:(?:xml:)?lang|dir)=(["\']).*?\1/i', '', $output );
 	return trim( $output ) . ' lang="' . esc_attr( $html ) . '"' . ( $xml ? ' xml:lang="' . esc_attr( $html ) . '"' : '' ) . ' dir="' . esc_attr( $dir ) . '"';
-}
-
-function qtrad_flag_css() {
-	$css = '';
-	foreach ( qtrad_enabled_languages() as $lang ) {
-		$url = qtrad_flag_url( $lang );
-		if ( ! $url ) {
-			continue;
-		}
-		$css .= '.qtrans_flag_' . $lang . ',.qtranxs_flag_' . $lang . '{background-image:url(' . esc_url( $url ) . ');background-repeat:no-repeat;background-position:center;background-size:contain;}';
-	}
-	return $css;
 }
 
 function qtrad_flag_url( $lang ) {
@@ -348,12 +356,16 @@ function qtrad_available_language_where( $lang ) {
 	// Exclude whitespace and immediately following markers, including empty blocks.
 	$content = '(\\[:' . $lang . '\\][[:space:]]*([^[:space:]\\[]|\\[[^:])|<!--:' . $lang . '-->[[:space:]]*([^[:space:]<]|<[^!]|<![^-]|<!-[^-]|<!--[^:])|\\{:' . $lang . '\\}[[:space:]]*([^[:space:]{}]|\\{[^:]))';
 	$field = "CASE WHEN {$wpdb->posts}.post_content REGEXP %s THEN {$wpdb->posts}.post_content ELSE {$wpdb->posts}.post_title END";
-	return $wpdb->prepare(
+	// $field holds one %s placeholder and appears twice, so five values fill five placeholders. $lang is an enabled two-letter code.
+	// phpcs:disable WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+	$where = $wpdb->prepare(
 		" AND (EXISTS (SELECT 1 FROM {$wpdb->postmeta} qtrad_available WHERE qtrad_available.post_id = {$wpdb->posts}.ID AND qtrad_available.meta_key = '_qtrad_available_languages' AND (qtrad_available.meta_value = '*' OR qtrad_available.meta_value LIKE %s))
 		OR (NOT EXISTS (SELECT 1 FROM {$wpdb->postmeta} qtrad_index WHERE qtrad_index.post_id = {$wpdb->posts}.ID AND qtrad_index.meta_key = '_qtrad_available_languages')
 		AND (($field) NOT REGEXP %s OR ($field) REGEXP %s)))",
 		'%|' . $lang . '|%', $marker, $marker, $marker, $content
 	);
+	// phpcs:enable
+	return $where;
 }
 
 function qtrad_filter_get_term( $term ) {

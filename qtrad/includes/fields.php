@@ -64,7 +64,9 @@ function qtrad_register_rest_fields() {
 }
 
 function qtrad_request_edit_lang() {
-	if ( isset( $_POST['qtrad_edit_lang'] ) && is_string( $_POST['qtrad_edit_lang'] ) ) {
+	$id = isset( $_POST['qtrad_field_post_id'] ) ? absint( $_POST['qtrad_field_post_id'] ) : 0;
+	if ( $id && isset( $_POST['qtrad_edit_lang'], $_POST['qtrad_field_nonce'] ) && is_string( $_POST['qtrad_edit_lang'] ) && is_string( $_POST['qtrad_field_nonce'] )
+		&& wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['qtrad_field_nonce'] ) ), 'qtrad_field_' . $id ) ) {
 		$lang = strtolower( sanitize_key( wp_unslash( $_POST['qtrad_edit_lang'] ) ) );
 		if ( qtrad_is_enabled( $lang ) ) { return $lang; }
 	}
@@ -72,7 +74,7 @@ function qtrad_request_edit_lang() {
 }
 
 function qtrad_sanitize_posted_text( $value, $kind ) {
-	$value = is_string( $value ) ? wp_unslash( $value ) : '';
+	$value = is_string( $value ) ? $value : '';
 	if ( $kind === 'title' ) { return sanitize_text_field( $value ); }
 	return current_user_can( 'unfiltered_html' ) ? $value : wp_kses_post( $value );
 }
@@ -104,7 +106,7 @@ function qtrad_filter_insert_post( $data, $postarr ) {
 			$texts = qtrad_split( $previous, null, false );
 			foreach ( qtrad_enabled_languages() as $lang ) {
 				if ( array_key_exists( $lang, $_POST['qtrad_field'][ $key ] ) ) {
-					$texts[ $lang ] = qtrad_sanitize_posted_text( $_POST['qtrad_field'][ $key ][ $lang ], $key );
+					$texts[ $lang ] = qtrad_sanitize_posted_text( wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ), $key ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized by qtrad_sanitize_posted_text() (sanitize_text_field or wp_kses_post).
 				}
 			}
 			$format = qtrad_resolve_format( $previous, qtrad_setting( 'write_format', 'keep' ) );
@@ -174,7 +176,7 @@ function qtrad_save_term( $term_id, $tt_id = 0, $taxonomy = '' ) {
 	if ( ! $term || is_wp_error( $term ) ) { return; }
 	if ( empty( $_POST['qtrad_term_id'] ) ) {
 		$submitted_name = isset( $_POST['tag-name'] ) && is_string( $_POST['tag-name'] ) ? sanitize_text_field( wp_unslash( $_POST['tag-name'] ) ) : '';
-		if ( $submitted_name !== $term->name || ! isset( $_POST['qtrad_term_taxonomy'] ) || $_POST['qtrad_term_taxonomy'] !== $taxonomy ) { return; }
+		if ( $submitted_name !== $term->name || ! isset( $_POST['qtrad_term_taxonomy'] ) || ! is_string( $_POST['qtrad_term_taxonomy'] ) || sanitize_key( wp_unslash( $_POST['qtrad_term_taxonomy'] ) ) !== $taxonomy ) { return; }
 	}
 	$old = isset( $GLOBALS['qtrad_old_term_names'][ $term_id ] ) ? $GLOBALS['qtrad_old_term_names'][ $term_id ] : $term->name;
 	unset( $GLOBALS['qtrad_old_term_names'][ $term_id ] );
@@ -193,7 +195,8 @@ function qtrad_save_term( $term_id, $tt_id = 0, $taxonomy = '' ) {
 		if ( is_wp_error( $result ) ) { return; }
 	}
 	global $wpdb;
-	if ( $old !== $name && ! $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM {$wpdb->terms} WHERE name = %s AND term_id <> %d LIMIT 1", $old, $term_id ) ) ) { unset( $library[ $old ] ); }
+	// Exact name match across all taxonomies, which no core term API offers.
+	if ( $old !== $name && ! $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM {$wpdb->terms} WHERE name = %s AND term_id <> %d LIMIT 1", $old, $term_id ) ) ) { unset( $library[ $old ] ); } // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	$library[ $name ] = $posted;
 	update_option( 'qtranslate_term_name', $library );
 	update_term_meta( $term_id, '_qtrad_translations', wp_slash( $posted ) );
@@ -225,7 +228,8 @@ function qtrad_filter_get_meta( $value, $object_id, $meta_key, $single ) {
 function qtrad_filter_update_meta( $check, $object_id, $meta_key, $meta_value, $prev_value ) {
 	if ( $check !== null || ! is_string( $meta_key ) || ! is_string( $meta_value ) || ! in_array( $meta_key, qtrad_extra_field_keys(), true ) || qtrad_has_lang_tags( $meta_value ) ) { return $check; }
 	global $wpdb;
-	$rows = $wpdb->get_results( $wpdb->prepare( "SELECT meta_id, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s ORDER BY meta_id", $object_id, $meta_key ) );
+	// Raw rows, bypassing the display filters and object cache, so a write merges into stored values.
+	$rows = $wpdb->get_results( $wpdb->prepare( "SELECT meta_id, meta_value FROM {$wpdb->postmeta} WHERE post_id = %d AND meta_key = %s ORDER BY meta_id", $object_id, $meta_key ) ); // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	$lang = qtrad_request_edit_lang();
 	if ( ! $rows ) {
 		if ( ! empty( $prev_value ) ) { return false; }
@@ -252,7 +256,7 @@ function qtrad_delete_term_library( $term_id, $tt_id, $taxonomy, $term ) {
 		$term->name = $GLOBALS['qtrad_old_term_names'][ $term_id ];
 		unset( $GLOBALS['qtrad_old_term_names'][ $term_id ] );
 	}
-	if ( ! isset( $term->name ) || $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM {$wpdb->terms} WHERE name = %s LIMIT 1", $term->name ) ) ) { return; }
+	if ( ! isset( $term->name ) || $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM {$wpdb->terms} WHERE name = %s LIMIT 1", $term->name ) ) ) { return; } // phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Exact name match across all taxonomies.
 	$library = (array) get_option( 'qtranslate_term_name', array() );
 	unset( $library[ $term->name ] );
 	update_option( 'qtranslate_term_name', $library );

@@ -14,17 +14,15 @@ function qtrad_register_widget() {
 }
 
 function qtrad_widgets_init() {
-	register_widget( 'qTradWidget' );
+	register_widget( 'Qtrad_Widget' );
 }
 
 function qtrad_register_shortcodes() {
 	add_shortcode( 'qtrad_switcher', 'qtrad_shortcode_switcher' );
-	add_shortcode( 'qtranslate_switcher', 'qtrad_shortcode_switcher' );
-	add_shortcode( 'qtrad_switcher', 'qtrad_shortcode_switcher' );
 }
 
 function qtrad_shortcode_switcher( $atts ) {
-	$atts = shortcode_atts( array( 'style' => 'both', 'id' => '' ), $atts, 'qtranslate_switcher' );
+	$atts = shortcode_atts( array( 'style' => 'both', 'id' => '' ), $atts, 'qtrad_switcher' );
 	return qtrad_language_chooser( $atts['style'], $atts['id'] );
 }
 
@@ -57,7 +55,7 @@ function qtrad_admin_bar( $bar ) {
 	}
 }
 
-class qTradWidget extends WP_Widget {
+class Qtrad_Widget extends WP_Widget {
 	public function __construct() {
 		parent::__construct(
 			'qtranslate',
@@ -71,12 +69,12 @@ class qTradWidget extends WP_Widget {
 	public function widget( $args, $instance ) {
 		$title = isset( $instance['title'] ) ? $instance['title'] : '';
 		$style = isset( $instance['type'] ) ? $instance['type'] : 'both';
-		echo $args['before_widget'];
+		echo wp_kses_post( $args['before_widget'] );
 		if ( $title !== '' && empty( $instance['hide-title'] ) ) {
-			echo $args['before_title'] . esc_html( qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $title ) ) . $args['after_title'];
+			echo wp_kses_post( $args['before_title'] ) . esc_html( qtranxf_useCurrentLanguageIfNotFoundUseDefaultLanguage( $title ) ) . wp_kses_post( $args['after_title'] );
 		}
-		echo qtrad_language_chooser( $style, $this->id );
-		echo $args['after_widget'];
+		echo wp_kses( qtrad_language_chooser( $style, $this->id ), qtrad_chooser_allowed_html() );
+		echo wp_kses_post( $args['after_widget'] );
 	}
 
 	public function form( $instance ) {
@@ -115,19 +113,11 @@ class qTradWidget extends WP_Widget {
 	}
 }
 
-// Retain former class names for integrations without registering another widget.
-if ( ! class_exists( 'qTranslateNextWidget' ) ) {
-	class qTranslateNextWidget extends qTradWidget {}
-}
-
+// qTranslate and qTranslate-X widget classes, for integrations that reference them.
 if ( ! class_exists( 'qTranslateWidget' ) ) {
-	class qTranslateWidget extends qTranslateNextWidget {}
+	class qTranslateWidget extends Qtrad_Widget {}
 }
 
 if ( ! class_exists( 'qTranslateXWidget' ) ) {
-	class qTranslateXWidget extends qTranslateNextWidget {}
-}
-
-if ( ! class_exists( 'qTranslateUnifiedWidget' ) ) {
-	class qTranslateUnifiedWidget extends qTranslateNextWidget {}
+	class qTranslateXWidget extends Qtrad_Widget {}
 }

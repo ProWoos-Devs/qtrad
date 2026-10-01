@@ -1,7 +1,7 @@
 <?php
 /**
  * Shared language options from qTranslate and qTranslate-X are retained.
- * See COMPATIBILITY.md for the separate backward-write policies.
+ * The repository docs/COMPATIBILITY.md describes the separate backward-write policies.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -132,20 +132,16 @@ function qtrad_load_config() {
 		$url_mode = 2;
 	}
 
-	$unified = get_option( 'qtranslate_unified_settings', array() );
-	if ( ! is_array( $unified ) ) {
-		$unified = array();
-	}
-	$next = get_option( 'qtranslate_next_settings', array() );
-	if ( is_array( $next ) ) {
-		$unified = array_replace( $unified, $next );
+	$own = get_option( 'qtrad_settings', array() );
+	if ( ! is_array( $own ) ) {
+		$own = array();
 	}
 	$formats = array( 'keep', 'bracket', 'comment', 'swirly' );
-	$write   = isset( $unified['write_format'] ) ? $unified['write_format'] : 'keep';
+	$write   = isset( $own['write_format'] ) ? $own['write_format'] : 'keep';
 	if ( ! in_array( $write, $formats, true ) ) {
 		$write = 'keep';
 	}
-	$editor_mode = isset( $unified['editor_mode'] ) ? $unified['editor_mode'] : '';
+	$editor_mode = isset( $own['editor_mode'] ) ? $own['editor_mode'] : '';
 	if ( $editor_mode === '' ) {
 		$legacy = get_option( 'qtranslate_editor_mode', 0 );
 		$editor_mode = ( (int) $legacy === 1 ) ? 'raw' : 'lsb';
@@ -154,7 +150,7 @@ function qtrad_load_config() {
 		$editor_mode = 'lsb';
 	}
 
-	$extra = isset( $unified['extra_fields'] ) ? $unified['extra_fields'] : '';
+	$extra = isset( $own['extra_fields'] ) ? $own['extra_fields'] : '';
 	$domains = get_option( 'qtranslate_domains', array() );
 	if ( ! is_array( $domains ) ) {
 		$domains = array();
@@ -183,15 +179,15 @@ function qtrad_load_config() {
 		'extra_fields'       => $extra,
 		'force_markers'      => qtrad_bool_option( 'qtranslate_force_markers', false ),
 		'not_available'      => (array) get_option( 'qtranslate_na_messages', array() ),
-		'show_prefix'        => isset( $unified['show_prefix'] ) ? (bool) $unified['show_prefix'] : qtrad_bool_option( 'qtranslate_show_displayed_language_prefix', true ),
-		'show_alt_message'   => isset( $unified['show_alt_message'] ) ? (bool) $unified['show_alt_message'] : qtrad_bool_option( 'qtranslate_show_alternative_content_message', true ),
+		'show_prefix'        => isset( $own['show_prefix'] ) ? (bool) $own['show_prefix'] : qtrad_bool_option( 'qtranslate_show_displayed_language_prefix', true ),
+		'show_alt_message'   => isset( $own['show_alt_message'] ) ? (bool) $own['show_alt_message'] : qtrad_bool_option( 'qtranslate_show_alternative_content_message', true ),
 		'show_alt_content'   => qtrad_bool_option( 'qtranslate_show_alternative_content', false ),
 		'url_info'           => array(),
 	);
 }
 
 function qtrad_config( $key = null ) {
-	global $q_config;
+	global $q_config; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- qTranslate's public configuration global.
 	if ( ! is_array( $q_config ) || empty( $q_config['qtrad_loaded'] ) ) {
 		$q_config = qtrad_load_config();
 	}
@@ -226,7 +222,7 @@ function qtrad_language_name( $lang ) {
 }
 
 function qtrad_set_language( $lang ) {
-	global $q_config;
+	global $q_config; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- qTranslate's public configuration global.
 	qtrad_config();
 	if ( ! qtrad_is_enabled( $lang ) ) {
 		$lang = qtrad_default_language();
@@ -237,7 +233,7 @@ function qtrad_set_language( $lang ) {
 }
 
 function qtrad_current_language() {
-	global $q_config;
+	global $q_config; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- qTranslate's public configuration global.
 	qtrad_config();
 	if ( ! empty( $q_config['language'] ) && qtrad_is_enabled( $q_config['language'] ) ) {
 		return $q_config['language'];
@@ -262,13 +258,13 @@ function qtrad_admin_language() {
 }
 
 function qtrad_reset_config() {
-	global $q_config;
+	global $q_config; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- qTranslate's public configuration global.
 	$q_config = null;
 }
 
 /** Language/options belong to a site; restore the caller's context after switching. */
 function qtrad_switch_blog( $new_blog_id, $previous_blog_id, $context = 'switch' ) {
-	global $q_config;
+	global $q_config; // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedVariableFound -- qTranslate's public configuration global.
 	if ( $context === 'restore' && ! empty( $GLOBALS['qtrad_blog_configs'] ) ) {
 		$previous = array_pop( $GLOBALS['qtrad_blog_configs'] );
 		if ( $previous['blog_id'] === (int) $new_blog_id ) { $q_config = $previous['config']; return; }
@@ -384,7 +380,7 @@ function qtrad_save_settings( $input ) {
 		update_option( 'qtranslate_show_alternative_content_message', ! empty( $input['show_alt_message'] ) );
 	}
 	update_option(
-		'qtranslate_next_settings',
+		'qtrad_settings',
 		array(
 			'write_format'     => $write,
 			'editor_mode'      => $editor_mode,
@@ -407,8 +403,6 @@ function qtrad_conflicting_plugin() {
 		'qtranslate/qtranslate.php',
 		'qtranslate-x/qtranslate.php',
 		'qtranslate-xt/qtranslate.php',
-		'qtranslate-next/qtranslate-next.php',
-		'qtranslate-unified/qtranslate-unified.php',
 	);
 	foreach ( $candidates as $plugin ) {
 		if ( in_array( $plugin, $active, true ) ) {
@@ -416,20 +410,47 @@ function qtrad_conflicting_plugin() {
 		}
 	}
 	foreach ( $active as $plugin ) {
-		$file = WP_PLUGIN_DIR . '/' . $plugin;
-		if ( basename( $plugin ) !== 'qtranslate.php' && is_file( $file ) ) {
-			$header = file_get_contents( $file, false, null, 0, 8192 );
-			if ( is_string( $header ) && preg_match( '/^\s*\*?\s*Plugin Name:\s*qTranslate(?:-X|-XT| Next| Unified)?\s*$/mi', $header ) ) {
-				return $plugin;
-			}
-		} elseif ( basename( $plugin ) === 'qtranslate.php' ) {
+		if ( basename( $plugin ) === 'qtranslate.php' ) {
 			return $plugin;
 		}
+	}
+	$renamed = qtrad_renamed_predecessor( $active );
+	if ( $renamed !== '' ) {
+		return $renamed;
 	}
 	if ( defined( 'QTX_VERSION' ) || defined( 'QTRANSLATE_VERSION' ) || function_exists( 'qtranxf_init' ) || function_exists( 'qtrans_init' ) ) {
 		return 'qTranslate';
 	}
 	return '';
+}
+
+/**
+ * A predecessor installed under another folder name, found by its plugin header.
+ * Headers are read only when the active plugin list changes.
+ */
+function qtrad_renamed_predecessor( $active ) {
+	$key = md5( implode( '|', $active ) );
+	$cached = get_transient( 'qtrad_conflict_scan' );
+	if ( is_array( $cached ) && isset( $cached['key'], $cached['plugin'] ) && $cached['key'] === $key ) {
+		return $cached['plugin'];
+	}
+	if ( ! function_exists( 'get_file_data' ) ) {
+		return '';
+	}
+	$found = '';
+	foreach ( $active as $plugin ) {
+		$file = WP_PLUGIN_DIR . '/' . $plugin;
+		if ( ! is_string( $plugin ) || ! is_file( $file ) ) {
+			continue;
+		}
+		$header = get_file_data( $file, array( 'name' => 'Plugin Name' ) );
+		if ( preg_match( '/^qTranslate(?:-X|-XT)?$/iD', trim( $header['name'] ) ) ) {
+			$found = $plugin;
+			break;
+		}
+	}
+	set_transient( 'qtrad_conflict_scan', array( 'key' => $key, 'plugin' => $found ), DAY_IN_SECONDS );
+	return $found;
 }
 
 /** Imported languages remain editable even when absent from the built-in list. */

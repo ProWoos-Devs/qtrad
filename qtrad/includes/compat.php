@@ -159,7 +159,7 @@ if ( ! function_exists( 'qtranxf_useTermLib' ) ) {
 
 if ( ! function_exists( 'qtranxf_generateLanguageSelectCode' ) ) {
 	function qtranxf_generateLanguageSelectCode( $style = '', $id = '' ) {
-		echo qtrad_language_chooser( $style, $id );
+		echo wp_kses( qtrad_language_chooser( $style, $id ), qtrad_chooser_allowed_html() );
 	}
 }
 
@@ -287,6 +287,24 @@ function qtrans_isAvailableIn( $post_id, $lang = '' ) { return qtranxf_isAvailab
 if ( ! function_exists( 'qtrans_useCurrentLanguageIfNotFoundShowEmpty' ) ) {
 function qtrans_useCurrentLanguageIfNotFoundShowEmpty( $text ) { return qtrad_use_current( $text, false, true ); }
 }
+/** Markup the language chooser may contain, for escaping it where it is echoed. */
+function qtrad_chooser_allowed_html() {
+	return array(
+		'nav'    => array( 'class' => true, 'aria-label' => true ),
+		'form'   => array( 'class' => true, 'hidden' => true ),
+		'label'  => array( 'for' => true ),
+		'select' => array( 'id' => true ),
+		'option' => array( 'value' => true, 'selected' => true ),
+		'button' => array( 'type' => true ),
+		'ul'     => array( 'class' => true, 'id' => true ),
+		'li'     => array( 'class' => true ),
+		'a'      => array( 'href' => true, 'hreflang' => true, 'lang' => true, 'aria-current' => true ),
+		'img'    => array( 'src' => true, 'width' => true, 'height' => true, 'alt' => true ),
+		'span'   => array( 'class' => true, 'aria-hidden' => true ),
+		'bdi'    => array( 'class' => true ),
+	);
+}
+
 /** Full names remain available to screen readers in every display style. */
 function qtrad_language_chooser( $style = '', $id = '' ) {
 	if ( is_array( $style ) ) {

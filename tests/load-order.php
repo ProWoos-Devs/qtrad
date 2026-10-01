@@ -1,8 +1,9 @@
 <?php
 // Bootstrap-only guard regression. No database/WordPress required.
-// php tests/load-order.php original|x|renamed|network|loaded|next|unified /path/to/upstream/qtranslate_core.php
+// php tests/load-order.php original|x|renamed|network|loaded /path/to/upstream/qtranslate_core.php
 $kind = $argv[1];
 define('ABSPATH', __DIR__ . '/');
+define('DAY_IN_SECONDS', 86400);
 define('WP_PLUGIN_DIR', sys_get_temp_dir() . '/qtrad-guard-plugins');
 class WP_Widget {}
 function plugin_dir_path($file) { return dirname($file) . '/'; }
@@ -11,9 +12,15 @@ function register_activation_hook() {}
 function get_option($key,$default=array()) {
     global $kind;
     if ($key !== 'active_plugins') return $default;
-    if ($kind === 'next') return array('qtranslate-next/qtranslate-next.php');
-    if ($kind === 'unified') return array('qtranslate-unified/qtranslate-unified.php');
     return $kind === 'original' ? array('qtranslate/qtranslate.php') : ($kind === 'x' ? array('qtranslate-x/qtranslate.php') : ($kind === 'renamed' ? array('renamed/main.php') : array()));
+}
+function get_transient() { return false; }
+function set_transient() { return true; }
+function get_file_data($file, $headers) {
+    $data = (string) file_get_contents($file, false, null, 0, 8192);
+    $result = array();
+    foreach ($headers as $key => $name) $result[$key] = preg_match('/^[ \t\/*#@]*' . preg_quote($name, '/') . ':(.*)$/mi', $data, $m) ? trim($m[1]) : '';
+    return $result;
 }
 function is_multisite() { return $GLOBALS['kind'] === 'network'; }
 function get_site_option() { return array('qtranslate-x/qtranslate.php'=>1); }

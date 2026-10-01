@@ -54,8 +54,8 @@ The declared minimums remain WordPress 5.8/PHP 7.4. All 12 cells in ../tests/mat
 
 Multisite language/options caches follow each site and restore the caller’s selection after nested switch_to_blog()/restore_current_blog() calls. Site-specific custom blocks, plugins, themes, domain routing and caches still require staging validation.
 
-## Earlier package identities
+## Plugin identity
 
-The canonical package is `qtrad/qtrad.php`, previously `qtranslate-next/qtranslate-next.php`. Deactivate the former distribution before activating qTrad. Bootstrap shims inside the new folder preserve `qtranslate-next.php` and `qtranslate-unified.php` for direct includes; integrations hardcoding a former folder path must update it. The text domain and settings page slug are now `qtrad`. Shared options and the existing `qtranslate_next_settings`/`qtranslate_unified_settings` keys retain their contracts. The `qtranslate_next_seo_*` filter names remain supported.
+The plugin entry point is `qtrad/qtrad.php`, with text domain and settings page slug `qtrad`. qTrad's own names use the `qtrad_` prefix: settings in the `qtrad_settings` option, the `qtrad_edit_language` user preference, `_qtrad_*` post and term metadata, the `qtrad_seo_*` filters and the `[qtrad_switcher]` shortcode. Earlier development builds (called qTranslate Unified and qTranslate Next) were never released, so their names are not carried over.
 
-`qTradWidget` is the registered widget class; the former `qTranslateNextWidget`, `qTranslateUnifiedWidget`, `qTranslateWidget` and `qTranslateXWidget` classes remain compatible. The widget ID base remains `qtranslate`. The new `[qtrad_switcher]` shortcode shares the legacy `[qtranslate_switcher]`/`[qtrad_switcher]` renderer.
+`Qtrad_Widget` is the registered widget class. The `qTranslateWidget` and `qTranslateXWidget` class names from qTranslate and qTranslate-X remain available, and the widget ID base remains `qtranslate`, so sidebars that held either predecessor's widget keep it.

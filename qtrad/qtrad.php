@@ -1,11 +1,12 @@
 <?php
 /**
- * Plugin Name: qTrad — Multilingual Content
- * Description: An independent continuation of qTranslate and qTranslate-X with accessible multilingual editing and SEO.
- * Version: 1.2.1
+ * Plugin Name: qTrad
+ * Description: Multilingual content for WordPress. An independent continuation of qTranslate and qTranslate-X that keeps their translations and adds accessible editing and multilingual SEO.
+ * Version: 1.3.0
  * Requires at least: 5.8
  * Requires PHP: 7.4
- * Author: qTrad contributors
+ * Author: Rafael Minuesa
+ * Author URI: https://github.com/rafael-minuesa
  * License: GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: qtrad
@@ -15,11 +16,15 @@
  * This plugin accepts all three and can keep whichever a field already uses.
  */
 
-if ( ! defined( 'ABSPATH' ) || defined( 'QTRAD_VERSION' ) ) {
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+if ( defined( 'QTRAD_VERSION' ) ) {
 	return;
 }
 
-define( 'QTRAD_VERSION', '1.2.1' );
+define( 'QTRAD_VERSION', '1.3.0' );
 define( 'QTRAD_FILE', __FILE__ );
 define( 'QTRAD_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -37,9 +42,11 @@ if ( qtrad_conflicting_plugin() ) {
 	add_action( 'network_admin_notices', 'qtrad_conflict_notice' );
 	return;
 }
-foreach ( array( 'QTX_URL_QUERY' => 1, 'QTX_URL_PATH' => 2, 'QTX_URL_DOMAIN' => 3, 'QTX_URL_DOMAINS' => 4 ) as $constant => $value ) {
-	if ( ! defined( $constant ) ) { define( $constant, $value ); }
+// qTranslate-X URL mode constants, for integrations that compare against them.
+foreach ( array( 'QTX_URL_QUERY' => 1, 'QTX_URL_PATH' => 2, 'QTX_URL_DOMAIN' => 3, 'QTX_URL_DOMAINS' => 4 ) as $qtrad_constant => $qtrad_value ) {
+	if ( ! defined( $qtrad_constant ) ) { define( $qtrad_constant, $qtrad_value ); } // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.VariableConstantNameFound -- qTranslate-X public constants.
 }
+unset( $qtrad_constant, $qtrad_value );
 require_once QTRAD_DIR . 'includes/tokens.php';
 require_once QTRAD_DIR . 'includes/runtime.php';
 require_once QTRAD_DIR . 'includes/compat.php';
@@ -69,7 +76,6 @@ function qtrad_boot() {
 	add_action( 'init', 'qtrad_refresh_admin_language', 0 );
 	add_action( 'switch_blog', 'qtrad_switch_blog', 0, 3 );
 	add_action( 'init', 'qtrad_register_shortcodes' );
-	add_action( 'init', 'qtrad_load_textdomain' );
 	add_action( 'wp_enqueue_scripts', 'qtrad_enqueue_front' );
 }
 
@@ -95,7 +101,7 @@ function qtrad_conflict_notice() {
 	echo esc_html(
 		sprintf(
 			/* translators: %s: plugin basename */
-			__( 'qTrad did not start because %s is still active. Deactivate the other qTranslate implementation, including former Next or Unified builds, before using this plugin. Your posts and qtranslate_* settings are left untouched.', 'qtrad' ),
+			__( 'qTrad did not start because %s is still active. Deactivate the other qTranslate implementation before using this plugin. Your posts and qtranslate_* settings are left untouched.', 'qtrad' ),
 			$other ? $other : __( 'another qTranslate build', 'qtrad' )
 		)
 	);
@@ -104,10 +110,6 @@ function qtrad_conflict_notice() {
 
 function qtrad_activate() {
 	if ( qtrad_conflicting_plugin() ) {
-		wp_die( esc_html__( 'Deactivate the other qTranslate implementation, including former Next or Unified builds, first.', 'qtrad' ), esc_html__( 'qTrad', 'qtrad' ), array( 'back_link' => true ) );
+		wp_die( esc_html__( 'Deactivate the other qTranslate implementation first.', 'qtrad' ), esc_html__( 'qTrad', 'qtrad' ), array( 'back_link' => true ) );
 	}
-}
-
-function qtrad_load_textdomain() {
-	load_plugin_textdomain( 'qtrad', false, dirname( plugin_basename( QTRAD_FILE ) ) . '/languages' );
 }

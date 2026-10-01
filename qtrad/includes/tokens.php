@@ -286,7 +286,7 @@ function qtrad_use_language( $text, $lang, $show_available = false, $show_empty 
 		}
 		$message = sprintf(
 			/* translators: %s: linked list of languages that have a translation */
-			__( 'Sorry, this entry is only available in %s.', 'qtrad' ),
+			esc_html__( 'Sorry, this entry is only available in %s.', 'qtrad' ),
 			implode( ', ', $list )
 		);
 		$prefix = $show_prefix ? '(' . esc_html( qtrad_language_name( $alt ) ) . ') ' : '';
@@ -305,7 +305,7 @@ function qtrad_use_language( $text, $lang, $show_available = false, $show_empty 
 		return $output;
 	}
 	if ( $show_prefix ) {
-		return '(' . qtrad_language_name( $alt ) . ') ' . $alt_text;
+		return '(' . esc_html( qtrad_language_name( $alt ) ) . ') ' . $alt_text;
 	}
 	return $alt_text;
 }

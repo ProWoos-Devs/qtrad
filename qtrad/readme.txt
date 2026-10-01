@@ -1,105 +1,93 @@
-=== qTrad — Multilingual Content ===
-Tags: multilingual, bilingual, language, accessibility, i18n
+=== qTrad ===
+Contributors: rafaelminuesa
+Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.2.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-An independent continuation of qTranslate and qTranslate-X with accessible multilingual editing and SEO.
+Multilingual content that keeps your qTranslate and qTranslate-X translations, with accessible editing and multilingual SEO.
 
 == Description ==
 
-Keep your existing qTranslate translations and gain modern editing, accessible language controls and multilingual SEO. qTrad is an independent continuation of qTranslate and qTranslate-X, previously developed here as qTranslate Next and qTranslate Unified.
+qTrad is an independent continuation of qTranslate and qTranslate-X. Existing translations keep working as they are, and you gain modern editing, accessible language controls and multilingual SEO.
 
-qTrad keeps translations together in post titles, content and excerpts. It reads qTranslate comment markers, qTranslate-X bracket markers and swirly markers:
+qTrad keeps all translations of a post title, content and excerpt together in the same field. It reads the qTranslate comment markers, the qTranslate-X bracket markers and the swirly markers.
 
 * <!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->
 * [:en]Hello[:de]Hallo[:]
 * {:en}Hello{:de}Hallo{:}
 
-Classic and block editors show one language at a time. Saving preserves the other translations, including disabled languages. Public custom post types with a REST endpoint are supported. Raw mode leaves complete multilingual fields visible for direct editing.
+The classic and block editors show one language at a time. Saving preserves the other translations, including those of disabled languages. Public custom post types with a REST endpoint are supported. Raw mode shows the complete multilingual field for direct editing.
 
-Language controls use full names, keyboard-operable buttons, announced selection changes, visible focus, generous targets and right-to-left editing. Public switchers offer links, flags with accessible names, short codes, or a labelled dropdown with an explicit Go button. Dropdowns fall back to ordinary links without JavaScript. See ACCESSIBILITY.md for verified coverage and remaining manual checks.
+Language controls use full names, keyboard-operable buttons, announced selection changes, visible focus, generous targets and right-to-left editing. Public switchers offer links, flags with accessible names, short codes, or a labelled dropdown with an explicit Go button. Dropdowns fall back to ordinary links without JavaScript.
 
-Legacy qtranslate_* language, locale, flag, URL, term and fallback settings are retained. Existing qtranslate widgets keep their sidebar identity. Imported custom languages remain available in Settings → Languages; you can edit their names/locales and add two-letter language codes.
+The qtranslate_* language, locale, flag, URL, term and fallback settings are reused as they are. Existing qTranslate and qTranslate-X widgets keep their place in the sidebar. Imported custom languages remain available in Settings → Languages, where you can edit their names and locales and add new two-letter language codes.
 
-This is content compatibility and a documented subset of the legacy public APIs. It does not include every predecessor feature or third-party integration module. See COMPATIBILITY.md for the supported functions and limits.
+qTrad offers content compatibility and a documented subset of the qtrans_* and qtranxf_* public functions. It does not include every feature of its predecessors or their third-party integration modules.
 
 = Read and write compatibility =
 
-Keep preserves the format already in each field and uses comments for newly translated post fields. Select comments if a site needs to return to original qTranslate. Original qTranslate cannot correctly read qTranslate-X closing brackets or swirly syntax. Site title and tagline use brackets because WordPress sanitizes comments out of those options; returning those settings to original qTranslate requires deliberate conversion. Activation never rewrites posts.
+The "Keep" format preserves whichever marker style each field already uses, and new translated post fields use comment markers. Choose comments if a site may need to return to the original qTranslate, which cannot read qTranslate-X closing brackets or swirly markers. The site title and tagline always use brackets because WordPress strips comments from those settings, so returning those two to the original qTranslate needs a deliberate conversion. Activation never rewrites posts.
 
-Disabled translations are retained until you intentionally replace a complete field in raw mode or through a full programmatic update. Ordinary wp_update_post() calls replace supplied fields; pass qtrad_language to request a partial language update. REST saves in language-button mode merge plain values into the requested qtrad_language or lang, otherwise the request language. Complete marker strings replace complete fields.
+Translations of disabled languages are kept until you replace a complete field in raw mode or through a full programmatic update. Ordinary wp_update_post() calls replace the fields they supply. Pass qtrad_language to request an update of one language only. REST saves in language-button mode merge plain values into the language given by qtrad_language or lang, otherwise into the request language. Complete marker strings replace complete fields.
 
 = URLs =
 
-Legacy modes: 1 query, 2 language path, 3 subdomain, 4 mapped domains. Plain permalinks use query URLs. Subdomains/domains need appropriate DNS, certificates and server configuration.
+The URL modes are the same as in qTranslate-X:
 
-Explicit language URLs take precedence. Cookies/browser negotiation apply on the bare homepage; bare interior URLs consistently serve the default language when its prefix is hidden. Public switching to the default uses an explicit URL to update the language cookie, then redirects to its canonical address. REST endpoints, assets, administrative URLs, feeds and XML sitemaps do not receive language prefixes.
+1. Query parameter
+2. Language path
+3. Subdomain
+4. One domain per language
 
-Alternate language links and multilingual sitemap entries use canonical URLs and available translations. WordPress core, Yoast and Rank Math adapters cover metadata, social sharing and schema output. Missing translations receive noindex while retaining the configured visitor fallback. The SEO translations panel supplies optional language-specific titles/descriptions. See SEO.md for scope and tested integration versions. Configure full-page caches to bypass personalized bare-homepage responses or vary by the language cookie/Accept-Language. Browser negotiation can be disabled for a stable homepage.
+Sites with plain permalinks use query URLs. Subdomains and separate domains need the matching DNS, certificates and server configuration.
+
+An explicit language URL always wins. Cookies and browser negotiation apply only to the bare homepage, and other bare URLs serve the default language when its prefix is hidden. REST endpoints, assets, admin URLs, feeds and XML sitemaps never receive language prefixes.
+
+= SEO =
+
+Alternate language links and multilingual sitemap entries use canonical URLs and only list languages a post is actually translated into. Adapters for WordPress core, Yoast SEO and Rank Math cover metadata, social sharing and schema output. Pages missing a translation keep the configured visitor fallback and receive noindex. The SEO translations panel takes optional per-language titles and descriptions.
+
+Full-page caches should bypass the personalized bare homepage or vary it by the language cookie and Accept-Language. Browser negotiation can be turned off for a stable homepage.
 
 = Switchers =
 
-[qtrad_switcher style="both"]
-
-Styles: text, image, both, short, dropdown. Prefer text or both so visitors can identify languages without interpreting flags. The legacy qtranslate widget ID and qtrans_*/qtranxf_* chooser functions are supported. Legacy custom widget templates/CSS are retained in saved options for rollback but are not executed by qTrad.
+Use the shortcode [qtrad_switcher style="both"] or the qTrad Language Chooser widget. Styles are text, image, both, short and dropdown. Prefer text or both so visitors can identify languages without interpreting flags. The qtrans_* and qtranxf_* chooser functions used in older themes keep working.
 
 == Installation ==
 
-1. Back up the site and test the switch on a staging copy.
-2. Deactivate qTranslate, qTranslate-X and qTranslate-XT.
-3. Upload the qtrad folder to wp-content/plugins/.
-4. Activate qTrad and open Settings → Languages.
-5. Verify representative content, editor saves, language URLs and site-specific integrations.
+1. Back up the site and try the switch on a staging copy first.
+2. Deactivate qTranslate, qTranslate-X or qTranslate-XT. qTrad will not start while one of them is active.
+3. Install and activate qTrad, then open Settings → Languages.
+4. Check representative content, editor saves, language URLs and any site-specific integrations.
 
-The canonical entry point is qtrad/qtrad.php. When upgrading qTranslate Next or Unified, deactivate the former plugin, upload the qtrad folder and activate qTrad. The folder/entry-point change requires manual activation; existing content and settings need no conversion. Do not activate both distributions together.
-
-qtranslate-next.php and qtranslate-unified.php remain bootstrap shims inside the qtrad folder for direct integrations; neither has a plugin header. Integrations using an absolute path to a former folder must update that path. Existing qtranslate_unified_settings and qtranslate_next_settings, qtranslate_* shared settings, legacy widget identity and [qtranslate_switcher]/[qtrad_switcher] shortcodes remain supported. New settings saves keep the existing qtranslate_next_settings key. Uninstall deliberately retains translations/settings.
+Your posts and qtranslate_* settings need no conversion. Uninstalling qTrad keeps translations and settings in place.
 
 == Frequently Asked Questions ==
 
 = Is this a drop-in replacement for every extension? =
 
-No. The supported API matrix is in COMPATIBILITY.md. Other integration modules, menu-language management and third-party custom editor controls need separate validation. Bundled flags have pinned MIT-licensed sources and an offline provenance check; see PROVENANCE.md.
+No. qTrad covers stored content, the shared settings and the commonly used public functions of qTranslate and qTranslate-X. Other integration modules, menu-language management and third-party custom editor controls need to be checked on your site.
 
 = What if JavaScript is unavailable? =
 
-Public switchers remain links. In the classic editor, full marker strings remain visible and language buttons stay disabled. Edit complete fields carefully. The WordPress block editor itself requires JavaScript.
+Public switchers remain plain links. In the classic editor the full marker strings stay visible and the language buttons stay disabled, so edit complete fields carefully. The WordPress block editor itself requires JavaScript.
 
 = How do I include a literal marker in content? =
 
-Language markers are reserved syntax. Encode a literal example such as [:en] using HTML entities (for example &#91;:en&#93;) in HTML/code content rather than inserting it as an actual marker.
+Language markers are reserved syntax. To show an example such as [:en] in a post, encode it with HTML entities, for example &#91;:en&#93;.
+
+== Credits ==
+
+qTrad continues the work of qTranslate by Qian Qin and qTranslate-X by the qTranslate Team, both licensed GPLv2 or later. It is an independent project and is not endorsed by the original authors.
+
+The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis Lipiridis, licensed MIT. The full notice is in flags/LICENSE.flag-icons and the source of each file is recorded in flags/manifest.json.
 
 == Changelog ==
 
-= 1.2.1 =
+= 1.3.0 =
 
-* Rename the plugin to qTrad — Multilingual Content, using qtrad/qtrad.php and the qtrad text domain.
-* Keep earlier bootstrap filenames, settings, widget classes and shortcodes for compatibility; add [qtrad_switcher].
-* Document the exact upstream GPLv2-or-later source-tree grant and retain MIT flag notices.
-
-= 1.2.0 =
-
-* Add a reproducible WordPress/PHP/MySQL/MariaDB test matrix and CI workflow.
-* Add multilingual core, Yoast and Rank Math metadata/sitemap integration.
-* Add accessible language-specific SEO title/description fields and missing-translation noindex behavior.
-* Replace inherited flag PNGs with pinned MIT-licensed SVGs and preserve saved filename aliases.
-* Preserve per-site language context through multisite switches/restores.
-* Preload the selected editor language and preserve matching block identities when switching.
-
-= 1.1.0 =
-
-* Fix recursive editor save handling and scope packing to the current post's REST endpoint.
-* Preserve disabled languages, whitespace, backslashes, metadata rows and conditional updates.
-* Support custom post REST saves/autosaves, raw replacements and term translation renames.
-* Correct URL origin checks, query preservation, REST handling, browser preferences and canonical alternates.
-* Retain imported/custom languages and legacy fallback/marker policies.
-* Add accessible language controls, progressive dropdown enhancement, RTL canvas support and regression tests.
-* Complete qTrad branding and document licensing, compatibility and verified accessibility coverage.
-
-= 1.0.0 =
-
-* Initial implementation, previously called qTranslate Unified.
+* First public release on WordPress.org.

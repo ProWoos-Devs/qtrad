@@ -499,52 +499,52 @@
     ],
     "fixtures": {
         "translated": {
-            "id": 28,
+            "id": 29,
             "slug": "qtrad-seo-translated",
             "url": "http://127.0.0.1:8931/qtrad-seo-translated/"
         },
         "missing": {
-            "id": 29,
+            "id": 30,
             "slug": "qtrad-seo-missing",
             "url": "http://127.0.0.1:8931/qtrad-seo-missing/"
         },
         "german": {
-            "id": 30,
+            "id": 31,
             "slug": "qtrad-seo-german",
             "url": "http://127.0.0.1:8931/qtrad-seo-german/"
         },
         "zero": {
-            "id": 31,
+            "id": 32,
             "slug": "qtrad-seo-zero",
             "url": "http://127.0.0.1:8931/qtrad-seo-zero/"
         },
         "empty": {
-            "id": 32,
+            "id": 33,
             "slug": "qtrad-seo-empty",
             "url": "http://127.0.0.1:8931/qtrad-seo-empty/"
         },
         "disabled": {
-            "id": 33,
+            "id": 34,
             "slug": "qtrad-seo-disabled",
             "url": "http://127.0.0.1:8931/qtrad-seo-disabled/"
         },
         "draft": {
-            "id": 34,
+            "id": 35,
             "slug": "qtrad-seo-draft",
-            "url": "http://127.0.0.1:8931/?p=34"
+            "url": "http://127.0.0.1:8931/?p=35"
         },
         "private": {
-            "id": 35,
+            "id": 36,
             "slug": "qtrad-seo-private",
             "url": "http://127.0.0.1:8931/qtrad-seo-private/"
         },
         "password": {
-            "id": 36,
+            "id": 37,
             "slug": "qtrad-seo-password",
             "url": "http://127.0.0.1:8931/qtrad-seo-password/"
         },
         "book": {
-            "id": 37,
+            "id": 38,
             "slug": "qtrad-seo-book",
             "url": "http://127.0.0.1:8931/qtrad_book/qtrad-seo-book/"
         }

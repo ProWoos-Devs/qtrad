@@ -3,10 +3,10 @@
         "wordpress": "6.8",
         "php": "8.3.35"
     },
-    "browser_post_id": 27,
+    "browser_post_id": 28,
     "browser_post_slug": "qtrad-audit-browser",
-    "passed": 88,
-    "total": 88,
+    "passed": 109,
+    "total": 109,
     "cases": [
         {
             "case": "Canonical activation file is qtrad.php",
@@ -197,6 +197,46 @@
             ]
         },
         {
+            "case": "qTranslate-XT built-in Lithuanian has its locale",
+            "pass": true,
+            "expected": "lt_LT",
+            "actual": "lt_LT"
+        },
+        {
+            "case": "unchanged qTranslate-XT editor mode 2 is kept",
+            "pass": true,
+            "expected": 2,
+            "actual": 2
+        },
+        {
+            "case": "unchanged language names and locales are not written",
+            "pass": true,
+            "expected": [
+                [],
+                []
+            ],
+            "actual": [
+                [],
+                []
+            ]
+        },
+        {
+            "case": "changed editor mode is written",
+            "pass": true,
+            "expected": 1,
+            "actual": 1
+        },
+        {
+            "case": "only the changed language name is written",
+            "pass": true,
+            "expected": {
+                "lt": "Lithuanian"
+            },
+            "actual": {
+                "lt": "Lithuanian"
+            }
+        },
+        {
             "case": "legacy chooser echoes output",
             "pass": true,
             "expected": true,
@@ -215,6 +255,72 @@
             "actual": "mailto:user@example.test"
         },
         {
+            "case": "neutral path /wp-comments-post.php",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "neutral path /wp-cron.php",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "neutral path /wp-signup.php",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "neutral path /wp-activate.php",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "neutral path /oauth/authorize",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "neutral path /media/clip.mp4",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "neutral path /files/archive.7z",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "ordinary page is not neutral",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "moved login page is neutral",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "XMLHttpRequest is recognized as a script request",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "ordinary request is not a script request",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
             "case": "home_url is localized outside request parsing",
             "pass": true,
             "expected": true,
@@ -231,6 +337,36 @@
             "pass": true,
             "expected": "http://127.0.0.1:8931/de/",
             "actual": "http://127.0.0.1:8931/de/"
+        },
+        {
+            "case": "three-letter code is an enabled language",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "three-letter path prefix is stripped",
+            "pass": true,
+            "expected": "/sample/",
+            "actual": "/sample/"
+        },
+        {
+            "case": "three-letter path prefix leaves look-alike segments",
+            "pass": true,
+            "expected": "/file/",
+            "actual": "/file/"
+        },
+        {
+            "case": "URL conversion adds three-letter prefix",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/fil/sample/",
+            "actual": "http://127.0.0.1:8931/fil/sample/"
+        },
+        {
+            "case": "three-letter title is displayed",
+            "pass": true,
+            "expected": "Kumusta",
+            "actual": "Kumusta"
         },
         {
             "case": "URL conversion leaves anchor unchanged",
@@ -574,20 +710,20 @@
             "case": "indexed zero translation remains visible",
             "pass": true,
             "expected": [
-                24
+                25
             ],
             "actual": [
-                24
+                25
             ]
         },
         {
             "case": "legacy zero translation remains visible",
             "pass": true,
             "expected": [
-                24
+                25
             ],
             "actual": [
-                24
+                25
             ]
         },
         {

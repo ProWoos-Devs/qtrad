@@ -92,5 +92,33 @@
             "fr": "Début<!--more-->Fin"
         },
         "joined": "[:en]Intro<!--more-->End[:de]Anfang<!--more-->Ende[:fr]Début<!--more-->Fin[:]"
+    },
+    {
+        "name": "three-letter codes in brackets",
+        "pass": true,
+        "parts": {
+            "en": "Hi",
+            "fil": "Kumusta",
+            "de": "Hallo"
+        },
+        "joined": "[:en]Hi[:fil]Kumusta[:de]Hallo[:]"
+    },
+    {
+        "name": "three-letter code first, disabled",
+        "pass": true,
+        "parts": {
+            "en": "Hi",
+            "fil": "Kumusta"
+        },
+        "joined": "<!--:en-->Hi<!--:--><!--:fil-->Kumusta<!--:-->"
+    },
+    {
+        "name": "three-letter swirly",
+        "pass": true,
+        "parts": {
+            "en": "Hi",
+            "haw": "Aloha"
+        },
+        "joined": "{:en}Hi{:haw}Aloha{:}"
     }
 ]

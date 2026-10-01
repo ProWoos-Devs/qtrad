@@ -76,6 +76,10 @@ No. qTrad covers stored content, the shared settings and the commonly used publi
 
 Public switchers remain plain links. In the classic editor the full marker strings stay visible and the language buttons stay disabled, so edit complete fields carefully. The WordPress block editor itself requires JavaScript.
 
+= I am moving from qTranslate-XT. What should I check? =
+
+Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others), translated slugs or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
+
 = How do I include a literal marker in content? =
 
 Language markers are reserved syntax. To show an example such as [:en] in a post, encode it with HTML entities, for example &#91;:en&#93;.
@@ -85,6 +89,13 @@ Language markers are reserved syntax. To show an example such as [:en] in a post
 qTrad continues the work of qTranslate by Qian Qin and qTranslate-X by the qTranslate Team, both licensed GPLv2 or later. It is an independent project and is not endorsed by the original authors.
 
 The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis Lipiridis, licensed MIT. The full notice is in flags/LICENSE.flag-icons and the source of each file is recorded in flags/manifest.json.
+
+== Screenshots ==
+
+1. The block editor shows one language at a time. Language buttons switch between translations, and saving keeps every other translation.
+2. Settings → Languages, with the qTranslate URL modes and language list.
+3. The accessible language chooser on the front end, with full language names.
+4. After a switch from qTranslate-XT, administrators see which data qTrad keeps but does not display.
 
 == Changelog ==
 

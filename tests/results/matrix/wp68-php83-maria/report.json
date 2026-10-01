@@ -101,6 +101,34 @@
           "fr": "Début<!--more-->Fin"
         },
         "joined": "[:en]Intro<!--more-->End[:de]Anfang<!--more-->Ende[:fr]Début<!--more-->Fin[:]"
+      },
+      {
+        "name": "three-letter codes in brackets",
+        "pass": true,
+        "parts": {
+          "en": "Hi",
+          "fil": "Kumusta",
+          "de": "Hallo"
+        },
+        "joined": "[:en]Hi[:fil]Kumusta[:de]Hallo[:]"
+      },
+      {
+        "name": "three-letter code first, disabled",
+        "pass": true,
+        "parts": {
+          "en": "Hi",
+          "fil": "Kumusta"
+        },
+        "joined": "<!--:en-->Hi<!--:--><!--:fil-->Kumusta<!--:-->"
+      },
+      {
+        "name": "three-letter swirly",
+        "pass": true,
+        "parts": {
+          "en": "Hi",
+          "haw": "Aloha"
+        },
+        "joined": "{:en}Hi{:haw}Aloha{:}"
       }
     ],
     "wordpress": {
@@ -108,10 +136,10 @@
         "wordpress": "6.8",
         "php": "8.3.35"
       },
-      "browser_post_id": 27,
+      "browser_post_id": 28,
       "browser_post_slug": "qtrad-audit-browser",
-      "passed": 88,
-      "total": 88,
+      "passed": 109,
+      "total": 109,
       "cases": [
         {
           "case": "Canonical activation file is qtrad.php",
@@ -302,6 +330,46 @@
           ]
         },
         {
+          "case": "qTranslate-XT built-in Lithuanian has its locale",
+          "pass": true,
+          "expected": "lt_LT",
+          "actual": "lt_LT"
+        },
+        {
+          "case": "unchanged qTranslate-XT editor mode 2 is kept",
+          "pass": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "case": "unchanged language names and locales are not written",
+          "pass": true,
+          "expected": [
+            [],
+            []
+          ],
+          "actual": [
+            [],
+            []
+          ]
+        },
+        {
+          "case": "changed editor mode is written",
+          "pass": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "case": "only the changed language name is written",
+          "pass": true,
+          "expected": {
+            "lt": "Lithuanian"
+          },
+          "actual": {
+            "lt": "Lithuanian"
+          }
+        },
+        {
           "case": "legacy chooser echoes output",
           "pass": true,
           "expected": true,
@@ -320,6 +388,72 @@
           "actual": "mailto:user@example.test"
         },
         {
+          "case": "neutral path /wp-comments-post.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /wp-cron.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /wp-signup.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /wp-activate.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /oauth/authorize",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /media/clip.mp4",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /files/archive.7z",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "ordinary page is not neutral",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "moved login page is neutral",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "XMLHttpRequest is recognized as a script request",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "ordinary request is not a script request",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
           "case": "home_url is localized outside request parsing",
           "pass": true,
           "expected": true,
@@ -336,6 +470,36 @@
           "pass": true,
           "expected": "http://127.0.0.1:8931/de/",
           "actual": "http://127.0.0.1:8931/de/"
+        },
+        {
+          "case": "three-letter code is an enabled language",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "three-letter path prefix is stripped",
+          "pass": true,
+          "expected": "/sample/",
+          "actual": "/sample/"
+        },
+        {
+          "case": "three-letter path prefix leaves look-alike segments",
+          "pass": true,
+          "expected": "/file/",
+          "actual": "/file/"
+        },
+        {
+          "case": "URL conversion adds three-letter prefix",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/fil/sample/",
+          "actual": "http://127.0.0.1:8931/fil/sample/"
+        },
+        {
+          "case": "three-letter title is displayed",
+          "pass": true,
+          "expected": "Kumusta",
+          "actual": "Kumusta"
         },
         {
           "case": "URL conversion leaves anchor unchanged",
@@ -679,20 +843,20 @@
           "case": "indexed zero translation remains visible",
           "pass": true,
           "expected": [
-            24
+            25
           ],
           "actual": [
-            24
+            25
           ]
         },
         {
           "case": "legacy zero translation remains visible",
           "pass": true,
           "expected": [
-            24
+            25
           ],
           "actual": [
-            24
+            25
           ]
         },
         {
@@ -1246,52 +1410,52 @@
       ],
       "fixtures": {
         "translated": {
-          "id": 28,
+          "id": 29,
           "slug": "qtrad-seo-translated",
           "url": "http://127.0.0.1:8931/qtrad-seo-translated/"
         },
         "missing": {
-          "id": 29,
+          "id": 30,
           "slug": "qtrad-seo-missing",
           "url": "http://127.0.0.1:8931/qtrad-seo-missing/"
         },
         "german": {
-          "id": 30,
+          "id": 31,
           "slug": "qtrad-seo-german",
           "url": "http://127.0.0.1:8931/qtrad-seo-german/"
         },
         "zero": {
-          "id": 31,
+          "id": 32,
           "slug": "qtrad-seo-zero",
           "url": "http://127.0.0.1:8931/qtrad-seo-zero/"
         },
         "empty": {
-          "id": 32,
+          "id": 33,
           "slug": "qtrad-seo-empty",
           "url": "http://127.0.0.1:8931/qtrad-seo-empty/"
         },
         "disabled": {
-          "id": 33,
+          "id": 34,
           "slug": "qtrad-seo-disabled",
           "url": "http://127.0.0.1:8931/qtrad-seo-disabled/"
         },
         "draft": {
-          "id": 34,
+          "id": 35,
           "slug": "qtrad-seo-draft",
-          "url": "http://127.0.0.1:8931/?p=34"
+          "url": "http://127.0.0.1:8931/?p=35"
         },
         "private": {
-          "id": 35,
+          "id": 36,
           "slug": "qtrad-seo-private",
           "url": "http://127.0.0.1:8931/qtrad-seo-private/"
         },
         "password": {
-          "id": 36,
+          "id": 37,
           "slug": "qtrad-seo-password",
           "url": "http://127.0.0.1:8931/qtrad-seo-password/"
         },
         "book": {
-          "id": 37,
+          "id": 38,
           "slug": "qtrad-seo-book",
           "url": "http://127.0.0.1:8931/qtrad_book/qtrad-seo-book/"
         }
@@ -2079,7 +2243,7 @@
     "qtrad/LICENSE": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
     "qtrad/assets/css/admin.css": "ac3d5d02328fd8b3222fa7961790b55fbd1ba88e982770aeda4cb73957b3ba67",
     "qtrad/assets/css/front.css": "25b720704e8f48a026a3c8a52d38f2b6b40c458ca570102e40369316ba69922c",
-    "qtrad/assets/js/codec.js": "23df55d57f5e14f6b8868cebb99c67bf90dc8c6085f7f7dc9ced11b6f1a0f765",
+    "qtrad/assets/js/codec.js": "590ec4de7a6138edd23976e16137631419356e9a9aa355e1111ed85196ade03e",
     "qtrad/assets/js/editor.js": "9594b45cc7f08eaa45c7ff82c9bec9125c8fafd0709ad6e9b4d65300eeca7211",
     "qtrad/assets/js/settings.js": "5726e60955248630b8da74764fd3fc34ad9ee0e6bdfd4926c806ea3d95f2fc17",
     "qtrad/assets/js/switcher.js": "f177c57ba8201b6a90d4be57149be4002cf9941c51a25cafaafa6c852fad2a13",
@@ -2111,7 +2275,10 @@
     "qtrad/flags/it.svg": "9fa88118818d9b64838f578e2babcca3d0630aed21b5c33b34aff7ac5ce506bc",
     "qtrad/flags/jp.svg": "bfea80baf9989383dc4bf7ca594ed95be0df0ff125bfc88d0bfa878eb0198022",
     "qtrad/flags/kr.svg": "7a6cd5b51d0e2841ed8b79b1147ad8a66cf3c09f6344d4a63b5e4413ffa5d15b",
-    "qtrad/flags/manifest.json": "efe4c74f91ccdf71094c8252d5c674de64f63e79dc4e97844507aa8bd5a810d4",
+    "qtrad/flags/kz.svg": "ce0f495ae2039b6ed850a21b0c9501bc13f29fa566c02b123ccafab4c6dbd693",
+    "qtrad/flags/lt.svg": "dc0401993f6e14b3a58fa496d874b95dfcb58614052a868b14492166782c1006",
+    "qtrad/flags/manifest.json": "8396c59204548133e26c08320d648e34600985b98aef1ba552948efb1a3e02a0",
+    "qtrad/flags/md.svg": "987ca12a752ec2b3594c115923d50160343a7d30af8ea5e316ae04fb12b8e9dd",
     "qtrad/flags/mx.svg": "bf69fcf0118ebf04d391c522883b36da521d44169163c290435192930d28a109",
     "qtrad/flags/nl.svg": "8f691f17fe70894537af8e92f2ca47761d353639b0defc15cbe561eb503ab010",
     "qtrad/flags/pl.svg": "369bb3e14ee718df1ee15fd2fb3ad0dae713f78f622e277710fb2b30a313f2aa",
@@ -2126,20 +2293,21 @@
     "qtrad/flags/ua.svg": "2d869c23ebfefb2ae0a633297c11dee06fcb666ce7b3ca75eba09b7a1a3a03ac",
     "qtrad/flags/us.svg": "e7be4240cf57987926673708f09233be1ab6bdf35acc7b86bd32a263f197a2a7",
     "qtrad/flags/vn.svg": "2355037201315d74581ab0ad60b5587a29a087d26b0525bdeb8676e64fae5b86",
-    "qtrad/includes/admin.php": "f38e5e62ee86e03c67ee350ee578ddd217097b86e87ca76c92a1f8a23949bb5d",
+    "qtrad/includes/admin.php": "98a752ec71f28d1b32c0c7f82c4955eaa7566b705c6287addcd12a4c6fd14cea",
     "qtrad/includes/compat.php": "dc58fe3dd4c2affa0f85a208221a141e12d42e1ec055d86687e47f9646fbeb98",
-    "qtrad/includes/config.php": "cd9bf8ac8872b34f934d6e949c75eb310f3bbb6a89cb39c02312dd73ad5fcff7",
+    "qtrad/includes/config.php": "8d93b1ed4d2e76d922a320d8e5754574484ceff9eb46167dc725a50ada7c8bbf",
     "qtrad/includes/fields.php": "7a4142437b41184db5ba8649e358a2a540ee731120642799d4a0bff6b42f3ac8",
-    "qtrad/includes/runtime.php": "0dfd82a95f1acddb8f417aa42d5f181371b7fa0f80f2263ab11b95adf66c79d1",
-    "qtrad/includes/seo.php": "7dcaf981d86b47db74b4e920aed17176910b9002b36e968505404d2d2d3bb3e0",
-    "qtrad/includes/tokens.php": "9b8416e54866e3c8dec72124951a9ac0168b4befcc500790602daf58e0ccf307",
+    "qtrad/includes/migration.php": "4aff5b3bafe7f2d91c51dd2e3a3dc656c74dea0faec92e07b4ae879af6437d47",
+    "qtrad/includes/runtime.php": "1ed3c979c45b91d449ef93d69ab4024aff98f6822a61a885f89d9767c75d6361",
+    "qtrad/includes/seo.php": "257f58c19ba579715ae0b75b0566d174d9d168629dc73b38158e52efc7d83109",
+    "qtrad/includes/tokens.php": "e5d61f1f91706d1087afb198491d25ce8dbcf351fa8d7f4f06d65d1ee067a7eb",
     "qtrad/includes/widget.php": "3109b2629ed442ee9eadd5c17fd03bb6bee69874ac1fd0972bbc5b68dcdfcd64",
-    "qtrad/languages/qtrad.pot": "4dfc4f675f574d35d2142dce052ecac3c8c36ff81cd5917bf6694c2d5931508c",
-    "qtrad/qtrad.php": "88246d8602f8158ff0b99d7ef7efadeaa2c8f19ac564e9c6869d7ffd9edc6e1b",
-    "qtrad/readme.txt": "f195968635c16ce29736b1cc88113e6770c1d5d35d5f395d2b230b1b47a94a1e",
-    "qtrad/uninstall.php": "e4aeaebf3a3089c0f3e29c9562f5df69de19753a9c6aa82cf6706b964fb16896"
+    "qtrad/languages/qtrad.pot": "41a9dc4a7a2192ebcdc2278380a7bea3618983002406884748f5892848b7698b",
+    "qtrad/qtrad.php": "ea06e786e0cc518ad59b1099d6582a3d7a5e5a92f1a850551aa8e25afd696740",
+    "qtrad/readme.txt": "d31a1785b4314292e6592dee857097a1d9f1dbc73722ce2d04a2516ab656c1aa",
+    "qtrad/uninstall.php": "5510a1061241ccfb0433f1694af51b695631a6f8298d521acf195ab3f564dfb8"
   },
-  "started_utc": "2026-10-01T13:45:18.997288+00:00",
+  "started_utc": "2026-10-01T14:33:39.477452+00:00",
   "test_sha256": {
     "tests/README.md": "7293ea3b3fde29f56f9fb1ea4bb369a165e25bec1c88ba7ca5b5d2c873ac3075",
     "tests/assets.py": "895ad9a4f6c3b9fe862c438dc8eb93355a0cfe3980747a52efd479933a8221b9",
@@ -2147,7 +2315,7 @@
     "tests/codec.cjs": "61195c06b9388d02277dc2e42cbb4e7eeee3f408ea3d8f278d7927ba9bd5b808",
     "tests/codec.php": "4b7ed40d7376bda706f10c193241f806e94160815dc01154ea22eb627872d5b0",
     "tests/editor.cjs": "06a472cc2328c0135f35be61af4f9c228d5b746d3eac27bc70ed4047bd936cc8",
-    "tests/fixtures/codec.json": "dec55b1bd8addcd01221626b3a1a97f1a03cac309ff703c9eab3cbd9114a6cb0",
+    "tests/fixtures/codec.json": "af1e7eb00789f6b35efa2c6bf614cd356c14da65b046a34369e12a6797e537e5",
     "tests/fixtures/wordpress-mu.php": "26ef9b049d2bfce15bace37ea878bf76be6c7263800851eb49e3cd675b1217c0",
     "tests/load-order.php": "2091e5a48efe511755ae1daed41632c175595ef59b9959415ef166e295aad4f3",
     "tests/matrix/Dockerfile": "4e5d7f8edc495cd260e5b137640f8b9ca9e399066deca1736f0f11f9e009ccc0",
@@ -2163,9 +2331,9 @@
     "tests/package.json": "66040a252a8a89c57a5d233d5d1123a45b38376365cd3737410c1a6d5c2a5b7d",
     "tests/seo-http.py": "2f518e71bf5f510758f3f00465c55ded5fc98a644b8618fb8b6fdc4f725f8406",
     "tests/seo.php": "b241213610408ac07476a01767dd73fa532ec5057a9cda13f1bb1254152329c8",
-    "tests/wordpress.php": "f5506923e3169917232469c2584dbf1c317e670ca6d28de58cc8f0b72d920925"
+    "tests/wordpress.php": "3c7cac778b9919c615b604bc5ae64d97d113916706c5cb99f77170a88c946bd7"
   },
-  "php_image": "sha256:809efc2693f2539949aa13f7839f60b267605a5db774933786392dd6d4e18aa5",
+  "php_image": "sha256:d5dc5dc026db6b79ce2ae5e23ced3b7c04c8766bdbec13292729f26e6e215ec7",
   "wordpress_archive_sha256": "f7dbedc423ddb3f2f3e98e9140f1720bfd6d4a8f4873c85da2e62f6a078de10a",
   "database_image": "sha256:70867812f39c1e386104450bd6cf3bf9f6fb31ee4d771a10f7ea900950d53e71",
   "seo_plugins": {
@@ -2178,5 +2346,5 @@
       "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
     }
   },
-  "completed_utc": "2026-10-01T13:46:06.330439+00:00"
+  "completed_utc": "2026-10-01T14:34:26.157445+00:00"
 }

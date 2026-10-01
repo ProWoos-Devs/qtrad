@@ -17,6 +17,30 @@ function qtrad_register_admin_hooks() {
 	add_action( 'admin_enqueue_scripts', 'qtrad_enqueue_editor' );
 	add_action( 'add_meta_boxes', 'qtrad_add_meta_boxes' );
 	add_filter( 'plugin_action_links_' . plugin_basename( QTRAD_FILE ), 'qtrad_plugin_links' );
+	add_action( 'admin_bar_menu', 'qtrad_admin_bar_site_name', 100 );
+	add_filter( 'admin_title', 'qtrad_admin_title' );
+}
+
+/**
+ * The site title stays raw in wp-admin so Settings → General saves every
+ * language. Places that only display it use the editing language.
+ */
+function qtrad_admin_site_name() {
+	$raw = (string) get_option( 'blogname' );
+	return qtrad_has_lang_tags( $raw ) ? qtrad_use_current( $raw ) : '';
+}
+
+function qtrad_admin_bar_site_name( $bar ) {
+	$name = qtrad_admin_site_name();
+	$node = ( $name !== '' && $bar instanceof WP_Admin_Bar ) ? $bar->get_node( 'site-name' ) : null;
+	if ( $node ) {
+		$bar->add_node( array( 'id' => 'site-name', 'title' => esc_html( wp_html_excerpt( $name, 40, '&hellip;' ) ) ) );
+	}
+}
+
+function qtrad_admin_title( $title ) {
+	$name = qtrad_admin_site_name();
+	return $name !== '' ? str_replace( (string) get_option( 'blogname' ), $name, $title ) : $title;
 }
 
 function qtrad_plugin_links( $links ) {

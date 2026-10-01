@@ -1,0 +1,17 @@
+Sending build context to Docker daemon  47.62kB
+
+Step 1/4 : ARG PHP_VERSION=8.5
+Step 2/4 : FROM php:${PHP_VERSION}-cli
+ ---> 19642e172d3a
+Step 3/4 : RUN docker-php-ext-install -j2 mysqli
+ ---> Using cache
+ ---> db413e2e1822
+Step 4/4 : WORKDIR /workspace
+ ---> Using cache
+ ---> 11d0aeb8e3b1
+Successfully built 11d0aeb8e3b1
+Successfully tagged qtn-matrix-php:8.5
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+

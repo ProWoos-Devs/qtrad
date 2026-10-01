@@ -1,0 +1,11 @@
+/tests/node_modules/
+__pycache__/
+*.pyc
+/dist/
+# Secrets / local
+.env
+*.pem
+*.cer
+wp-config.php
+.claude/
+CLAUDE.md

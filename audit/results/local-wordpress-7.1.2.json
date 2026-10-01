@@ -1,0 +1,280 @@
+{
+    "environment": {
+        "wordpress": "7.1.2",
+        "php": "8.5.10"
+    },
+    "browser_post_id": null,
+    "passed": 9,
+    "total": 37,
+    "cases": [
+        {
+            "case": "codec round trip bracket",
+            "pass": true,
+            "expected": {
+                "en": "Hello",
+                "de": "Hallo"
+            },
+            "actual": {
+                "en": "Hello",
+                "de": "Hallo"
+            }
+        },
+        {
+            "case": "codec round trip comment",
+            "pass": true,
+            "expected": {
+                "en": "Hello",
+                "de": "Hallo"
+            },
+            "actual": {
+                "en": "Hello",
+                "de": "Hallo"
+            }
+        },
+        {
+            "case": "codec round trip swirly",
+            "pass": true,
+            "expected": {
+                "en": "Hello",
+                "de": "Hallo"
+            },
+            "actual": {
+                "en": "Hello",
+                "de": "Hallo"
+            }
+        },
+        {
+            "case": "plain language merge preserves existing translation",
+            "pass": true,
+            "expected": "[:en]Hello[:de]Neu[:]",
+            "actual": "[:en]Hello[:de]Neu[:]"
+        },
+        {
+            "case": "classic save retains disabled French translation",
+            "pass": false,
+            "expected": true,
+            "actual": false
+        },
+        {
+            "case": "classic save preserves JSON escaping and backslashes",
+            "pass": false,
+            "expected": "<!-- wp:paragraph {\"metadata\":{\"name\":\"a\\\\b\"}} --><p>C:\\temp</p><!-- /wp:paragraph -->",
+            "actual": "<!-- wp:paragraph {\"metadata\":{\"name\":\"a\\b\"}} --><p>C:temp</p><!-- /wp:paragraph -->"
+        },
+        {
+            "case": "plain merge preserves backslash in untouched English",
+            "pass": false,
+            "expected": "<p>C:\\temp</p>",
+            "actual": "<p>C:temp</p>"
+        },
+        {
+            "case": "secondary insert does not inherit main form payload",
+            "pass": false,
+            "expected": "Secondary page",
+            "actual": "[:en]Main title[:de]Haupttitel[:]"
+        },
+        {
+            "case": "metadata display uses selected German",
+            "pass": true,
+            "expected": "Hallo",
+            "actual": "Hallo"
+        },
+        {
+            "case": "metadata update retains both languages",
+            "pass": false,
+            "expected": {
+                "en": "Hello",
+                "de": "Neu"
+            },
+            "actual": {
+                "en": "Neu",
+                "de": "Neu"
+            }
+        },
+        {
+            "case": "metadata respects previous value condition",
+            "pass": false,
+            "expected": "[:en]Hello[:de]Hallo[:]",
+            "actual": "[:en]New[:de]Hallo[:]"
+        },
+        {
+            "case": "metadata reports rejected conditional update",
+            "pass": false,
+            "expected": false,
+            "actual": true
+        },
+        {
+            "case": "metadata non-single read returns every row",
+            "pass": false,
+            "expected": [
+                "Hello",
+                "Second"
+            ],
+            "actual": [
+                "Hello"
+            ]
+        },
+        {
+            "case": "metadata existence is false for absent configured field",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "legacy term library translates string",
+            "pass": false,
+            "expected": "Nachrichten",
+            "actual": "News"
+        },
+        {
+            "case": "legacy term library translates array",
+            "pass": false,
+            "expected": [
+                "Nachrichten"
+            ],
+            "actual": [
+                "News"
+            ]
+        },
+        {
+            "case": "term rename removes obsolete library key",
+            "pass": false,
+            "expected": false,
+            "actual": true
+        },
+        {
+            "case": "term rename retains disabled French",
+            "pass": false,
+            "expected": "Ancien",
+            "actual": null
+        },
+        {
+            "case": "AJAX-style term save keeps default-language database name",
+            "pass": true,
+            "expected": "News",
+            "actual": "News"
+        },
+        {
+            "case": "settings retain custom legacy language",
+            "pass": false,
+            "expected": [
+                "en",
+                "xx"
+            ],
+            "actual": [
+                "en"
+            ]
+        },
+        {
+            "case": "legacy chooser echoes output",
+            "pass": false,
+            "expected": true,
+            "actual": false
+        },
+        {
+            "case": "URL conversion leaves external host unchanged",
+            "pass": false,
+            "expected": "https://other.example/path?x=1",
+            "actual": "https://other.example:8931/de/path?x=1"
+        },
+        {
+            "case": "URL conversion leaves mailto unchanged",
+            "pass": false,
+            "expected": "mailto:user@example.test",
+            "actual": "mailto://127.0.0.1:8931/de/user@example.test"
+        },
+        {
+            "case": "URL conversion leaves anchor unchanged",
+            "pass": false,
+            "expected": "#section",
+            "actual": "http://127.0.0.1:8931/de/#section"
+        },
+        {
+            "case": "URL conversion preserves signed/repeated query bytes",
+            "pass": false,
+            "expected": "http://127.0.0.1:8931/de/path?a=1&a=2&v=a%20b",
+            "actual": "http://127.0.0.1:8931/de/path?a=2&v=a+b"
+        },
+        {
+            "case": "qtrans URL wrapper respects visible default setting",
+            "pass": false,
+            "expected": "http://127.0.0.1:8931/en/page/",
+            "actual": "http://127.0.0.1:8931/page/"
+        },
+        {
+            "case": "neutral paths work with WordPress in subdirectory",
+            "pass": false,
+            "expected": "https://site.example/blog/wp-login.php",
+            "actual": "https://site.example/blog/de/wp-login.php"
+        },
+        {
+            "case": "home prefix needs path segment boundary",
+            "pass": false,
+            "expected": "/blogger/post",
+            "actual": "ger/post"
+        },
+        {
+            "case": "browser detection rejects q=0 languages",
+            "pass": false,
+            "expected": "",
+            "actual": "de"
+        },
+        {
+            "case": "browser detection respects regional preference weights",
+            "pass": false,
+            "expected": "pt",
+            "actual": "pb"
+        },
+        {
+            "case": "zero survives joining",
+            "pass": false,
+            "expected": "0",
+            "actual": ""
+        },
+        {
+            "case": "empty tagged translation honors show_empty",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "selected legacy public APIs exist",
+            "pass": false,
+            "expected": [],
+            "actual": [
+                "qtrans_isEnabled",
+                "qtranxf_isEnabled",
+                "qtrans_isAvailableIn",
+                "qtranxf_isAvailableIn",
+                "qtranxf_convertURLs",
+                "qtranxf_isMultilingual"
+            ]
+        },
+        {
+            "case": "Catalan catalog flag exists",
+            "pass": false,
+            "expected": true,
+            "actual": false
+        },
+        {
+            "case": "qTranslate-X plain text availability contract",
+            "pass": false,
+            "expected": false,
+            "actual": [
+                "en"
+            ]
+        },
+        {
+            "case": "legacy force_markers option is respected",
+            "pass": false,
+            "expected": "[:en]Same[:de]Same[:]",
+            "actual": "Same"
+        },
+        {
+            "case": "author classic save strips script and event handlers",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        }
+    ]
+}

@@ -1,0 +1,82 @@
+{
+    "environment": {
+        "wordpress": "7.1.2",
+        "php": "8.5.11"
+    },
+    "passed": 10,
+    "total": 10,
+    "cases": [
+        {
+            "case": "Child site languages are separate",
+            "pass": true,
+            "expected": [
+                "en",
+                "fr"
+            ],
+            "actual": [
+                "en",
+                "fr"
+            ]
+        },
+        {
+            "case": "Child site default language is separate",
+            "pass": true,
+            "expected": "fr",
+            "actual": "fr"
+        },
+        {
+            "case": "Child URLs use child origin/path",
+            "pass": true,
+            "expected": "http://qtn.example.test/child/en/page/",
+            "actual": "http://qtn.example.test/child/en/page/"
+        },
+        {
+            "case": "Restore keeps caller selected language",
+            "pass": true,
+            "expected": "de",
+            "actual": "de"
+        },
+        {
+            "case": "Restore keeps caller enabled languages",
+            "pass": true,
+            "expected": [
+                "en",
+                "de"
+            ],
+            "actual": [
+                "en",
+                "de"
+            ]
+        },
+        {
+            "case": "Repeated switch reloads child settings",
+            "pass": true,
+            "expected": "fr",
+            "actual": "fr"
+        },
+        {
+            "case": "Nested restore keeps child context",
+            "pass": true,
+            "expected": "fr",
+            "actual": "fr"
+        },
+        {
+            "case": "Nested restore keeps original context",
+            "pass": true,
+            "expected": "de",
+            "actual": "de"
+        },
+        {
+            "case": "Network predecessor conflict detected",
+            "pass": true,
+            "expected": "qtranslate-x/qtranslate.php",
+            "actual": "qtranslate-x/qtranslate.php"
+        },
+        {
+            "case": "Network Next alone has no conflict",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        }
+    ]
+}

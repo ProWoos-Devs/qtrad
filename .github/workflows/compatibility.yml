@@ -1,0 +1,50 @@
+name: Compatibility and SEO
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      cells: ${{ steps.matrix.outputs.cells }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: matrix
+        run: echo "cells=$(jq -c '[.[] | .id]' tests/matrix/cells.json)" >> "$GITHUB_OUTPUT"
+  integration:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        cell: ${{ fromJSON(needs.plan.outputs.cells) }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci --prefix tests
+      - run: node tests/codec.cjs && node tests/editor.cjs
+      - run: python3 tests/assets.py
+      - name: Install Chromium for browser cells
+        if: matrix.cell == 'wp58-php74-maria' || matrix.cell == 'wp71-php85-maria'
+        run: npx --prefix tests playwright install --with-deps chromium
+      - run: python3 tests/matrix/run.py --cell '${{ matrix.cell }}' --browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ${{ matrix.cell }}
+          path: tests/results/matrix/${{ matrix.cell }}/
+  release-check:
+    needs: integration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: tests/results/matrix
+      - run: python3 tools/package.py --verify-only

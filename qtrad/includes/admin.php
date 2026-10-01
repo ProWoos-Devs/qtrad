@@ -1,0 +1,414 @@
+<?php
+/**
+ * Settings, the language bar on the editor, and the Languages column.
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+function qtu_register_admin_hooks() {
+	if ( ! is_admin() ) {
+		return;
+	}
+	add_action( 'admin_init', 'qtu_capture_admin_lang' );
+	add_action( 'admin_init', 'qtu_register_taxonomy_fields' );
+	add_action( 'admin_menu', 'qtu_admin_menu' );
+	add_action( 'admin_enqueue_scripts', 'qtu_enqueue_editor' );
+	add_action( 'add_meta_boxes', 'qtu_add_meta_boxes' );
+	add_filter( 'plugin_action_links_' . plugin_basename( QTU_FILE ), 'qtu_plugin_links' );
+}
+
+function qtu_plugin_links( $links ) {
+	$url = admin_url( 'options-general.php?page=qtrad' );
+	array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Languages', 'qtrad' ) . '</a>' );
+	return $links;
+}
+
+function qtu_capture_admin_lang() {
+	$id = isset( $_POST['qtu_field_post_id'] ) ? absint( $_POST['qtu_field_post_id'] ) : 0;
+	$lang = isset( $_POST['qtu_edit_lang'] ) && is_string( $_POST['qtu_edit_lang'] ) ? strtolower( sanitize_key( wp_unslash( $_POST['qtu_edit_lang'] ) ) ) : '';
+	if ( $id && qtu_is_enabled( $lang ) && current_user_can( 'edit_post', $id ) && isset( $_POST['qtu_field_nonce'] ) && is_string( $_POST['qtu_field_nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['qtu_field_nonce'] ) ), 'qtu_field_' . $id ) ) {
+		update_user_meta( get_current_user_id(), 'qtu_edit_language', $lang );
+	}
+
+	if ( ! isset( $_GET['qtu_lang'] ) ) {
+		return;
+	}
+	if ( ! current_user_can( 'edit_posts' ) && ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	check_admin_referer( 'qtu_language' );
+	$lang = is_string( $_GET['qtu_lang'] ) ? strtolower( sanitize_key( wp_unslash( $_GET['qtu_lang'] ) ) ) : '';
+	if ( ! qtu_is_enabled( $lang ) ) {
+		return;
+	}
+	if ( is_user_logged_in() ) {
+		update_user_meta( get_current_user_id(), 'qtu_edit_language', $lang );
+	}
+	$path = defined( 'COOKIEPATH' ) && COOKIEPATH ? COOKIEPATH : '/';
+	setcookie( 'qtrans_admin_language', $lang, array( 'expires' => time() + YEAR_IN_SECONDS, 'path' => $path, 'domain' => COOKIE_DOMAIN, 'secure' => is_ssl(), 'httponly' => true, 'samesite' => 'Lax' ) );
+	$_COOKIE['qtrans_admin_language'] = $lang;
+	qtu_set_language( $lang );
+	wp_safe_redirect( remove_query_arg( array( 'qtu_lang', '_wpnonce' ) ) );
+	exit;
+}
+
+function qtu_admin_menu() {
+	add_options_page(
+		__( 'Languages', 'qtrad' ),
+		__( 'Languages', 'qtrad' ),
+		'manage_options',
+		'qtrad',
+		'qtu_settings_page'
+	);
+}
+
+function qtu_enqueue_editor( $hook ) {
+	if ( ! in_array( $hook, array( 'post.php', 'post-new.php', 'settings_page_qtrad' ), true ) ) {
+		return;
+	}
+	if ( $hook !== 'settings_page_qtrad' ) {
+		$screen = get_current_screen();
+		$type = $screen ? get_post_type_object( $screen->post_type ) : null;
+		if ( ! $type || ! $type->public ) { return; }
+	}
+	wp_enqueue_script( 'qtu-settings', plugins_url( 'assets/js/settings.js', QTU_FILE ), array( 'common' ), QTU_VERSION, true );
+	wp_enqueue_style( 'qtu-admin', plugins_url( 'assets/css/admin.css', QTU_FILE ), array(), QTU_VERSION );
+	if ( ! in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+		return;
+	}
+	wp_enqueue_script( 'qtu-codec', plugins_url( 'assets/js/codec.js', QTU_FILE ), array(), QTU_VERSION, true );
+	$deps = array( 'jquery', 'qtu-codec' );
+	foreach ( array( 'wp-data', 'wp-blocks', 'wp-api-fetch' ) as $handle ) {
+		if ( wp_script_is( $handle, 'registered' ) ) {
+			$deps[] = $handle;
+		}
+	}
+	wp_enqueue_script( 'qtu-editor', plugins_url( 'assets/js/editor.js', QTU_FILE ), $deps, QTU_VERSION, true );
+	$enabled = qtu_enabled_languages();
+	$names   = array();
+	$directions = array();
+	foreach ( $enabled as $lang ) {
+		$names[ $lang ] = qtu_language_name( $lang );
+		$directions[ $lang ] = qtu_language_direction( $lang );
+	}
+	$screen = get_current_screen();
+	$post   = null;
+	if ( $screen && $screen->base === 'post' && isset( $_GET['post'] ) ) {
+		$post = get_post( (int) $_GET['post'] );
+	}
+	$type = $screen ? get_post_type_object( $screen->post_type ) : null;
+	wp_localize_script(
+		'qtu-editor',
+		'qtuEditorConfig',
+		array(
+			'enabled'    => $enabled,
+			'names'      => $names,
+			'locales' => qtu_config( 'locale' ),
+			'directions' => $directions,
+			'fieldNonce' => $post ? wp_create_nonce( 'qtu_field_' . $post->ID ) : '',
+			'forceMarkers' => (bool) qtu_setting( 'force_markers', false ),
+			'restBase' => $type && $type->rest_base ? $type->rest_base : ( $type ? $type->name : 'posts' ),
+			'restRoot' => esc_url_raw( rest_url() ),
+			'restNamespace' => $type && ! empty( $type->rest_namespace ) ? $type->rest_namespace : 'wp/v2',
+			/* translators: %s: native language name */
+			'languageMessage' => __( 'Editing %s. Other translations are preserved when you save.', 'qtrad' ),
+			'editLang'   => qtu_admin_language(),
+			'editorMode' => qtu_setting( 'editor_mode', 'lsb' ),
+			'writeFormat'=> qtu_setting( 'write_format', 'keep' ),
+			'title'      => $post ? $post->post_title : '',
+			'content'    => $post ? $post->post_content : '',
+			'excerpt'    => $post ? $post->post_excerpt : '',
+		)
+	);
+}
+
+function qtu_add_meta_boxes() {
+	$types = get_post_types( array( 'public' => true ), 'names' );
+	foreach ( $types as $type ) {
+		add_meta_box(
+			'qtu-languages',
+			__( 'Languages', 'qtrad' ),
+			'qtu_languages_box',
+			$type,
+			'side',
+			'high'
+		);
+	}
+}
+
+function qtu_languages_box( $post ) {
+	$enabled = qtu_enabled_languages();
+	$active  = qtu_admin_language();
+	$mode    = qtu_setting( 'editor_mode', 'lsb' );
+	if ( $mode === 'raw' ) {
+		echo '<p>' . esc_html__( 'Raw mode: edit the language markers directly in the title, content and excerpt.', 'qtrad' ) . '</p>';
+		return;
+	}
+	wp_nonce_field( 'qtu_field_' . $post->ID, 'qtu_field_nonce' );
+	echo '<input type="hidden" name="qtu_field_post_id" value="' . esc_attr( $post->ID ) . '" />';
+	echo '<input type="hidden" name="qtu_edit_lang" id="qtu_edit_lang" value="' . esc_attr( $active ) . '" />';
+	echo '<input type="hidden" name="qtu_js" id="qtu_js" value="" />';
+	echo '<div class="qtu-lsb" id="qtu-lsb" role="group" aria-label="' . esc_attr__( 'Editing language', 'qtrad' ) . '" aria-describedby="qtu-language-help">';
+	foreach ( $enabled as $lang ) {
+		echo '<button type="button" class="qtu-lsb__btn" disabled data-qtu-lang="' . esc_attr( $lang ) . '" aria-pressed="' . ( $lang === $active ? 'true' : 'false' ) . '"><bdi lang="' . esc_attr( str_replace( '_', '-', qtu_config( 'locale' )[ $lang ] ) ) . '">' . esc_html( qtu_language_name( $lang ) ) . '</bdi></button>';
+	}
+	echo '</div><p id="qtu-language-help">' . esc_html__( 'Choose the language to edit. Tab moves between buttons; Enter or Space selects a language. Other translations are preserved when you save.', 'qtrad' ) . '</p>';
+	echo '<p id="qtu-language-status" role="status" aria-live="polite" aria-atomic="true"></p>';
+	echo '<noscript><p>' . esc_html__( 'JavaScript is unavailable. Edit the full language markers directly; the language buttons require JavaScript.', 'qtrad' ) . '</p></noscript>';
+	echo '<div id="qtu-store">';
+	$fields = array(
+		'title'   => $post->post_title,
+		'content' => $post->post_content,
+		'excerpt' => $post->post_excerpt,
+	);
+	foreach ( $fields as $key => $raw ) {
+		$parts = qtu_split( (string) $raw, $enabled, false );
+		foreach ( $enabled as $lang ) {
+			$value = isset( $parts[ $lang ] ) ? $parts[ $lang ] : '';
+			echo '<textarea class="qtu-store" name="qtu_field[' . esc_attr( $key ) . '][' . esc_attr( $lang ) . ']" data-qtu-store="' . esc_attr( $key ) . '" data-qtu-lang="' . esc_attr( $lang ) . '" hidden>' . esc_textarea( $value ) . '</textarea>';
+		}
+	}
+	echo '</div>';
+	$format = qtu_detect_format( (string) $post->post_content );
+	if ( ! $format ) {
+		$format = qtu_detect_format( (string) $post->post_title );
+	}
+	if ( $format ) {
+		$labels = array(
+			'comment' => __( 'qTranslate comments', 'qtrad' ),
+			'bracket' => __( 'qTranslate-X brackets', 'qtrad' ),
+			'swirly'  => __( 'swirly brackets', 'qtrad' ),
+		);
+		echo '<p class="qtu-format">' . esc_html( isset( $labels[ $format ] ) ? $labels[ $format ] : $format ) . '</p>';
+	}
+}
+
+function qtu_language_column( $columns ) {
+	$columns['qtu_langs'] = __( 'Languages', 'qtrad' );
+	return $columns;
+}
+
+function qtu_language_column_cell( $column, $post_id ) {
+	if ( $column !== 'qtu_langs' ) {
+		return;
+	}
+	$post = get_post( $post_id );
+	if ( ! $post ) {
+		return;
+	}
+	$blob = $post->post_title . $post->post_content . $post->post_excerpt;
+	if ( ! qtu_has_lang_tags( $blob ) ) {
+		echo '<span class="qtu-col-plain">' . esc_html( strtoupper( qtu_default_language() ) ) . '</span>';
+		return;
+	}
+	$found = qtranxf_getAvailableLanguages( $post->post_title . "\n" . $post->post_content );
+	if ( ! $found ) {
+		$found = qtu_enabled_languages();
+	}
+	echo '<span class="qtu-col-langs">';
+	foreach ( $found as $lang ) {
+		echo '<span>' . esc_html( strtoupper( $lang ) ) . '</span>';
+	}
+	echo '</span>';
+}
+
+function qtu_term_rows( $term = null ) {
+	$enabled = qtu_enabled_languages();
+	$stored  = array();
+	if ( $term && isset( $term->name ) ) {
+		$term = qtu_get_raw_term( $term->term_id, $term->taxonomy );
+		$stored = get_term_meta( $term->term_id, '_qtn_translations', true );
+		$stored = is_array( $stored ) ? $stored : array();
+		$library = qtu_config( 'term_name' );
+		if ( ! $stored && is_array( $library ) && isset( $library[ $term->name ] ) && is_array( $library[ $term->name ] ) ) {
+			$stored = $library[ $term->name ];
+		}
+	}
+	foreach ( $enabled as $lang ) {
+		$value = isset( $stored[ $lang ] ) ? $stored[ $lang ] : '';
+		if ( $value === '' && $term && $lang === qtu_default_language() ) {
+			$value = $term->name;
+		}
+		echo '<div class="form-field qtu-term-field">';
+		echo '<label for="qtu-term-' . esc_attr( $lang ) . '">' . esc_html( qtu_language_name( $lang ) ) . '</label> ';
+		echo '<input name="qtu_term[' . esc_attr( $lang ) . ']" id="qtu-term-' . esc_attr( $lang ) . '" type="text" value="' . esc_attr( $value ) . '" class="regular-text" lang="' . esc_attr( str_replace( '_', '-', qtu_config( 'locale' )[ $lang ] ) ) . '" dir="' . esc_attr( qtu_language_direction( $lang ) ) . '" />';
+		echo '</div>';
+	}
+}
+
+function qtu_term_add_fields( $taxonomy ) {
+	echo '<input type="hidden" name="qtu_term_taxonomy" value="' . esc_attr( $taxonomy ) . '" />';
+	wp_nonce_field( 'qtu_term', 'qtu_term_nonce' );
+	echo '<input type="hidden" name="qtu_term_id" value="0" />';
+	echo '<div class="form-field"><p><strong>' . esc_html__( 'Translations', 'qtrad' ) . '</strong></p>';
+	qtu_term_rows( null );
+	echo '</div>';
+}
+
+function qtu_term_fields( $term ) {
+	echo '<tr class="form-field"><th scope="row">' . esc_html__( 'Translations', 'qtrad' ) . '</th><td>';
+	wp_nonce_field( 'qtu_term', 'qtu_term_nonce' );
+	echo '<input type="hidden" name="qtu_term_id" value="' . esc_attr( $term->term_id ) . '" />';
+	qtu_term_rows( $term );
+	echo '<p class="description">' . esc_html__( 'Translate this term in each enabled language. The default translation is its WordPress name.', 'qtrad' ) . '</p>';
+	echo '</td></tr>';
+}
+
+function qtu_settings_page() {
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
+	if ( isset( $_POST['qtu_settings'] ) && check_admin_referer( 'qtu_settings' ) ) {
+		$result = qtu_save_settings( wp_unslash( $_POST ) );
+		if ( is_wp_error( $result ) ) {
+			echo '<div id="qtn-errors" class="notice notice-error" role="alert" tabindex="-1"><p>' . esc_html( $result->get_error_message() ) . '</p></div>';
+		} else {
+			$enabled = qtu_enabled_languages();
+			foreach ( array( 'blogname', 'blogdescription' ) as $option ) {
+				$parts = qtu_split( (string) get_option( $option ), $enabled, false );
+				foreach ( $enabled as $lang ) {
+					if ( isset( $_POST[ $option ][ $lang ] ) && is_string( $_POST[ $option ][ $lang ] ) ) {
+						$parts[ $lang ] = sanitize_text_field( wp_unslash( $_POST[ $option ][ $lang ] ) );
+					}
+				}
+				update_option( $option, qtu_join( $parts, 'bracket', $enabled ) );
+			}
+			echo '<div class="notice notice-success" role="status"><p>' . esc_html__( 'Languages saved.', 'qtrad' ) . '</p></div>';
+		}
+	}
+
+	$catalog  = qtu_available_catalog();
+	$enabled  = qtu_enabled_languages();
+	$default  = qtu_default_language();
+	$url_mode = (int) qtu_config( 'url_mode' );
+	$write    = qtu_setting( 'write_format', 'keep' );
+	$editor   = qtu_setting( 'editor_mode', 'lsb' );
+	$domains  = qtu_config( 'domains' );
+	$domain_lines = '';
+	$invalid = isset( $result ) && is_wp_error( $result );
+	if ( is_array( $domains ) ) {
+		foreach ( $domains as $code => $host ) {
+			$domain_lines .= $code . ' = ' . $host . "\n";
+		}
+	}
+	if ( $invalid && isset( $_POST['domains'] ) && is_string( $_POST['domains'] ) ) { $domain_lines = wp_unslash( $_POST['domains'] ); }
+	$names = qtu_split( (string) get_option( 'blogname' ), $enabled );
+	$descs = qtu_split( (string) get_option( 'blogdescription' ), $enabled );
+
+	echo '<div class="wrap qtu-settings">';
+	echo '<h1>' . esc_html__( 'Languages', 'qtrad' ) . '</h1>';
+	echo '<p class="description">' . esc_html__( 'Reads qTranslate comments, qTranslate-X brackets and swirly brackets. Shared language settings are retained. For compatibility with the original qTranslate, use comment markers for posts.', 'qtrad' ) . '</p>';
+	echo '<form method="post">';
+	wp_nonce_field( 'qtu_settings' );
+	echo '<input type="hidden" name="qtu_settings" value="1" />';
+	echo '<table class="form-table" role="presentation">';
+
+	echo '<tr><th scope="row">' . esc_html__( 'Enabled', 'qtrad' ) . '</th><td><fieldset><legend class="screen-reader-text">' . esc_html__( 'Enabled languages', 'qtrad' ) . '</legend>';
+	foreach ( $catalog as $code => $meta ) {
+		echo '<label class="qtu-lang-choice"><input type="checkbox" name="enabled[]" value="' . esc_attr( $code ) . '"' . checked( in_array( $code, $enabled, true ), true, false ) . ' /> ';
+		echo esc_html( $meta['name'] . ' (' . $code . ')' ) . '</label>';
+	}
+	echo '</fieldset></td></tr>';
+
+	echo '<tr><th scope="row"><label for="qtu-default">' . esc_html__( 'Default language', 'qtrad' ) . '</label></th><td><select name="default" id="qtu-default">';
+	foreach ( array_keys( $catalog ) as $code ) {
+		echo '<option value="' . esc_attr( $code ) . '"' . selected( $default, $code, false ) . '>' . esc_html( qtu_language_name( $code ) ) . '</option>';
+	}
+	echo '</select></td></tr>';
+
+	echo '<tr><th scope="row">' . esc_html__( 'URL mode', 'qtrad' ) . '</th><td><fieldset><legend class="screen-reader-text">' . esc_html__( 'URL mode', 'qtrad' ) . '</legend>';
+	$modes = array(
+		1 => __( 'Query (?lang=en) — qTranslate mode 1', 'qtrad' ),
+		2 => __( 'Path (/en/page/) — qTranslate mode 2, the usual choice', 'qtrad' ),
+		3 => __( 'Subdomain (en.example.com) — mode 3', 'qtrad' ),
+		4 => __( 'One domain per language — qTranslate-X mode 4', 'qtrad' ),
+	);
+	foreach ( $modes as $value => $label ) {
+		echo '<label class="qtu-choice"><input type="radio" name="url_mode" value="' . esc_attr( (string) $value ) . '"' . checked( $url_mode, $value, false ) . ' /> ' . esc_html( $label ) . '</label><br />';
+	}
+	echo '</fieldset></td></tr>';
+
+	echo '<tr><th scope="row">' . esc_html__( 'URL options', 'qtrad' ) . '</th><td>';
+	echo '<label class="qtu-choice"><input type="checkbox" name="hide_default" value="1"' . checked( (bool) qtu_config( 'hide_default_language' ), true, false ) . ' /> ' . esc_html__( 'Hide the default language in the URL', 'qtrad' ) . '</label><br />';
+	echo '<label class="qtu-choice"><input type="checkbox" name="detect_browser" value="1"' . checked( (bool) qtu_config( 'detect_browser_language' ), true, false ) . ' /> ' . esc_html__( 'On the first visit to the home page, use the browser language', 'qtrad' ) . '</label><br />';
+	echo '<label class="qtu-choice"><input type="checkbox" name="hide_untranslated" value="1"' . checked( (bool) qtu_config( 'hide_untranslated' ), true, false ) . ' /> ' . esc_html__( 'Hide posts that have no translation in the current language', 'qtrad' ) . '</label>';
+	echo '</td></tr>';
+
+	echo '<tr><th scope="row">' . esc_html__( 'When a translation is missing', 'qtrad' ) . '</th><td>';
+	echo '<label class="qtu-choice"><input type="checkbox" name="show_prefix" value="1"' . checked( (bool) qtu_setting( 'show_prefix', true ), true, false ) . ' /> ' . esc_html__( 'Prefix the fallback with the language name', 'qtrad' ) . '</label><br />';
+	echo '<label class="qtu-choice"><input type="checkbox" name="show_alt_message" value="1"' . checked( (bool) qtu_setting( 'show_alt_message', true ), true, false ) . ' /> ' . esc_html__( 'On content and excerpts, show “only available in …”', 'qtrad' ) . '</label>';
+	echo '<br /><label class="qtu-choice"><input type="checkbox" name="show_alt_content" value="1"' . checked( (bool) qtu_setting( 'show_alt_content', false ), true, false ) . ' /> ' . esc_html__( 'Also show the available translation below the message', 'qtrad' ) . '</label>';
+	echo '</td></tr>';
+
+	echo '<tr><th scope="row"><label for="qtu-write">' . esc_html__( 'Write format', 'qtrad' ) . '</label></th><td><select name="write_format" id="qtu-write">';
+	$formats = array(
+		'keep'    => __( 'Keep the format already in the field', 'qtrad' ),
+		'bracket' => __( 'qTranslate-X brackets [:en]', 'qtrad' ),
+		'comment' => __( 'qTranslate comments <!--:en-->', 'qtrad' ),
+		'swirly'  => __( 'Swirly brackets {:en}', 'qtrad' ),
+	);
+	foreach ( $formats as $value => $label ) {
+		echo '<option value="' . esc_attr( $value ) . '"' . selected( $write, $value, false ) . '>' . esc_html( $label ) . '</option>';
+	}
+	echo '</select><p class="description">' . esc_html__( 'Keep preserves each existing field’s format and uses qTranslate comments for new translations. Brackets and swirly brackets require qTranslate-X or qTrad.', 'qtrad' ) . '</p></td></tr>';
+
+	echo '<tr><th scope="row">' . esc_html__( 'Editor', 'qtrad' ) . '</th><td><fieldset><legend class="screen-reader-text">' . esc_html__( 'Editor mode', 'qtrad' ) . '</legend>';
+	echo '<label class="qtu-choice"><input type="radio" name="editor_mode" value="lsb"' . checked( $editor, 'lsb', false ) . ' /> ' . esc_html__( 'Language switching buttons', 'qtrad' ) . '</label><br />';
+	echo '<label class="qtu-choice"><input type="radio" name="editor_mode" value="raw"' . checked( $editor, 'raw', false ) . ' /> ' . esc_html__( 'Raw tags in the editor', 'qtrad' ) . '</label>';
+	echo '</fieldset></td></tr>';
+
+	echo '<tr><th scope="row">' . esc_html__( 'Site title', 'qtrad' ) . '</th><td>';
+	foreach ( $enabled as $code ) {
+		echo '<p><label>' . esc_html( qtu_language_name( $code ) ) . '<br /><input type="text" class="regular-text" lang="' . esc_attr( str_replace( '_', '-', qtu_config( 'locale' )[ $code ] ) ) . '" dir="' . esc_attr( qtu_language_direction( $code ) ) . '" name="blogname[' . esc_attr( $code ) . ']" value="' . esc_attr( isset( $names[ $code ] ) ? $names[ $code ] : '' ) . '" /></label></p>';
+	}
+	echo '<p class="description">' . esc_html__( 'Saved with bracket tags so WordPress does not strip them. The same string is what qTranslate-X would have stored in blogname.', 'qtrad' ) . '</p>';
+	echo '</td></tr>';
+
+	echo '<tr><th scope="row">' . esc_html__( 'Tagline', 'qtrad' ) . '</th><td>';
+	foreach ( $enabled as $code ) {
+		echo '<p><label>' . esc_html( qtu_language_name( $code ) ) . '<br /><input type="text" class="regular-text" lang="' . esc_attr( str_replace( '_', '-', qtu_config( 'locale' )[ $code ] ) ) . '" dir="' . esc_attr( qtu_language_direction( $code ) ) . '" name="blogdescription[' . esc_attr( $code ) . ']" value="' . esc_attr( isset( $descs[ $code ] ) ? $descs[ $code ] : '' ) . '" /></label></p>';
+	}
+	echo '</td></tr>';
+
+	echo '<tr><th scope="row"><label for="qtu-domains">' . esc_html__( 'Domains', 'qtrad' ) . '</label></th><td>';
+	echo '<textarea name="domains" id="qtu-domains" rows="5" class="large-text code">' . esc_textarea( trim( $domain_lines ) ) . '</textarea>';
+	echo '<p class="description">' . esc_html__( 'Used by URL mode 4. One per line: de = de.example.com', 'qtrad' ) . '</p>';
+	echo '</td></tr>';
+
+	echo '<tr><th scope="row"><label for="qtu-extra">' . esc_html__( 'Custom fields', 'qtrad' ) . '</label></th><td>';
+	echo '<textarea name="extra_fields" id="qtu-extra" rows="4" class="large-text code">' . esc_textarea( (string) qtu_setting( 'extra_fields', '' ) ) . '</textarea>';
+	echo '<p class="description">' . esc_html__( 'Meta keys, one per line. On the public site their values are shown in the current language. A plain update merges into the language you are editing in the admin bar.', 'qtrad' ) . '</p>';
+	echo '</td></tr>';
+
+	echo '<tr><th scope="row">' . esc_html__( 'Language markers', 'qtrad' ) . '</th><td><label class="qtu-choice"><input type="checkbox" name="force_markers" value="1"' . checked( (bool) qtu_setting( 'force_markers', false ), true, false ) . ' /> ' . esc_html__( 'Keep markers even when translations are identical', 'qtrad' ) . '</label></td></tr>';
+	echo '</table>';
+	echo '<details><summary>' . esc_html__( 'Language names and locales', 'qtrad' ) . '</summary>';
+	foreach ( $catalog as $code => $meta ) {
+		if ( ! in_array( $code, $enabled, true ) ) { continue; }
+		echo '<fieldset><legend>' . esc_html( $meta['name'] . ' (' . $code . ')' ) . '</legend>';
+		foreach ( array( 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
+			echo '<p><label for="qtn-' . esc_attr( $code . '-' . $key ) . '">' . esc_html( $label ) . '</label> <input id="qtn-' . esc_attr( $code . '-' . $key ) . '" name="languages[' . esc_attr( $code ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['languages'][ $code ][ $key ] ) && is_string( $_POST['languages'][ $code ][ $key ] ) ? wp_unslash( $_POST['languages'][ $code ][ $key ] ) : $meta[ $key ] ) . '" /></p>';
+		}
+		echo '</fieldset>';
+	}
+	echo '</details><fieldset><legend><h2>' . esc_html__( 'Add a language', 'qtrad' ) . '</h2></legend><p>' . esc_html__( 'Provide a two-letter code, native name and WordPress locale, for example: uk, Українська, uk. The language will be enabled when you save.', 'qtrad' ) . '</p>';
+	foreach ( array( 'code' => __( 'Two-letter code', 'qtrad' ), 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
+		echo '<p><label for="qtn-new-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label> <input id="qtn-new-' . esc_attr( $key ) . '" name="new_language[' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['new_language'][ $key ] ) && is_string( $_POST['new_language'][ $key ] ) ? wp_unslash( $_POST['new_language'][ $key ] ) : '' ) . '" /></p>';
+	}
+	echo '</fieldset>';
+	submit_button( __( 'Save languages', 'qtrad' ) );
+	echo '</form></div>';
+}
+
+function qtu_register_taxonomy_fields() {
+	foreach ( get_taxonomies( array( 'show_ui' => true ) ) as $taxonomy ) {
+		add_action( $taxonomy . '_edit_form_fields', 'qtu_term_fields' );
+		add_action( $taxonomy . '_add_form_fields', 'qtu_term_add_fields' );
+	}
+	foreach ( get_post_types( array( 'public' => true ) ) as $type ) {
+		add_filter( "manage_{$type}_posts_columns", 'qtu_language_column' );
+		add_action( "manage_{$type}_posts_custom_column", 'qtu_language_column_cell', 10, 2 );
+	}
+}

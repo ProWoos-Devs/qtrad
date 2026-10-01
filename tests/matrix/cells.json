@@ -1,0 +1,14 @@
+[
+  {"id":"wp58-php74-maria", "wordpress":"5.8", "php":"7.4", "database":"mariadb:10.11", "browser":true},
+  {"id":"wp60-php80-mysql", "wordpress":"6.0", "php":"8.0", "database":"mysql:8.0"},
+  {"id":"wp64-php81-maria", "wordpress":"6.4", "php":"8.1", "database":"mariadb:10.11"},
+  {"id":"wp68-php82-mysql", "wordpress":"6.8", "php":"8.2", "database":"mysql:8.0"},
+  {"id":"wp68-php83-maria", "wordpress":"6.8", "php":"8.3", "database":"mariadb:10.11"},
+  {"id":"wp68-php84-mysql", "wordpress":"6.8", "php":"8.4", "database":"mysql:8.0"},
+  {"id":"wp69-php85-maria", "wordpress":"6.9", "php":"8.5", "database":"mariadb:10.11"},
+  {"id":"wp71-php74-maria", "wordpress":"7.1.2", "php":"7.4", "database":"mariadb:10.11"},
+  {"id":"wp71-php82-mysql", "wordpress":"7.1.2", "php":"8.2", "database":"mysql:8.0"},
+  {"id":"wp71-php83-maria", "wordpress":"7.1.2", "php":"8.3", "database":"mariadb:10.11"},
+  {"id":"wp71-php84-mysql", "wordpress":"7.1.2", "php":"8.4", "database":"mysql:8.0"},
+  {"id":"wp71-php85-maria", "wordpress":"7.1.2", "php":"8.5", "database":"mariadb:10.11", "browser":true}
+]

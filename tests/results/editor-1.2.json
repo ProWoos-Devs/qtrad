@@ -1,0 +1,108 @@
+{
+  "passed": 17,
+  "total": 17,
+  "cases": [
+    {
+      "case": "block editor initially displays selected language",
+      "pass": true,
+      "expected": "Hello",
+      "actual": "Hello"
+    },
+    {
+      "case": "language switch preserves existing classic block identity",
+      "pass": true,
+      "expected": "initial-block",
+      "actual": "initial-block"
+    },
+    {
+      "case": "block save preserves enabled English/German",
+      "pass": true,
+      "expected": "[:en]Hello[:de]Neu[:fr]Bonjour[:]",
+      "actual": "[:en]Hello[:de]Neu[:fr]Bonjour[:]"
+    },
+    {
+      "case": "block save retains disabled French",
+      "pass": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "case": "middleware does not rewrite other post IDs",
+      "pass": true,
+      "expected": "Unrelated title",
+      "actual": "Unrelated title"
+    },
+    {
+      "case": "plain editor preload retains other and disabled translations",
+      "pass": true,
+      "expected": "[:en]Changed English[:de]Hallo[:fr]Bonjour[:]",
+      "actual": "[:en]Changed English[:de]Hallo[:fr]Bonjour[:]"
+    },
+    {
+      "case": "middleware does not rewrite templates with post content",
+      "pass": true,
+      "expected": "<p>Header</p>",
+      "actual": "<p>Header</p>"
+    },
+    {
+      "case": "custom post type save contains both languages",
+      "pass": true,
+      "expected": "[:en]Hello[:de]Neu[:fr]Bonjour[:]",
+      "actual": "[:en]Hello[:de]Neu[:fr]Bonjour[:]"
+    },
+    {
+      "case": "literal tag in content does not discard title edits",
+      "pass": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "case": "JS join preserves zero string",
+      "pass": true,
+      "expected": "0",
+      "actual": "0"
+    },
+    {
+      "case": "save completion does not recursively dispatch",
+      "pass": true,
+      "expected": null,
+      "actual": null
+    },
+    {
+      "case": "save completion preserves edits made during request",
+      "pass": true,
+      "expected": "Typed during save",
+      "actual": "Typed during save"
+    },
+    {
+      "case": "full external REST URL is left untouched",
+      "pass": true,
+      "expected": "External title",
+      "actual": "External title"
+    },
+    {
+      "case": "full local REST URL packs only its current post",
+      "pass": true,
+      "expected": true,
+      "actual": true
+    },
+    {
+      "case": "title-only classic editor initializes",
+      "pass": true,
+      "expected": "Hello",
+      "actual": "Hello"
+    },
+    {
+      "case": "title-only classic editor switches language",
+      "pass": true,
+      "expected": "Hallo",
+      "actual": "Hallo"
+    },
+    {
+      "case": "title-only classic editor submits scoped stores",
+      "pass": true,
+      "expected": "1",
+      "actual": "1"
+    }
+  ]
+}

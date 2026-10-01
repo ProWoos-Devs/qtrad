@@ -1,0 +1,381 @@
+{
+  "project": "lipis/flag-icons",
+  "version": "7.3.2",
+  "commit": "fe15c16e7463d0c66d6c5730e9d0e832438d98e1",
+  "source_archive_sha256": "99dc1f2a3f4a7312a981e3edba1457f36b34c5ab2b2b3779df7814949c106742",
+  "license_file": "LICENSE.flag-icons",
+  "license_sha256": "8f1195d55a2fd315a07d812328470ca9ba2abb78c8d317ff19619d5125e00cea",
+  "assets": [
+    {
+      "file": "arab.svg",
+      "source_path": "flags/4x3/arab.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/arab.svg",
+      "sha256": "5c64e7f09bdfe4988fe3aa7d07e999b3577c4003820e19e918e52f8a2612a518",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "at.svg",
+      "source_path": "flags/4x3/at.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/at.svg",
+      "sha256": "c0e5cb3c1d59fd002afd6e2b0dd03787677ca3c9e7b2321f4af6d9e28256ebcd",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "be.svg",
+      "source_path": "flags/4x3/be.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/be.svg",
+      "sha256": "d6aff6fa4c913404eafd53f91c0a9b240fcecaddc8f0ac2160d362e38469342c",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "br.svg",
+      "source_path": "flags/4x3/br.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/br.svg",
+      "sha256": "d079a828be244afbfefccae98370ae404766e62e4716cb3e0ef2d9eed487b390",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "ca.svg",
+      "source_path": "flags/4x3/ca.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ca.svg",
+      "sha256": "345ec9dac057e203f1331b2d3f9f473789864edaee1182a26bc261356bcf72f1",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "ch.svg",
+      "source_path": "flags/4x3/ch.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ch.svg",
+      "sha256": "ac676cd39d7032988598ef2dd73f6bebcd767738e3e469705d6a437835ac485c",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "cn.svg",
+      "source_path": "flags/4x3/cn.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/cn.svg",
+      "sha256": "981da9bdf82d48e31691f20578cefcb26cf7d0bd95e4ebd5c0df00bdfe988c1a",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "cz.svg",
+      "source_path": "flags/4x3/cz.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/cz.svg",
+      "sha256": "d601fcc2e5b1fd48b79d53c55108af4c0e90793f146db51f3ee449d8d69512bc",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "de.svg",
+      "source_path": "flags/4x3/de.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/de.svg",
+      "sha256": "efd480af5a154a7651f29da23ee0d09dbc892410fb4041898ddf8face336c575",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "dk.svg",
+      "source_path": "flags/4x3/dk.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/dk.svg",
+      "sha256": "d2847c0bd7a1fb97977ee51f2f618c5ebc5898dd66ef9804f187613c27bdca1a",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "ee.svg",
+      "source_path": "flags/4x3/ee.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ee.svg",
+      "sha256": "25642310e287fbdc02e1ac3e0e08fadca9a32eae195f67b6863bf0fc6247176b",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "es-ct.svg",
+      "source_path": "flags/4x3/es-ct.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/es-ct.svg",
+      "sha256": "11229703126cc831021cf10b69552e3e5ed4534efadc44fa9aec151d2d4cca00",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "es-ga.svg",
+      "source_path": "flags/4x3/es-ga.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/es-ga.svg",
+      "sha256": "979d9860a973bfbc6e39e0ae996757eed21e4943cffd3519213c5cc0f691f916",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "es-pv.svg",
+      "source_path": "flags/4x3/es-pv.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/es-pv.svg",
+      "sha256": "df3beb6c83af9f45226eeef3f43a2c5b9d2c52017d3b26f57c656632cc6ee1d8",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "es.svg",
+      "source_path": "flags/4x3/es.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/es.svg",
+      "sha256": "1d60aebdd9ecfc669e11ea317a9f5ba8af6a9d6b98a841b9f70d8243e65b60eb",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "fi.svg",
+      "source_path": "flags/4x3/fi.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/fi.svg",
+      "sha256": "012edd984cf1879463c2855b7df02dea2f7de7f7a66b244fb1e22b4227f7aa65",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "fr.svg",
+      "source_path": "flags/4x3/fr.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/fr.svg",
+      "sha256": "8cdacc8d79bcf210cdca2777a2c0de1f9e5862526877bd3026c9d59ecdcd4578",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "gb-wls.svg",
+      "source_path": "flags/4x3/gb-wls.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/gb-wls.svg",
+      "sha256": "61ad944644250599da53b344e16bb40529677a7f35b84aaf6bc81fd18eb09e24",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "gb.svg",
+      "source_path": "flags/4x3/gb.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/gb.svg",
+      "sha256": "c8be1e7208798a4ae692ee1e937065d498bb29e741943f6172b29118b8ed8066",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "gr.svg",
+      "source_path": "flags/4x3/gr.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/gr.svg",
+      "sha256": "a184070f7678b06777be8ac38cb05ba41829591a6dac9b64b2b72db66aec82f5",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "hr.svg",
+      "source_path": "flags/4x3/hr.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/hr.svg",
+      "sha256": "6c9bd3fa4533610a8c54cb1e9da4c894c86d273bde61c8e6c2eb887216cd53c6",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "hu.svg",
+      "source_path": "flags/4x3/hu.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/hu.svg",
+      "sha256": "ffc4edd580d4b9789bee68f33cef24afe826ae571464350fe7b98c7a36b4ff8f",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "ie.svg",
+      "source_path": "flags/4x3/ie.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ie.svg",
+      "sha256": "f82568d70bd1624ff7ce3ced8712a718a224ff2424fd2ade2da4339be3bba463",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "il.svg",
+      "source_path": "flags/4x3/il.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/il.svg",
+      "sha256": "04a099ac4370b5e856f5f8d44ce0822ec47a6d3bc395a7d048d3a46d69274d68",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "it.svg",
+      "source_path": "flags/4x3/it.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/it.svg",
+      "sha256": "9fa88118818d9b64838f578e2babcca3d0630aed21b5c33b34aff7ac5ce506bc",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "jp.svg",
+      "source_path": "flags/4x3/jp.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/jp.svg",
+      "sha256": "bfea80baf9989383dc4bf7ca594ed95be0df0ff125bfc88d0bfa878eb0198022",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "kr.svg",
+      "source_path": "flags/4x3/kr.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/kr.svg",
+      "sha256": "7a6cd5b51d0e2841ed8b79b1147ad8a66cf3c09f6344d4a63b5e4413ffa5d15b",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "mx.svg",
+      "source_path": "flags/4x3/mx.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/mx.svg",
+      "sha256": "bf69fcf0118ebf04d391c522883b36da521d44169163c290435192930d28a109",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "nl.svg",
+      "source_path": "flags/4x3/nl.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/nl.svg",
+      "sha256": "8f691f17fe70894537af8e92f2ca47761d353639b0defc15cbe561eb503ab010",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "pl.svg",
+      "source_path": "flags/4x3/pl.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/pl.svg",
+      "sha256": "369bb3e14ee718df1ee15fd2fb3ad0dae713f78f622e277710fb2b30a313f2aa",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "pt.svg",
+      "source_path": "flags/4x3/pt.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/pt.svg",
+      "sha256": "79fb7f58a45dcef3f1149742fab8817068d962ebeb3179308b72c3ed1f73d4e4",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "ro.svg",
+      "source_path": "flags/4x3/ro.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ro.svg",
+      "sha256": "17a3a747fc5e63302aaa670a667e5812f3676f46768e5a3e87b254bd41762840",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "rs.svg",
+      "source_path": "flags/4x3/rs.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/rs.svg",
+      "sha256": "b11ea9d481e9ff9316aabcb9ec99831dff650f2c32199ee2300ff67c7ddd9359",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "ru.svg",
+      "source_path": "flags/4x3/ru.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ru.svg",
+      "sha256": "7100aaae51ff3b6a2bf0ca932b3bc518bdc760814725e7cca31d821a26c3dd7c",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "se.svg",
+      "source_path": "flags/4x3/se.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/se.svg",
+      "sha256": "b3b5071e6c1d4a0e3db828bab5c7dfd68d0e90fcf3b25b15e9a2c4f96c1f79c9",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "sk.svg",
+      "source_path": "flags/4x3/sk.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/sk.svg",
+      "sha256": "578d0693bc95214334248b47c5719dd01cfc9839bd909a726df045d499fabbb6",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "tr.svg",
+      "source_path": "flags/4x3/tr.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/tr.svg",
+      "sha256": "256a1d6afbedb9f731566982331a1cd1ad14aba211b8a61d338855879505e74f",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "tw.svg",
+      "source_path": "flags/4x3/tw.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/tw.svg",
+      "sha256": "931757f06b9ee751fd1a0cc8dd7cf862e21fdcaf894d10ed7bcc68dabcca59ad",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "ua.svg",
+      "source_path": "flags/4x3/ua.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/ua.svg",
+      "sha256": "2d869c23ebfefb2ae0a633297c11dee06fcb666ce7b3ca75eba09b7a1a3a03ac",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "us.svg",
+      "source_path": "flags/4x3/us.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/us.svg",
+      "sha256": "e7be4240cf57987926673708f09233be1ab6bdf35acc7b86bd32a263f197a2a7",
+      "license": "MIT",
+      "modifications": "none"
+    },
+    {
+      "file": "vn.svg",
+      "source_path": "flags/4x3/vn.svg",
+      "source_url": "https://github.com/lipis/flag-icons/blob/fe15c16e7463d0c66d6c5730e9d0e832438d98e1/flags/4x3/vn.svg",
+      "sha256": "2355037201315d74581ab0ad60b5587a29a087d26b0525bdeb8676e64fae5b86",
+      "license": "MIT",
+      "modifications": "none"
+    }
+  ],
+  "legacy_aliases": {
+    "arle.png": "arab.svg",
+    "at.png": "at.svg",
+    "be.png": "be.svg",
+    "br.png": "br.svg",
+    "ca.png": "ca.svg",
+    "ch.png": "ch.svg",
+    "cn.png": "cn.svg",
+    "cz.png": "cz.svg",
+    "de.png": "de.svg",
+    "dk.png": "dk.svg",
+    "ee.png": "ee.svg",
+    "es.png": "es.svg",
+    "fi.png": "fi.svg",
+    "fr.png": "fr.svg",
+    "galego.png": "es-ga.svg",
+    "gb.png": "gb.svg",
+    "gr.png": "gr.svg",
+    "hr.png": "hr.svg",
+    "hu.png": "hu.svg",
+    "ie.png": "ie.svg",
+    "il.png": "il.svg",
+    "it.png": "it.svg",
+    "jp.png": "jp.svg",
+    "kr.png": "kr.svg",
+    "mx.png": "mx.svg",
+    "nl.png": "nl.svg",
+    "pl.png": "pl.svg",
+    "pt.png": "pt.svg",
+    "ro.png": "ro.svg",
+    "rs.png": "rs.svg",
+    "ru.png": "ru.svg",
+    "se.png": "se.svg",
+    "sk.png": "sk.svg",
+    "tr.png": "tr.svg",
+    "tw.png": "tw.svg",
+    "ua.png": "ua.svg",
+    "us.png": "us.svg",
+    "vn.png": "vn.svg",
+    "catalonia.png": "es-ct.svg",
+    "basque.png": "es-pv.svg",
+    "wales.png": "gb-wls.svg"
+  }
+}

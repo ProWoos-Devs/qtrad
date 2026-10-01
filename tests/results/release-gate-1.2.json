@@ -1,0 +1,26 @@
+[
+  {
+    "case": "Untested runtime inventory rejected",
+    "pass": true,
+    "reason": "Stale tested source/inventory: wp58-php74-maria"
+  },
+  {
+    "case": "Stale test harness rejected",
+    "pass": true,
+    "reason": "Stale test harness: wp58-php74-maria"
+  },
+  {
+    "case": "Failed cell rejected",
+    "pass": true,
+    "reason": "Matrix cell did not pass: wp58-php74-maria"
+  },
+  {
+    "case": "Missing browser suite rejected",
+    "pass": true,
+    "reason": "Missing/failing browser validation: wp58-php74-maria"
+  },
+  {
+    "case": "Changed flag artwork rejected",
+    "pass": true
+  }
+]

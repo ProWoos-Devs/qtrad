@@ -1,0 +1,618 @@
+{
+    "environment": {
+        "wordpress": "6.4",
+        "php": "8.1.34"
+    },
+    "browser_post_id": 25,
+    "browser_post_slug": "qtn-audit-browser",
+    "passed": 85,
+    "total": 85,
+    "cases": [
+        {
+            "case": "Former bootstraps keep canonical activation file",
+            "pass": true,
+            "expected": "qtrad.php",
+            "actual": "qtrad.php"
+        },
+        {
+            "case": "WordPress discovers only one activatable entry",
+            "pass": true,
+            "expected": {
+                "qtrad.php": "qTrad — Multilingual Content"
+            },
+            "actual": {
+                "qtrad.php": "qTrad — Multilingual Content"
+            }
+        },
+        {
+            "case": "codec round trip bracket",
+            "pass": true,
+            "expected": {
+                "en": "Hello",
+                "de": "Hallo"
+            },
+            "actual": {
+                "en": "Hello",
+                "de": "Hallo"
+            }
+        },
+        {
+            "case": "codec round trip comment",
+            "pass": true,
+            "expected": {
+                "en": "Hello",
+                "de": "Hallo"
+            },
+            "actual": {
+                "en": "Hello",
+                "de": "Hallo"
+            }
+        },
+        {
+            "case": "codec round trip swirly",
+            "pass": true,
+            "expected": {
+                "en": "Hello",
+                "de": "Hallo"
+            },
+            "actual": {
+                "en": "Hello",
+                "de": "Hallo"
+            }
+        },
+        {
+            "case": "plain language merge preserves existing translation",
+            "pass": true,
+            "expected": "[:en]Hello[:de]Neu[:]",
+            "actual": "[:en]Hello[:de]Neu[:]"
+        },
+        {
+            "case": "classic save retains disabled French translation",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "classic save preserves JSON escaping and backslashes",
+            "pass": true,
+            "expected": "<!-- wp:paragraph {\"metadata\":{\"name\":\"a\\\\b\"}} --><p>C:\\temp</p><!-- /wp:paragraph -->",
+            "actual": "<!-- wp:paragraph {\"metadata\":{\"name\":\"a\\\\b\"}} --><p>C:\\temp</p><!-- /wp:paragraph -->"
+        },
+        {
+            "case": "plain merge preserves backslash in untouched English",
+            "pass": true,
+            "expected": "<p>C:\\temp</p>",
+            "actual": "<p>C:\\temp</p>"
+        },
+        {
+            "case": "secondary insert does not inherit main form payload",
+            "pass": true,
+            "expected": "Secondary page",
+            "actual": "Secondary page"
+        },
+        {
+            "case": "metadata display uses selected German",
+            "pass": true,
+            "expected": "Hallo",
+            "actual": "Hallo"
+        },
+        {
+            "case": "metadata update retains both languages",
+            "pass": true,
+            "expected": {
+                "en": "Hello",
+                "de": "Neu"
+            },
+            "actual": {
+                "en": "Hello",
+                "de": "Neu"
+            }
+        },
+        {
+            "case": "metadata respects previous value condition",
+            "pass": true,
+            "expected": "[:en]Hello[:de]Hallo[:]",
+            "actual": "[:en]Hello[:de]Hallo[:]"
+        },
+        {
+            "case": "metadata reports rejected conditional update",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "metadata non-single read returns every row",
+            "pass": true,
+            "expected": [
+                "Hello",
+                "Second"
+            ],
+            "actual": [
+                "Hello",
+                "Second"
+            ]
+        },
+        {
+            "case": "metadata existence is false for absent configured field",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "legacy term library translates string",
+            "pass": true,
+            "expected": "Nachrichten",
+            "actual": "Nachrichten"
+        },
+        {
+            "case": "legacy term library translates array",
+            "pass": true,
+            "expected": [
+                "Nachrichten"
+            ],
+            "actual": [
+                "Nachrichten"
+            ]
+        },
+        {
+            "case": "term rename removes obsolete library key",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "term rename retains disabled French",
+            "pass": true,
+            "expected": "Ancien",
+            "actual": "Ancien"
+        },
+        {
+            "case": "AJAX-style term save keeps default-language database name",
+            "pass": true,
+            "expected": "News",
+            "actual": "News"
+        },
+        {
+            "case": "settings retain custom legacy language",
+            "pass": true,
+            "expected": [
+                "en",
+                "xx"
+            ],
+            "actual": [
+                "en",
+                "xx"
+            ]
+        },
+        {
+            "case": "legacy chooser echoes output",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "URL conversion leaves external host unchanged",
+            "pass": true,
+            "expected": "https://other.example/path?x=1",
+            "actual": "https://other.example/path?x=1"
+        },
+        {
+            "case": "URL conversion leaves mailto unchanged",
+            "pass": true,
+            "expected": "mailto:user@example.test",
+            "actual": "mailto:user@example.test"
+        },
+        {
+            "case": "URL conversion leaves anchor unchanged",
+            "pass": true,
+            "expected": "#section",
+            "actual": "#section"
+        },
+        {
+            "case": "URL conversion preserves signed/repeated query bytes",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/de/path?a=1&a=2&v=a%20b",
+            "actual": "http://127.0.0.1:8931/de/path?a=1&a=2&v=a%20b"
+        },
+        {
+            "case": "qtrans URL wrapper respects visible default setting",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/en/page/",
+            "actual": "http://127.0.0.1:8931/en/page/"
+        },
+        {
+            "case": "neutral paths work with WordPress in subdirectory",
+            "pass": true,
+            "expected": "https://site.example/blog/wp-login.php",
+            "actual": "https://site.example/blog/wp-login.php"
+        },
+        {
+            "case": "home prefix needs path segment boundary",
+            "pass": true,
+            "expected": "/blogger/post",
+            "actual": "/blogger/post"
+        },
+        {
+            "case": "browser detection rejects q=0 languages",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "browser detection respects regional preference weights",
+            "pass": true,
+            "expected": "pt",
+            "actual": "pt"
+        },
+        {
+            "case": "zero survives joining",
+            "pass": true,
+            "expected": "0",
+            "actual": "0"
+        },
+        {
+            "case": "empty tagged translation honors show_empty",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "selected legacy public APIs exist",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "Catalan missing flag has visible text fallback",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "qTranslate-X plain text availability contract",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "qTranslate plain text availability contract",
+            "pass": true,
+            "expected": [
+                "en",
+                "de"
+            ],
+            "actual": [
+                "en",
+                "de"
+            ]
+        },
+        {
+            "case": "legacy join accepts string input",
+            "pass": true,
+            "expected": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->",
+            "actual": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->"
+        },
+        {
+            "case": "legacy force_markers option is respected",
+            "pass": true,
+            "expected": "[:en]Same[:de]Same[:]",
+            "actual": "[:en]Same[:de]Same[:]"
+        },
+        {
+            "case": "author classic save strips script and event handlers",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "hide_untranslated excludes empty tagged language",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "quicktags=false keeps bracket markers literal",
+            "pass": true,
+            "expected": {
+                "en": "[:en]Hello[:de]Hallo[:]",
+                "de": "[:en]Hello[:de]Hallo[:]"
+            },
+            "actual": {
+                "en": "[:en]Hello[:de]Hallo[:]",
+                "de": "[:en]Hello[:de]Hallo[:]"
+            }
+        },
+        {
+            "case": "use disabled language leaves complete source intact",
+            "pass": true,
+            "expected": "[:en]Hello[:fr]Bonjour[:]",
+            "actual": "[:en]Hello[:fr]Bonjour[:]"
+        },
+        {
+            "case": "shared footer survives in disabled language",
+            "pass": true,
+            "expected": "Bonjour footer",
+            "actual": "Bonjour footer"
+        },
+        {
+            "case": "new translated field uses original-compatible comments",
+            "pass": true,
+            "expected": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->",
+            "actual": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->"
+        },
+        {
+            "case": "more separator survives disabled language",
+            "pass": true,
+            "expected": {
+                "en": "Intro<!--more-->End",
+                "de": "Anfang<!--more-->Ende",
+                "fr": "Début<!--more-->Fin"
+            },
+            "actual": {
+                "en": "Intro<!--more-->End",
+                "de": "Anfang<!--more-->Ende",
+                "fr": "Début<!--more-->Fin"
+            }
+        },
+        {
+            "case": "chooser supports legacy options array",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "chooser boolean requests flags",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "qTrad widget preserves existing sidebar identity",
+            "pass": true,
+            "expected": "qtranslate",
+            "actual": "qtranslate"
+        },
+        {
+            "case": "former Next widget class preserves sidebar identity",
+            "pass": true,
+            "expected": "qtranslate",
+            "actual": "qtranslate"
+        },
+        {
+            "case": "qTrad switcher matches legacy shortcode output",
+            "pass": true,
+            "expected": "<nav class=\"qtu-switcher\" aria-label=\"Language\"><ul class=\"qtrans_language_chooser qtranxs-lang-switcher qtu-style-both\" id=\"branding\"><li class=\"lang-en active\"><a href=\"http://127.0.0.1:8931/en/\" hreflang=\"en-US\" lang=\"en-US\" aria-current=\"true\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/gb.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">English</bdi></a></li><li class=\"lang-de\"><a href=\"http://127.0.0.1:8931/de/\" hreflang=\"de-DE\" lang=\"de-DE\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/de.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">Deutsch</bdi></a></li></ul></nav>",
+            "actual": "<nav class=\"qtu-switcher\" aria-label=\"Language\"><ul class=\"qtrans_language_chooser qtranxs-lang-switcher qtu-style-both\" id=\"branding\"><li class=\"lang-en active\"><a href=\"http://127.0.0.1:8931/en/\" hreflang=\"en-US\" lang=\"en-US\" aria-current=\"true\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/gb.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">English</bdi></a></li><li class=\"lang-de\"><a href=\"http://127.0.0.1:8931/de/\" hreflang=\"de-DE\" lang=\"de-DE\"><img src=\"http://127.0.0.1:8931/wp-content/plugins/workspace/qtrad/flags/de.svg\" width=\"18\" height=\"12\" alt=\"\" /><bdi class=\"qtu-language-name\">Deutsch</bdi></a></li></ul></nav>"
+        },
+        {
+            "case": "widget retains unimplemented legacy options for rollback",
+            "pass": true,
+            "expected": "legacy-format",
+            "actual": "legacy-format"
+        },
+        {
+            "case": "widget updates hide-title",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "programmatic full replacement remains plain",
+            "pass": true,
+            "expected": "Full replacement",
+            "actual": "Full replacement"
+        },
+        {
+            "case": "programmatic partial update requires explicit context",
+            "pass": true,
+            "expected": {
+                "en": "Full replacement",
+                "de": "Neu"
+            },
+            "actual": {
+                "en": "Full replacement",
+                "de": "Neu"
+            }
+        },
+        {
+            "case": "wrong form identity cannot overwrite target",
+            "pass": true,
+            "expected": "Full value",
+            "actual": "Full value"
+        },
+        {
+            "case": "metadata conditional update selects one raw row",
+            "pass": true,
+            "expected": [
+                "[:en]First[:de]Erste[:]",
+                "[:en]Second[:de]C:\\temp[:]"
+            ],
+            "actual": [
+                "[:en]First[:de]Erste[:]",
+                "[:en]Second[:de]C:\\temp[:]"
+            ]
+        },
+        {
+            "case": "zero metadata exists",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "zero metadata is displayed",
+            "pass": true,
+            "expected": "0",
+            "actual": "0"
+        },
+        {
+            "case": "metadata respects earlier provider",
+            "pass": true,
+            "expected": "Provider value",
+            "actual": "Provider value"
+        },
+        {
+            "case": "legacy missing-translation message is retained",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "legacy policy does not append alternative content",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "legacy alternative content policy is honored",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "invalid custom language returns an error",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "invalid settings do not change enabled languages",
+            "pass": true,
+            "expected": [
+                "en",
+                "de"
+            ],
+            "actual": [
+                "en",
+                "de"
+            ]
+        },
+        {
+            "case": "invalid mapped domain returns an error",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "invalid domains do not partially save",
+            "pass": true,
+            "expected": [
+                "en",
+                "de"
+            ],
+            "actual": [
+                "en",
+                "de"
+            ]
+        },
+        {
+            "case": "domain map switches configured language origins",
+            "pass": true,
+            "expected": "http://de.example:8931/path?x=1",
+            "actual": "http://de.example:8931/path?x=1"
+        },
+        {
+            "case": "mapped default always uses its mapped origin",
+            "pass": true,
+            "expected": "http://en.example:8931/path",
+            "actual": "http://en.example:8931/path"
+        },
+        {
+            "case": "different port is an external origin",
+            "pass": true,
+            "expected": "http://127.0.0.1:9999/path",
+            "actual": "http://127.0.0.1:9999/path"
+        },
+        {
+            "case": "credential-bearing URL is preserved",
+            "pass": true,
+            "expected": "http://user:pass@127.0.0.1:8931/path",
+            "actual": "http://user:pass@127.0.0.1:8931/path"
+        },
+        {
+            "case": "tel URL is preserved",
+            "pass": true,
+            "expected": "tel:+34000000000",
+            "actual": "tel:+34000000000"
+        },
+        {
+            "case": "language query removal preserves duplicate bytes",
+            "pass": true,
+            "expected": "x=1&x=2&v=a%20b",
+            "actual": "x=1&x=2&v=a%20b"
+        },
+        {
+            "case": "unindexed legacy empty translation is excluded",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "indexed zero translation remains visible",
+            "pass": true,
+            "expected": [
+                22
+            ],
+            "actual": [
+                22
+            ]
+        },
+        {
+            "case": "legacy zero translation remains visible",
+            "pass": true,
+            "expected": [
+                22
+            ],
+            "actual": [
+                22
+            ]
+        },
+        {
+            "case": "custom post type REST update succeeds",
+            "pass": true,
+            "expected": 200,
+            "actual": 200
+        },
+        {
+            "case": "custom post type REST preserves disabled language",
+            "pass": true,
+            "expected": "[:en]Hello[:de]REST title[:fr]Bonjour[:]",
+            "actual": "[:en]Hello[:de]REST title[:fr]Bonjour[:]"
+        },
+        {
+            "case": "custom post type REST autosave succeeds",
+            "pass": true,
+            "expected": 200,
+            "actual": 200
+        },
+        {
+            "case": "autosave retains multilingual title",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "raw mode REST permits full plain replacement",
+            "pass": true,
+            "expected": "Raw replacement",
+            "actual": "Raw replacement"
+        },
+        {
+            "case": "deleting a displayed translation cleans the raw library key",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "root custom language attribute survives",
+            "pass": true,
+            "expected": "data-lang=\"custom\" lang=\"de-DE\" dir=\"ltr\"",
+            "actual": "data-lang=\"custom\" lang=\"de-DE\" dir=\"ltr\""
+        },
+        {
+            "case": "root language attributes retain unrelated and XHTML attributes",
+            "pass": true,
+            "expected": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\"",
+            "actual": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\""
+        }
+    ]
+}

@@ -1,0 +1,319 @@
+{
+  "version": "1.2.0",
+  "passed": true,
+  "cells": 12,
+  "totals": {
+    "codec": 120,
+    "wordpress": 960,
+    "seo": 912,
+    "seo-http": 720,
+    "yoast-http": 780,
+    "rankmath-http": 768,
+    "browser": 84,
+    "multisite": 20
+  },
+  "runs": [
+    {
+      "cell": {
+        "id": "wp58-php74-maria",
+        "wordpress": "5.8",
+        "php": "7.4",
+        "database": "mariadb:10.11",
+        "browser": true
+      },
+      "environment": {
+        "wordpress": "5.8",
+        "php": "7.4.33"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:03:43.771441+00:00",
+      "completed_utc": "2026-10-01T07:04:35.873564+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "17.9",
+          "archive_sha256": "53835548d25ef61f4f8a521d1630a39fb8935f4332a3113f5c9243de593f11a6"
+        },
+        "rankmath": {
+          "version": "1.0.76.1",
+          "archive_sha256": "1f9fed1d1a027079e34bbf63c53cfe04bb23e3c1f180c7c7d5a2e1b7fbb66606"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp60-php80-mysql",
+        "wordpress": "6.0",
+        "php": "8.0",
+        "database": "mysql:8.0"
+      },
+      "environment": {
+        "wordpress": "6.0",
+        "php": "8.0.30"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:04:35.883319+00:00",
+      "completed_utc": "2026-10-01T07:05:41.024972+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "17.9",
+          "archive_sha256": "53835548d25ef61f4f8a521d1630a39fb8935f4332a3113f5c9243de593f11a6"
+        },
+        "rankmath": {
+          "version": "1.0.76.1",
+          "archive_sha256": "1f9fed1d1a027079e34bbf63c53cfe04bb23e3c1f180c7c7d5a2e1b7fbb66606"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp64-php81-maria",
+        "wordpress": "6.4",
+        "php": "8.1",
+        "database": "mariadb:10.11"
+      },
+      "environment": {
+        "wordpress": "6.4",
+        "php": "8.1.34"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:05:41.042516+00:00",
+      "completed_utc": "2026-10-01T07:06:07.525968+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "17.9",
+          "archive_sha256": "53835548d25ef61f4f8a521d1630a39fb8935f4332a3113f5c9243de593f11a6"
+        },
+        "rankmath": {
+          "version": "1.0.76.1",
+          "archive_sha256": "1f9fed1d1a027079e34bbf63c53cfe04bb23e3c1f180c7c7d5a2e1b7fbb66606"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp68-php82-mysql",
+        "wordpress": "6.8",
+        "php": "8.2",
+        "database": "mysql:8.0"
+      },
+      "environment": {
+        "wordpress": "6.8",
+        "php": "8.2.34"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:06:07.533480+00:00",
+      "completed_utc": "2026-10-01T07:06:48.249475+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "25.9",
+          "archive_sha256": "6b131399f0edc441984b1f6d4afbd90c0e712ad8061b136a6e1b0460b7a06711"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp68-php83-maria",
+        "wordpress": "6.8",
+        "php": "8.3",
+        "database": "mariadb:10.11"
+      },
+      "environment": {
+        "wordpress": "6.8",
+        "php": "8.3.35"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:06:48.257210+00:00",
+      "completed_utc": "2026-10-01T07:07:13.427694+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "25.9",
+          "archive_sha256": "6b131399f0edc441984b1f6d4afbd90c0e712ad8061b136a6e1b0460b7a06711"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp68-php84-mysql",
+        "wordpress": "6.8",
+        "php": "8.4",
+        "database": "mysql:8.0"
+      },
+      "environment": {
+        "wordpress": "6.8",
+        "php": "8.4.26"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:07:13.435546+00:00",
+      "completed_utc": "2026-10-01T07:07:51.173541+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "25.9",
+          "archive_sha256": "6b131399f0edc441984b1f6d4afbd90c0e712ad8061b136a6e1b0460b7a06711"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp69-php85-maria",
+        "wordpress": "6.9",
+        "php": "8.5",
+        "database": "mariadb:10.11"
+      },
+      "environment": {
+        "wordpress": "6.9",
+        "php": "8.5.11"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:07:51.180213+00:00",
+      "completed_utc": "2026-10-01T07:08:20.015404+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "28.6",
+          "archive_sha256": "ebb6e2a89d697cabecf2348a06d1efe807fd13ee1faeddcd06e354b98ee2a4d5"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp71-php74-maria",
+        "wordpress": "7.1.2",
+        "php": "7.4",
+        "database": "mariadb:10.11"
+      },
+      "environment": {
+        "wordpress": "7.1.2",
+        "php": "7.4.33"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:08:20.024552+00:00",
+      "completed_utc": "2026-10-01T07:08:56.292241+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "28.6",
+          "archive_sha256": "ebb6e2a89d697cabecf2348a06d1efe807fd13ee1faeddcd06e354b98ee2a4d5"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp71-php82-mysql",
+        "wordpress": "7.1.2",
+        "php": "8.2",
+        "database": "mysql:8.0"
+      },
+      "environment": {
+        "wordpress": "7.1.2",
+        "php": "8.2.34"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:08:56.302260+00:00",
+      "completed_utc": "2026-10-01T07:09:36.522424+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "28.6",
+          "archive_sha256": "ebb6e2a89d697cabecf2348a06d1efe807fd13ee1faeddcd06e354b98ee2a4d5"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp71-php83-maria",
+        "wordpress": "7.1.2",
+        "php": "8.3",
+        "database": "mariadb:10.11"
+      },
+      "environment": {
+        "wordpress": "7.1.2",
+        "php": "8.3.35"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:09:36.532836+00:00",
+      "completed_utc": "2026-10-01T07:10:03.692346+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "28.6",
+          "archive_sha256": "ebb6e2a89d697cabecf2348a06d1efe807fd13ee1faeddcd06e354b98ee2a4d5"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp71-php84-mysql",
+        "wordpress": "7.1.2",
+        "php": "8.4",
+        "database": "mysql:8.0"
+      },
+      "environment": {
+        "wordpress": "7.1.2",
+        "php": "8.4.26"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:10:03.702654+00:00",
+      "completed_utc": "2026-10-01T07:10:44.338540+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "28.6",
+          "archive_sha256": "ebb6e2a89d697cabecf2348a06d1efe807fd13ee1faeddcd06e354b98ee2a4d5"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    },
+    {
+      "cell": {
+        "id": "wp71-php85-maria",
+        "wordpress": "7.1.2",
+        "php": "8.5",
+        "database": "mariadb:10.11",
+        "browser": true
+      },
+      "environment": {
+        "wordpress": "7.1.2",
+        "php": "8.5.11"
+      },
+      "passed": true,
+      "started_utc": "2026-10-01T07:10:44.348913+00:00",
+      "completed_utc": "2026-10-01T07:11:33.052221+00:00",
+      "seo_plugins": {
+        "yoast": {
+          "version": "28.6",
+          "archive_sha256": "ebb6e2a89d697cabecf2348a06d1efe807fd13ee1faeddcd06e354b98ee2a4d5"
+        },
+        "rankmath": {
+          "version": "1.0.279",
+          "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+        }
+      }
+    }
+  ]
+}

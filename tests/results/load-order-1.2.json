@@ -1,0 +1,32 @@
+[
+  {
+    "case": "original",
+    "pass": true,
+    "output": "Guard passed: original.\n",
+    "stderr": ""
+  },
+  {
+    "case": "x",
+    "pass": true,
+    "output": "Guard passed: x.\n",
+    "stderr": ""
+  },
+  {
+    "case": "renamed",
+    "pass": true,
+    "output": "Guard passed: renamed.\n",
+    "stderr": ""
+  },
+  {
+    "case": "network",
+    "pass": true,
+    "output": "Guard passed: network.\n",
+    "stderr": ""
+  },
+  {
+    "case": "loaded",
+    "pass": true,
+    "output": "Guard passed: loaded.\n",
+    "stderr": ""
+  }
+]

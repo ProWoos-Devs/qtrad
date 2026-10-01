@@ -1,0 +1,9 @@
+{
+  "version": "1.2.0",
+  "passed": true,
+  "files": 67,
+  "svg_flags": 41,
+  "bytes": 219371,
+  "sha256": "6e0d1dec04bb4e79b358ded08b0f04c11344c9058ba75b39355d403a54ba0052",
+  "repeat_build_identical": true
+}

@@ -1,0 +1,267 @@
+{
+  "owner": "yoast",
+  "passed": 65,
+  "total": 65,
+  "cases": [
+    {
+      "case": "en canonical appears once and matches",
+      "pass": true
+    },
+    {
+      "case": "en reciprocal alternates",
+      "pass": true
+    },
+    {
+      "case": "en no language markers",
+      "pass": true
+    },
+    {
+      "case": "en one description",
+      "pass": true
+    },
+    {
+      "case": "en localized description",
+      "pass": true
+    },
+    {
+      "case": "en localized social URL",
+      "pass": true
+    },
+    {
+      "case": "en schema present",
+      "pass": true
+    },
+    {
+      "case": "en localized social title",
+      "pass": true
+    },
+    {
+      "case": "de canonical appears once and matches",
+      "pass": true
+    },
+    {
+      "case": "de reciprocal alternates",
+      "pass": true
+    },
+    {
+      "case": "de no language markers",
+      "pass": true
+    },
+    {
+      "case": "de one description",
+      "pass": true
+    },
+    {
+      "case": "de localized description",
+      "pass": true
+    },
+    {
+      "case": "de localized social URL",
+      "pass": true
+    },
+    {
+      "case": "de schema present",
+      "pass": true
+    },
+    {
+      "case": "de localized social title",
+      "pass": true
+    },
+    {
+      "case": "es canonical appears once and matches",
+      "pass": true
+    },
+    {
+      "case": "es reciprocal alternates",
+      "pass": true
+    },
+    {
+      "case": "es no language markers",
+      "pass": true
+    },
+    {
+      "case": "es one description",
+      "pass": true
+    },
+    {
+      "case": "es localized description",
+      "pass": true
+    },
+    {
+      "case": "es localized social URL",
+      "pass": true
+    },
+    {
+      "case": "es schema present",
+      "pass": true
+    },
+    {
+      "case": "es localized social title",
+      "pass": true
+    },
+    {
+      "case": "de canonical appears once and matches",
+      "pass": true
+    },
+    {
+      "case": "de reciprocal alternates",
+      "pass": true
+    },
+    {
+      "case": "de no language markers",
+      "pass": true
+    },
+    {
+      "case": "de one description",
+      "pass": true
+    },
+    {
+      "case": "de localized description",
+      "pass": true
+    },
+    {
+      "case": "de localized social URL",
+      "pass": true
+    },
+    {
+      "case": "de schema present",
+      "pass": true
+    },
+    {
+      "case": "de localized social title",
+      "pass": true
+    },
+    {
+      "case": "en canonical appears once and matches",
+      "pass": true
+    },
+    {
+      "case": "en reciprocal alternates",
+      "pass": true
+    },
+    {
+      "case": "en no language markers",
+      "pass": true
+    },
+    {
+      "case": "en one description",
+      "pass": true
+    },
+    {
+      "case": "en localized description",
+      "pass": true
+    },
+    {
+      "case": "en localized social URL",
+      "pass": true
+    },
+    {
+      "case": "en schema present",
+      "pass": true
+    },
+    {
+      "case": "en localized social title",
+      "pass": true
+    },
+    {
+      "case": "Missing translation noindex",
+      "pass": true
+    },
+    {
+      "case": "Missing translation has no alternate claims",
+      "pass": true
+    },
+    {
+      "case": "qTrad SEO description override used",
+      "pass": true
+    },
+    {
+      "case": "qTrad SEO title override used",
+      "pass": true
+    },
+    {
+      "case": "Sitemap response sets no language cookie",
+      "pass": true
+    },
+    {
+      "case": "Sitemap index populated",
+      "pass": true
+    },
+    {
+      "case": "Sitemap endpoints remain neutral",
+      "pass": true
+    },
+    {
+      "case": "Sitemap file has unique locs http://127.0.0.1:8931/post-sitemap.xml",
+      "pass": true
+    },
+    {
+      "case": "Sitemap file has unique locs http://127.0.0.1:8931/page-sitemap.xml",
+      "pass": true
+    },
+    {
+      "case": "Sitemap file has unique locs http://127.0.0.1:8931/qtn_book-sitemap.xml",
+      "pass": true
+    },
+    {
+      "case": "Sitemap file has unique locs http://127.0.0.1:8931/category-sitemap.xml",
+      "pass": true
+    },
+    {
+      "case": "Sitemap file has unique locs http://127.0.0.1:8931/author-sitemap.xml",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains en-US",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains de-DE",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains es-ES",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains x-default",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains German-only version",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits missing translation",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits draft",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits private",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits password",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits empty",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits disabled",
+      "pass": true
+    },
+    {
+      "case": "Sitemap translated custom post type",
+      "pass": true
+    },
+    {
+      "case": "Sitemap content locs are unique",
+      "pass": true
+    }
+  ]
+}

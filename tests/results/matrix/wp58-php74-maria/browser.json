@@ -1,0 +1,302 @@
+{
+  "checks": [
+    {
+      "name": "German page status",
+      "actual": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "English alternate is canonical",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "Canonical default status",
+      "actual": 302,
+      "expected": 302,
+      "pass": true
+    },
+    {
+      "name": "Browser negotiation status",
+      "actual": 302,
+      "expected": 302,
+      "pass": true
+    },
+    {
+      "name": "REST German status",
+      "actual": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "REST German rendered value",
+      "actual": "Hallo",
+      "expected": "Hallo",
+      "pass": true
+    },
+    {
+      "name": "REST German no language cookie",
+      "actual": null,
+      "expected": null,
+      "pass": true
+    },
+    {
+      "name": "Query REST German status",
+      "actual": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "Query REST German rendered value",
+      "actual": "Hallo",
+      "expected": "Hallo",
+      "pass": true
+    },
+    {
+      "name": "Query REST German no language cookie",
+      "actual": null,
+      "expected": null,
+      "pass": true
+    },
+    {
+      "name": "Sitemap status",
+      "actual": 200,
+      "expected": 200,
+      "pass": true
+    },
+    {
+      "name": "Unknown host redirects to configured home status",
+      "actual": 302,
+      "expected": 302,
+      "pass": true
+    },
+    {
+      "name": "Unknown host redirects to configured home destination",
+      "actual": "http://127.0.0.1:8931/de/",
+      "expected": "http://127.0.0.1:8931/de/",
+      "pass": true
+    },
+    {
+      "name": "Default homepage remains uncacheable",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "Default homepage varies with language preferences",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "Dropdown selection does not navigate",
+      "actual": "http://127.0.0.1:8931/qtn-audit-browser-2/",
+      "expected": "http://127.0.0.1:8931/qtn-audit-browser-2/",
+      "pass": true
+    },
+    {
+      "name": "Dropdown Go navigates",
+      "actual": "http://127.0.0.1:8931/de/qtn-audit-browser-2/",
+      "expected": "http://127.0.0.1:8931/de/qtn-audit-browser-2/",
+      "pass": true
+    },
+    {
+      "name": "Current language is marked",
+      "actual": "de-DE",
+      "expected": "de-DE",
+      "pass": true
+    },
+    {
+      "name": "Missing Catalan flag has visible name",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "Switchers fit 320 CSS pixels",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "Flag names visible in forced colors",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "No-JS dropdown fallback has ordinary links",
+      "actual": 4,
+      "expected": 4,
+      "pass": true
+    },
+    {
+      "name": "No-JS dropdown form remains hidden",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "Initial editor value",
+      "actual": "Hello",
+      "expected": "Hello",
+      "pass": true
+    },
+    {
+      "name": "Keyboard selects German",
+      "actual": "true",
+      "expected": "true",
+      "pass": true
+    },
+    {
+      "name": "Keyboard focus stays on selected button",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "Live region announces language",
+      "actual": "Editing Deutsch. Other translations are preserved when you save.",
+      "expected": "Editing Deutsch. Other translations are preserved when you save.",
+      "pass": true
+    },
+    {
+      "name": "Successful save leaves editor clean",
+      "actual": false,
+      "expected": false,
+      "pass": true
+    },
+    {
+      "name": "Saved title retains disabled French",
+      "actual": "[:en]Hello[:de]Updated German title[:fr]Bonjour[:]",
+      "expected": "[:en]Hello[:de]Updated German title[:fr]Bonjour[:]",
+      "pass": true
+    },
+    {
+      "name": "Second language save retains first edit",
+      "actual": "[:en]Updated English title[:de]Updated German title[:fr]Bonjour[:]",
+      "expected": "[:en]Updated English title[:de]Updated German title[:fr]Bonjour[:]",
+      "pass": true
+    },
+    {
+      "name": "Arabic editor direction",
+      "actual": "rtl",
+      "expected": "rtl",
+      "pass": true
+    },
+    {
+      "name": "Arabic editor language",
+      "actual": "ar",
+      "expected": "ar",
+      "pass": true
+    },
+    {
+      "name": "Classic keyboard switching loads German",
+      "actual": "Updated German title",
+      "expected": "Updated German title",
+      "pass": true
+    },
+    {
+      "name": "Classic save shows selected language",
+      "actual": "Classic German title",
+      "expected": "Classic German title",
+      "pass": true
+    },
+    {
+      "name": "SEO title save retains language value",
+      "actual": "Browser German SEO title",
+      "expected": "Browser German SEO title",
+      "pass": true
+    },
+    {
+      "name": "SEO description save retains language value",
+      "actual": "Browser German SEO description",
+      "expected": "Browser German SEO description",
+      "pass": true
+    },
+    {
+      "name": "Classic save retains other and disabled translations",
+      "actual": "[:en]Updated English title[:de]Classic German title[:fr]Bonjour[:]",
+      "expected": "[:en]Updated English title[:de]Classic German title[:fr]Bonjour[:]",
+      "pass": true
+    },
+    {
+      "name": "Settings stylesheet loads",
+      "actual": "inline-flex",
+      "expected": "inline-flex",
+      "pass": true
+    },
+    {
+      "name": "Settings error receives focus",
+      "actual": "qtn-errors",
+      "expected": "qtn-errors",
+      "pass": true
+    },
+    {
+      "name": "Invalid language value is retained",
+      "actual": "invalid",
+      "expected": "invalid",
+      "pass": true
+    },
+    {
+      "name": "New language becomes enabled",
+      "actual": true,
+      "expected": true,
+      "pass": true
+    },
+    {
+      "name": "Settings preserve disabled French site title",
+      "actual": "Titre français",
+      "expected": "Titre français",
+      "pass": true
+    }
+  ],
+  "accessibility": [
+    {
+      "name": "Public switchers",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "passes": 18
+    },
+    {
+      "name": "Editor language controls",
+      "violations": [],
+      "incomplete": [],
+      "passes": 15
+    },
+    {
+      "name": "SEO translation fields",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "passes": 14
+    },
+    {
+      "name": "Language settings",
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "passes": 13
+    },
+    {
+      "name": "Settings error notice",
+      "violations": [],
+      "incomplete": [],
+      "passes": 4
+    },
+    {
+      "name": "Taxonomy translation fields",
+      "violations": [],
+      "incomplete": [],
+      "passes": 6
+    }
+  ],
+  "errors": [],
+  "errorDetails": []
+}

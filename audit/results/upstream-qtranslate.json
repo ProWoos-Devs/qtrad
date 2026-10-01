@@ -1,0 +1,20 @@
+{
+    "plugin": "qtranslate",
+    "Next bracket string": {
+        "en": "Hello",
+        "de": "Hallo[:]"
+    },
+    "Next swirly string": {
+        "en": "{:en}Hello{:de}Hallo{:}",
+        "de": "{:en}Hello{:de}Hallo{:}"
+    },
+    "comment string": {
+        "en": "Hello",
+        "de": "Hallo"
+    },
+    "plain availability": [
+        "en",
+        "de"
+    ],
+    "legacy join string input": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->"
+}

@@ -1,0 +1,552 @@
+{
+    "environment": {
+        "wordpress": "7.1.2",
+        "php": "8.4.26"
+    },
+    "passed": 76,
+    "total": 76,
+    "cases": [
+        {
+            "case": "Legacy Brazilian code has valid hreflang",
+            "pass": true,
+            "expected": "pt-BR",
+            "actual": "pt-BR"
+        },
+        {
+            "case": "Legacy Taiwanese code has valid hreflang",
+            "pass": true,
+            "expected": "zh-TW",
+            "actual": "zh-TW"
+        },
+        {
+            "case": "Legacy Ukrainian code has valid hreflang",
+            "pass": true,
+            "expected": "uk",
+            "actual": "uk"
+        },
+        {
+            "case": "WordPress locale suffix is omitted",
+            "pass": true,
+            "expected": "en-US",
+            "actual": "en-US"
+        },
+        {
+            "case": "Unknown ISO language is omitted",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "Custom storage code uses real locale",
+            "pass": true,
+            "expected": "en-GB",
+            "actual": "en-GB"
+        },
+        {
+            "case": "Stable English URL from German context",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/qtn-seo-translated/",
+            "actual": "http://127.0.0.1:8931/qtn-seo-translated/"
+        },
+        {
+            "case": "Canonical uses requested language",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/de/qtn-seo-translated/",
+            "actual": "http://127.0.0.1:8931/de/qtn-seo-translated/"
+        },
+        {
+            "case": "External canonical is respected",
+            "pass": true,
+            "expected": "https://external.example/canonical",
+            "actual": "https://external.example/canonical"
+        },
+        {
+            "case": "Canonical retains unrelated query bytes",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/de/path?a=1&a=2&x=a%20b",
+            "actual": "http://127.0.0.1:8931/de/path?a=1&a=2&x=a%20b"
+        },
+        {
+            "case": "SEO selection does not show fallback",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "Disabled translation is not an alternate",
+            "pass": true,
+            "expected": [
+                "en",
+                "de",
+                "es"
+            ],
+            "actual": [
+                "en",
+                "de",
+                "es"
+            ]
+        },
+        {
+            "case": "Empty translation is not an alternate",
+            "pass": true,
+            "expected": [
+                "en"
+            ],
+            "actual": [
+                "en"
+            ]
+        },
+        {
+            "case": "Zero translation remains indexable",
+            "pass": true,
+            "expected": [
+                "en",
+                "de"
+            ],
+            "actual": [
+                "en",
+                "de"
+            ]
+        },
+        {
+            "case": "draft omitted",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "private omitted",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "password omitted",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "empty omitted",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "disabled omitted",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "Missing translation adds noindex",
+            "pass": true,
+            "expected": {
+                "max-image-preview": "large",
+                "noindex": true
+            },
+            "actual": {
+                "max-image-preview": "large",
+                "noindex": true
+            }
+        },
+        {
+            "case": "Vendor string robots retains directives",
+            "pass": true,
+            "expected": "follow, max-image-preview:large, noindex",
+            "actual": "follow, max-image-preview:large, noindex"
+        },
+        {
+            "case": "Vendor array robots retains directives",
+            "pass": true,
+            "expected": {
+                "follow": "follow",
+                "index": "noindex"
+            },
+            "actual": {
+                "follow": "follow",
+                "index": "noindex"
+            }
+        },
+        {
+            "case": "Description selects current language",
+            "pass": true,
+            "expected": "Deutsche Beschreibung",
+            "actual": "Deutsche Beschreibung"
+        },
+        {
+            "case": "Alternates include current language",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Alternates include canonical default",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Yoast title adapter selects raw translation",
+            "pass": true,
+            "expected": "Deutscher SEO Titel",
+            "actual": "Deutscher SEO Titel"
+        },
+        {
+            "case": "Rank Math description adapter selects raw translation",
+            "pass": true,
+            "expected": "Deutsche SEO Beschreibung",
+            "actual": "Deutsche SEO Beschreibung"
+        },
+        {
+            "case": "SEO reads leave stored metadata intact",
+            "pass": true,
+            "expected": [
+                "[:en]English SEO title[:de]Deutscher SEO Titel[:es]Título SEO español[:]"
+            ],
+            "actual": [
+                "[:en]English SEO title[:de]Deutscher SEO Titel[:es]Título SEO español[:]"
+            ]
+        },
+        {
+            "case": "SEO field retains disabled French",
+            "pass": true,
+            "expected": "Ancien",
+            "actual": "Ancien"
+        },
+        {
+            "case": "SEO field selects requested translation",
+            "pass": true,
+            "expected": "Next German title",
+            "actual": "Next German title"
+        },
+        {
+            "case": "SEO field rejects invalid nonce",
+            "pass": true,
+            "expected": "[:en]Next English title[:de]Next German title[:fr]Ancien[:]",
+            "actual": "[:en]Next English title[:de]Next German title[:fr]Ancien[:]"
+        },
+        {
+            "case": "SEO field rejects mismatched identity",
+            "pass": true,
+            "expected": "[:en]Next English title[:de]Next German title[:fr]Ancien[:]",
+            "actual": "[:en]Next English title[:de]Next German title[:fr]Ancien[:]"
+        },
+        {
+            "case": "Schema text translated",
+            "pass": true,
+            "expected": "Deutsch",
+            "actual": "Deutsch"
+        },
+        {
+            "case": "Schema locale translated",
+            "pass": true,
+            "expected": "de-DE",
+            "actual": "de-DE"
+        },
+        {
+            "case": "Schema identifiers translated",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/de/qtn-seo-translated/#webpage",
+            "actual": "http://127.0.0.1:8931/de/qtn-seo-translated/#webpage"
+        },
+        {
+            "case": "Legacy flag alias en",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Legacy flag alias ar",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Legacy flag alias gl",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Legacy flag alias ca",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Vendor sitemap path is neutral",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Plain sitemap query is neutral",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Core provider wrapped",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Internal sitemap data removed post/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/2",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/2",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/3",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/3",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/3",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/4",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/5",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/6",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/6",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed qtn_book/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed qtn_book/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed qtn_book/1",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Expanded pages respect configured six-URL bound",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Sitemap contains translated en",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Sitemap contains translated de",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Sitemap contains translated es",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Sitemap includes German-only post",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Sitemap excludes missing German",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Sitemap excludes draft",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Sitemap excludes private",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Sitemap excludes password",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Sitemap excludes empty",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Sitemap excludes disabled",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Paginated sitemap has no duplicates",
+            "pass": true,
+            "expected": 21,
+            "actual": 21
+        },
+        {
+            "case": "XML expansion retains extensions",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        }
+    ],
+    "fixtures": {
+        "translated": {
+            "id": 26,
+            "slug": "qtn-seo-translated",
+            "url": "http://127.0.0.1:8931/qtn-seo-translated/"
+        },
+        "missing": {
+            "id": 27,
+            "slug": "qtn-seo-missing",
+            "url": "http://127.0.0.1:8931/qtn-seo-missing/"
+        },
+        "german": {
+            "id": 28,
+            "slug": "qtn-seo-german",
+            "url": "http://127.0.0.1:8931/qtn-seo-german/"
+        },
+        "zero": {
+            "id": 29,
+            "slug": "qtn-seo-zero",
+            "url": "http://127.0.0.1:8931/qtn-seo-zero/"
+        },
+        "empty": {
+            "id": 30,
+            "slug": "qtn-seo-empty",
+            "url": "http://127.0.0.1:8931/qtn-seo-empty/"
+        },
+        "disabled": {
+            "id": 31,
+            "slug": "qtn-seo-disabled",
+            "url": "http://127.0.0.1:8931/qtn-seo-disabled/"
+        },
+        "draft": {
+            "id": 32,
+            "slug": "qtn-seo-draft",
+            "url": "http://127.0.0.1:8931/?p=32"
+        },
+        "private": {
+            "id": 33,
+            "slug": "qtn-seo-private",
+            "url": "http://127.0.0.1:8931/qtn-seo-private/"
+        },
+        "password": {
+            "id": 34,
+            "slug": "qtn-seo-password",
+            "url": "http://127.0.0.1:8931/qtn-seo-password/"
+        },
+        "book": {
+            "id": 35,
+            "slug": "qtn-seo-book",
+            "url": "http://127.0.0.1:8931/qtn_book/qtn-seo-book/"
+        }
+    }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "case": "original",
+    "pass": true,
+    "stdout": "Guard passed: original.\n",
+    "stderr": ""
+  },
+  {
+    "case": "x",
+    "pass": true,
+    "stdout": "Guard passed: x.\n",
+    "stderr": ""
+  },
+  {
+    "case": "renamed",
+    "pass": true,
+    "stdout": "Guard passed: renamed.\n",
+    "stderr": ""
+  },
+  {
+    "case": "network",
+    "pass": true,
+    "stdout": "Guard passed: network.\n",
+    "stderr": ""
+  },
+  {
+    "case": "loaded",
+    "pass": true,
+    "stdout": "Guard passed: loaded.\n",
+    "stderr": ""
+  },
+  {
+    "case": "next",
+    "pass": true,
+    "stdout": "Guard passed: next.\n",
+    "stderr": ""
+  },
+  {
+    "case": "unified",
+    "pass": true,
+    "stdout": "Guard passed: unified.\n",
+    "stderr": ""
+  }
+]

@@ -1,0 +1,96 @@
+[
+    {
+        "name": "comments and disabled language",
+        "pass": true,
+        "parts": {
+            "en": "Hello",
+            "de": "Hallo",
+            "fr": "Bonjour"
+        },
+        "joined": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:--><!--:fr-->Bonjour<!--:-->"
+    },
+    {
+        "name": "brackets and disabled language",
+        "pass": true,
+        "parts": {
+            "en": "Hello",
+            "de": "Hallo",
+            "fr": "Bonjour"
+        },
+        "joined": "[:en]Hello[:de]Hallo[:fr]Bonjour[:]"
+    },
+    {
+        "name": "swirly and disabled language",
+        "pass": true,
+        "parts": {
+            "en": "Hello",
+            "de": "Hallo",
+            "fr": "Bonjour"
+        },
+        "joined": "{:en}Hello{:de}Hallo{:fr}Bonjour{:}"
+    },
+    {
+        "name": "untouched whitespace and backslashes",
+        "pass": true,
+        "parts": {
+            "en": "  C:\\temp\n",
+            "de": " Hallo "
+        },
+        "joined": "[:en]  C:\\temp\n[:de] Hallo [:]"
+    },
+    {
+        "name": "zero",
+        "pass": true,
+        "parts": {
+            "en": "0",
+            "de": "0"
+        },
+        "joined": "0"
+    },
+    {
+        "name": "empty",
+        "pass": true,
+        "parts": {
+            "en": "",
+            "de": ""
+        },
+        "joined": ""
+    },
+    {
+        "name": "identical forced",
+        "pass": true,
+        "parts": {
+            "en": "Same",
+            "de": "Same"
+        },
+        "joined": "[:en]Same[:de]Same[:]"
+    },
+    {
+        "name": "empty German",
+        "pass": true,
+        "parts": {
+            "en": "Hello",
+            "de": ""
+        },
+        "joined": "[:en]Hello[:]"
+    },
+    {
+        "name": "shared chunk",
+        "pass": true,
+        "parts": {
+            "en": "Shared Hello footer",
+            "de": "Shared Hallo footer"
+        },
+        "joined": "[:en]Shared Hello footer[:de]Shared Hallo footer[:]"
+    },
+    {
+        "name": "more and disabled language",
+        "pass": true,
+        "parts": {
+            "en": "Intro<!--more-->End",
+            "de": "Anfang<!--more-->Ende",
+            "fr": "Début<!--more-->Fin"
+        },
+        "joined": "[:en]Intro<!--more-->End[:de]Anfang<!--more-->Ende[:fr]Début<!--more-->Fin[:]"
+    }
+]

@@ -2,21 +2,21 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: qTrad 1.3.0\n"
+"Project-Id-Version: qTrad 1.4.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/qtrad\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-01T21:15:40+00:00\n"
+"POT-Creation-Date: 2026-10-06T12:53:07+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: qtrad\n"
 
 #. Plugin Name of the plugin
 #: qtrad.php
-#: qtrad.php:115
+#: qtrad.php:117
 msgid "qTrad"
 msgstr ""
 
@@ -36,6 +36,9 @@ msgid "https://github.com/rafael-minuesa"
 msgstr ""
 
 #: includes/admin.php:48
+msgid "Settings"
+msgstr ""
+
 #: includes/admin.php:83
 #: includes/admin.php:84
 #: includes/admin.php:156
@@ -412,6 +415,7 @@ msgstr ""
 
 #: includes/compat.php:319
 #: includes/compat.php:322
+#: includes/menus.php:150
 msgid "Language"
 msgstr ""
 
@@ -419,20 +423,26 @@ msgstr ""
 msgid "Go"
 msgstr ""
 
-#: includes/config.php:284
+#: includes/config.php:289
 msgid "Enter a new two- or three-letter language code, a native name and a valid locale. Existing codes cannot be added again."
 msgstr ""
 
-#: includes/config.php:290
+#: includes/config.php:295
 msgid "Each language needs a native name and valid WordPress locale, for example en_US."
 msgstr ""
 
-#: includes/config.php:365
+#: includes/config.php:370
 msgid "Enter each domain as code = host, optionally with a port. Do not include a scheme or path."
 msgstr ""
 
-#: includes/config.php:368
+#: includes/config.php:373
 msgid "Give each language a different domain."
+msgstr ""
+
+#. translators: %s: title of the language menu item, a flag follows the colon
+#: includes/menus.php:158
+#, php-format
+msgid "%s:"
 msgstr ""
 
 #. translators: %s: comma-separated list of qTranslate-XT integration modules
@@ -457,51 +467,43 @@ msgid_plural "%d ACF fields use qTranslate field types. ACF cannot render them w
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: %d: number of menu items
-#: includes/migration.php:77
-#, php-format
-msgid "%d menu item is a qTranslate-XT language switcher (#qtransLangSw). It shows as a plain link; use the qTrad Language Chooser widget or the [qtrad_switcher] shortcode instead."
-msgid_plural "%d menu items are qTranslate-XT language switchers (#qtransLangSw). They show as plain links; use the qTrad Language Chooser widget or the [qtrad_switcher] shortcode instead."
-msgstr[0] ""
-msgstr[1] ""
-
 #. translators: %s: comma-separated list of custom field names
-#: includes/migration.php:86
+#: includes/migration.php:80
 #, php-format
 msgid "Custom fields contain language markers but are not configured in qTrad: %s. Add the ones that hold text to \"Custom fields\" in Settings → Languages."
 msgstr ""
 
 #. translators: %s: comma-separated list of option names
-#: includes/migration.php:92
+#: includes/migration.php:86
 #, php-format
 msgid "Settings stored by the theme or other plugins contain language markers, which qTranslate-XT translated automatically: %s. qTrad translates only the site title and tagline, so these may show raw markers."
 msgstr ""
 
 #. translators: %d: number of users
-#: includes/migration.php:98
+#: includes/migration.php:92
 #, php-format
 msgid "%d user profile (for example a biography) contains language markers. qTrad does not translate user profiles."
 msgid_plural "%d user profiles (for example biographies) contain language markers. qTrad does not translate user profiles."
 msgstr[0] ""
 msgstr[1] ""
 
-#: includes/migration.php:104
+#: includes/migration.php:98
 msgid "Per-language date and time formats are set. qTrad uses the WordPress date and time formats with each language's locale."
 msgstr ""
 
-#: includes/migration.php:109
+#: includes/migration.php:103
 msgid "qTranslate-XT was set to single-language editing. qTrad shows language buttons in the editor instead; the setting is kept for qTranslate-XT."
 msgstr ""
 
-#: includes/migration.php:123
+#: includes/migration.php:117
 msgid "qTrad found qTranslate data it keeps but does not display"
 msgstr ""
 
-#: includes/migration.php:127
+#: includes/migration.php:121
 msgid "Nothing was changed or deleted. Reactivating qTranslate-XT shows this data again."
 msgstr ""
 
-#: includes/migration.php:127
+#: includes/migration.php:121
 msgid "Dismiss"
 msgstr ""
 
@@ -568,15 +570,15 @@ msgid "Hide title"
 msgstr ""
 
 #. translators: %s: plugin basename
-#: qtrad.php:106
+#: qtrad.php:108
 #, php-format
 msgid "qTrad did not start because %s is still active. Deactivate the other qTranslate implementation before using this plugin. Your posts and qtranslate_* settings are left untouched."
 msgstr ""
 
-#: qtrad.php:107
+#: qtrad.php:109
 msgid "another qTranslate build"
 msgstr ""
 
-#: qtrad.php:115
+#: qtrad.php:117
 msgid "Deactivate the other qTranslate implementation first."
 msgstr ""

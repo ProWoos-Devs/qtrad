@@ -63,6 +63,25 @@ try:
     _,_,body=fetch(base+'/de/'+fixtures['book']['slug']+'/');head=Head();head.feed(body)
     check('qTrad SEO description override used',meta(head,'description')==['qTrad German description'])
     check('qTrad SEO title override used',any('qTrad German title' in value for value in meta(head,'og:title')))
+    slugged=fixtures['slugged'];category=fixtures['category']
+    slug_alternates={'en-US':base+'/'+slugged['slug']+'/','de-DE':base+'/de/'+slugged['slugs']['de']+'/','es-ES':base+'/es/'+slugged['slugs']['es']+'/'}
+    slug_alternates['x-default']=slug_alternates['en-US']
+    for tag in ('en-US','de-DE','es-ES'):
+        url=slug_alternates[tag]
+        status,_,body=fetch(url);head=Head();head.feed(body)
+        check(tag+' translated slug resolves',status==200)
+        check(tag+' translated slug canonical',[link.get('href') for link in head.links if link.get('rel')=='canonical']==[url])
+        check(tag+' translated slug alternates',{link.get('hreflang'):link.get('href') for link in head.links if link.get('hreflang')}==slug_alternates)
+        check(tag+' translated slug social URL',meta(head,'og:url')==[url])
+    response=urllib.request.urlopen(base+'/de/'+slugged['slug']+'/',timeout=30)
+    check('Stored slug moves to the translated address',response.geturl()==slug_alternates['de-DE'])
+    try:
+        fetch(base+'/'+slugged['slugs']['de']+'/');check('Slug of another language is not found',False)
+    except urllib.error.HTTPError as error:check('Slug of another language is not found',error.code==404)
+    translated_category=base+'/de/category/'+category['slugs']['de']+'/'
+    status,_,body=fetch(translated_category);head=Head();head.feed(body)
+    check('Translated category slug resolves',status==200)
+    check('Translated category canonical',[link.get('href') for link in head.links if link.get('rel')=='canonical']==[translated_category])
     index_url=base+('/wp-sitemap.xml' if owner=='core' else '/sitemap_index.xml')
     _,headers,body=fetch(index_url,{'Cookie':'qtrans_front_language=de','Accept-Language':'de'})
     check('Sitemap response sets no language cookie',headers.get('Set-Cookie') is None)
@@ -77,6 +96,9 @@ try:
         check('Sitemap file has unique locs '+child,len(entries)==len(set(entries)))
         urls.extend(entries)
     for tag,url in expected_alternates.items():check('Sitemap contains '+tag,url in urls)
+    for tag,url in slug_alternates.items():check('Sitemap contains translated slug '+tag,url in urls)
+    check('Sitemap omits the stored slug in other languages',base+'/de/'+slugged['slug']+'/' not in urls)
+    check('Sitemap contains translated category slug',translated_category in urls)
     check('Sitemap contains German-only version',base+'/de/'+fixtures['german']['slug']+'/' in urls)
     check('Sitemap omits missing translation',missing not in urls)
     for slug in ('draft','private','password','empty','disabled'):check('Sitemap omits '+slug,not any(fixtures[slug]['slug']+'/' in url for url in urls))

@@ -47,6 +47,8 @@ Sites with plain permalinks use query URLs. Subdomains and separate domains need
 
 An explicit language URL always wins. Cookies and browser negotiation apply only to the bare homepage, and other bare URLs serve the default language when its prefix is hidden. REST endpoints, assets, admin URLs, feeds and XML sitemaps never receive language prefixes.
 
+Translated slugs stored by qTranslate-XT or the qTranslate Slug plugin are served as they were: a post, page, custom post type entry, category, tag or other term opens under the slug of each language, and links, the language switcher, canonical and hreflang tags and sitemaps use it. The stored slug under another language redirects to the translated address. The WordPress admin, the REST API and the editor keep working with the stored slug.
+
 = SEO =
 
 Alternate language links and multilingual sitemap entries use canonical URLs and only list languages a post is actually translated into. Adapters for WordPress core, Yoast SEO and Rank Math cover metadata, social sharing and schema output. Pages missing a translation keep the configured visitor fallback and receive noindex. The SEO translations panel takes optional per-language titles and descriptions.
@@ -80,7 +82,7 @@ Public switchers remain plain links. In the classic editor the full marker strin
 
 = I am moving from qTranslate-XT. What should I check? =
 
-Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers, language menu items and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others), translated slugs or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
+Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers, language menu items and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. Translated slugs of posts, pages, custom post types and terms keep their addresses; translated URL bases (such as a translated category base) are not used yet, and slugs cannot be edited in qTrad yet. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others) or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
 
 = How do I include a literal marker in content? =
 

@@ -275,6 +275,10 @@ function qtrad_convert_url( $url = '', $lang = '', $forceadmin = false, $show_de
 	if ( $url !== '' && ( $url[0] === '#' || $url[0] === '?' || preg_match( '/^(?!https?:)[a-z][a-z0-9+.-]*:/i', $url ) ) ) { return $url; }
 	$lang = $lang === '' ? qtrad_current_language() : strtolower( $lang );
 	if ( ! qtrad_is_enabled( $lang ) ) { return ''; }
+	if ( $url === '' ) {
+		// The current page may have another slug in the target language.
+		$url = qtrad_slugs_current_url( $lang );
+	}
 	$parts = qtrad_parse_local_url( $url );
 	if ( ! $parts || ! qtrad_is_local_url( $parts ) || qtrad_is_neutral_path( $parts['path'] ) ) { return $url !== '' ? $url : ( $parts ? qtrad_assemble_url( $parts ) : '' ); }
 	$show = ! qtrad_config( 'hide_default_language' ) || $lang !== qtrad_default_language() || $show_default === true;

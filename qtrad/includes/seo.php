@@ -43,7 +43,7 @@ function qtrad_seo_text( $value ) {
 function qtrad_seo_post_url( $post, $language ) {
 	$previous = ! empty( $GLOBALS['qtrad_seo_neutral_url'] );
 	$GLOBALS['qtrad_seo_neutral_url'] = true;
-	try { $url = get_permalink( $post ); }
+	try { $url = qtrad_slugs_in_language( $language, function () use ( $post ) { return get_permalink( $post ); } ); }
 	finally { $GLOBALS['qtrad_seo_neutral_url'] = $previous; }
 	return qtrad_convert_url( $url, $language, true, false );
 }
@@ -77,14 +77,14 @@ function qtrad_seo_missing_translation() {
 }
 
 function qtrad_seo_canonical( $url ) {
-	return is_string( $url ) && $url !== '' ? qtrad_convert_url( qtrad_seo_text( $url ), qtrad_current_language(), true, false ) : $url;
+	return is_string( $url ) && $url !== '' ? qtrad_convert_url( qtrad_slugs_localize_url( qtrad_seo_text( $url ), qtrad_current_language() ), qtrad_current_language(), true, false ) : $url;
 }
 
 /** Canonical archive URLs omit request tracking arguments and retain pagination. */
 function qtrad_seo_current_url( $language ) {
 	if ( is_singular() ) {
 		$url = wp_get_canonical_url( get_queried_object_id() );
-		return $url ? qtrad_convert_url( $url, $language, true, false ) : qtrad_seo_post_url( get_post( get_queried_object_id() ), $language );
+		return $url ? qtrad_convert_url( qtrad_slugs_localize_url( $url, $language ), $language, true, false ) : qtrad_seo_post_url( get_post( get_queried_object_id() ), $language );
 	}
 	if ( is_category() || is_tag() || is_tax() ) { $url = get_term_link( get_queried_object() ); }
 	elseif ( is_author() ) { $url = get_author_posts_url( get_queried_object_id() ); }
@@ -98,7 +98,7 @@ function qtrad_seo_current_url( $language ) {
 		global $wp_rewrite;
 		$url = $wp_rewrite->using_permalinks() ? trailingslashit( $url ) . user_trailingslashit( $wp_rewrite->pagination_base . '/' . $page, 'paged' ) : add_query_arg( 'paged', $page, $url );
 	}
-	return qtrad_convert_url( $url, $language, true, false );
+	return qtrad_convert_url( qtrad_slugs_localize_url( $url, $language ), $language, true, false );
 }
 
 function qtrad_seo_core_robots( $robots ) {
@@ -317,10 +317,15 @@ function qtrad_seo_sitemap_entry( $entry, $type, $object ) {
 	if ( ! is_array( $entry ) || empty( $entry['loc'] ) ) { return $entry; }
 	$post = $type === 'post' && is_object( $object ) && isset( $object->ID ) ? get_post( (int) $object->ID ) : null;
 	$entry['_qtrad_languages'] = $post ? qtrad_seo_post_languages( $post ) : qtrad_enabled_languages();
+	if ( $post ) { $entry['_qtrad_object'] = array( 'post', (int) $post->ID ); }
+	elseif ( $type === 'term' && $object instanceof WP_Term ) { $entry['_qtrad_object'] = array( 'term', (int) $object->term_id ); }
 	return $entry;
 }
 
 function qtrad_seo_core_post_entry( $entry, $post ) { return qtrad_seo_sitemap_entry( $entry, 'post', $post ); }
+
+/** Before WordPress 6.0 the second argument is the term, later its id. */
+function qtrad_seo_core_term_entry( $entry, $term, $taxonomy = '' ) { return qtrad_seo_sitemap_entry( $entry, 'term', is_object( $term ) ? $term : get_term( (int) $term, $taxonomy ) ); }
 
 function qtrad_seo_sitemap_query_args( $args ) {
 	$args['has_password'] = false;
@@ -338,14 +343,16 @@ function qtrad_seo_sitemap_where( $where, $query ) {
 function qtrad_seo_sitemap_urls( $entry ) {
 	if ( ! is_array( $entry ) || empty( $entry['loc'] ) ) { return array(); }
 	$parts = qtrad_parse_local_url( $entry['loc'] );
-	if ( ! $parts || ! qtrad_is_local_url( $parts ) ) { unset( $entry['_qtrad_languages'] ); return array( $entry ); }
+	$object = isset( $entry['_qtrad_object'] ) && qtrad_slugs_active() ? $entry['_qtrad_object'] : null;
+	if ( ! $parts || ! qtrad_is_local_url( $parts ) ) { unset( $entry['_qtrad_languages'], $entry['_qtrad_object'] ); return array( $entry ); }
 	$languages = isset( $entry['_qtrad_languages'] ) ? $entry['_qtrad_languages'] : qtrad_enabled_languages();
-	unset( $entry['_qtrad_languages'] );
+	unset( $entry['_qtrad_languages'], $entry['_qtrad_object'] );
 	$urls = array();
 	foreach ( $languages as $language ) {
 		if ( qtrad_seo_language_tag( $language ) === '' ) { continue; }
 		$variant = $entry;
-		$variant['loc'] = qtrad_convert_url( $entry['loc'], $language, true, false );
+		$loc = $object ? qtrad_slugs_object_url( $object[0], $object[1], $language ) : '';
+		$variant['loc'] = qtrad_convert_url( $loc !== '' ? $loc : $entry['loc'], $language, true, false );
 		$urls[ $variant['loc'] ] = $variant;
 	}
 	return array_values( $urls );
@@ -398,6 +405,7 @@ function qtrad_register_seo_hooks() {
 	add_filter( 'wp_sitemaps_add_provider', 'qtrad_seo_core_provider', 99, 2 );
 	add_filter( 'wp_sitemaps_max_urls', 'qtrad_seo_sitemap_limit', 99 );
 	add_filter( 'wp_sitemaps_posts_entry', 'qtrad_seo_core_post_entry', 99, 2 );
+	add_filter( 'wp_sitemaps_taxonomies_entry', 'qtrad_seo_core_term_entry', 99, 3 );
 	add_filter( 'wp_sitemaps_posts_query_args', 'qtrad_seo_sitemap_query_args', 99 );
 	add_filter( 'posts_where_request', 'qtrad_seo_sitemap_where', 99, 2 );
 	foreach ( array( 'wpseo_title', 'wpseo_metadesc', 'wpseo_opengraph_title', 'wpseo_opengraph_desc', 'wpseo_opengraph_site_name', 'wpseo_twitter_title', 'wpseo_twitter_description', 'rank_math/frontend/title', 'rank_math/frontend/description', 'rank_math/opengraph/facebook/og_title', 'rank_math/opengraph/facebook/og_description', 'rank_math/opengraph/facebook/og_site_name', 'rank_math/opengraph/twitter/twitter_title', 'rank_math/opengraph/twitter/twitter_description' ) as $hook ) {

@@ -6,7 +6,7 @@ define('WP_PLUGIN_DIR', __DIR__ . '/unloaded-plugins');
 $_SERVER['HTTP_HOST'] = '127.0.0.1:8931'; $_SERVER['REQUEST_URI'] = '/';
 require $argv[1] . '/wp-load.php';
 require dirname(__DIR__) . '/qtrad/qtrad.php';
-qtrad_register_front_filters(); qtrad_register_seo_hooks(); qtrad_register_field_hooks();
+qtrad_register_front_filters(); qtrad_register_seo_hooks(); qtrad_register_field_hooks(); qtrad_register_slug_hooks();
 wp_set_current_user(1);
 $cases = array();
 function seo_check($name, $expected, $actual) {
@@ -27,7 +27,7 @@ $definitions = array(
     'empty'=>array('post_title'=>'[:en][:de][:es][:]', 'post_content'=>'[:en][:de][:es][:]'),
     'disabled'=>array('post_title'=>'[:spa]Solo español[:]', 'post_content'=>'[:spa]Contenido solo en español[:]'),
     'draft'=>array('post_status'=>'draft'), 'private'=>array('post_status'=>'private'),
-    'password'=>array('post_password'=>'fixture-only'), 'book'=>array('post_type'=>'qtrad_book'),
+    'password'=>array('post_password'=>'fixture-only'), 'book'=>array('post_type'=>'qtrad_book'), 'slugged'=>array(),
 );
 foreach ($definitions as $slug=>$fields) {
     $id = wp_insert_post(wp_slash(array_merge(array('post_type'=>'post','post_status'=>'publish','post_name'=>'qtrad-seo-'.$slug,'post_title'=>'[:en]English title[:de]Deutscher Titel[:es]Título español[:]', 'post_content'=>'[:en]English body[:de]Deutscher Inhalt[:es]Contenido español[:]'),$fields)));
@@ -42,6 +42,15 @@ foreach (array('_yoast_wpseo_title'=>'[:en]English SEO title[:de]Deutscher SEO T
 $term = wp_insert_term('SEO category','category',array('slug'=>'qtrad-seo-category'));
 if (is_wp_error($term)) { $term_id = (int) $term->get_error_data('term_exists'); } else { $term_id = $term['term_id']; }
 wp_set_post_terms($id,array($term_id),'category');
+// Translated slugs as qTranslate-XT and the qTranslate Slug plugin store them.
+$posts['slugged']['slugs'] = array('de'=>'qtrad-seo-slug-deutsch','es'=>'qtrad-seo-slug-espanol');
+update_post_meta($posts['slugged']['id'],'qtranslate_slug_de',$posts['slugged']['slugs']['de']);
+update_post_meta($posts['slugged']['id'],'_qts_slug_es',$posts['slugged']['slugs']['es']);
+update_term_meta($term_id,'qtranslate_slug_de','qtrad-seo-kategorie');
+$posts['category'] = array('id'=>$term_id,'slug'=>'qtrad-seo-category','slugs'=>array('de'=>'qtrad-seo-kategorie'));
+seo_check('Translated slug is used for its language','http://127.0.0.1:8931/de/qtrad-seo-slug-deutsch/',qtrad_seo_post_url(get_post($posts['slugged']['id']),'de'));
+seo_check('Legacy translated slug is used for its language','http://127.0.0.1:8931/es/qtrad-seo-slug-espanol/',qtrad_seo_post_url(get_post($posts['slugged']['id']),'es'));
+seo_check('Default language keeps the stored slug','http://127.0.0.1:8931/qtrad-seo-slugged/',qtrad_seo_post_url(get_post($posts['slugged']['id']),'en'));
 seo_check('Legacy Brazilian code has valid hreflang','pt-BR',qtrad_seo_language_tag('pb'));
 seo_check('Legacy Taiwanese code has valid hreflang','zh-TW',qtrad_seo_language_tag('tw'));
 update_option('qtranslate_locales',array('en'=>'en_US_formal','xx'=>'xxx_BAD','zz'=>'en_GB')); qtrad_reset_config();

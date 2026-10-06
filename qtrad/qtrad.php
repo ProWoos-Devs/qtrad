@@ -55,6 +55,7 @@ require_once QTRAD_DIR . 'includes/seo.php';
 require_once QTRAD_DIR . 'includes/admin.php';
 require_once QTRAD_DIR . 'includes/widget.php';
 require_once QTRAD_DIR . 'includes/menus.php';
+require_once QTRAD_DIR . 'includes/slugs.php';
 require_once QTRAD_DIR . 'includes/migration.php';
 
 /**
@@ -77,6 +78,7 @@ function qtrad_boot() {
 	qtrad_register_migration_hooks();
 	qtrad_register_widget();
 	qtrad_register_menu_hooks();
+	qtrad_register_slug_hooks();
 	add_action( 'init', 'qtrad_refresh_admin_language', 0 );
 	add_action( 'switch_blog', 'qtrad_switch_blog', 0, 3 );
 	add_action( 'init', 'qtrad_register_shortcodes' );
@@ -116,4 +118,6 @@ function qtrad_activate() {
 	if ( qtrad_conflicting_plugin() ) {
 		wp_die( esc_html__( 'Deactivate the other qTranslate implementation first.', 'qtrad' ), esc_html__( 'qTrad', 'qtrad' ), array( 'back_link' => true ) );
 	}
+	// Translated slugs may have been stored while another qTranslate plugin was active.
+	delete_option( 'qtrad_slugs_present' );
 }

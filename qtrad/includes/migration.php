@@ -45,7 +45,7 @@ function qtrad_migration_scan() {
 	);
 	$active = array();
 	foreach ( is_array( $modules ) ? $modules : array() as $id => $state ) {
-		if ( 1 === (int) $state ) { // QTX_MODULE_STATE_ACTIVE.
+		if ( 1 === (int) $state && 'slugs' !== $id ) { // QTX_MODULE_STATE_ACTIVE. qTrad reads the translated slugs itself.
 			$active[] = isset( $names[ $id ] ) ? $names[ $id ] : (string) $id;
 		}
 	}
@@ -54,17 +54,19 @@ function qtrad_migration_scan() {
 		$items[] = sprintf( __( 'qTranslate-XT integration modules were active: %s. qTrad has no equivalent for these modules, so content they translated may show raw language markers.', 'qtrad' ), implode( ', ', $active ) );
 	}
 
-	// One-time read-only scan; no core API counts meta by key pattern.
-	// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	$slug_like = $wpdb->esc_like( 'qtranslate_slug_' ) . '%';
-	$qts_like  = $wpdb->esc_like( '_qts_slug_' ) . '%';
-	$slugs     = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key LIKE %s OR meta_key LIKE %s", $slug_like, $qts_like ) )
-		+ (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->termmeta} WHERE meta_key LIKE %s OR meta_key LIKE %s", $slug_like, $qts_like ) );
-	if ( $slugs ) {
-		/* translators: %d: number of stored translated slugs */
-		$items[] = sprintf( _n( '%d translated slug is stored. qTrad does not use translated slugs yet, so links that relied on it will return 404.', '%d translated slugs are stored. qTrad does not use translated slugs yet, so links that relied on them will return 404.', $slugs, 'qtrad' ), $slugs );
+	$bases = array();
+	foreach ( (array) get_option( 'qtranslate_module_slugs', array() ) as $name => $translations ) {
+		if ( is_array( $translations ) && array_filter( $translations, function ( $base ) { return is_string( $base ) && '' !== $base; } ) ) {
+			$bases[] = preg_replace( '/^(?:post_type|taxonomy)_/', '', (string) $name );
+		}
+	}
+	if ( $bases ) {
+		/* translators: %s: comma-separated list of post type and taxonomy names */
+		$items[] = sprintf( __( 'Translated URL bases are set for: %s. qTrad uses the translated slugs of posts, pages and terms, but not translated bases yet, so addresses that contain one return 404.', 'qtrad' ), implode( ', ', array_slice( $bases, 0, 10 ) ) . ( count( $bases ) > 10 ? ', …' : '' ) );
 	}
 
+	// One-time read-only scan; no core API counts meta by key pattern.
+	// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 	$acf = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE %s", '%' . $wpdb->esc_like( '"qtranslate_' ) . '%' ) );
 	if ( $acf ) {
 		/* translators: %d: number of ACF fields */

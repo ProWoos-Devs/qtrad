@@ -420,6 +420,78 @@ $menu = array(menu_item('http://127.0.0.1:8931/de/contact/'));
 $menu[0]->type = 'post_type';
 check_case('only custom links are converted', array('http://127.0.0.1:8931/de/contact/'), $urls(qtrad_filter_nav_menu_objects($menu)));
 unset($GLOBALS['qtrad_original_uri']);
+// Translated slugs stored by qTranslate-XT and the qTranslate Slug plugin.
+settings(array('qtranslate_enabled_languages'=>array('en','de','es')));
+function slug_structure($structure) {
+    global $wp_rewrite;
+    update_option('permalink_structure', $structure);
+    $wp_rewrite->init();
+    if (!$wp_rewrite->get_extra_permastruct('category')) $wp_rewrite->add_permastruct('category', 'category/%category%', array('with_front'=>true, 'hierarchical'=>true, 'ep_mask'=>EP_CATEGORIES));
+}
+function slug_term($name, $slug, $parent = 0) {
+    $term = wp_insert_term($name, 'category', array('slug'=>$slug, 'parent'=>$parent));
+    return is_wp_error($term) ? (int) $term->get_error_data('term_exists') : (int) $term['term_id'];
+}
+function slug_resolve($uri, $lang, $server = array()) {
+    unset($GLOBALS['qtrad_slugs_rewritten'], $_SERVER['PATH_INFO'], $_SERVER['PHP_SELF']);
+    qtrad_set_language($lang);
+    $_SERVER['REQUEST_URI'] = $uri;
+    foreach ($server as $key => $value) $_SERVER[$key] = $value;
+    qtrad_slugs_resolve_request(true);
+    return $_SERVER['REQUEST_URI'];
+}
+slug_structure('/%postname%/');
+qtrad_register_slug_hooks();
+$base = 'http://127.0.0.1:8931';
+$unique = uniqid('s');
+$slug_post = fixture(array('post_status'=>'publish', 'post_name'=>$unique.'-hello'));
+$plain_post = fixture(array('post_status'=>'publish', 'post_name'=>$unique.'-plain'));
+add_post_meta($slug_post, 'qtranslate_slug_de', $unique.'-hallo');
+check_case('storing a translated slug turns slug handling on', array(true, '1'), array(qtrad_slugs_active(), get_option('qtrad_slugs_present')));
+add_post_meta($slug_post, '_qts_slug_es', $unique.'-hola');
+check_case('post link takes the slug of its language', $base.'/'.$unique.'-hallo/', qtrad_slugs_object_url('post', $slug_post, 'de'));
+check_case('qTranslate Slug meta is read', $base.'/'.$unique.'-hola/', qtrad_slugs_object_url('post', $slug_post, 'es'));
+check_case('language without a translated slug keeps the stored one', $base.'/'.$unique.'-hello/', qtrad_slugs_object_url('post', $slug_post, 'en'));
+qtrad_set_language('de');
+check_case('links follow the current language', $base.'/'.$unique.'-hallo/', get_permalink($slug_post));
+$GLOBALS['qtrad_seo_neutral_url'] = true;
+check_case('language-neutral links keep the stored slug', $base.'/'.$unique.'-hello/', get_permalink($slug_post));
+unset($GLOBALS['qtrad_seo_neutral_url']);
+check_case('SEO URL of another language uses its slug', true, strpos(qtrad_seo_post_url(get_post($slug_post), 'es'), '/'.$unique.'-hola/') !== false);
+$parent = fixture(array('post_type'=>'page', 'post_status'=>'publish', 'post_name'=>$unique.'-parent'));
+$child = fixture(array('post_type'=>'page', 'post_status'=>'publish', 'post_name'=>$unique.'-child', 'post_parent'=>$parent));
+add_post_meta($parent, 'qtranslate_slug_de', $unique.'-eltern');
+check_case('child page link uses the translated slug of its parent', $base.'/'.$unique.'-eltern/'.$unique.'-child/', qtrad_slugs_object_url('post', $child, 'de'));
+add_post_meta($child, 'qtranslate_slug_de', $unique.'-kind');
+check_case('page link translates every level', $base.'/'.$unique.'-eltern/'.$unique.'-kind/', qtrad_slugs_object_url('post', $child, 'de'));
+$cat = slug_term($unique.' cat', $unique.'-cat');
+$sub = slug_term($unique.' sub', $unique.'-sub', $cat);
+add_term_meta($cat, 'qtranslate_slug_de', $unique.'-kategorie');
+check_case('category link uses the translated slug of its parent', $base.'/category/'.$unique.'-kategorie/'.$unique.'-sub/', qtrad_slugs_object_url('term', $sub, 'de'));
+check_case('category link without a translation is unchanged', $base.'/category/'.$unique.'-cat/'.$unique.'-sub/', qtrad_slugs_object_url('term', $sub, 'es'));
+check_case('path swap leaves host and query alone', 'http://news.example/x/nachrichten/?news=1', qtrad_slugs_swap_path('http://news.example/x/news/?news=1', 'news', 'nachrichten', true));
+check_case('translated post address maps to the stored one', '/'.$unique.'-hello/', slug_resolve('/'.$unique.'-hallo/', 'de'));
+check_case('page number and query string survive the mapping', '/'.$unique.'-hello/2/?x=1', slug_resolve('/'.$unique.'-hallo/2/?x=1', 'de'));
+check_case('slug of another language is not mapped', '/'.$unique.'-hallo/', slug_resolve('/'.$unique.'-hallo/', 'es'));
+check_case('stored address is left alone', '/'.$unique.'-hello/', slug_resolve('/'.$unique.'-hello/', 'de'));
+check_case('translated page path maps to the stored path', '/'.$unique.'-parent/'.$unique.'-child/', slug_resolve('/'.$unique.'-eltern/'.$unique.'-kind/', 'de'));
+check_case('translated parent with a stored child maps', '/'.$unique.'-parent/'.$unique.'-child/', slug_resolve('/'.$unique.'-eltern/'.$unique.'-child/', 'de'));
+check_case('translated category feed maps to the stored path', '/category/'.$unique.'-cat/'.$unique.'-sub/feed/', slug_resolve('/category/'.$unique.'-kategorie/'.$unique.'-sub/feed/', 'de'));
+slug_resolve('/'.$unique.'-hallo/', 'de', array('PATH_INFO'=>'/'.$unique.'-hallo/', 'PHP_SELF'=>'/index.php/'.$unique.'-hallo/'));
+check_case('PATH_INFO and PHP_SELF follow the mapped path', array('/'.$unique.'-hello/', '/index.php/'.$unique.'-hello/'), array($_SERVER['PATH_INFO'], $_SERVER['PHP_SELF']));
+slug_structure('/%category%/%postname%/');
+wp_set_post_terms($slug_post, array($sub), 'category');
+wp_set_post_terms($plain_post, array($sub), 'category');
+check_case('category in the post address is translated', $base.'/'.$unique.'-kategorie/'.$unique.'-sub/'.$unique.'-hallo/', qtrad_slugs_object_url('post', $slug_post, 'de'));
+check_case('post under a translated category maps to the stored address', '/'.$unique.'-cat/'.$unique.'-sub/'.$unique.'-plain/', slug_resolve('/'.$unique.'-kategorie/'.$unique.'-sub/'.$unique.'-plain/', 'de'));
+slug_structure('/%postname%-%post_id%/');
+check_case('post slug stays stored where a request could not be mapped back', $base.'/'.$unique.'-hello-'.$slug_post.'/', qtrad_slugs_object_url('post', $slug_post, 'de'));
+slug_structure('/%postname%.html');
+check_case('post name with an extension is translated', $base.'/'.$unique.'-hallo.html', qtrad_slugs_object_url('post', $slug_post, 'de'));
+check_case('post name with an extension maps to the stored address', '/'.$unique.'-hello.html', slug_resolve('/'.$unique.'-hallo.html', 'de'));
+unset($GLOBALS['qtrad_slugs_rewritten'], $_SERVER['PATH_INFO'], $_SERVER['PHP_SELF']);
+$_SERVER['REQUEST_URI'] = '/';
+slug_structure('/%postname%/');
 settings();
 if (in_array('--prepare-browser', $argv, true)) {
     update_option('blogname', '[:en]qTrad Audit[:de]qTrad Audit DE[:es]Título español[:]');

@@ -1,4 +1,4 @@
-# Multilingual SEO in 1.5.0
+# Multilingual SEO in 1.6.0
 
 qTrad uses the same URL and translation-availability rules for canonical tags, HTML `hreflang` links and XML sitemap entries. Language-tag generation maps configured WordPress locales to SEO tags (for example legacy `pb` → `pt-BR`, `tw` → `zh-TW`, `ua` → `uk`) and removes locale suffixes such as `_formal`. Unsupported language identifiers are omitted; imported storage codes do not have to equal the emitted language tag.
 

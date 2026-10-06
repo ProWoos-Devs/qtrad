@@ -1,7 +1,7 @@
 {
   "owner": "rankmath",
-  "passed": 86,
-  "total": 86,
+  "passed": 88,
+  "total": 88,
   "cases": [
     {
       "case": "en canonical appears once and matches",
@@ -236,11 +236,19 @@
       "pass": true
     },
     {
-      "case": "Translated category slug resolves",
+      "case": "Translated category base and slug resolve",
       "pass": true
     },
     {
       "case": "Translated category canonical",
+      "pass": true
+    },
+    {
+      "case": "Category address /de/category/qtrad-seo-kategorie/ moves to the translated one",
+      "pass": true
+    },
+    {
+      "case": "Category address /de/category/qtrad-seo-category/ moves to the translated one",
       "pass": true
     },
     {

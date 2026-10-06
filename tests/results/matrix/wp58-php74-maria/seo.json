@@ -3,9 +3,15 @@
         "wordpress": "5.8",
         "php": "7.4.33"
     },
-    "passed": 94,
-    "total": 94,
+    "passed": 104,
+    "total": 104,
     "cases": [
+        {
+            "case": "Translated base and slug are used for a category",
+            "pass": true,
+            "expected": "http://127.0.0.1:8931/qtrad-seo-rubrik/qtrad-seo-kategorie/",
+            "actual": "http://127.0.0.1:8931/qtrad-seo-rubrik/qtrad-seo-kategorie/"
+        },
         {
             "case": "Translated slug is used for its language",
             "pass": true,
@@ -401,6 +407,18 @@
             "actual": false
         },
         {
+            "case": "Internal sitemap data removed post/6",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/6",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
             "case": "Internal sitemap data removed post/7",
             "pass": true,
             "expected": false,
@@ -413,12 +431,6 @@
             "actual": false
         },
         {
-            "case": "Internal sitemap data removed post/8",
-            "pass": true,
-            "expected": false,
-            "actual": false
-        },
-        {
             "case": "Internal sitemap data removed post/9",
             "pass": true,
             "expected": false,
@@ -431,7 +443,19 @@
             "actual": false
         },
         {
-            "case": "Internal sitemap data removed post/9",
+            "case": "Internal sitemap data removed post/10",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/10",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed post/10",
             "pass": true,
             "expected": false,
             "actual": false
@@ -504,6 +528,42 @@
         },
         {
             "case": "Internal sitemap data removed page/3",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/4",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/4",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/4",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/5",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/5",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "Internal sitemap data removed page/5",
             "pass": true,
             "expected": false,
             "actual": false
@@ -595,8 +655,8 @@
         {
             "case": "Paginated sitemap has no duplicates",
             "pass": true,
-            "expected": 37,
-            "actual": 37
+            "expected": 46,
+            "actual": 46
         },
         {
             "case": "XML expansion retains extensions",
@@ -607,57 +667,57 @@
     ],
     "fixtures": {
         "translated": {
-            "id": 33,
+            "id": 37,
             "slug": "qtrad-seo-translated",
             "url": "http://127.0.0.1:8931/qtrad-seo-translated/"
         },
         "missing": {
-            "id": 34,
+            "id": 38,
             "slug": "qtrad-seo-missing",
             "url": "http://127.0.0.1:8931/qtrad-seo-missing/"
         },
         "german": {
-            "id": 35,
+            "id": 39,
             "slug": "qtrad-seo-german",
             "url": "http://127.0.0.1:8931/qtrad-seo-german/"
         },
         "zero": {
-            "id": 36,
+            "id": 40,
             "slug": "qtrad-seo-zero",
             "url": "http://127.0.0.1:8931/qtrad-seo-zero/"
         },
         "empty": {
-            "id": 37,
+            "id": 41,
             "slug": "qtrad-seo-empty",
             "url": "http://127.0.0.1:8931/qtrad-seo-empty/"
         },
         "disabled": {
-            "id": 38,
+            "id": 42,
             "slug": "qtrad-seo-disabled",
             "url": "http://127.0.0.1:8931/qtrad-seo-disabled/"
         },
         "draft": {
-            "id": 39,
+            "id": 43,
             "slug": "qtrad-seo-draft",
-            "url": "http://127.0.0.1:8931/?p=39"
+            "url": "http://127.0.0.1:8931/?p=43"
         },
         "private": {
-            "id": 40,
+            "id": 44,
             "slug": "qtrad-seo-private",
             "url": "http://127.0.0.1:8931/qtrad-seo-private/"
         },
         "password": {
-            "id": 41,
+            "id": 45,
             "slug": "qtrad-seo-password",
             "url": "http://127.0.0.1:8931/qtrad-seo-password/"
         },
         "book": {
-            "id": 42,
+            "id": 46,
             "slug": "qtrad-seo-book",
             "url": "http://127.0.0.1:8931/qtrad_book/qtrad-seo-book/"
         },
         "slugged": {
-            "id": 43,
+            "id": 47,
             "slug": "qtrad-seo-slugged",
             "url": "http://127.0.0.1:8931/qtrad-seo-slugged/",
             "slugs": {
@@ -666,10 +726,13 @@
             }
         },
         "category": {
-            "id": 7,
+            "id": 8,
             "slug": "qtrad-seo-category",
             "slugs": {
                 "de": "qtrad-seo-kategorie"
+            },
+            "bases": {
+                "de": "qtrad-seo-rubrik"
             }
         }
     }

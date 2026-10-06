@@ -280,7 +280,7 @@
       "incomplete": [
         "color-contrast"
       ],
-      "passes": 17
+      "passes": 25
     },
     {
       "name": "Settings error notice",

@@ -1,7 +1,7 @@
 {
   "owner": "core",
-  "passed": 82,
-  "total": 82,
+  "passed": 84,
+  "total": 84,
   "cases": [
     {
       "case": "en canonical appears once and matches",
@@ -216,11 +216,19 @@
       "pass": true
     },
     {
-      "case": "Translated category slug resolves",
+      "case": "Translated category base and slug resolve",
       "pass": true
     },
     {
       "case": "Translated category canonical",
+      "pass": true
+    },
+    {
+      "case": "Category address /de/category/qtrad-seo-kategorie/ moves to the translated one",
+      "pass": true
+    },
+    {
+      "case": "Category address /de/category/qtrad-seo-category/ moves to the translated one",
       "pass": true
     },
     {

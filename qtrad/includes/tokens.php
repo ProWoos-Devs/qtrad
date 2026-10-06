@@ -239,16 +239,16 @@ function qtrad_merge_field( $incoming, $existing, $lang, $kind = 'text' ) {
 	return $kind === 'content' ? qtrad_join_content( $texts, $format, $keys ) : qtrad_join( $texts, $format, $keys );
 }
 
-function qtrad_use_language( $text, $lang, $show_available = false, $show_empty = false ) {
+function qtrad_use_language( $text, $lang, $show_available = false, $show_empty = false, $show_prefix = null ) {
 	if ( is_array( $text ) ) {
 		foreach ( $text as $key => $value ) {
-			$text[ $key ] = qtrad_use_language( $value, $lang, $show_available, $show_empty );
+			$text[ $key ] = qtrad_use_language( $value, $lang, $show_available, $show_empty, $show_prefix );
 		}
 		return $text;
 	}
 	if ( is_object( $text ) ) {
 		foreach ( get_object_vars( $text ) as $key => $value ) {
-			$text->$key = qtrad_use_language( $value, $lang, $show_available, $show_empty );
+			$text->$key = qtrad_use_language( $value, $lang, $show_available, $show_empty, $show_prefix );
 		}
 		return $text;
 	}
@@ -276,7 +276,8 @@ function qtrad_use_language( $text, $lang, $show_available = false, $show_empty 
 	$default = qtrad_default_language();
 	$alt     = $available[0];
 	$alt_text = isset( $texts[ $alt ] ) ? $texts[ $alt ] : '';
-	$show_prefix = (bool) qtrad_setting( 'show_prefix', true );
+	// Values that are no prose, such as ids or URLs, are read without the language-name prefix.
+	$show_prefix = null === $show_prefix ? (bool) qtrad_setting( 'show_prefix', true ) : (bool) $show_prefix;
 	if ( $show_available && qtrad_setting( 'show_alt_message', false ) ) {
 		$list = array();
 		foreach ( $available as $code ) {

@@ -131,6 +131,23 @@ $table_prefix = 'qtrad_'; if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '
                 report['suites'][owner + '-http'] = json.loads(result.stdout)
             command(php + ['tests/matrix/select-seo.php', '/site', 'core'])
             command(php + ['tests/matrix/diagnose.php', '/site', '--refresh'])
+            # Real ACF (free): the newest release needs WordPress 6.2.
+            acf_version = '6.8.10' if wp_version >= (6, 2) else '6.0.7'
+            print(f"{cell['id']}: real acf {acf_version}", flush=True)
+            archive = cache / ('advanced-custom-fields.' + acf_version + '.zip')
+            if not archive.exists(): urllib.request.urlretrieve('https://downloads.wordpress.org/plugin/' + archive.name, archive)
+            with zipfile.ZipFile(archive) as package:
+                for name in package.namelist():
+                    if not name.startswith('advanced-custom-fields/') or '..' in Path(name).parts: raise RuntimeError('Unexpected plugin archive member')
+                package.extractall(site / 'wp-content/plugins')
+            report['acf'] = {'version': acf_version, 'archive_sha256': hashlib.sha256(archive.read_bytes()).hexdigest()}
+            command(php + ['tests/matrix/select-seo.php', '/site', 'acf'])
+            result = command(php + ['tests/acf.php', '/site'], check=False)
+            (output / 'acf.json').write_text(result.stdout)
+            (output / 'acf.stderr.log').write_text(result.stderr)
+            if result.returncode: raise RuntimeError('ACF checks failed')
+            report['suites']['acf'] = json.loads(result.stdout)
+            command(php + ['tests/matrix/select-seo.php', '/site', 'core'])
         if browser and cell.get('browser'):
             # SEO fixtures deliberately change site options; recreate browser context.
             result = command(php + ['tests/wordpress.php', '/site', '--prepare-browser'])

@@ -42,7 +42,6 @@ function qtrad_migration_scan( $apply = false ) {
 
 	$modules = get_option( 'qtranslate_modules_state', array() );
 	$names   = array(
-		'acf'                 => 'ACF',
 		'all-in-one-seo-pack' => 'All in One SEO Pack',
 		'events-made-easy'    => 'Events Made Easy',
 		'google-site-kit'     => 'Google Site Kit',
@@ -54,7 +53,7 @@ function qtrad_migration_scan( $apply = false ) {
 	);
 	$active = array();
 	foreach ( is_array( $modules ) ? $modules : array() as $id => $state ) {
-		if ( 1 === (int) $state && 'slugs' !== $id ) { // QTX_MODULE_STATE_ACTIVE. qTrad reads the translated slugs itself.
+		if ( 1 === (int) $state && ! in_array( $id, array( 'slugs', 'acf' ), true ) ) { // QTX_MODULE_STATE_ACTIVE. qTrad covers slugs and ACF itself.
 			$active[] = isset( $names[ $id ] ) ? $names[ $id ] : (string) $id;
 		}
 	}
@@ -65,12 +64,6 @@ function qtrad_migration_scan( $apply = false ) {
 
 	// One-time read-only scan; no core API counts meta by key pattern.
 	// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-	$acf = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'acf-field' AND post_content LIKE %s", '%' . $wpdb->esc_like( '"qtranslate_' ) . '%' ) );
-	if ( $acf ) {
-		/* translators: %d: number of ACF fields */
-		$items[] = sprintf( _n( '%d ACF field uses a qTranslate field type. ACF cannot render it without qTranslate-XT.', '%d ACF fields use qTranslate field types. ACF cannot render them without qTranslate-XT.', $acf, 'qtrad' ), $acf );
-	}
-
 	$markers = array( '%' . $wpdb->esc_like( '[:' ) . '%' . $wpdb->esc_like( ']' ) . '%', '%' . $wpdb->esc_like( '<!--:' ) . '%', '%' . $wpdb->esc_like( '{:' ) . '%' . $wpdb->esc_like( '}' ) . '%' );
 	$extra   = array_merge( qtrad_extra_field_keys(), array( '_qtrad_seo_title', '_qtrad_seo_description' ) );
 	$keys    = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE %s AND ( meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s ) LIMIT 50", $wpdb->esc_like( '_menu_item_' ) . '%', $markers[0], $markers[1], $markers[2] ) );

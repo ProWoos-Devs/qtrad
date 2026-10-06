@@ -92,20 +92,20 @@ function qtrad_option_names_to_translate() {
 }
 
 /** Strings with language markers, anywhere in nested arrays, in the current language. */
-function qtrad_translate_deep( $value ) {
+function qtrad_translate_deep( $value, $show_prefix = null ) {
 	if ( is_string( $value ) ) {
 		if ( ! qtrad_has_lang_tags( $value ) ) {
 			return $value;
 		}
 		if ( is_serialized( $value ) ) {
 			$inner = maybe_unserialize( $value );
-			return is_array( $inner ) ? maybe_serialize( qtrad_translate_deep( $inner ) ) : $value;
+			return is_array( $inner ) ? maybe_serialize( qtrad_translate_deep( $inner, $show_prefix ) ) : $value;
 		}
-		return qtrad_use_current( $value );
+		return qtrad_use_language( $value, qtrad_current_language(), false, false, $show_prefix );
 	}
 	if ( is_array( $value ) ) {
 		foreach ( $value as $key => $item ) {
-			$value[ $key ] = qtrad_translate_deep( $item );
+			$value[ $key ] = qtrad_translate_deep( $item, $show_prefix );
 		}
 	}
 	return $value;
@@ -155,6 +155,11 @@ function qtrad_meta_key_is_raw( $key ) {
 	return '_menu_item_url' === $key || 0 === strpos( $key, '_qtrad_' );
 }
 
+/** ACF marks its fields with a reference row; their values are typed, so a fallback carries no language-name prefix. */
+function qtrad_meta_prefix( $rows, $key ) {
+	return isset( $rows[ '_' . $key ][0] ) && is_string( $rows[ '_' . $key ][0] ) && 0 === strpos( $rows[ '_' . $key ][0], 'field_' ) ? false : null;
+}
+
 /** Stored rows of all custom fields of a post or user, from the object cache. */
 function qtrad_meta_rows( $type, $object_id ) {
 	$cache = wp_cache_get( $object_id, $type . '_meta' );
@@ -180,7 +185,7 @@ function qtrad_filter_meta_all( $value, $object_id, $meta_key, $single, $type = 
 			foreach ( $values as $index => $raw ) {
 				if ( is_string( $raw ) && qtrad_has_lang_tags( $raw ) ) {
 					// Without a key WordPress returns the rows as stored, serialized where they are arrays.
-					$rows[ $key ][ $index ] = maybe_serialize( qtrad_translate_deep( maybe_unserialize( $raw ) ) );
+					$rows[ $key ][ $index ] = maybe_serialize( qtrad_translate_deep( maybe_unserialize( $raw ), qtrad_meta_prefix( $rows, (string) $key ) ) );
 					$changed                = true;
 				}
 			}
@@ -205,7 +210,7 @@ function qtrad_filter_meta_all( $value, $object_id, $meta_key, $single, $type = 
 	}
 	$translated = array();
 	foreach ( $rows[ $meta_key ] as $raw ) {
-		$translated[] = qtrad_translate_deep( maybe_unserialize( $raw ) );
+		$translated[] = qtrad_translate_deep( maybe_unserialize( $raw ), qtrad_meta_prefix( $rows, $meta_key ) );
 	}
 	return $single ? array( $translated[0] ) : $translated;
 }

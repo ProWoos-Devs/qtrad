@@ -52,6 +52,7 @@ require_once QTRAD_DIR . 'includes/runtime.php';
 require_once QTRAD_DIR . 'includes/compat.php';
 require_once QTRAD_DIR . 'includes/fields.php';
 require_once QTRAD_DIR . 'includes/values.php';
+require_once QTRAD_DIR . 'includes/acf.php';
 require_once QTRAD_DIR . 'includes/seo.php';
 require_once QTRAD_DIR . 'includes/admin.php';
 require_once QTRAD_DIR . 'includes/widget.php';
@@ -76,6 +77,7 @@ function qtrad_boot() {
 	qtrad_register_front_filters();
 	qtrad_register_field_hooks();
 	qtrad_register_value_hooks();
+	qtrad_register_acf_hooks();
 	qtrad_register_seo_hooks();
 	qtrad_register_admin_hooks();
 	qtrad_register_migration_hooks();

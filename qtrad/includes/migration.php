@@ -23,13 +23,22 @@ function qtrad_migration_maybe_scan() {
 	if ( ! current_user_can( 'manage_options' ) || get_option( 'qtrad_migration_report', false ) !== false ) {
 		return;
 	}
-	update_option( 'qtrad_migration_report', array( 'version' => QTRAD_VERSION, 'items' => qtrad_migration_scan(), 'dismissed' => false ), false );
+	update_option( 'qtrad_migration_report', array( 'version' => QTRAD_VERSION, 'items' => qtrad_migration_scan( true ), 'dismissed' => false ), false );
 }
 
-/** @return string[] One plain-text line per kind of data qTrad will not display. */
-function qtrad_migration_scan() {
+/**
+ * What a site that used qTranslate-X or qTranslate-XT should know after the switch.
+ *
+ * @param bool $apply Turn on the translation of custom fields, user profiles and options
+ *                    where such data is found and the admin has not chosen yet.
+ * @return string[] One plain-text line per finding.
+ */
+function qtrad_migration_scan( $apply = false ) {
 	global $wpdb;
 	$items = array();
+	$own   = get_option( 'qtrad_settings', array() );
+	$own   = is_array( $own ) ? $own : array();
+	$saved = $own;
 
 	$modules = get_option( 'qtranslate_modules_state', array() );
 	$names   = array(
@@ -66,21 +75,29 @@ function qtrad_migration_scan() {
 	$extra   = array_merge( qtrad_extra_field_keys(), array( '_qtrad_seo_title', '_qtrad_seo_description' ) );
 	$keys    = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE %s AND ( meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s ) LIMIT 50", $wpdb->esc_like( '_menu_item_' ) . '%', $markers[0], $markers[1], $markers[2] ) );
 	$keys    = array_values( array_diff( $keys, $extra ) );
-	if ( $keys ) {
-		/* translators: %s: comma-separated list of custom field names */
-		$items[] = sprintf( __( 'Custom fields contain language markers but are not configured in qTrad: %s. Add the ones that hold text to "Custom fields" in Settings → Languages.', 'qtrad' ), implode( ', ', array_slice( $keys, 0, 10 ) ) . ( count( $keys ) > 10 ? ', …' : '' ) );
-	}
-
 	$options = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name NOT LIKE %s AND option_name NOT LIKE %s AND option_name NOT LIKE %s AND option_name NOT IN ('blogname', 'blogdescription') AND ( option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s ) LIMIT 50", $wpdb->esc_like( 'qtranslate_' ) . '%', $wpdb->esc_like( '_transient' ) . '%', $wpdb->esc_like( 'widget_' ) . '%', $markers[0], $markers[1], $markers[2] ) );
-	if ( $options ) {
-		/* translators: %s: comma-separated list of option names */
-		$items[] = sprintf( __( 'Settings stored by the theme or other plugins contain language markers, which qTranslate-XT translated automatically: %s. qTrad translates only the site title and tagline, so these may show raw markers.', 'qtrad' ), implode( ', ', array_slice( $options, 0, 10 ) ) . ( count( $options ) > 10 ? ', …' : '' ) );
-	}
-
 	$users = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(DISTINCT user_id) FROM {$wpdb->usermeta} WHERE meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s", $markers[0], $markers[1], $markers[2] ) );
+	if ( $apply && ( $keys || $users ) && ! array_key_exists( 'translate_meta', $own ) ) {
+		$own['translate_meta'] = true;
+	}
+	if ( $apply && $options && ! array_key_exists( 'translate_options', $own ) ) {
+		$own['translate_options'] = 'all';
+	}
+	$meta_on    = ! empty( $own['translate_meta'] );
+	$options_on = isset( $own['translate_options'] ) && in_array( $own['translate_options'], array( 'list', 'all' ), true );
+	if ( $keys ) {
+		$list = implode( ', ', array_slice( $keys, 0, 10 ) ) . ( count( $keys ) > 10 ? ', …' : '' );
+		/* translators: %s: comma-separated list of custom field names */
+		$items[] = sprintf( $meta_on ? __( 'Custom fields contain language markers: %s. The public site shows them in the visitor\'s language. To edit one per language in wp-admin, add its key to "Custom fields" in Settings → Languages.', 'qtrad' ) : __( 'Custom fields contain language markers: %s. They are shown as stored. In Settings → Languages, add their keys to "Custom fields", or tick the box below it to show every such field in the visitor\'s language.', 'qtrad' ), $list );
+	}
+	if ( $options ) {
+		$list = implode( ', ', array_slice( $options, 0, 10 ) ) . ( count( $options ) > 10 ? ', …' : '' );
+		/* translators: %s: comma-separated list of option names */
+		$items[] = sprintf( $options_on ? __( 'Settings stored by the theme or other plugins contain language markers: %s. The public site shows them in the visitor\'s language, see "Options" in Settings → Languages.', 'qtrad' ) : __( 'Settings stored by the theme or other plugins contain language markers: %s. They are shown as stored. Choose what to translate under "Options" in Settings → Languages.', 'qtrad' ), $list );
+	}
 	if ( $users ) {
 		/* translators: %d: number of users */
-		$items[] = sprintf( _n( '%d user profile (for example a biography) contains language markers. qTrad does not translate user profiles.', '%d user profiles (for example biographies) contain language markers. qTrad does not translate user profiles.', $users, 'qtrad' ), $users );
+		$items[] = sprintf( $meta_on ? _n( '%d user profile (for example a biography) contains language markers. The public site shows it in the visitor\'s language.', '%d user profiles (for example biographies) contain language markers. The public site shows them in the visitor\'s language.', $users, 'qtrad' ) : _n( '%d user profile (for example a biography) contains language markers and is shown as stored. Tick the box below "Custom fields" in Settings → Languages to show it in the visitor\'s language.', '%d user profiles (for example biographies) contain language markers and are shown as stored. Tick the box below "Custom fields" in Settings → Languages to show them in the visitor\'s language.', $users, 'qtrad' ), $users );
 	}
 	// phpcs:enable
 
@@ -92,6 +109,10 @@ function qtrad_migration_scan() {
 	}
 	if ( 2 === (int) get_option( 'qtranslate_editor_mode', 0 ) ) {
 		$items[] = __( 'qTranslate-XT was set to single-language editing. qTrad shows language buttons in the editor instead; the setting is kept for qTranslate-XT.', 'qtrad' );
+	}
+	if ( $own !== $saved ) {
+		update_option( 'qtrad_settings', $own );
+		qtrad_reset_config();
 	}
 	return $items;
 }

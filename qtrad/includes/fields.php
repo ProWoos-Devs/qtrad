@@ -211,9 +211,14 @@ function qtrad_extra_field_keys() {
 /** Bypass our display filter, retaining other metadata providers. */
 function qtrad_raw_post_meta( $object_id, $key ) {
 	$priority = has_filter( 'get_post_metadata', 'qtrad_filter_get_meta' );
+	$previous = ! empty( $GLOBALS['qtrad_raw_meta'] );
+	$GLOBALS['qtrad_raw_meta'] = true;
 	if ( $priority !== false ) { remove_filter( 'get_post_metadata', 'qtrad_filter_get_meta', $priority ); }
 	try { return get_post_meta( $object_id, $key, false ); }
-	finally { if ( $priority !== false ) { add_filter( 'get_post_metadata', 'qtrad_filter_get_meta', $priority, 4 ); } }
+	finally {
+		$GLOBALS['qtrad_raw_meta'] = $previous;
+		if ( $priority !== false ) { add_filter( 'get_post_metadata', 'qtrad_filter_get_meta', $priority, 4 ); }
+	}
 }
 
 function qtrad_filter_get_meta( $value, $object_id, $meta_key, $single ) {

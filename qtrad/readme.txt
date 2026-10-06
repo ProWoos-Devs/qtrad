@@ -32,6 +32,10 @@ qTrad offers content compatibility and a documented subset of the qtrans_* and q
 
 The "Keep" format preserves whichever marker style each field already uses, and new translated post fields use comment markers. Choose comments if a site may need to return to the original qTranslate, which cannot read qTranslate-X closing brackets or swirly markers. The site title and tagline always use brackets because WordPress strips comments from those settings, so returning those two to the original qTranslate needs a deliberate conversion. Activation never rewrites posts.
 
+= Custom fields, user profiles and options =
+
+List custom fields under "Custom fields" in Settings → Languages to show them in the visitor's language and to merge edits into the language you are editing. A checkbox below that list also shows every other custom field and user profile field that holds language markers in the visitor's language. Under "Options" you can do the same for options, such as theme and widget settings, either all of them or a list of names. "Text filters" takes filter hooks of your theme or other plugins whose text should be shown in the current language. These three work on the public site only: wp-admin, the REST API and WP-CLI keep reading what is stored. If code on the public site writes a value back after reading it translated, qTrad keeps the stored translations of everything that did not change.
+
 Translations of disabled languages are kept until you replace a complete field in raw mode or through a full programmatic update. Ordinary wp_update_post() calls replace the fields they supply. Pass qtrad_language to request an update of one language only. REST saves in language-button mode merge plain values into the language given by qtrad_language or lang, otherwise into the request language. Complete marker strings replace complete fields.
 
 = URLs =
@@ -84,7 +88,7 @@ Public switchers remain plain links. In the classic editor the full marker strin
 
 = I am moving from qTranslate-XT. What should I check? =
 
-Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers, language menu items and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. Translated slugs and translated URL bases keep their addresses and can be edited in qTrad. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others) or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
+Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers, language menu items and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. Translated slugs and translated URL bases keep their addresses and can be edited in qTrad. Custom fields, user profile fields and options with language markers are shown in the visitor's language: on the first visit to wp-admin qTrad looks for such data, turns the matching settings on and lists what it found. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others) or per-language date formats, and lists those as well. No content is changed or deleted, so reactivating qTranslate-XT shows that data again.
 
 = How do I include a literal marker in content? =
 

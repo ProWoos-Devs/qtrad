@@ -473,6 +473,26 @@ function qtrad_settings_page() {
 	echo '<tr><th scope="row"><label for="qtrad-extra">' . esc_html__( 'Custom fields', 'qtrad' ) . '</label></th><td>';
 	echo '<textarea name="extra_fields" id="qtrad-extra" rows="4" class="large-text code">' . esc_textarea( (string) qtrad_setting( 'extra_fields', '' ) ) . '</textarea>';
 	echo '<p class="description">' . esc_html__( 'Meta keys, one per line. On the public site their values are shown in the current language. A plain update merges into the language you are editing in the admin bar.', 'qtrad' ) . '</p>';
+	echo '<label class="qtrad-choice"><input type="checkbox" name="translate_meta" value="1"' . checked( (bool) qtrad_setting( 'translate_meta', false ), true, false ) . ' /> ' . esc_html__( 'On the public site, also show every other custom field and user profile field that contains language markers in the current language', 'qtrad' ) . '</label>';
+	echo '</td></tr>';
+
+	$options_mode = qtrad_setting( 'translate_options', 'none' );
+	echo '<tr><th scope="row">' . esc_html__( 'Options', 'qtrad' ) . '</th><td><fieldset><legend class="screen-reader-text">' . esc_html__( 'Options', 'qtrad' ) . '</legend>';
+	$option_modes = array(
+		'none' => __( 'Translate only the site title and tagline', 'qtrad' ),
+		'all'  => __( 'Translate every option that contains language markers, such as theme and widget settings', 'qtrad' ),
+		'list' => __( 'Translate only the options listed below', 'qtrad' ),
+	);
+	foreach ( $option_modes as $value => $label ) {
+		echo '<label class="qtrad-choice"><input type="radio" name="translate_options" value="' . esc_attr( $value ) . '"' . checked( $options_mode, $value, false ) . ' /> ' . esc_html( $label ) . '</label><br />';
+	}
+	echo '</fieldset><p><label for="qtrad-filter-options">' . esc_html__( 'Option names', 'qtrad' ) . '</label><br /><input type="text" class="large-text code" id="qtrad-filter-options" name="filter_options" value="' . esc_attr( implode( ' ', qtrad_option_patterns() ) ) . '" autocomplete="off" spellcheck="false" /></p>';
+	echo '<p class="description">' . esc_html__( 'Separated by spaces, with % for any characters, for example widget_%. Options are translated on the public site only; wp-admin keeps showing what is stored.', 'qtrad' ) . '</p>';
+	echo '</td></tr>';
+
+	echo '<tr><th scope="row"><label for="qtrad-text-filters">' . esc_html__( 'Text filters', 'qtrad' ) . '</label></th><td>';
+	echo '<input type="text" class="large-text code" id="qtrad-text-filters" name="text_field_filters" value="' . esc_attr( implode( ' ', qtrad_text_filters() ) ) . '" autocomplete="off" spellcheck="false" />';
+	echo '<p class="description">' . esc_html__( 'Filter hooks of your theme or other plugins whose text should be shown in the current language, separated by spaces.', 'qtrad' ) . '</p>';
 	echo '</td></tr>';
 
 	echo '<tr><th scope="row">' . esc_html__( 'Language markers', 'qtrad' ) . '</th><td><label class="qtrad-choice"><input type="checkbox" name="force_markers" value="1"' . checked( (bool) qtrad_setting( 'force_markers', false ), true, false ) . ' /> ' . esc_html__( 'Keep markers even when translations are identical', 'qtrad' ) . '</label></td></tr>';

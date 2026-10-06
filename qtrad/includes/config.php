@@ -182,6 +182,11 @@ function qtrad_load_config() {
 		'write_format'       => $write,
 		'editor_mode'        => $editor_mode,
 		'extra_fields'       => $extra,
+		'translate_meta'     => ! empty( $own['translate_meta'] ),
+		'translate_options'  => isset( $own['translate_options'] ) && in_array( $own['translate_options'], array( 'list', 'all' ), true ) ? $own['translate_options'] : 'none',
+		// qTranslate-X names and defaults for the option list and the extra text filters.
+		'filter_options'     => get_option( 'qtranslate_filter_options', array( 'blogname', 'blogdescription', 'widget_%' ) ),
+		'text_field_filters' => get_option( 'qtranslate_text_field_filters', array() ),
 		'force_markers'      => qtrad_bool_option( 'qtranslate_force_markers', false ),
 		'not_available'      => (array) get_option( 'qtranslate_na_messages', array() ),
 		'show_prefix'        => isset( $own['show_prefix'] ) ? (bool) $own['show_prefix'] : qtrad_bool_option( 'qtranslate_show_displayed_language_prefix', true ),
@@ -397,14 +402,27 @@ function qtrad_save_settings( $input ) {
 		update_option( 'qtranslate_show_alternative_content', ! empty( $input['show_alt_content'] ) );
 		update_option( 'qtranslate_show_alternative_content_message', ! empty( $input['show_alt_message'] ) );
 	}
+	// Only the settings form carries these; other callers keep what is stored.
+	$form              = isset( $input['qtrad_settings'] );
+	$translate_meta    = $form ? ! empty( $input['translate_meta'] ) : (bool) qtrad_config( 'translate_meta' );
+	$translate_options = $form ? ( isset( $input['translate_options'] ) && in_array( $input['translate_options'], array( 'list', 'all' ), true ) ? $input['translate_options'] : 'none' ) : qtrad_config( 'translate_options' );
+	if ( $form ) {
+		foreach ( array( 'filter_options' => 'qtrad_option_patterns', 'text_field_filters' => 'qtrad_text_filters' ) as $field => $current ) {
+			if ( ! isset( $input[ $field ] ) || ! is_string( $input[ $field ] ) ) { continue; }
+			$names = qtrad_name_list( sanitize_text_field( $input[ $field ] ), 'filter_options' === $field ? '/^[A-Za-z0-9_.:%\-]+$/D' : '/^[A-Za-z0-9_.:\/\-]+$/D' );
+			if ( $names !== $current() ) { update_option( 'qtranslate_' . $field, $names ); }
+		}
+	}
 	update_option(
 		'qtrad_settings',
 		array(
-			'write_format'     => $write,
-			'editor_mode'      => $editor_mode,
-			'extra_fields'     => $extra,
-			'show_prefix'      => ! empty( $input['show_prefix'] ),
-			'show_alt_message' => ! empty( $input['show_alt_message'] ),
+			'write_format'      => $write,
+			'editor_mode'       => $editor_mode,
+			'extra_fields'      => $extra,
+			'show_prefix'       => ! empty( $input['show_prefix'] ),
+			'show_alt_message'  => ! empty( $input['show_alt_message'] ),
+			'translate_meta'    => $translate_meta,
+			'translate_options' => $translate_options,
 		)
 	);
 	qtrad_reset_config();

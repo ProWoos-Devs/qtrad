@@ -537,6 +537,8 @@ function qtrad_register_front_filters() {
 		add_filter( $filter, $title, 0 );
 	}
 	if ( ! is_admin() ) {
+		// Block themes show excerpts through get_the_excerpt() without the_excerpt.
+		add_filter( 'get_the_excerpt', $body, 0 );
 		add_filter( 'option_blogname', $title, 0 );
 		add_filter( 'option_blogdescription', $title, 0 );
 	}

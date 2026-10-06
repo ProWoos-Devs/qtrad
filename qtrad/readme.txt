@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.7.0
+Stable tag: 1.8.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -112,6 +112,11 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 4. After a switch from qTranslate-XT, administrators see which data qTrad keeps but does not display.
 
 == Changelog ==
+
+= 1.8.0 =
+
+* Advanced Custom Fields: qTranslate-XT's qtranslate_* field types work, with one input per language, and standard text, text area, URL and WYSIWYG fields can be translated with a "Translate" setting.
+* get_field() returns the visitor's language; validation runs per language.
 
 = 1.7.0 =
 

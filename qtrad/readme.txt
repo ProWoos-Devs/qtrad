@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.5.0
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,12 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 4. After a switch from qTranslate-XT, administrators see which data qTrad keeps but does not display.
 
 == Changelog ==
+
+= 1.6.0 =
+
+* Translated slugs can be edited: a "Translated slugs" box in the editor and fields on the term screens, one slug per language.
+* Post types and taxonomies can have a translated URL base per language, under Settings → Languages. Bases stored by qTranslate-XT are used as they are.
+* Addresses from before a base was translated redirect to the new address.
 
 = 1.5.0 =
 

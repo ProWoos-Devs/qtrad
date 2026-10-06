@@ -1,7 +1,7 @@
 {
-    "active": {
-        "1": "qtrad\/qtrad.php"
-    },
+    "active": [
+        "qtrad\/qtrad.php"
+    ],
     "seo_owner": "",
     "yoast_xml": null,
     "yoast_sitemaps": false,

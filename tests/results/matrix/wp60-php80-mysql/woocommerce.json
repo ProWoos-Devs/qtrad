@@ -1,0 +1,186 @@
+{
+    "environment": {
+        "wordpress": "6.0",
+        "php": "8.0.30",
+        "woocommerce": "6.9.5"
+    },
+    "passed": 20,
+    "total": 20,
+    "cases": [
+        {
+            "case": "product name, short description and purchase note in the current language",
+            "pass": true,
+            "expected": [
+                "Rotwein",
+                "Ein trockener Roter.",
+                "Danke"
+            ],
+            "actual": [
+                "Rotwein",
+                "Ein trockener Roter.",
+                "Danke"
+            ]
+        },
+        {
+            "case": "edit context keeps the stored value",
+            "pass": true,
+            "expected": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]",
+            "actual": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]"
+        },
+        {
+            "case": "missing translation falls back with the language name, like titles",
+            "pass": true,
+            "expected": "(English) Thanks",
+            "actual": "(English) Thanks"
+        },
+        {
+            "case": "attribute labels in the current language",
+            "pass": true,
+            "expected": [
+                "Farbe",
+                "Größe"
+            ],
+            "actual": [
+                "Farbe",
+                "Größe"
+            ]
+        },
+        {
+            "case": "global attribute term names in the current language",
+            "pass": true,
+            "expected": "Rot",
+            "actual": "Rot"
+        },
+        {
+            "case": "custom option text in the current language, its value stays stored",
+            "pass": true,
+            "expected": [
+                "Klein",
+                "[:en]Small[:de]Klein[:]"
+            ],
+            "actual": [
+                "Klein",
+                "[:en]Small[:de]Klein[:]"
+            ]
+        },
+        {
+            "case": "attribute meta stays raw when every custom field is translated",
+            "pass": true,
+            "expected": "[:en]Size[:de]Größe[:]",
+            "actual": "[:en]Size[:de]Größe[:]"
+        },
+        {
+            "case": "variation attribute meta stays raw",
+            "pass": true,
+            "expected": "[:en]Small[:de]Klein[:]",
+            "actual": "[:en]Small[:de]Klein[:]"
+        },
+        {
+            "case": "gateway title in the current language",
+            "pass": true,
+            "expected": "Nachnahme",
+            "actual": "Nachnahme"
+        },
+        {
+            "case": "structured data in the current language",
+            "pass": true,
+            "expected": [
+                "Rotwein",
+                "B"
+            ],
+            "actual": [
+                "Rotwein",
+                "B"
+            ]
+        },
+        {
+            "case": "cart hash differs per language",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "empty cart hash stays empty",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "order stores the language in _user_language",
+            "pass": true,
+            "expected": "de",
+            "actual": "de"
+        },
+        {
+            "case": "custom attribute value of an order item is stored in the customer language",
+            "pass": true,
+            "expected": "Klein",
+            "actual": "Klein"
+        },
+        {
+            "case": "thank-you address opens in the order language",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "customer email is sent",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "customer email uses the order language for markers and the locale",
+            "pass": true,
+            "expected": [
+                true,
+                true,
+                false,
+                "de_DE"
+            ],
+            "actual": [
+                true,
+                true,
+                false,
+                "de_DE"
+            ]
+        },
+        {
+            "case": "shop email uses the default language",
+            "pass": true,
+            "expected": [
+                false,
+                true,
+                false
+            ],
+            "actual": [
+                false,
+                true,
+                false
+            ]
+        },
+        {
+            "case": "language and locale are restored after sending",
+            "pass": true,
+            "expected": [
+                "en",
+                "en_US"
+            ],
+            "actual": [
+                "en",
+                "en_US"
+            ]
+        },
+        {
+            "case": "wp-admin keeps stored values",
+            "pass": true,
+            "expected": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]",
+            "actual": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]"
+        }
+    ],
+    "fixtures": {
+        "simple": "qtrad-red-wine",
+        "variable": "qtrad-tshirt",
+        "size_key": "ensizedegrose"
+    }
+}

@@ -1,0 +1,62 @@
+{
+  "passed": 14,
+  "total": 14,
+  "cases": [
+    {
+      "case": "en product page shows no language markers",
+      "pass": true
+    },
+    {
+      "case": "en product name",
+      "pass": true
+    },
+    {
+      "case": "en structured data has no markers",
+      "pass": true
+    },
+    {
+      "case": "en variable product page shows no language markers",
+      "pass": true
+    },
+    {
+      "case": "en custom attribute label",
+      "pass": true
+    },
+    {
+      "case": "en global attribute label",
+      "pass": true
+    },
+    {
+      "case": "en custom option values stay stored for matching",
+      "pass": true
+    },
+    {
+      "case": "de product page shows no language markers",
+      "pass": true
+    },
+    {
+      "case": "de product name",
+      "pass": true
+    },
+    {
+      "case": "de structured data has no markers",
+      "pass": true
+    },
+    {
+      "case": "de variable product page shows no language markers",
+      "pass": true
+    },
+    {
+      "case": "de custom attribute label",
+      "pass": true
+    },
+    {
+      "case": "de global attribute label",
+      "pass": true
+    },
+    {
+      "case": "de custom option values stay stored for matching",
+      "pass": true
+    }
+  ]
+}

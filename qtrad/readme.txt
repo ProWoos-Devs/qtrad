@@ -57,6 +57,8 @@ Full-page caches should bypass the personalized bare homepage or vary it by the 
 
 Use the shortcode [qtrad_switcher style="both"] or the qTrad Language Chooser widget. Styles are text, image, both, short and dropdown. Prefer text or both so visitors can identify languages without interpreting flags. The qtrans_* and qtranxf_* chooser functions used in older themes keep working.
 
+Language menu items created with qTranslate-X or qTranslate-XT (custom links to #qtransLangSw) keep working in classic navigation menus, with their type, title, flags, names, colon and current options. To add one, create a custom link with the URL #qtransLangSw for a "Language" item with all languages below it, or #qtransLangSw?type=AL for a direct link to the other language. Custom links that point into the site follow the visitor's language; add setlang=no to a link's query string to keep it as written.
+
 == Installation ==
 
 1. Back up the site and try the switch on a staging copy first.
@@ -78,7 +80,7 @@ Public switchers remain plain links. In the classic editor the full marker strin
 
 = I am moving from qTranslate-XT. What should I check? =
 
-Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others), translated slugs or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
+Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers, language menu items and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others), translated slugs or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
 
 = How do I include a literal marker in content? =
 

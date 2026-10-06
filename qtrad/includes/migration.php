@@ -71,12 +71,6 @@ function qtrad_migration_scan() {
 		$items[] = sprintf( _n( '%d ACF field uses a qTranslate field type. ACF cannot render it without qTranslate-XT.', '%d ACF fields use qTranslate field types. ACF cannot render them without qTranslate-XT.', $acf, 'qtrad' ), $acf );
 	}
 
-	$switchers = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = '_menu_item_url' AND meta_value LIKE %s", '%' . $wpdb->esc_like( '#qtransLangSw' ) . '%' ) );
-	if ( $switchers ) {
-		/* translators: %d: number of menu items */
-		$items[] = sprintf( _n( '%d menu item is a qTranslate-XT language switcher (#qtransLangSw). It shows as a plain link; use the qTrad Language Chooser widget or the [qtrad_switcher] shortcode instead.', '%d menu items are qTranslate-XT language switchers (#qtransLangSw). They show as plain links; use the qTrad Language Chooser widget or the [qtrad_switcher] shortcode instead.', $switchers, 'qtrad' ), $switchers );
-	}
-
 	$markers = array( '%' . $wpdb->esc_like( '[:' ) . '%' . $wpdb->esc_like( ']' ) . '%', '%' . $wpdb->esc_like( '<!--:' ) . '%', '%' . $wpdb->esc_like( '{:' ) . '%' . $wpdb->esc_like( '}' ) . '%' );
 	$extra   = array_merge( qtrad_extra_field_keys(), array( '_qtrad_seo_title', '_qtrad_seo_description' ) );
 	$keys    = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE %s AND ( meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s ) LIMIT 50", $wpdb->esc_like( '_menu_item_' ) . '%', $markers[0], $markers[1], $markers[2] ) );

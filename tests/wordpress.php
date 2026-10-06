@@ -385,6 +385,41 @@ settings();
 qtrad_set_language('de');
 check_case('root custom language attribute survives', 'data-lang="custom" lang="de-DE" dir="ltr"', qtrad_filter_language_attributes('data-lang="custom" lang="en-US"'));
 check_case('root language attributes retain unrelated and XHTML attributes', 'data-test="kept" lang="de-DE" xml:lang="de-DE" dir="ltr"', qtrad_filter_language_attributes('data-test="kept" lang="en-US" xml:lang="en-US" dir="ltr"'));
+// Navigation menus: qTranslate-X switcher items and custom links.
+settings(array('qtranslate_enabled_languages'=>array('en','de','es')));
+qtrad_set_language('de');
+$GLOBALS['qtrad_original_uri'] = '/de/sample/?x=1';
+function menu_item($url, $title = 'Language Menu', $id = 501) {
+    $item = new WP_Post((object) array('ID'=>$id, 'post_type'=>'nav_menu_item', 'post_title'=>$title, 'menu_order'=>$id - 500));
+    foreach (array('db_id'=>$id, 'menu_item_parent'=>'0', 'type'=>'custom', 'object'=>'custom', 'title'=>$title, 'url'=>$url, 'classes'=>array(''), 'attr_title'=>'', 'description'=>'') as $key => $value) $item->$key = $value;
+    return $item;
+}
+$urls = fn($items) => array_values(array_map(fn($item) => $item->url, $items));
+$menu = qtrad_filter_nav_menu_items(array(menu_item('#qtransLangSw'), menu_item('http://127.0.0.1:8931/contact/', '[:en]Contact[:de]Kontakt[:]', 502)));
+check_case('language menu lists every enabled language under its item', array('#', 'http://127.0.0.1:8931/contact/', 'http://127.0.0.1:8931/en/sample/?x=1', 'http://127.0.0.1:8931/de/sample/?x=1', 'http://127.0.0.1:8931/es/sample/?x=1'), $urls($menu));
+check_case('language menu children belong to the switcher item', array('501','501','501'), array_map(fn($item) => $item->menu_item_parent, array_slice($menu, 2)));
+check_case('language menu children sort after the stored items', array(3,4,5), array_map(fn($item) => $item->menu_order, array_slice($menu, 2)));
+check_case('language menu item keeps the default title and shows the current flag', true, strpos($menu[0]->title, 'Language:&nbsp;<img class="qtranxs-flag"') === 0 && strpos($menu[0]->title, 'alt="Deutsch"') !== false);
+check_case('language menu keeps qTranslate-X classes', true, in_array('qtranxs-lang-menu-de', $menu[0]->classes, true) && in_array('qtranxs-lang-menu-item-es', $menu[4]->classes, true));
+check_case('language menu is not expanded twice', 5, count(qtrad_filter_nav_menu_items($menu)));
+$atts = qtrad_filter_nav_menu_link_attributes(array('href'=>$menu[3]->url), $menu[3]);
+check_case('current language item is marked for assistive technology', array('de-DE','de-DE','true'), array($atts['hreflang'], $atts['lang'], $atts['aria-current']));
+check_case('ordinary menu items get no language attributes', array('href'=>'/x'), qtrad_filter_nav_menu_link_attributes(array('href'=>'/x'), $menu[1]));
+$menu = qtrad_filter_nav_menu_items(array(menu_item('#qtransLangSw?type=AL&flags=none')));
+check_case('alternative language item links to the first other language', array('http://127.0.0.1:8931/en/sample/?x=1', 'http://127.0.0.1:8931/es/sample/?x=1'), $urls($menu));
+check_case('alternative language item is named after its language', array('English','Español'), array($menu[0]->title, $menu[1]->title));
+$menu = qtrad_filter_nav_menu_items(array(menu_item('#qtransLangSw?title=none&current=hidden&names=hidden&colon=hidden', '[:en]Languages[:de]Sprachen[:]')));
+check_case('hidden current language is left out of the language menu', array('#', 'http://127.0.0.1:8931/en/sample/?x=1', 'http://127.0.0.1:8931/es/sample/?x=1'), $urls($menu));
+check_case('flag-only language items carry the name as text alternative', true, strpos($menu[1]->title, 'alt="English"') !== false && strpos($menu[1]->title, '>English') === false);
+$menu = qtrad_filter_nav_menu_items(array(menu_item('#qtransLangSw?flags=items', '[:en]Languages[:de]Sprachen[:]')));
+check_case('translated switcher title is used without the top flag', 'Sprachen', $menu[0]->title);
+$menu = qtrad_filter_nav_menu_objects(array(menu_item('http://127.0.0.1:8931/contact/'), menu_item('/contact/?setlang=no', 'Plain', 502), menu_item('#?lang=es', 'Spanish', 503), menu_item('https://example.org/contact/', 'External', 504), menu_item('#top', 'Anchor', 505), menu_item('http://127.0.0.1:8931/wp-content/uploads/a.pdf', 'File', 506)));
+check_case('custom links follow the current language', array('http://127.0.0.1:8931/de/contact/', '/contact/', 'http://127.0.0.1:8931/es/sample/?x=1', 'https://example.org/contact/', '#top', 'http://127.0.0.1:8931/wp-content/uploads/a.pdf'), $urls($menu));
+check_case('link to another language declares it without claiming the text language', array('hreflang'=>'es-ES'), qtrad_filter_nav_menu_link_attributes(array(), $menu[2]));
+$menu = array(menu_item('http://127.0.0.1:8931/de/contact/'));
+$menu[0]->type = 'post_type';
+check_case('only custom links are converted', array('http://127.0.0.1:8931/de/contact/'), $urls(qtrad_filter_nav_menu_objects($menu)));
+unset($GLOBALS['qtrad_original_uri']);
 settings();
 if (in_array('--prepare-browser', $argv, true)) {
     update_option('blogname', '[:en]qTrad Audit[:de]qTrad Audit DE[:es]Título español[:]');

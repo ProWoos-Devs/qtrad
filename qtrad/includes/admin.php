@@ -45,7 +45,7 @@ function qtrad_admin_title( $title ) {
 
 function qtrad_plugin_links( $links ) {
 	$url = admin_url( 'options-general.php?page=qtrad' );
-	array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Languages', 'qtrad' ) . '</a>' );
+	array_unshift( $links, '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'qtrad' ) . '</a>' );
 	return $links;
 }
 

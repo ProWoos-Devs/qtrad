@@ -82,7 +82,8 @@ $table_prefix = 'qtrad_'; if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '
                  '-e', 'MYSQL_USER=qtrad', '-e', 'MYSQL_PASSWORD=qtrad-disposable-only', cell['database']])
         client = 'mariadb' if cell['database'].startswith('mariadb') else 'mysql'
         for attempt in range(90):
-            ready = command(['docker', 'exec', db, client, '-uqtrad', '-pqtrad-disposable-only', '-e', 'SELECT 1'], check=False)
+            # Over TCP: the image's first-start server answers on the socket only, then restarts.
+            ready = command(['docker', 'exec', db, client, '-h', '127.0.0.1', '-uqtrad', '-pqtrad-disposable-only', '-e', 'SELECT 1'], check=False)
             if ready.returncode == 0: break
             time.sleep(1)
         else: raise RuntimeError('Disposable database did not become ready')

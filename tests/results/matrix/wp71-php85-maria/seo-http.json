@@ -1,7 +1,7 @@
 {
   "owner": "core",
-  "passed": 60,
-  "total": 60,
+  "passed": 82,
+  "total": 82,
   "cases": [
     {
       "case": "en canonical appears once and matches",
@@ -160,6 +160,70 @@
       "pass": true
     },
     {
+      "case": "en-US translated slug resolves",
+      "pass": true
+    },
+    {
+      "case": "en-US translated slug canonical",
+      "pass": true
+    },
+    {
+      "case": "en-US translated slug alternates",
+      "pass": true
+    },
+    {
+      "case": "en-US translated slug social URL",
+      "pass": true
+    },
+    {
+      "case": "de-DE translated slug resolves",
+      "pass": true
+    },
+    {
+      "case": "de-DE translated slug canonical",
+      "pass": true
+    },
+    {
+      "case": "de-DE translated slug alternates",
+      "pass": true
+    },
+    {
+      "case": "de-DE translated slug social URL",
+      "pass": true
+    },
+    {
+      "case": "es-ES translated slug resolves",
+      "pass": true
+    },
+    {
+      "case": "es-ES translated slug canonical",
+      "pass": true
+    },
+    {
+      "case": "es-ES translated slug alternates",
+      "pass": true
+    },
+    {
+      "case": "es-ES translated slug social URL",
+      "pass": true
+    },
+    {
+      "case": "Stored slug moves to the translated address",
+      "pass": true
+    },
+    {
+      "case": "Slug of another language is not found",
+      "pass": true
+    },
+    {
+      "case": "Translated category slug resolves",
+      "pass": true
+    },
+    {
+      "case": "Translated category canonical",
+      "pass": true
+    },
+    {
       "case": "Sitemap response sets no language cookie",
       "pass": true
     },
@@ -205,6 +269,30 @@
     },
     {
       "case": "Sitemap contains x-default",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains translated slug en-US",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains translated slug de-DE",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains translated slug es-ES",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains translated slug x-default",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits the stored slug in other languages",
+      "pass": true
+    },
+    {
+      "case": "Sitemap contains translated category slug",
       "pass": true
     },
     {

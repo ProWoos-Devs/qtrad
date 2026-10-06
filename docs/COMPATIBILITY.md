@@ -1,4 +1,4 @@
-# Compatibility in 1.4.0
+# Compatibility in 1.5.0
 
 qTrad reads comment, bracket and swirly markers and retains shared `qtranslate_*` options. It does not declare `QTX_VERSION`: it is not a particular qTranslate-X release. URL enum constants keep their historical numeric values. Only one qTranslate implementation may be active; the guard runs before exporting predecessor function names, including network-active and renamed packages.
 
@@ -50,7 +50,7 @@ No automatic activation-time rewrite occurs. Availability metadata is maintained
 
 XML sitemap endpoints remain neutral and are served without language cookies. Core/Yoast/Rank Math entries include available translated post/page/custom-post URLs. Alternate links and metadata share the routing canonical policy. Missing singular translations receive noindex. SEO.md describes overrides, archive policy and adapter limits. Language-specific menus, legacy date-formatting APIs and predecessor extension modules remain outside this release.
 
-The declared minimums remain WordPress 5.8/PHP 7.4. All 12 cells in ../tests/matrix/cells.json passed for 1.4.0 on GitHub Actions (run https://github.com/ProWoos-Devs/qtrad/actions/runs/37466553911): representative compatible pairings through WordPress 7.1.2/PHP 8.5, with MySQL 8.0 and MariaDB 10.11. Actual reports and runtime/test fingerprints live in ../tests/results/matrix/. This samples version boundaries rather than every possible combination. Legacy PHP cells verify migration compatibility, not a production hosting recommendation. The older first-round WordPress 6.8/PHP 8.5 result is retained as historical evidence and is outside core’s official pairing matrix.
+The declared minimums remain WordPress 5.8/PHP 7.4. All 12 cells in ../tests/matrix/cells.json passed for 1.5.0 on GitHub Actions (run https://github.com/ProWoos-Devs/qtrad/actions/runs/37469008978, where wp71-php82-mysql passed on its second attempt after its database container failed to start on the first): representative compatible pairings through WordPress 7.1.2/PHP 8.5, with MySQL 8.0 and MariaDB 10.11. Actual reports and runtime/test fingerprints live in ../tests/results/matrix/. This samples version boundaries rather than every possible combination. Legacy PHP cells verify migration compatibility, not a production hosting recommendation. The older first-round WordPress 6.8/PHP 8.5 result is retained as historical evidence and is outside core’s official pairing matrix.
 
 Multisite language/options caches follow each site and restore the caller’s selection after nested switch_to_blog()/restore_current_blog() calls. Site-specific custom blocks, plugins, themes, domain routing and caches still require staging validation.
 

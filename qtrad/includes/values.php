@@ -150,9 +150,16 @@ function qtrad_filter_update_option( $value, $old_value, $option ) {
 	return qtrad_restore_raw( $value, qtrad_raw_option( $option ) );
 }
 
-/** Custom fields qTrad reads raw itself, or whose value is no text. */
-function qtrad_meta_key_is_raw( $key ) {
-	return '_menu_item_url' === $key || 0 === strpos( $key, '_qtrad_' );
+/**
+ * Custom fields qTrad reads raw itself, or whose value is no text. WooCommerce
+ * matches attribute names and values as stored, so those stay raw and are
+ * translated where they are shown.
+ */
+function qtrad_meta_key_is_raw( $key, $object_id = 0 ) {
+	if ( '_menu_item_url' === $key || '_product_attributes' === $key || 0 === strpos( $key, '_qtrad_' ) ) {
+		return true;
+	}
+	return 0 === strpos( $key, 'attribute_' ) && $object_id && 'product_variation' === get_post_type( $object_id );
 }
 
 /** ACF marks its fields with a reference row; their values are typed, so a fallback carries no language-name prefix. */
@@ -179,7 +186,7 @@ function qtrad_filter_meta_all( $value, $object_id, $meta_key, $single, $type = 
 	if ( '' === $meta_key || null === $meta_key ) {
 		$changed = false;
 		foreach ( $rows as $key => $values ) {
-			if ( ! is_array( $values ) || qtrad_meta_key_is_raw( (string) $key ) ) {
+			if ( ! is_array( $values ) || qtrad_meta_key_is_raw( (string) $key, $object_id ) ) {
 				continue;
 			}
 			foreach ( $values as $index => $raw ) {
@@ -195,7 +202,7 @@ function qtrad_filter_meta_all( $value, $object_id, $meta_key, $single, $type = 
 		}
 		return $single ? array( $rows ) : $rows;
 	}
-	if ( ! is_string( $meta_key ) || empty( $rows[ $meta_key ] ) || ! is_array( $rows[ $meta_key ] ) || qtrad_meta_key_is_raw( $meta_key ) ) {
+	if ( ! is_string( $meta_key ) || empty( $rows[ $meta_key ] ) || ! is_array( $rows[ $meta_key ] ) || qtrad_meta_key_is_raw( $meta_key, $object_id ) ) {
 		return $value;
 	}
 	$marked = false;
@@ -221,7 +228,7 @@ function qtrad_filter_meta_all( $value, $object_id, $meta_key, $single, $type = 
  */
 function qtrad_filter_update_meta_all( $check, $object_id, $meta_key, $meta_value, $prev_value, $type = '' ) {
 	static $busy = false;
-	if ( null !== $check || $busy || ! is_string( $meta_key ) || qtrad_meta_key_is_raw( $meta_key ) || ! qtrad_translates_values() ) {
+	if ( null !== $check || $busy || ! is_string( $meta_key ) || qtrad_meta_key_is_raw( $meta_key, $object_id ) || ! qtrad_translates_values() ) {
 		return $check;
 	}
 	$type = $type ? $type : ( 'update_user_metadata' === current_filter() ? 'user' : 'post' );

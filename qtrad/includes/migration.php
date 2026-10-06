@@ -48,12 +48,11 @@ function qtrad_migration_scan( $apply = false ) {
 		'gravity-forms'       => 'Gravity Forms',
 		'jetpack'             => 'Jetpack',
 		'slugs'               => 'Slugs translation',
-		'woo-commerce'        => 'WooCommerce',
 		'wp-seo'              => 'Yoast SEO',
 	);
 	$active = array();
 	foreach ( is_array( $modules ) ? $modules : array() as $id => $state ) {
-		if ( 1 === (int) $state && ! in_array( $id, array( 'slugs', 'acf' ), true ) ) { // QTX_MODULE_STATE_ACTIVE. qTrad covers slugs and ACF itself.
+		if ( 1 === (int) $state && ! in_array( $id, array( 'slugs', 'acf', 'woo-commerce' ), true ) ) { // QTX_MODULE_STATE_ACTIVE. qTrad covers these itself.
 			$active[] = isset( $names[ $id ] ) ? $names[ $id ] : (string) $id;
 		}
 	}

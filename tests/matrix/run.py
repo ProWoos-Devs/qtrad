@@ -147,6 +147,27 @@ $table_prefix = 'qtrad_'; if (!defined('ABSPATH')) define('ABSPATH', __DIR__ . '
             (output / 'acf.stderr.log').write_text(result.stderr)
             if result.returncode: raise RuntimeError('ACF checks failed')
             report['suites']['acf'] = json.loads(result.stdout)
+            # Real WooCommerce, the newest release each WordPress version supports.
+            wc_version = '11.1.2' if wp_version >= (7, 0) else '10.9.4' if wp_version >= (6, 9) else '9.9.7' if wp_version >= (6, 7) else '8.9.5' if wp_version >= (6, 4) else '6.9.5'
+            print(f"{cell['id']}: real woocommerce {wc_version}", flush=True)
+            archive = cache / ('woocommerce.' + wc_version + '.zip')
+            if not archive.exists(): urllib.request.urlretrieve('https://downloads.wordpress.org/plugin/' + archive.name, archive)
+            with zipfile.ZipFile(archive) as package:
+                for name in package.namelist():
+                    if not name.startswith('woocommerce/') or '..' in Path(name).parts: raise RuntimeError('Unexpected plugin archive member')
+                package.extractall(site / 'wp-content/plugins')
+            report['woocommerce'] = {'version': wc_version, 'archive_sha256': hashlib.sha256(archive.read_bytes()).hexdigest()}
+            command(php + ['tests/matrix/select-seo.php', '/site', 'woocommerce'])
+            result = command(php + ['tests/woocommerce.php', '/site'], check=False)
+            (output / 'woocommerce.json').write_text(result.stdout)
+            (output / 'woocommerce.stderr.log').write_text(result.stderr)
+            if result.returncode: raise RuntimeError('WooCommerce checks failed')
+            report['suites']['woocommerce'] = json.loads(result.stdout)
+            result = command(['python3', str(ROOT / 'tests/woocommerce-http.py'), str(output / 'woocommerce.json')], check=False)
+            (output / 'woocommerce-http.json').write_text(result.stdout)
+            (output / 'woocommerce-http.stderr.log').write_text(result.stderr)
+            if result.returncode: raise RuntimeError('WooCommerce HTTP checks failed')
+            report['suites']['woocommerce-http'] = json.loads(result.stdout)
             command(php + ['tests/matrix/select-seo.php', '/site', 'core'])
         if browser and cell.get('browser'):
             # SEO fixtures deliberately change site options; recreate browser context.

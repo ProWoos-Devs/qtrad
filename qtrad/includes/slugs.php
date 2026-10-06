@@ -1,7 +1,9 @@
 <?php
 /**
- * Translated slugs stored by qTranslate-XT (qtranslate_slug_{lang}) and by the
- * older qTranslate Slug plugin (_qts_slug_{lang}), as post and term meta.
+ * Translated slugs, stored the way qTranslate-XT stores them: post and term
+ * meta qtranslate_slug_{lang}, and translated URL bases of post types and
+ * taxonomies in the option qtranslate_module_slugs. Slugs left by the older
+ * qTranslate Slug plugin (_qts_slug_{lang}) are read as well.
  *
  * WordPress keeps working with the stored post and term slugs. A request for a
  * translated address is mapped to the stored one before WordPress parses it,
@@ -33,7 +35,7 @@ function qtrad_slugs_meta_keys( $lang ) {
 }
 
 /**
- * Whether the site stores any translated slug. Sites without them skip all of this.
+ * Whether the site stores any translated slug or base. Sites without them skip all of this.
  *
  * @param string $state 'found' records that a slug was stored, 'refresh' looks again.
  */
@@ -58,7 +60,8 @@ function qtrad_slugs_active( $state = '' ) {
 		$like = array( $wpdb->esc_like( 'qtranslate_slug_' ) . '%', $wpdb->esc_like( '_qts_slug_' ) . '%' );
 		// One-time presence check; no core API looks up meta by key pattern.
 		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
-		$found = $wpdb->get_var( $wpdb->prepare( "SELECT meta_id FROM {$wpdb->postmeta} WHERE meta_key LIKE %s OR meta_key LIKE %s LIMIT 1", $like[0], $like[1] ) )
+		$found = qtrad_slugs_all_bases()
+			|| $wpdb->get_var( $wpdb->prepare( "SELECT meta_id FROM {$wpdb->postmeta} WHERE meta_key LIKE %s OR meta_key LIKE %s LIMIT 1", $like[0], $like[1] ) )
 			|| $wpdb->get_var( $wpdb->prepare( "SELECT meta_id FROM {$wpdb->termmeta} WHERE meta_key LIKE %s OR meta_key LIKE %s LIMIT 1", $like[0], $like[1] ) );
 		// phpcs:enable
 		$stored = $found ? '1' : '0';
@@ -82,18 +85,56 @@ function qtrad_slugs_post_structure() {
 	return (bool) preg_match( '~(?:^|/)%postname%(?:\.[a-z0-9]+)?(?:/|$)~i', (string) get_option( 'permalink_structure' ) );
 }
 
-/** Translated slug of a post or term, or '' when it has none in that language. */
+/**
+ * Translated slug of a post or term, or '' when it has none in that language.
+ * An empty qtranslate_slug_{lang} means none, even if an older _qts_slug_{lang} is left.
+ */
 function qtrad_slugs_get( $type, $id, $lang ) {
 	if ( '' === $lang ) {
 		return '';
 	}
 	foreach ( qtrad_slugs_meta_keys( $lang ) as $key ) {
-		$slug = get_metadata( $type, $id, $key, true );
-		if ( is_string( $slug ) && '' !== $slug ) {
-			return $slug;
+		if ( metadata_exists( $type, $id, $key ) ) {
+			$slug = get_metadata( $type, $id, $key, true );
+			return is_string( $slug ) ? $slug : '';
 		}
 	}
 	return '';
+}
+
+/**
+ * Translated URL bases as qTranslate-XT stores them.
+ *
+ * @return array[] Bases by "post_type_{name}" or "taxonomy_{name}", then by language.
+ */
+function qtrad_slugs_all_bases() {
+	$bases = array();
+	foreach ( (array) get_option( 'qtranslate_module_slugs', array() ) as $name => $translations ) {
+		if ( ! is_string( $name ) || ! is_array( $translations ) || ! preg_match( '/^(?:post_type|taxonomy)_./', $name ) ) {
+			continue;
+		}
+		foreach ( $translations as $lang => $base ) {
+			$base = is_string( $base ) ? trim( $base, '/' ) : '';
+			if ( '' !== $base ) {
+				$bases[ $name ][ $lang ] = $base;
+			}
+		}
+	}
+	return $bases;
+}
+
+/** Translated base of a post type or taxonomy in a language, '' when it has none. */
+function qtrad_slugs_base( $kind, $name, $lang ) {
+	if ( ! empty( $GLOBALS['qtrad_slugs_stored_bases'] ) ) {
+		return '';
+	}
+	$bases = qtrad_slugs_all_bases();
+	return '' !== $lang && isset( $bases[ $kind . '_' . $name ][ $lang ] ) ? $bases[ $kind . '_' . $name ][ $lang ] : '';
+}
+
+/** The address qTranslate-XT builds under a translated base: the base, then the slug path. */
+function qtrad_slugs_based_url( $base, $path, $type = '' ) {
+	return home_url( user_trailingslashit( '/' . $base . '/' . $path, $type ) );
 }
 
 /**
@@ -238,6 +279,10 @@ function qtrad_slugs_filter_post_type_link( $link, $post, $leavename = false, $s
 	$type         = get_post_type_object( $post->post_type );
 	$hierarchical = $type && $type->hierarchical;
 	$translated   = $hierarchical ? qtrad_slugs_page_uri( $post, $lang ) : qtrad_slugs_post_name( $post, $lang );
+	$base         = qtrad_slugs_base( 'post_type', $post->post_type, $lang );
+	if ( '' !== $base && is_string( $link ) && false === strpos( $link, '?' ) ) {
+		return qtrad_slugs_based_url( $base, $translated );
+	}
 	if ( ( $hierarchical ? get_page_uri( $post ) : $post->post_name ) === $translated ) {
 		return $link;
 	}
@@ -253,6 +298,10 @@ function qtrad_slugs_filter_term_link( $link, $term ) {
 	}
 	$taxonomy     = get_taxonomy( $term->taxonomy );
 	$hierarchical = $taxonomy && ! empty( $taxonomy->rewrite['hierarchical'] );
+	$base         = qtrad_slugs_base( 'taxonomy', $term->taxonomy, $lang );
+	if ( '' !== $base && false === strpos( $link, '?' ) ) {
+		return qtrad_slugs_based_url( $base, qtrad_slugs_term_path( $term, $lang, $hierarchical ), 'category' );
+	}
 	return qtrad_slugs_swap_path( $link, qtrad_slugs_term_path( $term, '', $hierarchical ), qtrad_slugs_term_path( $term, $lang, $hierarchical ), true );
 }
 
@@ -314,14 +363,14 @@ function qtrad_slugs_find_object( $segments, $lang ) {
 	$posts = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT post_id FROM {$wpdb->postmeta} WHERE meta_key IN (%s, %s) AND meta_value IN ($in) LIMIT 50", $args ) );
 	$terms = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT term_id FROM {$wpdb->termmeta} WHERE meta_key IN (%s, %s) AND meta_value IN ($in) LIMIT 50", $args ) );
 	// phpcs:enable
-	if ( ! $posts && ! $terms ) {
+	if ( ! $posts && ! $terms && ! qtrad_slugs_starts_with_base( $segments, $lang ) ) {
 		return null;
 	}
 	$match = qtrad_slugs_best_match( $segments, $lang, $posts, $terms );
 	if ( $match ) {
 		return $match;
 	}
-	// Only a parent or the category is translated: find the object by its stored slug.
+	// Only a parent, the category or the base is translated: find the object by its stored slug.
 	$types = array_diff( get_post_types( array( 'public' => true ) ), array( 'attachment' ) );
 	$posts = $types ? get_posts( array( 'post_name__in' => $values, 'post_type' => $types, 'post_status' => array( 'publish', 'private' ), 'fields' => 'ids', 'posts_per_page' => 50, 'orderby' => 'none', 'no_found_rows' => true ) ) : array();
 	$taxes = get_taxonomies( array( 'public' => true ) );
@@ -329,8 +378,20 @@ function qtrad_slugs_find_object( $segments, $lang ) {
 	return qtrad_slugs_best_match( $segments, $lang, $posts, is_array( $terms ) ? $terms : array() );
 }
 
+/** Whether the path starts with a translated base of that language. */
+function qtrad_slugs_starts_with_base( $segments, $lang ) {
+	foreach ( qtrad_slugs_all_bases() as $translations ) {
+		$base = isset( $translations[ $lang ] ) ? qtrad_slugs_segments( $translations[ $lang ] ) : array();
+		if ( $base && array_slice( $segments, 0, count( $base ) ) === $base ) {
+			return true;
+		}
+	}
+	return false;
+}
+
 function qtrad_slugs_best_match( $segments, $lang, $posts, $terms ) {
-	$best = null;
+	$best  = null;
+	$bases = (bool) qtrad_slugs_all_bases();
 	foreach ( array( 'post' => $posts, 'term' => $terms ) as $type => $ids ) {
 		foreach ( $ids as $id ) {
 			if ( 'post' === $type ) {
@@ -339,10 +400,18 @@ function qtrad_slugs_best_match( $segments, $lang, $posts, $terms ) {
 					continue;
 				}
 			}
-			$path   = qtrad_slugs_url_segments( qtrad_slugs_object_url( $type, $id, $lang ) );
-			$length = count( $path );
-			if ( $length && $length <= count( $segments ) && array_slice( $segments, 0, $length ) === $path && ( ! $best || $length > $best[2] ) ) {
-				$best = array( $type, (int) $id, $length );
+			$paths = array( qtrad_slugs_url_segments( qtrad_slugs_object_url( $type, $id, $lang ) ) );
+			if ( $bases ) {
+				// A translated slug under the stored base is an address from before the base was translated.
+				$GLOBALS['qtrad_slugs_stored_bases'] = true;
+				$paths[] = qtrad_slugs_url_segments( qtrad_slugs_object_url( $type, $id, $lang ) );
+				unset( $GLOBALS['qtrad_slugs_stored_bases'] );
+			}
+			foreach ( $paths as $path ) {
+				$length = count( $path );
+				if ( $length && $length <= count( $segments ) && array_slice( $segments, 0, $length ) === $path && ( ! $best || $length > $best[2] ) ) {
+					$best = array( $type, (int) $id, $length );
+				}
 			}
 		}
 	}

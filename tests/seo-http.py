@@ -78,10 +78,13 @@ try:
     try:
         fetch(base+'/'+slugged['slugs']['de']+'/');check('Slug of another language is not found',False)
     except urllib.error.HTTPError as error:check('Slug of another language is not found',error.code==404)
-    translated_category=base+'/de/category/'+category['slugs']['de']+'/'
+    translated_category=base+'/de/'+category['bases']['de']+'/'+category['slugs']['de']+'/'
     status,_,body=fetch(translated_category);head=Head();head.feed(body)
-    check('Translated category slug resolves',status==200)
+    check('Translated category base and slug resolve',status==200)
     check('Translated category canonical',[link.get('href') for link in head.links if link.get('rel')=='canonical']==[translated_category])
+    for old_path in ('/de/category/'+category['slugs']['de']+'/','/de/category/'+category['slug']+'/'):
+        response=urllib.request.urlopen(base+old_path,timeout=30)
+        check('Category address '+old_path+' moves to the translated one',response.geturl()==translated_category)
     index_url=base+('/wp-sitemap.xml' if owner=='core' else '/sitemap_index.xml')
     _,headers,body=fetch(index_url,{'Cookie':'qtrans_front_language=de','Accept-Language':'de'})
     check('Sitemap response sets no language cookie',headers.get('Set-Cookie') is None)

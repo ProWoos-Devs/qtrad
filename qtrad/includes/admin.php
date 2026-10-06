@@ -468,6 +468,8 @@ function qtrad_settings_page() {
 	echo '<p class="description">' . esc_html__( 'Used by URL mode 4. One per line: de = de.example.com', 'qtrad' ) . '</p>';
 	echo '</td></tr>';
 
+	qtrad_slugs_settings_row();
+
 	echo '<tr><th scope="row"><label for="qtrad-extra">' . esc_html__( 'Custom fields', 'qtrad' ) . '</label></th><td>';
 	echo '<textarea name="extra_fields" id="qtrad-extra" rows="4" class="large-text code">' . esc_textarea( (string) qtrad_setting( 'extra_fields', '' ) ) . '</textarea>';
 	echo '<p class="description">' . esc_html__( 'Meta keys, one per line. On the public site their values are shown in the current language. A plain update merges into the language you are editing in the admin bar.', 'qtrad' ) . '</p>';

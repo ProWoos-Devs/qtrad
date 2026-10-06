@@ -408,6 +408,7 @@ function qtrad_save_settings( $input ) {
 		)
 	);
 	qtrad_reset_config();
+	qtrad_slugs_save_bases( $input );
 	return true;
 }
 

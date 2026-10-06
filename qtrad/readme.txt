@@ -47,7 +47,9 @@ Sites with plain permalinks use query URLs. Subdomains and separate domains need
 
 An explicit language URL always wins. Cookies and browser negotiation apply only to the bare homepage, and other bare URLs serve the default language when its prefix is hidden. REST endpoints, assets, admin URLs, feeds and XML sitemaps never receive language prefixes.
 
-Translated slugs stored by qTranslate-XT or the qTranslate Slug plugin are served as they were: a post, page, custom post type entry, category, tag or other term opens under the slug of each language, and links, the language switcher, canonical and hreflang tags and sitemaps use it. The stored slug under another language redirects to the translated address. The WordPress admin, the REST API and the editor keep working with the stored slug.
+Each language can have its own slug for a post, page, custom post type entry, category, tag or other term. Edit them in the "Translated slugs" box of the editor and on the term screens; an empty field uses the WordPress slug. Post types and taxonomies can also have a translated base, such as "kategorie" instead of "category", under Settings → Languages. Links, the language switcher, canonical and hreflang tags and sitemaps use the translated address, and the WordPress address under another language redirects to it. The WordPress admin and the REST API keep working with the WordPress slug.
+
+Slugs and bases are stored the way qTranslate-XT stores them, so a site that used its Slugs module keeps its addresses, and slugs left by the older qTranslate Slug plugin are read as well.
 
 = SEO =
 
@@ -82,7 +84,7 @@ Public switchers remain plain links. In the classic editor the full marker strin
 
 = I am moving from qTranslate-XT. What should I check? =
 
-Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers, language menu items and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. Translated slugs of posts, pages, custom post types and terms keep their addresses; translated URL bases (such as a translated category base) are not used yet, and slugs cannot be edited in qTrad yet. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others) or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
+Posts, pages, titles, excerpts, term names, the site title and tagline, widgets with markers, language menu items and the shared qtranslate_* settings work as they are, including two- and three-letter language codes. Translated slugs and translated URL bases keep their addresses and can be edited in qTrad. qTrad does not include XT's integration modules (ACF, WooCommerce, Yoast, Gravity Forms and others) or per-language date formats. On the first visit to wp-admin, qTrad lists any such data it finds on your site. Nothing is changed or deleted, so reactivating qTranslate-XT shows that data again.
 
 = How do I include a literal marker in content? =
 

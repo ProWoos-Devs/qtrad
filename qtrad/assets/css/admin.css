@@ -21,3 +21,7 @@
 .qtrad-settings .qtrad-lang-grid .qtrad-lang-choice { display:flex; align-items:center; gap:6px; margin:0; }
 .qtrad-lang-text { flex:1; min-width:0; }
 .qtrad-lang-code { color:#50575e; }
+
+#qtrad-slugs input[type="text"], .qtrad-bases input[type="text"] { min-height:44px; max-width:100%; }
+.qtrad-bases { max-width:60rem; }
+.qtrad-bases input[type="text"] { width:100%; }

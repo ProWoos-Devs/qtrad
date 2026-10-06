@@ -47,7 +47,9 @@ $posts['slugged']['slugs'] = array('de'=>'qtrad-seo-slug-deutsch','es'=>'qtrad-s
 update_post_meta($posts['slugged']['id'],'qtranslate_slug_de',$posts['slugged']['slugs']['de']);
 update_post_meta($posts['slugged']['id'],'_qts_slug_es',$posts['slugged']['slugs']['es']);
 update_term_meta($term_id,'qtranslate_slug_de','qtrad-seo-kategorie');
-$posts['category'] = array('id'=>$term_id,'slug'=>'qtrad-seo-category','slugs'=>array('de'=>'qtrad-seo-kategorie'));
+update_option('qtranslate_module_slugs',array('taxonomy_category'=>array('de'=>'qtrad-seo-rubrik')));
+$posts['category'] = array('id'=>$term_id,'slug'=>'qtrad-seo-category','slugs'=>array('de'=>'qtrad-seo-kategorie'),'bases'=>array('de'=>'qtrad-seo-rubrik'));
+seo_check('Translated base and slug are used for a category','http://127.0.0.1:8931/qtrad-seo-rubrik/qtrad-seo-kategorie/',qtrad_slugs_object_url('term',$term_id,'de'));
 seo_check('Translated slug is used for its language','http://127.0.0.1:8931/de/qtrad-seo-slug-deutsch/',qtrad_seo_post_url(get_post($posts['slugged']['id']),'de'));
 seo_check('Legacy translated slug is used for its language','http://127.0.0.1:8931/es/qtrad-seo-slug-espanol/',qtrad_seo_post_url(get_post($posts['slugged']['id']),'es'));
 seo_check('Default language keeps the stored slug','http://127.0.0.1:8931/qtrad-seo-slugged/',qtrad_seo_post_url(get_post($posts['slugged']['id']),'en'));
@@ -112,7 +114,7 @@ $urls = array(); $page_sizes = array();
 foreach (array('post','page','qtrad_book') as $type) {
     for ($page=1;$page<=$provider->get_max_num_pages($type);$page++) {
         $entries=$provider->get_url_list($page,$type); $page_sizes[]=count($entries);
-        foreach ($entries as $entry) { $urls[]=$entry['loc']; seo_check('Internal sitemap data removed '.$type.'/'.$page,false,isset($entry['_qtrad_languages'])); }
+        foreach ($entries as $entry) { $urls[]=$entry['loc']; seo_check('Internal sitemap data removed '.$type.'/'.$page,false,isset($entry['_qtrad_languages']) || isset($entry['_qtrad_object'])); }
     }
 }
 seo_check('Expanded pages respect configured six-URL bound',true,max($page_sizes)<=6);

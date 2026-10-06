@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.6.0
+Stable tag: 1.7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -108,6 +108,14 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 4. After a switch from qTranslate-XT, administrators see which data qTrad keeps but does not display.
 
 == Changelog ==
+
+= 1.7.0 =
+
+* Custom fields and user profile fields that contain language markers can be shown in the visitor's language without listing each one.
+* Options that contain language markers, such as theme and widget settings, can be translated on the public site, all of them or a list of names.
+* Text filters: filter hooks of a theme or another plugin whose text is shown in the current language.
+* Code on the public site that writes back a value it read translated keeps the other languages.
+* After a switch from qTranslate-X or qTranslate-XT, these settings are turned on where such data is found.
 
 = 1.6.0 =
 

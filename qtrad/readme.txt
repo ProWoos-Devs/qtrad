@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.8.0
+Stable tag: 1.9.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,12 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 4. After a switch from qTranslate-XT, administrators see which data qTrad keeps but does not display.
 
 == Changelog ==
+
+= 1.9.0 =
+
+* WooCommerce: product, attribute, gateway, shipping and email texts in the visitor's language, also in the cart and checkout blocks and the mini-cart.
+* WooCommerce orders keep the customer's language: the thank-you page and customer emails use it.
+* Excerpts shown by block themes are translated.
 
 = 1.8.0 =
 

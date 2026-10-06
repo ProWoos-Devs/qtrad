@@ -3,10 +3,10 @@
         "wordpress": "7.1.2",
         "php": "8.5.11"
     },
-    "browser_post_id": 81,
+    "browser_post_id": 83,
     "browser_post_slug": "qtrad-audit-browser-2",
-    "passed": 175,
-    "total": 175,
+    "passed": 199,
+    "total": 199,
     "cases": [
         {
             "case": "Canonical activation file is qtrad.php",
@@ -724,20 +724,20 @@
             "case": "indexed zero translation remains visible",
             "pass": true,
             "expected": [
-                70
+                71
             ],
             "actual": [
-                70
+                71
             ]
         },
         {
             "case": "legacy zero translation remains visible",
             "pass": true,
             "expected": [
-                70
+                71
             ],
             "actual": [
-                70
+                71
             ]
         },
         {
@@ -981,32 +981,32 @@
         {
             "case": "post link takes the slug of its language",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-hallo/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-hallo/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-hallo/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-hallo/"
         },
         {
             "case": "qTranslate Slug meta is read",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-hola/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-hola/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-hola/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-hola/"
         },
         {
             "case": "language without a translated slug keeps the stored one",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-hello/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-hello/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-hello/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-hello/"
         },
         {
             "case": "links follow the current language",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-hallo/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-hallo/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-hallo/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-hallo/"
         },
         {
             "case": "language-neutral links keep the stored slug",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-hello/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-hello/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-hello/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-hello/"
         },
         {
             "case": "SEO URL of another language uses its slug",
@@ -1017,26 +1017,26 @@
         {
             "case": "child page link uses the translated slug of its parent",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-eltern/s6ac4fa2faf487-child/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-eltern/s6ac4fa2faf487-child/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-eltern/s6ac50bd70b639-child/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-eltern/s6ac50bd70b639-child/"
         },
         {
             "case": "page link translates every level",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-eltern/s6ac4fa2faf487-kind/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-eltern/s6ac4fa2faf487-kind/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-eltern/s6ac50bd70b639-kind/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-eltern/s6ac50bd70b639-kind/"
         },
         {
             "case": "category link uses the translated slug of its parent",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/category/s6ac4fa2faf487-kategorie/s6ac4fa2faf487-sub/",
-            "actual": "http://127.0.0.1:8931/category/s6ac4fa2faf487-kategorie/s6ac4fa2faf487-sub/"
+            "expected": "http://127.0.0.1:8931/category/s6ac50bd70b639-kategorie/s6ac50bd70b639-sub/",
+            "actual": "http://127.0.0.1:8931/category/s6ac50bd70b639-kategorie/s6ac50bd70b639-sub/"
         },
         {
             "case": "category link without a translation is unchanged",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/",
-            "actual": "http://127.0.0.1:8931/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/"
+            "expected": "http://127.0.0.1:8931/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/",
+            "actual": "http://127.0.0.1:8931/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/"
         },
         {
             "case": "path swap leaves host and query alone",
@@ -1047,122 +1047,122 @@
         {
             "case": "translated post address maps to the stored one",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-hello/",
-            "actual": "/s6ac4fa2faf487-hello/"
+            "expected": "/s6ac50bd70b639-hello/",
+            "actual": "/s6ac50bd70b639-hello/"
         },
         {
             "case": "page number and query string survive the mapping",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-hello/2/?x=1",
-            "actual": "/s6ac4fa2faf487-hello/2/?x=1"
+            "expected": "/s6ac50bd70b639-hello/2/?x=1",
+            "actual": "/s6ac50bd70b639-hello/2/?x=1"
         },
         {
             "case": "slug of another language is not mapped",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-hallo/",
-            "actual": "/s6ac4fa2faf487-hallo/"
+            "expected": "/s6ac50bd70b639-hallo/",
+            "actual": "/s6ac50bd70b639-hallo/"
         },
         {
             "case": "stored address is left alone",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-hello/",
-            "actual": "/s6ac4fa2faf487-hello/"
+            "expected": "/s6ac50bd70b639-hello/",
+            "actual": "/s6ac50bd70b639-hello/"
         },
         {
             "case": "translated page path maps to the stored path",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-parent/s6ac4fa2faf487-child/",
-            "actual": "/s6ac4fa2faf487-parent/s6ac4fa2faf487-child/"
+            "expected": "/s6ac50bd70b639-parent/s6ac50bd70b639-child/",
+            "actual": "/s6ac50bd70b639-parent/s6ac50bd70b639-child/"
         },
         {
             "case": "translated parent with a stored child maps",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-parent/s6ac4fa2faf487-child/",
-            "actual": "/s6ac4fa2faf487-parent/s6ac4fa2faf487-child/"
+            "expected": "/s6ac50bd70b639-parent/s6ac50bd70b639-child/",
+            "actual": "/s6ac50bd70b639-parent/s6ac50bd70b639-child/"
         },
         {
             "case": "translated category feed maps to the stored path",
             "pass": true,
-            "expected": "/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/feed/",
-            "actual": "/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/feed/"
+            "expected": "/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/feed/",
+            "actual": "/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/feed/"
         },
         {
             "case": "PATH_INFO and PHP_SELF follow the mapped path",
             "pass": true,
             "expected": [
-                "/s6ac4fa2faf487-hello/",
-                "/index.php/s6ac4fa2faf487-hello/"
+                "/s6ac50bd70b639-hello/",
+                "/index.php/s6ac50bd70b639-hello/"
             ],
             "actual": [
-                "/s6ac4fa2faf487-hello/",
-                "/index.php/s6ac4fa2faf487-hello/"
+                "/s6ac50bd70b639-hello/",
+                "/index.php/s6ac50bd70b639-hello/"
             ]
         },
         {
             "case": "category in the post address is translated",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-kategorie/s6ac4fa2faf487-sub/s6ac4fa2faf487-hallo/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-kategorie/s6ac4fa2faf487-sub/s6ac4fa2faf487-hallo/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-kategorie/s6ac50bd70b639-sub/s6ac50bd70b639-hallo/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-kategorie/s6ac50bd70b639-sub/s6ac50bd70b639-hallo/"
         },
         {
             "case": "post under a translated category maps to the stored address",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/s6ac4fa2faf487-plain/",
-            "actual": "/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/s6ac4fa2faf487-plain/"
+            "expected": "/s6ac50bd70b639-cat/s6ac50bd70b639-sub/s6ac50bd70b639-plain/",
+            "actual": "/s6ac50bd70b639-cat/s6ac50bd70b639-sub/s6ac50bd70b639-plain/"
         },
         {
             "case": "post slug stays stored where a request could not be mapped back",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-hello-73/",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-hello-73/"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-hello-74/",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-hello-74/"
         },
         {
             "case": "post name with an extension is translated",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ac4fa2faf487-hallo.html",
-            "actual": "http://127.0.0.1:8931/s6ac4fa2faf487-hallo.html"
+            "expected": "http://127.0.0.1:8931/s6ac50bd70b639-hallo.html",
+            "actual": "http://127.0.0.1:8931/s6ac50bd70b639-hallo.html"
         },
         {
             "case": "post name with an extension maps to the stored address",
             "pass": true,
-            "expected": "/s6ac4fa2faf487-hello.html",
-            "actual": "/s6ac4fa2faf487-hello.html"
+            "expected": "/s6ac50bd70b639-hello.html",
+            "actual": "/s6ac50bd70b639-hello.html"
         },
         {
             "case": "new translated slug is stored in the qTranslate-XT key",
             "pass": true,
             "expected": [
-                "s6ac4fa2faf487-neu",
-                "s6ac4fa2faf487-neu"
+                "s6ac50bd70b639-neu",
+                "s6ac50bd70b639-neu"
             ],
             "actual": [
-                "s6ac4fa2faf487-neu",
-                "s6ac4fa2faf487-neu"
+                "s6ac50bd70b639-neu",
+                "s6ac50bd70b639-neu"
             ]
         },
         {
             "case": "slug taken by a translation in that language gets a suffix",
             "pass": true,
-            "expected": "s6ac4fa2faf487-hallo-2",
-            "actual": "s6ac4fa2faf487-hallo-2"
+            "expected": "s6ac50bd70b639-hallo-2",
+            "actual": "s6ac50bd70b639-hallo-2"
         },
         {
             "case": "slug taken by a stored slug gets a suffix",
             "pass": true,
-            "expected": "s6ac4fa2faf487-plain-2",
-            "actual": "s6ac4fa2faf487-plain-2"
+            "expected": "s6ac50bd70b639-plain-2",
+            "actual": "s6ac50bd70b639-plain-2"
         },
         {
             "case": "same slug is free in another language",
             "pass": true,
-            "expected": "s6ac4fa2faf487-hallo",
-            "actual": "s6ac4fa2faf487-hallo"
+            "expected": "s6ac50bd70b639-hallo",
+            "actual": "s6ac50bd70b639-hallo"
         },
         {
             "case": "unchanged slug keeps its value",
             "pass": true,
-            "expected": "s6ac4fa2faf487-plain-2",
-            "actual": "s6ac4fa2faf487-plain-2"
+            "expected": "s6ac50bd70b639-plain-2",
+            "actual": "s6ac50bd70b639-plain-2"
         },
         {
             "case": "feed names are not usable as slugs",
@@ -1187,50 +1187,50 @@
             "pass": true,
             "expected": [
                 "",
-                "s6ac4fa2faf487-hola",
-                "http://127.0.0.1:8931/s6ac4fa2faf487-hello/"
+                "s6ac50bd70b639-hola",
+                "http://127.0.0.1:8931/s6ac50bd70b639-hello/"
             ],
             "actual": [
                 "",
-                "s6ac4fa2faf487-hola",
-                "http://127.0.0.1:8931/s6ac4fa2faf487-hello/"
+                "s6ac50bd70b639-hola",
+                "http://127.0.0.1:8931/s6ac50bd70b639-hello/"
             ]
         },
         {
             "case": "page slug is unique among pages with the same parent",
             "pass": true,
-            "expected": "s6ac4fa2faf487-kind-2",
-            "actual": "s6ac4fa2faf487-kind-2"
+            "expected": "s6ac50bd70b639-kind-2",
+            "actual": "s6ac50bd70b639-kind-2"
         },
         {
             "case": "page slug may repeat under another parent",
             "pass": true,
-            "expected": "s6ac4fa2faf487-kind",
-            "actual": "s6ac4fa2faf487-kind"
+            "expected": "s6ac50bd70b639-kind",
+            "actual": "s6ac50bd70b639-kind"
         },
         {
             "case": "term slug is unique within its taxonomy",
             "pass": true,
-            "expected": "s6ac4fa2faf487-kategorie-2",
-            "actual": "s6ac4fa2faf487-kategorie-2"
+            "expected": "s6ac50bd70b639-kategorie-2",
+            "actual": "s6ac50bd70b639-kategorie-2"
         },
         {
             "case": "meta box saves a sanitized slug",
             "pass": true,
-            "expected": "s6ac4fa2faf487-uber-uns",
-            "actual": "s6ac4fa2faf487-uber-uns"
+            "expected": "s6ac50bd70b639-uber-uns",
+            "actual": "s6ac50bd70b639-uber-uns"
         },
         {
             "case": "meta box ignores a wrong nonce or another post",
             "pass": true,
-            "expected": "s6ac4fa2faf487-uber-uns",
-            "actual": "s6ac4fa2faf487-uber-uns"
+            "expected": "s6ac50bd70b639-uber-uns",
+            "actual": "s6ac50bd70b639-uber-uns"
         },
         {
             "case": "term form saves a sanitized slug",
             "pass": true,
-            "expected": "s6ac4fa2faf487-unter",
-            "actual": "s6ac4fa2faf487-unter"
+            "expected": "s6ac50bd70b639-unter",
+            "actual": "s6ac50bd70b639-unter"
         },
         {
             "case": "bases are saved sanitized, next to settings qTrad does not own",
@@ -1257,50 +1257,320 @@
         {
             "case": "category link uses the translated base",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/rubrik/thema/s6ac4fa2faf487-kategorie/s6ac4fa2faf487-sub/",
-            "actual": "http://127.0.0.1:8931/rubrik/thema/s6ac4fa2faf487-kategorie/s6ac4fa2faf487-sub/"
+            "expected": "http://127.0.0.1:8931/rubrik/thema/s6ac50bd70b639-kategorie/s6ac50bd70b639-sub/",
+            "actual": "http://127.0.0.1:8931/rubrik/thema/s6ac50bd70b639-kategorie/s6ac50bd70b639-sub/"
         },
         {
             "case": "language without a translated base keeps the stored one",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/",
-            "actual": "http://127.0.0.1:8931/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/"
+            "expected": "http://127.0.0.1:8931/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/",
+            "actual": "http://127.0.0.1:8931/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/"
         },
         {
             "case": "address under a translated base maps to the stored one",
             "pass": true,
-            "expected": "/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/",
-            "actual": "/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/"
+            "expected": "/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/",
+            "actual": "/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/"
         },
         {
             "case": "address from before the base was translated still maps",
             "pass": true,
-            "expected": "/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/page/2/",
-            "actual": "/category/s6ac4fa2faf487-cat/s6ac4fa2faf487-sub/page/2/"
+            "expected": "/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/page/2/",
+            "actual": "/category/s6ac50bd70b639-cat/s6ac50bd70b639-sub/page/2/"
         },
         {
             "case": "term without a translated slug maps under a translated base",
             "pass": true,
-            "expected": "/category/s6ac4fa2faf487-plaincat/",
-            "actual": "/category/s6ac4fa2faf487-plaincat/"
+            "expected": "/category/s6ac50bd70b639-plaincat/",
+            "actual": "/category/s6ac50bd70b639-plaincat/"
         },
         {
             "case": "custom post type link uses the translated base",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/bucher/s6ac4fa2faf487-book/",
-            "actual": "http://127.0.0.1:8931/bucher/s6ac4fa2faf487-book/"
+            "expected": "http://127.0.0.1:8931/bucher/s6ac50bd70b639-book/",
+            "actual": "http://127.0.0.1:8931/bucher/s6ac50bd70b639-book/"
         },
         {
             "case": "custom post type address under a translated base maps to the stored one",
             "pass": true,
-            "expected": "/slugbooks/s6ac4fa2faf487-book/",
-            "actual": "/slugbooks/s6ac4fa2faf487-book/"
+            "expected": "/slugbooks/s6ac50bd70b639-book/",
+            "actual": "/slugbooks/s6ac50bd70b639-book/"
         },
         {
             "case": "custom post type address with translated base and slug maps",
             "pass": true,
-            "expected": "/slugbooks/s6ac4fa2faf487-book/",
-            "actual": "/slugbooks/s6ac4fa2faf487-book/"
+            "expected": "/slugbooks/s6ac50bd70b639-book/",
+            "actual": "/slugbooks/s6ac50bd70b639-book/"
+        },
+        {
+            "case": "custom field with markers is read in the current language",
+            "pass": true,
+            "expected": [
+                "Unter"
+            ],
+            "actual": [
+                "Unter"
+            ]
+        },
+        {
+            "case": "nested custom field values are translated",
+            "pass": true,
+            "expected": [
+                {
+                    "label": "Eins",
+                    "n": 3,
+                    "deep": [
+                        "Zwei"
+                    ]
+                }
+            ],
+            "actual": [
+                {
+                    "label": "Eins",
+                    "n": 3,
+                    "deep": [
+                        "Zwei"
+                    ]
+                }
+            ]
+        },
+        {
+            "case": "custom field without markers is left to WordPress",
+            "pass": true,
+            "expected": null,
+            "actual": null
+        },
+        {
+            "case": "all custom fields at once come translated, as stored rows",
+            "pass": true,
+            "expected": [
+                "Unter",
+                "a:3:{s:5:\"label\";s:4:\"Eins\";s:1:\"n\";i:3;s:4:\"deep\";a:1:{i:0;s:4:\"Zwei\";}}",
+                "Plain"
+            ],
+            "actual": [
+                "Unter",
+                "a:3:{s:5:\"label\";s:4:\"Eins\";s:1:\"n\";i:3;s:4:\"deep\";a:1:{i:0;s:4:\"Zwei\";}}",
+                "Plain"
+            ]
+        },
+        {
+            "case": "value of an earlier metadata provider is kept",
+            "pass": true,
+            "expected": "given",
+            "actual": "given"
+        },
+        {
+            "case": "wp-admin, REST and cron read custom fields as stored",
+            "pass": true,
+            "expected": null,
+            "actual": null
+        },
+        {
+            "case": "get_post_meta returns the current language",
+            "pass": true,
+            "expected": "Unter",
+            "actual": "Unter"
+        },
+        {
+            "case": "raw reads still see every language",
+            "pass": true,
+            "expected": [
+                "[:en]Sub[:de]Unter[:]"
+            ],
+            "actual": [
+                "[:en]Sub[:de]Unter[:]"
+            ]
+        },
+        {
+            "case": "writing back a translated custom field keeps the other languages",
+            "pass": true,
+            "expected": [
+                "[:en]Sub[:de]Unter[:]"
+            ],
+            "actual": [
+                "[:en]Sub[:de]Unter[:]"
+            ]
+        },
+        {
+            "case": "changing one part of a nested custom field keeps the stored rest",
+            "pass": true,
+            "expected": [
+                {
+                    "label": "[:en]One[:de]Eins[:]",
+                    "n": 4,
+                    "deep": [
+                        "<!--:en-->Two<!--:--><!--:de-->Zwei<!--:-->"
+                    ]
+                }
+            ],
+            "actual": [
+                {
+                    "label": "[:en]One[:de]Eins[:]",
+                    "n": 4,
+                    "deep": [
+                        "<!--:en-->Two<!--:--><!--:de-->Zwei<!--:-->"
+                    ]
+                }
+            ]
+        },
+        {
+            "case": "a changed custom field is stored as given",
+            "pass": true,
+            "expected": [
+                "C:\\neu"
+            ],
+            "actual": [
+                "C:\\neu"
+            ]
+        },
+        {
+            "case": "user profile field is read in the current language",
+            "pass": true,
+            "expected": "Biografie",
+            "actual": "Biografie"
+        },
+        {
+            "case": "writing back a translated profile field keeps the other languages",
+            "pass": true,
+            "expected": "[:en]Bio[:de]Biografie[:]",
+            "actual": "[:en]Bio[:de]Biografie[:]"
+        },
+        {
+            "case": "every option with markers is translated, except the ones qTrad reads itself",
+            "pass": true,
+            "expected": [
+                true,
+                false,
+                false
+            ],
+            "actual": [
+                true,
+                false,
+                false
+            ]
+        },
+        {
+            "case": "listed options are matched by name and by pattern",
+            "pass": true,
+            "expected": [
+                "value_exact",
+                "value_test_mods",
+                "value_test_plain"
+            ],
+            "actual": [
+                "value_exact",
+                "value_test_mods",
+                "value_test_plain"
+            ]
+        },
+        {
+            "case": "options stay as stored unless translation is turned on",
+            "pass": true,
+            "expected": [],
+            "actual": []
+        },
+        {
+            "case": "translated option is read in the current language",
+            "pass": true,
+            "expected": {
+                "note": "Danke",
+                "n": 1
+            },
+            "actual": {
+                "note": "Danke",
+                "n": 1
+            }
+        },
+        {
+            "case": "saving a translated option keeps the other languages of what did not change",
+            "pass": true,
+            "expected": {
+                "note": "[:en]Thanks[:de]Danke[:]",
+                "n": 2
+            },
+            "actual": {
+                "note": "[:en]Thanks[:de]Danke[:]",
+                "n": 2
+            }
+        },
+        {
+            "case": "text filter names are validated",
+            "pass": true,
+            "expected": [
+                "value_test_filter"
+            ],
+            "actual": [
+                "value_test_filter"
+            ]
+        },
+        {
+            "case": "extra text filter shows the current language",
+            "pass": true,
+            "expected": "B",
+            "actual": "B"
+        },
+        {
+            "case": "settings form saves the value translation choices",
+            "pass": true,
+            "expected": [
+                true,
+                "all",
+                [
+                    "widget_%",
+                    "my_option"
+                ],
+                [
+                    "my_filter"
+                ]
+            ],
+            "actual": [
+                true,
+                "all",
+                [
+                    "widget_%",
+                    "my_option"
+                ],
+                [
+                    "my_filter"
+                ]
+            ]
+        },
+        {
+            "case": "a partial settings save keeps the value translation choices",
+            "pass": true,
+            "expected": [
+                true,
+                "all"
+            ],
+            "actual": [
+                true,
+                "all"
+            ]
+        },
+        {
+            "case": "first scan turns value translation on where such data exists",
+            "pass": true,
+            "expected": [
+                true,
+                "all"
+            ],
+            "actual": [
+                true,
+                "all"
+            ]
+        },
+        {
+            "case": "scan leaves a choice the admin made",
+            "pass": true,
+            "expected": {
+                "translate_meta": false,
+                "translate_options": "none"
+            },
+            "actual": {
+                "translate_meta": false,
+                "translate_options": "none"
+            }
         }
     ]
 }

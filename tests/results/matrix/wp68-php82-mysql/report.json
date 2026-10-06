@@ -138,8 +138,8 @@
       },
       "browser_post_id": 28,
       "browser_post_slug": "qtrad-audit-browser",
-      "passed": 110,
-      "total": 110,
+      "passed": 126,
+      "total": 126,
       "cases": [
         {
           "case": "Canonical activation file is qtrad.php",
@@ -920,6 +920,184 @@
           "pass": true,
           "expected": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\"",
           "actual": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\""
+        },
+        {
+          "case": "language menu lists every enabled language under its item",
+          "pass": true,
+          "expected": [
+            "#",
+            "http://127.0.0.1:8931/contact/",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/de/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ],
+          "actual": [
+            "#",
+            "http://127.0.0.1:8931/contact/",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/de/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ]
+        },
+        {
+          "case": "language menu children belong to the switcher item",
+          "pass": true,
+          "expected": [
+            "501",
+            "501",
+            "501"
+          ],
+          "actual": [
+            "501",
+            "501",
+            "501"
+          ]
+        },
+        {
+          "case": "language menu children sort after the stored items",
+          "pass": true,
+          "expected": [
+            3,
+            4,
+            5
+          ],
+          "actual": [
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "case": "language menu item keeps the default title and shows the current flag",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "language menu keeps qTranslate-X classes",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "language menu is not expanded twice",
+          "pass": true,
+          "expected": 5,
+          "actual": 5
+        },
+        {
+          "case": "current language item is marked for assistive technology",
+          "pass": true,
+          "expected": [
+            "de-DE",
+            "de-DE",
+            "true"
+          ],
+          "actual": [
+            "de-DE",
+            "de-DE",
+            "true"
+          ]
+        },
+        {
+          "case": "ordinary menu items get no language attributes",
+          "pass": true,
+          "expected": {
+            "href": "/x"
+          },
+          "actual": {
+            "href": "/x"
+          }
+        },
+        {
+          "case": "alternative language item links to the first other language",
+          "pass": true,
+          "expected": [
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ],
+          "actual": [
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ]
+        },
+        {
+          "case": "alternative language item is named after its language",
+          "pass": true,
+          "expected": [
+            "English",
+            "Español"
+          ],
+          "actual": [
+            "English",
+            "Español"
+          ]
+        },
+        {
+          "case": "hidden current language is left out of the language menu",
+          "pass": true,
+          "expected": [
+            "#",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ],
+          "actual": [
+            "#",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ]
+        },
+        {
+          "case": "flag-only language items carry the name as text alternative",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "translated switcher title is used without the top flag",
+          "pass": true,
+          "expected": "Sprachen",
+          "actual": "Sprachen"
+        },
+        {
+          "case": "custom links follow the current language",
+          "pass": true,
+          "expected": [
+            "http://127.0.0.1:8931/de/contact/",
+            "/contact/",
+            "http://127.0.0.1:8931/es/sample/?x=1",
+            "https://example.org/contact/",
+            "#top",
+            "http://127.0.0.1:8931/wp-content/uploads/a.pdf"
+          ],
+          "actual": [
+            "http://127.0.0.1:8931/de/contact/",
+            "/contact/",
+            "http://127.0.0.1:8931/es/sample/?x=1",
+            "https://example.org/contact/",
+            "#top",
+            "http://127.0.0.1:8931/wp-content/uploads/a.pdf"
+          ]
+        },
+        {
+          "case": "link to another language declares it without claiming the text language",
+          "pass": true,
+          "expected": {
+            "hreflang": "es-ES"
+          },
+          "actual": {
+            "hreflang": "es-ES"
+          }
+        },
+        {
+          "case": "only custom links are converted",
+          "pass": true,
+          "expected": [
+            "http://127.0.0.1:8931/de/contact/"
+          ],
+          "actual": [
+            "http://127.0.0.1:8931/de/contact/"
+          ]
         }
       ]
     },
@@ -2306,21 +2484,22 @@
     "qtrad/flags/tw.svg": "931757f06b9ee751fd1a0cc8dd7cf862e21fdcaf894d10ed7bcc68dabcca59ad",
     "qtrad/flags/us.svg": "e7be4240cf57987926673708f09233be1ab6bdf35acc7b86bd32a263f197a2a7",
     "qtrad/flags/vn.svg": "2355037201315d74581ab0ad60b5587a29a087d26b0525bdeb8676e64fae5b86",
-    "qtrad/includes/admin.php": "09bda2a423c70b8071e9b46e33428888f4a2bac965fa36bbb21c3e05b9562aae",
+    "qtrad/includes/admin.php": "f5133e34398893d3051bdd1a1587e6adc88fdf0a275ac66497da2d8dd6407187",
     "qtrad/includes/compat.php": "dc58fe3dd4c2affa0f85a208221a141e12d42e1ec055d86687e47f9646fbeb98",
     "qtrad/includes/config.php": "623aa9c075fa8db349122a48cbc55f2bb94906d07e9f2235f6a61887f4748978",
     "qtrad/includes/fields.php": "7a4142437b41184db5ba8649e358a2a540ee731120642799d4a0bff6b42f3ac8",
-    "qtrad/includes/migration.php": "4aff5b3bafe7f2d91c51dd2e3a3dc656c74dea0faec92e07b4ae879af6437d47",
+    "qtrad/includes/menus.php": "f77286499eaaba04bee20c69354d1f91167d448393b337eab9cfe842f14976d3",
+    "qtrad/includes/migration.php": "f1b5001748837450bee30d8ea8db0c2ab6bb745ceb29d9de251986c33e0becaa",
     "qtrad/includes/runtime.php": "1ed3c979c45b91d449ef93d69ab4024aff98f6822a61a885f89d9767c75d6361",
     "qtrad/includes/seo.php": "4144a09e968be87bf2bbb9eba6f00a6e9062b6c71227da7549eea696c9375ff3",
     "qtrad/includes/tokens.php": "e5d61f1f91706d1087afb198491d25ce8dbcf351fa8d7f4f06d65d1ee067a7eb",
     "qtrad/includes/widget.php": "3109b2629ed442ee9eadd5c17fd03bb6bee69874ac1fd0972bbc5b68dcdfcd64",
-    "qtrad/languages/qtrad.pot": "294999f657cc0461b08b51e9f8055415ad1d0352df1168503eac566e3b130a0e",
-    "qtrad/qtrad.php": "ea06e786e0cc518ad59b1099d6582a3d7a5e5a92f1a850551aa8e25afd696740",
-    "qtrad/readme.txt": "0294b8ee21f1b7615752adfcd9ca3b2a6dfa90b7c4edfaa7d2c0c8185a125d2f",
+    "qtrad/languages/qtrad.pot": "f1647c321b7714c169d8178f765c0dbd160e5b24d147742b340a0d601d57e665",
+    "qtrad/qtrad.php": "d547923ef7cb9e61c70590a26022048913e86c80c38ec31e7179f569cfe9a64a",
+    "qtrad/readme.txt": "c8163e2792a6116d674f65390c0ad0cb11902afa664c00b8cb5f10a3e937db28",
     "qtrad/uninstall.php": "5510a1061241ccfb0433f1694af51b695631a6f8298d521acf195ab3f564dfb8"
   },
-  "started_utc": "2026-10-01T22:04:06.605663+00:00",
+  "started_utc": "2026-10-06T12:53:36.664553+00:00",
   "test_sha256": {
     "tests/README.md": "7293ea3b3fde29f56f9fb1ea4bb369a165e25bec1c88ba7ca5b5d2c873ac3075",
     "tests/assets.py": "895ad9a4f6c3b9fe862c438dc8eb93355a0cfe3980747a52efd479933a8221b9",
@@ -2344,9 +2523,9 @@
     "tests/package.json": "66040a252a8a89c57a5d233d5d1123a45b38376365cd3737410c1a6d5c2a5b7d",
     "tests/seo-http.py": "2f518e71bf5f510758f3f00465c55ded5fc98a644b8618fb8b6fdc4f725f8406",
     "tests/seo.php": "c33a411b44d1224200eaf5c07375741df44ce007aec1fd9fb63853f59d73f66a",
-    "tests/wordpress.php": "05f147259325ac32a5680c6924591770c294d9423fad0ca96e5091d367825026"
+    "tests/wordpress.php": "e93707fc8e0287c1bc8d38d4663eb2ed3bbdcf2e3a0756a217b2b019968257fd"
   },
-  "php_image": "sha256:d28df876abe2def005a216c8c1f699a98c340f964d6719fd0b3839dd209c9b22",
+  "php_image": "sha256:2a26c3ae020224ab3848d8b1c3785883d6c4b256d039a35ca1af4af88fc6c16c",
   "wordpress_archive_sha256": "f7dbedc423ddb3f2f3e98e9140f1720bfd6d4a8f4873c85da2e62f6a078de10a",
   "database_image": "sha256:6cd09145362dfe6831b14545de3d5fd6cc75c37cfd6ef8561429c1fc73518b39",
   "seo_plugins": {
@@ -2359,5 +2538,5 @@
       "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
     }
   },
-  "completed_utc": "2026-10-01T22:05:04.349326+00:00"
+  "completed_utc": "2026-10-06T12:54:37.953263+00:00"
 }

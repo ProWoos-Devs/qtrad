@@ -5,8 +5,8 @@
     },
     "browser_post_id": 64,
     "browser_post_slug": "qtrad-audit-browser-2",
-    "passed": 110,
-    "total": 110,
+    "passed": 126,
+    "total": 126,
     "cases": [
         {
             "case": "Canonical activation file is qtrad.php",
@@ -787,6 +787,184 @@
             "pass": true,
             "expected": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\"",
             "actual": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\""
+        },
+        {
+            "case": "language menu lists every enabled language under its item",
+            "pass": true,
+            "expected": [
+                "#",
+                "http://127.0.0.1:8931/contact/",
+                "http://127.0.0.1:8931/en/sample/?x=1",
+                "http://127.0.0.1:8931/de/sample/?x=1",
+                "http://127.0.0.1:8931/es/sample/?x=1"
+            ],
+            "actual": [
+                "#",
+                "http://127.0.0.1:8931/contact/",
+                "http://127.0.0.1:8931/en/sample/?x=1",
+                "http://127.0.0.1:8931/de/sample/?x=1",
+                "http://127.0.0.1:8931/es/sample/?x=1"
+            ]
+        },
+        {
+            "case": "language menu children belong to the switcher item",
+            "pass": true,
+            "expected": [
+                "501",
+                "501",
+                "501"
+            ],
+            "actual": [
+                "501",
+                "501",
+                "501"
+            ]
+        },
+        {
+            "case": "language menu children sort after the stored items",
+            "pass": true,
+            "expected": [
+                3,
+                4,
+                5
+            ],
+            "actual": [
+                3,
+                4,
+                5
+            ]
+        },
+        {
+            "case": "language menu item keeps the default title and shows the current flag",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "language menu keeps qTranslate-X classes",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "language menu is not expanded twice",
+            "pass": true,
+            "expected": 5,
+            "actual": 5
+        },
+        {
+            "case": "current language item is marked for assistive technology",
+            "pass": true,
+            "expected": [
+                "de-DE",
+                "de-DE",
+                "true"
+            ],
+            "actual": [
+                "de-DE",
+                "de-DE",
+                "true"
+            ]
+        },
+        {
+            "case": "ordinary menu items get no language attributes",
+            "pass": true,
+            "expected": {
+                "href": "/x"
+            },
+            "actual": {
+                "href": "/x"
+            }
+        },
+        {
+            "case": "alternative language item links to the first other language",
+            "pass": true,
+            "expected": [
+                "http://127.0.0.1:8931/en/sample/?x=1",
+                "http://127.0.0.1:8931/es/sample/?x=1"
+            ],
+            "actual": [
+                "http://127.0.0.1:8931/en/sample/?x=1",
+                "http://127.0.0.1:8931/es/sample/?x=1"
+            ]
+        },
+        {
+            "case": "alternative language item is named after its language",
+            "pass": true,
+            "expected": [
+                "English",
+                "Español"
+            ],
+            "actual": [
+                "English",
+                "Español"
+            ]
+        },
+        {
+            "case": "hidden current language is left out of the language menu",
+            "pass": true,
+            "expected": [
+                "#",
+                "http://127.0.0.1:8931/en/sample/?x=1",
+                "http://127.0.0.1:8931/es/sample/?x=1"
+            ],
+            "actual": [
+                "#",
+                "http://127.0.0.1:8931/en/sample/?x=1",
+                "http://127.0.0.1:8931/es/sample/?x=1"
+            ]
+        },
+        {
+            "case": "flag-only language items carry the name as text alternative",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "translated switcher title is used without the top flag",
+            "pass": true,
+            "expected": "Sprachen",
+            "actual": "Sprachen"
+        },
+        {
+            "case": "custom links follow the current language",
+            "pass": true,
+            "expected": [
+                "http://127.0.0.1:8931/de/contact/",
+                "/contact/",
+                "http://127.0.0.1:8931/es/sample/?x=1",
+                "https://example.org/contact/",
+                "#top",
+                "http://127.0.0.1:8931/wp-content/uploads/a.pdf"
+            ],
+            "actual": [
+                "http://127.0.0.1:8931/de/contact/",
+                "/contact/",
+                "http://127.0.0.1:8931/es/sample/?x=1",
+                "https://example.org/contact/",
+                "#top",
+                "http://127.0.0.1:8931/wp-content/uploads/a.pdf"
+            ]
+        },
+        {
+            "case": "link to another language declares it without claiming the text language",
+            "pass": true,
+            "expected": {
+                "hreflang": "es-ES"
+            },
+            "actual": {
+                "hreflang": "es-ES"
+            }
+        },
+        {
+            "case": "only custom links are converted",
+            "pass": true,
+            "expected": [
+                "http://127.0.0.1:8931/de/contact/"
+            ],
+            "actual": [
+                "http://127.0.0.1:8931/de/contact/"
+            ]
         }
     ]
 }

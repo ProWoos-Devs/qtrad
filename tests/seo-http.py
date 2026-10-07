@@ -56,6 +56,10 @@ try:
         check(language+' localized social URL',meta(head,'og:url')==[url])
         check(language+' schema present',bool(head.schemas))
         if owner!='core':check(language+' localized social title',meta(head,'og:title')==[title])
+    for prefix in ('/','/de/','/es/'):
+        _,_,body=fetch(base+prefix+fixtures['password']['slug']+'/')
+        at=body.find('SECRET_')
+        checks.append(dict({'case':'Protected post text absent from the whole page '+prefix,'pass':at<0},**({} if at<0 else {'detail':' '.join(body[max(0,at-200):at+80].split())})))
     missing=base+'/de/'+fixtures['missing']['slug']+'/'
     _,_,body=fetch(missing);head=Head();head.feed(body)
     check('Missing translation noindex',any('noindex' in value for value in meta(head,'robots')))

@@ -140,6 +140,8 @@ function qtrad_seo_head_links() {
 
 function qtrad_seo_description() {
 	$post = is_singular() ? get_post( get_queried_object_id() ) : null;
+	// A password-protected post shows its form; its text must not reach metadata either.
+	if ( $post && post_password_required( $post ) ) { return ''; }
 	$override = $post ? qtrad_seo_override( $post->ID, 'description', qtrad_current_language() ) : '';
 	if ( $override !== '' ) { return $override; }
 	$text = $post ? qtrad_seo_text( $post->post_excerpt !== '' ? $post->post_excerpt : $post->post_content ) : get_option( 'blogdescription' );
@@ -181,11 +183,13 @@ function qtrad_seo_vendor_text( $value ) {
 	);
 	$hook = current_filter();
 	$kind = strpos( $hook, 'title' ) !== false ? 'title' : ( strpos( $hook, 'desc' ) !== false ? 'description' : '' );
+	// Some SEO plugin versions build a description from the content even while a password protects it.
+	if ( 'description' === $kind && qtrad_seo_protected() ) { return ''; }
 	$override = is_singular() && $kind ? qtrad_seo_override( get_queried_object_id(), $kind, qtrad_current_language() ) : '';
 	if ( $override !== '' ) { return $override; }
 	if ( is_singular() && isset( $keys[ $hook ] ) ) {
 		$raw = qtrad_seo_raw_meta( get_queried_object_id(), $keys[ $hook ] );
-		if ( is_string( $raw ) && qtrad_has_lang_tags( $raw ) ) {
+		if ( is_string( $raw ) && qtrad_has_lang_tags( $raw ) && ! ( 'description' === $kind && post_password_required( get_queried_object_id() ) ) ) {
 			$value = qtrad_seo_text( $raw );
 			if ( strpos( $hook, 'wpseo_' ) === 0 && function_exists( 'wpseo_replace_vars' ) ) { $value = wpseo_replace_vars( $value, get_queried_object() ); }
 			elseif ( class_exists( 'RankMath\\Helper' ) ) { $value = \RankMath\Helper::replace_vars( $value ); }
@@ -208,6 +212,7 @@ function qtrad_seo_yoast_replacements( $replacements ) {
 function qtrad_seo_schema( $data ) {
 	if ( ! is_array( $data ) ) { return qtrad_seo_text( $data ); }
 	foreach ( $data as $key => $value ) {
+		if ( in_array( $key, array( 'description', 'articleBody', 'text' ), true ) && is_string( $value ) && qtrad_seo_protected() ) { unset( $data[ $key ] ); continue; }
 		if ( is_array( $value ) ) { $data[ $key ] = qtrad_seo_schema( $value ); }
 		elseif ( is_string( $value ) ) {
 			$data[ $key ] = qtrad_seo_text( $value );
@@ -225,7 +230,13 @@ function qtrad_seo_schema( $data ) {
 	return $data;
 }
 
+/** Whether the queried post is password-protected for this visitor. */
+function qtrad_seo_protected() {
+	return is_singular() && post_password_required( get_queried_object_id() );
+}
+
 function qtrad_seo_override( $post_id, $kind, $language ) {
+	if ( 'description' === $kind && post_password_required( $post_id ) ) { return ''; }
 	$value = qtrad_seo_raw_meta( $post_id, '_qtrad_seo_' . $kind );
 	return is_string( $value ) ? wp_strip_all_tags( qtrad_use_language( $value, $language, false, true ), true ) : '';
 }

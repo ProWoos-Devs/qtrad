@@ -27,7 +27,7 @@ $definitions = array(
     'empty'=>array('post_title'=>'[:en][:de][:es][:]', 'post_content'=>'[:en][:de][:es][:]'),
     'disabled'=>array('post_title'=>'[:spa]Solo español[:]', 'post_content'=>'[:spa]Contenido solo en español[:]'),
     'draft'=>array('post_status'=>'draft'), 'private'=>array('post_status'=>'private'),
-    'password'=>array('post_password'=>'fixture-only'), 'book'=>array('post_type'=>'qtrad_book'), 'slugged'=>array(),
+    'password'=>array('post_password'=>'fixture-only', 'post_content'=>'[:en]SECRET_EN_q7 protected body[:de]SECRET_DE_q7 geschützter Inhalt[:es]SECRET_ES_q7 contenido protegido[:]'), 'book'=>array('post_type'=>'qtrad_book'), 'slugged'=>array(),
 );
 foreach ($definitions as $slug=>$fields) {
     $id = wp_insert_post(wp_slash(array_merge(array('post_type'=>'post','post_status'=>'publish','post_name'=>'qtrad-seo-'.$slug,'post_title'=>'[:en]English title[:de]Deutscher Titel[:es]Título español[:]', 'post_content'=>'[:en]English body[:de]Deutscher Inhalt[:es]Contenido español[:]'),$fields)));
@@ -76,6 +76,17 @@ seo_check('Vendor string robots retains directives','follow, max-image-preview:l
 seo_check('Vendor array robots retains directives',array('follow'=>'follow','index'=>'noindex'),qtrad_seo_vendor_robots(array('index'=>'index','follow'=>'follow')));
 $GLOBALS['wp_query'] = new WP_Query(array('p'=>$id)); $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
 seo_check('Description selects current language','Deutsche Beschreibung',qtrad_seo_description());
+// Password-protected posts keep their text out of descriptions until the visitor has entered the password.
+$protected_id = $posts['password']['id'];
+update_post_meta($protected_id, '_qtrad_seo_description', '[:en]SECRET_EN_q7 override[:de]SECRET_DE_q7 Override[:]');
+$GLOBALS['wp_query'] = new WP_Query(array('p'=>$protected_id)); $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
+seo_check('Protected post has no description', '', qtrad_seo_description());
+seo_check('Protected post description override is withheld', '', qtrad_seo_override($protected_id, 'description', 'de'));
+require_once ABSPATH . WPINC . '/class-phpass.php';
+$_COOKIE['wp-postpass_' . COOKIEHASH] = (new PasswordHash(8, true))->HashPassword('fixture-only');
+seo_check('Description returns once the password was entered', 'SECRET_DE_q7 Override', qtrad_seo_description());
+unset($_COOKIE['wp-postpass_' . COOKIEHASH]);
+$GLOBALS['wp_query'] = new WP_Query(array('p'=>$id)); $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
 ob_start(); qtrad_head_links(); $head = ob_get_clean();
 seo_check('Alternates include current language',true,strpos($head,'hreflang="de-DE"') !== false);
 seo_check('Alternates include canonical default',true,strpos($head,'hreflang="en-US" href="'.$posts['translated']['url'].'"') !== false);

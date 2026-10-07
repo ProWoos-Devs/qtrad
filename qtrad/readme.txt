@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.9.0
+Stable tag: 1.10.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -120,6 +120,11 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 4. After a switch from qTranslate-XT, administrators see which data qTrad keeps but does not display.
 
 == Changelog ==
+
+= 1.10.0 =
+
+* Date and time formats per language, including the ones stored by qTranslate-X and qTranslate-XT.
+* qTranslate-XT's helper functions qtranxf_use_language, qtranxf_translate_deep, qtranxf_translate_post, qtranxf_get_url_for_language and others, its QTX_Translator object and the translate_text, translate_term and translate_url filters.
 
 = 1.9.0 =
 

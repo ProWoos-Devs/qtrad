@@ -117,12 +117,15 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 1. The block editor shows one language at a time. Language buttons switch between translations, and saving keeps every other translation.
 2. Settings → Languages, with the qTranslate URL modes and language list.
 3. The accessible language chooser on the front end, with full language names.
-4. After a switch from qTranslate-XT, administrators see which data qTrad keeps but does not display.
+4. After a switch from qTranslate-XT, administrators see what qTrad found and which settings it turned on.
+5. Translated URL bases, custom fields, options and text filters in Settings → Languages.
+6. Native name, locale, and date and time formats of each language.
 
 == Changelog ==
 
 = 1.10.0 =
 
+* First public release on WordPress.org.
 * Date and time formats per language, including the ones stored by qTranslate-X and qTranslate-XT.
 * qTranslate-XT's helper functions qtranxf_use_language, qtranxf_translate_deep, qtranxf_translate_post, qtranxf_get_url_for_language and others, its QTX_Translator object and the translate_text, translate_term and translate_url filters.
 
@@ -165,4 +168,4 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 = 1.3.0 =
 
-* First public release on WordPress.org.
+* Prepared for WordPress.org: qtrad_ prefix for qTrad's own names, two- and three-letter language codes, translated multi-page posts, the migration notice for sites coming from qTranslate-XT.

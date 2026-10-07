@@ -4,8 +4,8 @@
         "php": "8.2.34",
         "acf": "6.8.10"
     },
-    "passed": 21,
-    "total": 21,
+    "passed": 28,
+    "total": 28,
     "cases": [
         {
             "case": "qTranslate-XT field types are registered",
@@ -218,6 +218,54 @@
                 false,
                 2
             ]
+        },
+        {
+            "case": "ACF accepts per-language values of a marker-detected field",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "saving keeps the translation of a language that is not enabled",
+            "pass": true,
+            "expected": "[:en]Hello edited[:de]Hallo[:es]Hola[:]",
+            "actual": "[:en]Hello edited[:de]Hallo[:es]Hola[:]"
+        },
+        {
+            "case": "marker-detected standard field is stored as a string, an emptied language is cleared",
+            "pass": true,
+            "expected": "[:en]Plain edited[:es]Hola[:]",
+            "actual": "[:en]Plain edited[:es]Hola[:]"
+        },
+        {
+            "case": "a field key validator still rejects a multilingual value",
+            "pass": true,
+            "expected": [
+                false,
+                "Rejected by custom rule"
+            ],
+            "actual": [
+                false,
+                "Rejected by custom rule"
+            ]
+        },
+        {
+            "case": "a later type validator returning false still rejects",
+            "pass": true,
+            "expected": false,
+            "actual": false
+        },
+        {
+            "case": "a per-language URL check is not tripped by the markers",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "a qTranslate-XT field type keeps its key validators too",
+            "pass": true,
+            "expected": false,
+            "actual": false
         }
     ]
 }

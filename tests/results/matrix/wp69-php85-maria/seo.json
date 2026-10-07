@@ -3,8 +3,8 @@
         "wordpress": "6.9",
         "php": "8.5.11"
     },
-    "passed": 104,
-    "total": 104,
+    "passed": 107,
+    "total": 107,
     "cases": [
         {
             "case": "Translated base and slug are used for a category",
@@ -191,6 +191,24 @@
             "pass": true,
             "expected": "Deutsche Beschreibung",
             "actual": "Deutsche Beschreibung"
+        },
+        {
+            "case": "Protected post has no description",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "Protected post description override is withheld",
+            "pass": true,
+            "expected": "",
+            "actual": ""
+        },
+        {
+            "case": "Description returns once the password was entered",
+            "pass": true,
+            "expected": "SECRET_DE_q7 Override",
+            "actual": "SECRET_DE_q7 Override"
         },
         {
             "case": "Alternates include current language",

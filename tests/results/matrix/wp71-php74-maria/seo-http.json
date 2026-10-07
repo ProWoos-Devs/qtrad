@@ -1,7 +1,7 @@
 {
   "owner": "core",
-  "passed": 84,
-  "total": 84,
+  "passed": 87,
+  "total": 87,
   "cases": [
     {
       "case": "en canonical appears once and matches",
@@ -141,6 +141,18 @@
     },
     {
       "case": "en schema present",
+      "pass": true
+    },
+    {
+      "case": "Protected post text absent from the whole page /",
+      "pass": true
+    },
+    {
+      "case": "Protected post text absent from the whole page /de/",
+      "pass": true
+    },
+    {
+      "case": "Protected post text absent from the whole page /es/",
       "pass": true
     },
     {

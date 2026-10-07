@@ -1,7 +1,7 @@
 {
   "owner": "rankmath",
-  "passed": 88,
-  "total": 88,
+  "passed": 91,
+  "total": 91,
   "cases": [
     {
       "case": "en canonical appears once and matches",
@@ -161,6 +161,18 @@
     },
     {
       "case": "en localized social title",
+      "pass": true
+    },
+    {
+      "case": "Protected post text absent from the whole page /",
+      "pass": true
+    },
+    {
+      "case": "Protected post text absent from the whole page /de/",
+      "pass": true
+    },
+    {
+      "case": "Protected post text absent from the whole page /es/",
       "pass": true
     },
     {

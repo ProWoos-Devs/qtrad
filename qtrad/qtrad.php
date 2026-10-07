@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: qTrad: Multilingual for qTranslate and qTranslate-X Sites
+ * Plugin Name: qTrad: qTranslate compatible multilingual sites
  * Description: Multilingual content for WordPress. An independent continuation of qTranslate and qTranslate-X that keeps their translations and adds accessible editing and multilingual SEO.
  * Version: 1.10.1
  * Requires at least: 5.8

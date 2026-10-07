@@ -1,4 +1,4 @@
-=== qTrad: Multilingual for qTranslate and qTranslate-X Sites ===
+=== qTrad: qTranslate compatible multilingual sites ===
 Contributors: rafaelminuesa
 Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8

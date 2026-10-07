@@ -32,7 +32,7 @@ foreach (glob(QTRAD_DIR . '*.php') as $entry) {
     if ($header['name'] !== '') $entries[basename($entry)] = $header['name'];
 }
 check_case('Canonical activation file is qtrad.php', 'qtrad.php', basename(QTRAD_FILE));
-check_case('WordPress discovers only one activatable entry', array('qtrad.php'=>'qTrad: Multilingual for qTranslate and qTranslate-X Sites'), $entries);
+check_case('WordPress discovers only one activatable entry', array('qtrad.php'=>'qTrad: qTranslate compatible multilingual sites'), $entries);
 function settings($overrides = array()) {
     global $q_config, $current_screen;
     $current_screen = null;

@@ -37,16 +37,16 @@
                 "[:en]Std[:de]Standard[:]",
                 "[:en]https://example.com/en[:de]https://example.com/de[:]",
                 "Just text",
-                "[:en]60[:]",
-                "[:en]59[:de]58[:]"
+                "[:en]65[:]",
+                "[:en]64[:de]63[:]"
             ],
             "actual": [
                 "[:en]Hello[:de]Hallo[:]",
                 "[:en]Std[:de]Standard[:]",
                 "[:en]https://example.com/en[:de]https://example.com/de[:]",
                 "Just text",
-                "[:en]60[:]",
-                "[:en]59[:de]58[:]"
+                "[:en]65[:]",
+                "[:en]64[:de]63[:]"
             ]
         },
         {
@@ -57,14 +57,14 @@
                 "Standard",
                 "https://example.com/de",
                 "Just text",
-                58
+                63
             ],
             "actual": [
                 "Hallo",
                 "Standard",
                 "https://example.com/de",
                 "Just text",
-                58
+                63
             ]
         },
         {
@@ -72,31 +72,31 @@
             "pass": true,
             "expected": [
                 "Hello",
-                60,
-                59
+                65,
+                64
             ],
             "actual": [
                 "Hello",
-                60,
-                59
+                65,
+                64
             ]
         },
         {
             "case": "image without a translation in the language falls back too",
             "pass": true,
-            "expected": 60,
-            "actual": 60
+            "expected": 65,
+            "actual": 65
         },
         {
             "case": "with every custom field translated, ACF fields still fall back without a prefix",
             "pass": true,
             "expected": [
                 "Hello",
-                59
+                64
             ],
             "actual": [
                 "Hello",
-                59
+                64
             ]
         },
         {

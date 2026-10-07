@@ -739,57 +739,57 @@
     ],
     "fixtures": {
         "translated": {
-            "id": 39,
+            "id": 44,
             "slug": "qtrad-seo-translated",
             "url": "http://127.0.0.1:8931/qtrad-seo-translated/"
         },
         "missing": {
-            "id": 40,
+            "id": 45,
             "slug": "qtrad-seo-missing",
             "url": "http://127.0.0.1:8931/qtrad-seo-missing/"
         },
         "german": {
-            "id": 41,
+            "id": 46,
             "slug": "qtrad-seo-german",
             "url": "http://127.0.0.1:8931/qtrad-seo-german/"
         },
         "zero": {
-            "id": 42,
+            "id": 47,
             "slug": "qtrad-seo-zero",
             "url": "http://127.0.0.1:8931/qtrad-seo-zero/"
         },
         "empty": {
-            "id": 43,
+            "id": 48,
             "slug": "qtrad-seo-empty",
             "url": "http://127.0.0.1:8931/qtrad-seo-empty/"
         },
         "disabled": {
-            "id": 44,
+            "id": 49,
             "slug": "qtrad-seo-disabled",
             "url": "http://127.0.0.1:8931/qtrad-seo-disabled/"
         },
         "draft": {
-            "id": 45,
+            "id": 50,
             "slug": "qtrad-seo-draft",
-            "url": "http://127.0.0.1:8931/?p=45"
+            "url": "http://127.0.0.1:8931/?p=50"
         },
         "private": {
-            "id": 46,
+            "id": 51,
             "slug": "qtrad-seo-private",
             "url": "http://127.0.0.1:8931/qtrad-seo-private/"
         },
         "password": {
-            "id": 47,
+            "id": 52,
             "slug": "qtrad-seo-password",
             "url": "http://127.0.0.1:8931/qtrad-seo-password/"
         },
         "book": {
-            "id": 48,
+            "id": 53,
             "slug": "qtrad-seo-book",
             "url": "http://127.0.0.1:8931/qtrad_book/qtrad-seo-book/"
         },
         "slugged": {
-            "id": 49,
+            "id": 54,
             "slug": "qtrad-seo-slugged",
             "url": "http://127.0.0.1:8931/qtrad-seo-slugged/",
             "slugs": {

@@ -21,6 +21,12 @@ qTrad reads comment, bracket and swirly markers and retains shared `qtranslate_*
 | `qtrans_convertURL`, `qtranxf_convertURL`, `qtranxf_convertURLs` | Local URLs only; arrays supported by `convertURLs`. External/non-HTTP URLs, fragments, other ports and neutral paths remain unchanged. Unrelated query bytes and repeated keys retained. |
 | `qtrans_useTermLib`, `qtranxf_useTermLib` | Strings, term objects and recursive arrays. |
 | `qtrans_generateLanguageSelectCode`, `qtranxf_generateLanguageSelectCode` | Echo markup. Accept style strings, legacy boolean flag selection and an options array with `type`/`style` and `id`. |
+| `qtranxf_use_language`, `qtranxf_translate_deep` | Language selection with the language first, as in qTranslate-XT; strings, arrays and objects. |
+| `qtranxf_get_language_blocks`, `qtranxf_split_languages` | Marker tokens of a string, and the language map built from them. |
+| `qtranxf_translate_post` | Translates `post_title`, `post_content` and `post_excerpt` of a post object in place. |
+| `qtranxf_get_url_for_language` | URL in the given language, optionally with the default language shown. |
+| `qtranxf_term_use` | Term names, term objects and arrays, from markers or the shared term library. |
+| `QTX_Translator`, filters `translate_text`, `translate_term`, `translate_url`, `get_language`, `set_language` | qTranslate-XT's translator object and the filters it answers; `QTX_TRANSLATOR_SHOW_*` flags are defined. |
 
 Internal `qtrad_language_chooser()` returns markup for shortcodes/widgets. Chooser HTML and widget CSS differ from the legacy implementations to support accessible controls. The widget ID remains `qtranslate`; old class names remain aliases. Existing unsupported widget options survive updates, but custom format/CSS execution is not supported.
 

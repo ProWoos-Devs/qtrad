@@ -82,6 +82,7 @@ function qtrad_boot() {
 	qtrad_register_acf_hooks();
 	qtrad_register_woocommerce_hooks();
 	qtrad_register_date_hooks();
+	qtrad_register_translator_filters();
 	qtrad_register_seo_hooks();
 	qtrad_register_admin_hooks();
 	qtrad_register_migration_hooks();

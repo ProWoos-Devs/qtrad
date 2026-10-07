@@ -352,3 +352,132 @@ function qtranxf_convertURLs( $urls, $lang = '', $forceadmin = false, $showDefau
 }
 
 }
+
+// qTranslate-XT helpers and its translator API, for themes and plugins that call them.
+if ( ! function_exists( 'qtranxf_use_language' ) ) {
+	function qtranxf_use_language( $lang, $text, $show_available = false, $show_empty = false ) {
+		return qtrad_use_language( $text, (string) $lang, $show_available, $show_empty );
+	}
+}
+
+if ( ! function_exists( 'qtranxf_get_language_blocks' ) ) {
+	function qtranxf_get_language_blocks( $text ) {
+		return is_string( $text ) ? qtrad_language_blocks( $text ) : array();
+	}
+}
+
+if ( ! function_exists( 'qtranxf_split_languages' ) ) {
+	function qtranxf_split_languages( $blocks ) {
+		return qtrad_split_blocks( (array) $blocks, qtrad_enabled_languages() );
+	}
+}
+
+if ( ! function_exists( 'qtranxf_translate_deep' ) ) {
+	function qtranxf_translate_deep( $value, $lang = '' ) {
+		return qtrad_use_language( $value, $lang ? (string) $lang : qtrad_current_language() );
+	}
+}
+
+if ( ! function_exists( 'qtranxf_translate_post' ) ) {
+	/** Translates the text fields of a post object in place, as qTranslate-XT does. */
+	function qtranxf_translate_post( $post, $lang ) {
+		if ( ! is_object( $post ) ) {
+			return;
+		}
+		foreach ( array( 'post_title', 'post_content', 'post_excerpt' ) as $field ) {
+			if ( isset( $post->$field ) && is_string( $post->$field ) ) {
+				$post->$field = qtrad_use_language( $post->$field, (string) $lang );
+			}
+		}
+	}
+}
+
+if ( ! function_exists( 'qtranxf_get_url_for_language' ) ) {
+	function qtranxf_get_url_for_language( $url, $lang, $showLanguage = true ) { // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- qTranslate-XT signature.
+		return qtrad_convert_url( (string) $url, (string) $lang, true, (bool) $showLanguage ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.VariableNotSnakeCase -- As above.
+	}
+}
+
+if ( ! function_exists( 'qtranxf_term_use' ) ) {
+	function qtranxf_term_use( $lang, $term, $taxonomy = null ) {
+		if ( is_array( $term ) ) {
+			foreach ( $term as $key => $value ) {
+				$term[ $key ] = qtranxf_term_use( $lang, $value, $taxonomy );
+			}
+			return $term;
+		}
+		if ( is_object( $term ) && isset( $term->name ) ) {
+			$term       = clone $term;
+			$term->name = qtranxf_term_use( $lang, $term->name, $taxonomy );
+			return $term;
+		}
+		if ( ! is_string( $term ) || '' === $term ) {
+			return $term;
+		}
+		if ( qtrad_has_lang_tags( $term ) ) {
+			return qtrad_use_language( $term, (string) $lang );
+		}
+		$library = qtrad_config( 'term_name' );
+		return is_array( $library ) && ! empty( $library[ $term ][ $lang ] ) ? $library[ $term ][ $lang ] : $term;
+	}
+}
+
+if ( ! defined( 'QTX_TRANSLATOR_SHOW_DEFAULT' ) ) {
+	define( 'QTX_TRANSLATOR_SHOW_DEFAULT', 1 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- qTranslate-XT constant.
+	define( 'QTX_TRANSLATOR_SHOW_AVAILABLE', 2 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- qTranslate-XT constant.
+	define( 'QTX_TRANSLATOR_SHOW_EMPTY', 4 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- qTranslate-XT constant.
+}
+
+if ( ! class_exists( 'QTX_Translator' ) ) {
+	/**
+	 * qTranslate-XT's translator object. Its methods also answer the filters
+	 * translate_text, translate_term and translate_url, and get_language and set_language.
+	 */
+	class QTX_Translator { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedClassFound -- qTranslate-XT class name.
+		private static $instance = null;
+
+		public static function get_translator() {
+			if ( null === self::$instance ) {
+				self::$instance = new self();
+			}
+			return self::$instance;
+		}
+
+		public function get_language() {
+			return qtrad_current_language();
+		}
+
+		public function set_language( $lang ) {
+			$previous = qtrad_current_language();
+			if ( is_string( $lang ) && qtrad_is_enabled( $lang ) ) {
+				qtrad_set_language( $lang );
+			}
+			return $previous;
+		}
+
+		public function translate_text( $text, $lang = null, $flags = 0 ) {
+			return qtrad_use_language( $text, $lang ? (string) $lang : qtrad_current_language(), (bool) ( $flags & QTX_TRANSLATOR_SHOW_AVAILABLE ), (bool) ( $flags & QTX_TRANSLATOR_SHOW_EMPTY ) );
+		}
+
+		public function translate_term( $term, $lang = null, $taxonomy = null ) {
+			return qtranxf_term_use( $lang ? (string) $lang : qtrad_current_language(), $term, $taxonomy );
+		}
+
+		public function translate_url( $url, $lang = null ) {
+			return $lang ? qtrad_convert_url( (string) $url, (string) $lang, false, true ) : qtrad_convert_url( (string) $url );
+		}
+	}
+}
+
+/** The filters qTranslate-XT answers, for integrations that call them instead of the functions. */
+function qtrad_register_translator_filters() {
+	if ( ! class_exists( 'QTX_Translator' ) || ! method_exists( 'QTX_Translator', 'get_translator' ) ) {
+		return;
+	}
+	$translator = QTX_Translator::get_translator();
+	add_filter( 'translate_text', array( $translator, 'translate_text' ), 10, 3 );
+	add_filter( 'translate_term', array( $translator, 'translate_term' ), 10, 3 );
+	add_filter( 'translate_url', array( $translator, 'translate_url' ), 10, 2 );
+	add_filter( 'get_language', array( $translator, 'get_language' ) );
+	add_filter( 'set_language', array( $translator, 'set_language' ) );
+}

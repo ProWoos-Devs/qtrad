@@ -1,4 +1,4 @@
-=== qTrad ===
+=== qTrad: Multilingual for qTranslate and qTranslate-X Sites ===
 Contributors: rafaelminuesa
 Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
@@ -13,6 +13,10 @@ Multilingual content that keeps your qTranslate and qTranslate-X translations, w
 == Description ==
 
 qTrad is an independent continuation of qTranslate and qTranslate-X. Existing translations keep working as they are, and you gain modern editing, accessible language controls and multilingual SEO.
+
+= Why qTrad =
+
+I liked the way qTranslate worked. Every translation of a post lives in that same post, so there are no duplicate posts to keep in sync, and switching languages in the editor is one click. When qTranslate and later qTranslate-X were closed, I wanted that approach to stay available, so qTrad carries it on and reads the same data.
 
 qTrad keeps all translations of a post title, content and excerpt together in the same field. It reads the qTranslate comment markers, the qTranslate-X bracket markers and the swirly markers.
 

@@ -3,8 +3,8 @@
         "wordpress": "7.1.2",
         "php": "8.3.35"
     },
-    "passed": 107,
-    "total": 107,
+    "passed": 112,
+    "total": 112,
     "cases": [
         {
             "case": "Translated base and slug are used for a category",
@@ -209,6 +209,60 @@
             "pass": true,
             "expected": "SECRET_DE_q7 Override",
             "actual": "SECRET_DE_q7 Override"
+        },
+        {
+            "case": "Archive languages follow its posts",
+            "pass": true,
+            "expected": [
+                "en"
+            ],
+            "actual": [
+                "en"
+            ]
+        },
+        {
+            "case": "Archive without German posts is a missing translation in German",
+            "pass": true,
+            "expected": true,
+            "actual": true
+        },
+        {
+            "case": "Archive term sitemap languages follow its posts",
+            "pass": true,
+            "expected": [
+                "en"
+            ],
+            "actual": [
+                "en"
+            ]
+        },
+        {
+            "case": "Archive with translated posts keeps every language",
+            "pass": true,
+            "expected": [
+                "en",
+                "de",
+                "es"
+            ],
+            "actual": [
+                "en",
+                "de",
+                "es"
+            ]
+        },
+        {
+            "case": "Probe queries are not narrowed by hide-untranslated",
+            "pass": true,
+            "expected": [
+                "en",
+                "de",
+                "es"
+            ],
+            "actual": [
+                "en",
+                "de",
+                "es"
+            ]
         },
         {
             "case": "Alternates include current language",
@@ -752,6 +806,14 @@
             "bases": {
                 "de": "qtrad-seo-rubrik"
             }
+        },
+        "english_tag": {
+            "id": 9,
+            "slug": "qtrad-seo-english-tag"
+        },
+        "translated_tag": {
+            "id": 10,
+            "slug": "qtrad-seo-translated-tag"
         }
     }
 }

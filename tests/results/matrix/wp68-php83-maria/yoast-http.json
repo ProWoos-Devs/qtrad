@@ -1,7 +1,7 @@
 {
   "owner": "yoast",
-  "passed": 92,
-  "total": 92,
+  "passed": 98,
+  "total": 98,
   "cases": [
     {
       "case": "en canonical appears once and matches",
@@ -176,6 +176,22 @@
       "pass": true
     },
     {
+      "case": "English-only archive claims only English",
+      "pass": true
+    },
+    {
+      "case": "English-only archive in German is noindex",
+      "pass": true
+    },
+    {
+      "case": "English-only archive in German claims no alternates",
+      "pass": true
+    },
+    {
+      "case": "Translated archive claims every language",
+      "pass": true
+    },
+    {
       "case": "Missing translation noindex",
       "pass": true
     },
@@ -292,6 +308,10 @@
       "pass": true
     },
     {
+      "case": "Sitemap file has unique locs http://127.0.0.1:8931/post_tag-sitemap.xml",
+      "pass": true
+    },
+    {
       "case": "Sitemap file has unique locs http://127.0.0.1:8931/author-sitemap.xml",
       "pass": true
     },
@@ -341,6 +361,10 @@
     },
     {
       "case": "Sitemap omits missing translation",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits archive languages without posts",
       "pass": true
     },
     {

@@ -1,7 +1,7 @@
 {
   "owner": "rankmath",
-  "passed": 91,
-  "total": 91,
+  "passed": 96,
+  "total": 96,
   "cases": [
     {
       "case": "en canonical appears once and matches",
@@ -176,6 +176,22 @@
       "pass": true
     },
     {
+      "case": "English-only archive claims only English",
+      "pass": true
+    },
+    {
+      "case": "English-only archive in German is noindex",
+      "pass": true
+    },
+    {
+      "case": "English-only archive in German claims no alternates",
+      "pass": true
+    },
+    {
+      "case": "Translated archive claims every language",
+      "pass": true
+    },
+    {
       "case": "Missing translation noindex",
       "pass": true
     },
@@ -337,6 +353,10 @@
     },
     {
       "case": "Sitemap omits missing translation",
+      "pass": true
+    },
+    {
+      "case": "Sitemap omits archive languages without posts",
       "pass": true
     },
     {

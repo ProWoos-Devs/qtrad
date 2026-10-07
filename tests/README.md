@@ -1,6 +1,6 @@
 # qTrad regression tests
 
-These are behavior tests, not replicas of implementation internals. The original audit and its baseline results remain in `../audit/`. The former Next 1.2.0 matrix evidence is preserved in `results/qtranslate-next-1.2.0-matrix/`; current qTrad runs use `results/matrix/`.
+These are behavior tests, not replicas of implementation internals. The original audit and its baseline results are kept outside the repository, with the project notes. The former Next 1.2.0 matrix evidence is preserved in `results/qtranslate-next-1.2.0-matrix/`; current qTrad runs use `results/matrix/`.
 
 Run the parser/editor tests without WordPress:
 

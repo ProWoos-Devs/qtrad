@@ -45,6 +45,14 @@ class Qtrad_Acf_Field_Text extends acf_field_text {
 	public function qtrad_render_base( $field ) {
 		parent::render_field( $field );
 	}
+	/** Each language is checked on its own; the marker string as a whole would fail checks such as a valid URL. */
+	public function validate_value( $valid, $value, $field, $input ) {
+		$marked = qtrad_acf_marker_value( $value );
+		if ( null === $marked ) {
+			return method_exists( get_parent_class( $this ), 'validate_value' ) ? parent::validate_value( $valid, $value, $field, $input ) : $valid;
+		}
+		return true !== $valid ? $valid : qtrad_acf_validate_languages( $marked, $field, $input, 'text' );
+	}
 	public function render_field( $field ) {
 		qtrad_acf_render_languages( $this, $field, 'text', true );
 	}
@@ -59,6 +67,14 @@ class Qtrad_Acf_Field_Textarea extends acf_field_textarea {
 	}
 	public function qtrad_render_base( $field ) {
 		parent::render_field( $field );
+	}
+	/** Each language is checked on its own; the marker string as a whole would fail checks such as a valid URL. */
+	public function validate_value( $valid, $value, $field, $input ) {
+		$marked = qtrad_acf_marker_value( $value );
+		if ( null === $marked ) {
+			return method_exists( get_parent_class( $this ), 'validate_value' ) ? parent::validate_value( $valid, $value, $field, $input ) : $valid;
+		}
+		return true !== $valid ? $valid : qtrad_acf_validate_languages( $marked, $field, $input, 'textarea' );
 	}
 	public function render_field( $field ) {
 		qtrad_acf_render_languages( $this, $field, 'textarea', true );
@@ -75,6 +91,14 @@ class Qtrad_Acf_Field_Url extends acf_field_url {
 	public function qtrad_render_base( $field ) {
 		parent::render_field( $field );
 	}
+	/** Each language is checked on its own; the marker string as a whole would fail checks such as a valid URL. */
+	public function validate_value( $valid, $value, $field, $input ) {
+		$marked = qtrad_acf_marker_value( $value );
+		if ( null === $marked ) {
+			return method_exists( get_parent_class( $this ), 'validate_value' ) ? parent::validate_value( $valid, $value, $field, $input ) : $valid;
+		}
+		return true !== $valid ? $valid : qtrad_acf_validate_languages( $marked, $field, $input, 'url' );
+	}
 	public function render_field( $field ) {
 		qtrad_acf_render_languages( $this, $field, 'url', true );
 	}
@@ -90,6 +114,14 @@ class Qtrad_Acf_Field_Wysiwyg extends acf_field_wysiwyg {
 	public function qtrad_render_base( $field ) {
 		parent::render_field( $field );
 	}
+	/** Each language is checked on its own; the marker string as a whole would fail checks such as a valid URL. */
+	public function validate_value( $valid, $value, $field, $input ) {
+		$marked = qtrad_acf_marker_value( $value );
+		if ( null === $marked ) {
+			return method_exists( get_parent_class( $this ), 'validate_value' ) ? parent::validate_value( $valid, $value, $field, $input ) : $valid;
+		}
+		return true !== $valid ? $valid : qtrad_acf_validate_languages( $marked, $field, $input, 'wysiwyg' );
+	}
 	public function render_field( $field ) {
 		qtrad_acf_render_languages( $this, $field, 'wysiwyg', true );
 	}
@@ -104,6 +136,14 @@ class Qtrad_Acf_Field_Image extends acf_field_image {
 	}
 	public function qtrad_render_base( $field ) {
 		parent::render_field( $field );
+	}
+	/** Each language is checked on its own; the marker string as a whole would fail checks such as a valid URL. */
+	public function validate_value( $valid, $value, $field, $input ) {
+		$marked = qtrad_acf_marker_value( $value );
+		if ( null === $marked ) {
+			return method_exists( get_parent_class( $this ), 'validate_value' ) ? parent::validate_value( $valid, $value, $field, $input ) : $valid;
+		}
+		return true !== $valid ? $valid : qtrad_acf_validate_languages( $marked, $field, $input, 'image' );
 	}
 	public function render_field( $field ) {
 		qtrad_acf_render_languages( $this, $field, 'image', false );
@@ -125,6 +165,14 @@ class Qtrad_Acf_Field_File extends acf_field_file {
 	}
 	public function qtrad_render_base( $field ) {
 		parent::render_field( $field );
+	}
+	/** Each language is checked on its own; the marker string as a whole would fail checks such as a valid URL. */
+	public function validate_value( $valid, $value, $field, $input ) {
+		$marked = qtrad_acf_marker_value( $value );
+		if ( null === $marked ) {
+			return method_exists( get_parent_class( $this ), 'validate_value' ) ? parent::validate_value( $valid, $value, $field, $input ) : $valid;
+		}
+		return true !== $valid ? $valid : qtrad_acf_validate_languages( $marked, $field, $input, 'file' );
 	}
 	public function render_field( $field ) {
 		qtrad_acf_render_languages( $this, $field, 'file', false );
@@ -165,6 +213,14 @@ class Qtrad_Acf_Field_Post_Object extends acf_field_post_object {
 	public function qtrad_render_base( $field ) {
 		$field['multiple'] = 0;
 		parent::render_field( $field );
+	}
+	/** Each language is checked on its own; the marker string as a whole would fail checks such as a valid URL. */
+	public function validate_value( $valid, $value, $field, $input ) {
+		$marked = qtrad_acf_marker_value( $value );
+		if ( null === $marked ) {
+			return method_exists( get_parent_class( $this ), 'validate_value' ) ? parent::validate_value( $valid, $value, $field, $input ) : $valid;
+		}
+		return true !== $valid ? $valid : qtrad_acf_validate_languages( $marked, $field, $input, 'post_object' );
 	}
 	public function render_field( $field ) {
 		qtrad_acf_render_languages( $this, $field, 'post_object', false );

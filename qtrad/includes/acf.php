@@ -25,11 +25,12 @@ function qtrad_acf_setup() {
 	add_filter( 'acf/format_value', 'qtrad_acf_format_value', 5 );
 	add_filter( 'acf/prepare_field', 'qtrad_acf_prepare_field', 5 );
 	add_filter( 'acf/update_value', 'qtrad_acf_update_value', 5, 3 );
-	add_filter( 'acf/validate_value', 'qtrad_acf_validate_value', 20, 4 );
 	add_action( 'acf/validate_save_post', 'qtrad_acf_join_posted_values', 1 );
 	add_action( 'acf/input/admin_enqueue_scripts', 'qtrad_acf_enqueue' );
 	foreach ( qtrad_acf_switchable_types() as $type ) {
 		add_action( 'acf/render_field_settings/type=' . $type, 'qtrad_acf_render_translate_setting' );
+		// Right after ACF's own check of the type, so field name, field key and generic validators still run afterwards.
+		add_filter( 'acf/validate_value/type=' . $type, 'qtrad_acf_validate_standard', 11, 4 );
 	}
 }
 
@@ -71,7 +72,8 @@ function qtrad_acf_is_multilingual( $field, $value = null ) {
 	if ( ! in_array( $field['type'], qtrad_acf_switchable_types(), true ) ) {
 		return false;
 	}
-	return ! empty( $field['qtrad_translate'] ) || ( is_string( $value ) && qtrad_has_lang_tags( $value ) );
+	// A value with markers, or one posted by the per-language inputs, marks the field as multilingual wherever it is rendered, validated or saved.
+	return ! empty( $field['qtrad_translate'] ) || ( is_string( $value ) && qtrad_has_lang_tags( $value ) ) || qtrad_acf_is_language_array( $value );
 }
 
 /** One value per enabled language from a stored string. */
@@ -129,8 +131,65 @@ function qtrad_acf_prepare_field( $field ) {
 }
 
 /** A field posted with one value per language is stored as one string. */
+/**
+ * A multilingual value is stored as one string. Languages that are not
+ * enabled have no input, so their stored translations are kept.
+ */
 function qtrad_acf_update_value( $value, $post_id, $field ) {
-	return qtrad_acf_is_multilingual( $field ) && qtrad_acf_is_language_array( $value ) ? qtrad_acf_join( $value ) : $value;
+	if ( ! qtrad_acf_is_multilingual( $field, $value ) ) {
+		return $value;
+	}
+	if ( qtrad_acf_is_language_array( $value ) ) {
+		$value = qtrad_acf_join( $value );
+	}
+	return is_string( $value ) && qtrad_has_lang_tags( $value ) ? qtrad_acf_merge( $value, qtrad_acf_raw_value( $post_id, $field ) ) : $value;
+}
+
+/** The stored value of a field before it is updated, without any translation applied. */
+function qtrad_acf_raw_value( $post_id, $field ) {
+	if ( ! function_exists( 'acf_get_metadata' ) || empty( $field['name'] ) ) {
+		return null;
+	}
+	$flags = array( 'qtrad_raw_meta' => ! empty( $GLOBALS['qtrad_raw_meta'] ), 'qtrad_raw_options' => ! empty( $GLOBALS['qtrad_raw_options'] ) );
+	$GLOBALS['qtrad_raw_meta']    = true;
+	$GLOBALS['qtrad_raw_options'] = true;
+	$priority = has_filter( 'get_post_metadata', 'qtrad_filter_get_meta' );
+	if ( false !== $priority ) {
+		remove_filter( 'get_post_metadata', 'qtrad_filter_get_meta', $priority );
+	}
+	try {
+		return acf_get_metadata( $post_id, $field['name'] );
+	} finally {
+		foreach ( $flags as $flag => $previous ) {
+			$GLOBALS[ $flag ] = $previous;
+		}
+		if ( false !== $priority ) {
+			add_filter( 'get_post_metadata', 'qtrad_filter_get_meta', $priority, 4 );
+		}
+	}
+}
+
+/**
+ * Merge a new multilingual value into the stored one: enabled languages take
+ * the new text, also when it is empty; other languages keep their stored text
+ * unless the new value carries them.
+ */
+function qtrad_acf_merge( $new, $old ) {
+	if ( ! is_string( $old ) || ! qtrad_has_lang_tags( $old ) ) {
+		return $new;
+	}
+	$enabled = qtrad_enabled_languages();
+	$texts   = qtrad_split( $old, $enabled, false );
+	$fresh   = qtrad_split( $new, $enabled, false );
+	foreach ( $enabled as $lang ) {
+		$texts[ $lang ] = isset( $fresh[ $lang ] ) ? $fresh[ $lang ] : '';
+	}
+	foreach ( $fresh as $lang => $text ) {
+		if ( ! in_array( $lang, $enabled, true ) && is_string( $text ) && '' !== $text ) {
+			$texts[ $lang ] = $text;
+		}
+	}
+	return qtrad_join( $texts, 'bracket', $enabled );
 }
 
 /**
@@ -166,21 +225,13 @@ function qtrad_acf_join_tree( $values, $slash ) {
 }
 
 /**
- * ACF validated the stored form, where a URL check or a length limit fails on
- * the markers. Validate each language on its own instead; a required field
- * needs the default language.
+ * Each language is checked with the base field type's own rules, such as a
+ * valid URL or a character limit; a required field needs the default language.
+ *
+ * @return true|false|string True, false or an error message, as ACF validators return.
  */
-function qtrad_acf_validate_value( $valid, $value, $field, $input ) {
-	if ( ! qtrad_acf_is_multilingual( $field, $value ) ) {
-		return $valid;
-	}
-	if ( qtrad_acf_is_language_array( $value ) ) {
-		$value = qtrad_acf_join( $value );
-	}
-	if ( ! is_string( $value ) || ! qtrad_has_lang_tags( $value ) ) {
-		return $valid;
-	}
-	$base   = isset( qtrad_acf_field_types()[ $field['type'] ] ) ? qtrad_acf_field_types()[ $field['type'] ] : $field['type'];
+function qtrad_acf_validate_languages( $value, $field, $input, $base ) {
+	$type   = function_exists( 'acf_get_field_type' ) ? acf_get_field_type( $base ) : null;
 	$single = $field;
 	$single['type'] = $base;
 	foreach ( qtrad_acf_split( $value ) as $lang => $text ) {
@@ -191,12 +242,42 @@ function qtrad_acf_validate_value( $valid, $value, $field, $input ) {
 			}
 			continue;
 		}
-		$result = apply_filters( 'acf/validate_value/type=' . $base, true, $text, $single, $input ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- ACF's own filter, applied per language.
+		$result = $type && method_exists( $type, 'validate_value' ) ? $type->validate_value( true, $text, $single, $input ) : true;
+		if ( false === $result ) {
+			return false;
+		}
 		if ( is_string( $result ) && '' !== $result ) {
 			return qtrad_language_name( $lang ) . ': ' . $result;
 		}
 	}
 	return true;
+}
+
+/** A multilingual value as one marker string, or null when the value is not one. */
+function qtrad_acf_marker_value( $value ) {
+	if ( qtrad_acf_is_language_array( $value ) ) {
+		$value = qtrad_acf_join( $value );
+	}
+	return is_string( $value ) && qtrad_has_lang_tags( $value ) ? $value : null;
+}
+
+/**
+ * Runs after ACF checked a standard text, text area, URL or WYSIWYG field.
+ * ACF tested the marker string as a whole, where a URL check or a length limit
+ * fails on the markers; that result is replaced by a check of each language.
+ * A failure from anything else, such as another validator for the type, stays.
+ */
+function qtrad_acf_validate_standard( $valid, $value, $field, $input ) {
+	$marked = qtrad_acf_is_multilingual( $field, $value ) ? qtrad_acf_marker_value( $value ) : null;
+	if ( null === $marked ) {
+		return $valid;
+	}
+	$type     = function_exists( 'acf_get_field_type' ) ? acf_get_field_type( $field['type'] ) : null;
+	$combined = $type && method_exists( $type, 'validate_value' ) ? $type->validate_value( true, $marked, $field, $input ) : true;
+	if ( true !== $valid && $valid !== $combined ) {
+		return $valid;
+	}
+	return qtrad_acf_validate_languages( $marked, $field, $input, $field['type'] );
 }
 
 function qtrad_acf_render_translate_setting( $field ) {

@@ -79,7 +79,7 @@ Full-page caches should bypass the personalized bare homepage or vary it by the 
 
 = Switchers =
 
-Use the shortcode [qtrad_switcher style="both"] or the qTrad Language Chooser widget. Styles are text, image, both, short and dropdown. Prefer text or both so visitors can identify languages without interpreting flags. The qtrans_* and qtranxf_* chooser functions used in older themes keep working.
+Use the Language switcher block (in block themes, for example in the header), the shortcode [qtrad_switcher style="both"] or the qTrad Language Chooser widget. Styles are text, image, both, short and dropdown. Prefer text or both so visitors can identify languages without interpreting flags. The qtrans_* and qtranxf_* chooser functions used in older themes keep working.
 
 Language menu items created with qTranslate-X or qTranslate-XT (custom links to #qtransLangSw) keep working in classic navigation menus, with their type, title, flags, names, colon and current options. To add one, create a custom link with the URL #qtransLangSw for a "Language" item with all languages below it, or #qtransLangSw?type=AL for a direct link to the other language. Custom links that point into the site follow the visitor's language; add setlang=no to a link's query string to keep it as written.
 

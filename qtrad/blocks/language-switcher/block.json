@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "qtrad/language-switcher",
+	"title": "Language switcher",
+	"category": "widgets",
+	"icon": "translation",
+	"description": "Links to the current page in each enabled language.",
+	"keywords": [ "language", "translation", "qtranslate" ],
+	"textdomain": "qtrad",
+	"attributes": {
+		"display": {
+			"type": "string",
+			"enum": [ "text", "image", "both", "short", "dropdown" ],
+			"default": "text"
+		}
+	},
+	"supports": {
+		"html": false,
+		"align": [ "left", "center", "right" ],
+		"spacing": { "margin": true, "padding": true },
+		"typography": { "fontSize": true }
+	},
+	"editorScript": "qtrad-switcher-block",
+	"style": "qtrad-front"
+}

@@ -419,6 +419,12 @@ check_case('link to another language declares it without claiming the text langu
 $menu = array(menu_item('http://127.0.0.1:8931/de/contact/'));
 $menu[0]->type = 'post_type';
 check_case('only custom links are converted', array('http://127.0.0.1:8931/de/contact/'), $urls(qtrad_filter_nav_menu_objects($menu)));
+// Language switcher block.
+if (!WP_Block_Type_Registry::get_instance()->is_registered('qtrad/language-switcher')) qtrad_register_blocks();
+check_case('language switcher block is registered with its display setting', array(true, 'text'), array(WP_Block_Type_Registry::get_instance()->is_registered('qtrad/language-switcher'), WP_Block_Type_Registry::get_instance()->get_registered('qtrad/language-switcher')->attributes['display']['default']));
+$block_html = do_blocks('<!-- wp:qtrad/language-switcher {"display":"short","align":"right"} /-->');
+check_case('block renders the accessible chooser for the current page', array(true, true, true, true), array(strpos($block_html, 'wp-block-qtrad-language-switcher') !== false, strpos($block_html, 'alignright') !== false, strpos($block_html, '<nav class="qtrad-switcher" aria-label=') !== false, strpos($block_html, 'href="http://127.0.0.1:8931/es/sample/?x=1"') !== false));
+check_case('an unknown display falls back to text', true, strpos(qtrad_render_switcher_block(array('display'=>'bogus')), 'qtrad-style-text') !== false);
 unset($GLOBALS['qtrad_original_uri']);
 // Translated slugs stored by qTranslate-XT and the qTranslate Slug plugin.
 settings(array('qtranslate_enabled_languages'=>array('en','de','es')));

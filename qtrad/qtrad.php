@@ -59,6 +59,7 @@ require_once QTRAD_DIR . 'includes/seo.php';
 require_once QTRAD_DIR . 'includes/admin.php';
 require_once QTRAD_DIR . 'includes/widget.php';
 require_once QTRAD_DIR . 'includes/menus.php';
+require_once QTRAD_DIR . 'includes/blocks.php';
 require_once QTRAD_DIR . 'includes/slugs.php';
 require_once QTRAD_DIR . 'includes/slugs-admin.php';
 require_once QTRAD_DIR . 'includes/migration.php';
@@ -88,6 +89,7 @@ function qtrad_boot() {
 	qtrad_register_migration_hooks();
 	qtrad_register_widget();
 	qtrad_register_menu_hooks();
+	qtrad_register_block_hooks();
 	qtrad_register_slug_hooks();
 	qtrad_register_slug_admin_hooks();
 	add_action( 'init', 'qtrad_refresh_admin_language', 0 );

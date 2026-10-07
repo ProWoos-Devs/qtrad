@@ -501,11 +501,15 @@ function qtrad_settings_page() {
 	foreach ( $catalog as $code => $meta ) {
 		if ( ! in_array( $code, $enabled, true ) ) { continue; }
 		echo '<fieldset><legend>' . esc_html( $meta['name'] . ' (' . $code . ')' ) . '</legend>';
-		foreach ( array( 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
-			echo '<p><label for="qtrad-' . esc_attr( $code . '-' . $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-' . esc_attr( $code . '-' . $key ) . '" name="languages[' . esc_attr( $code ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['languages'][ $code ][ $key ] ) && is_string( $_POST['languages'][ $code ][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['languages'][ $code ][ $key ] ) ) : $meta[ $key ] ) . '" /></p>';
+		$formats = array( 'date_format' => get_option( 'qtranslate_date_formats', array() ), 'time_format' => get_option( 'qtranslate_time_formats', array() ) );
+		$meta['date_format'] = is_array( $formats['date_format'] ) && isset( $formats['date_format'][ $code ] ) && is_string( $formats['date_format'][ $code ] ) ? $formats['date_format'][ $code ] : '';
+		$meta['time_format'] = is_array( $formats['time_format'] ) && isset( $formats['time_format'][ $code ] ) && is_string( $formats['time_format'][ $code ] ) ? $formats['time_format'][ $code ] : '';
+		foreach ( array( 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ), 'date_format' => __( 'Date format', 'qtrad' ), 'time_format' => __( 'Time format', 'qtrad' ) ) as $key => $label ) {
+			echo '<p><label for="qtrad-' . esc_attr( $code . '-' . $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-' . esc_attr( $code . '-' . $key ) . '" name="languages[' . esc_attr( $code ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['languages'][ $code ][ $key ] ) && is_string( $_POST['languages'][ $code ][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['languages'][ $code ][ $key ] ) ) : $meta[ $key ] ) . '"' . ( in_array( $key, array( 'date_format', 'time_format' ), true ) ? ' aria-describedby="qtrad-format-help" placeholder="' . esc_attr( get_option( $key ) ) . '"' : '' ) . ' /></p>';
 		}
 		echo '</fieldset>';
 	}
+	echo '<p class="description" id="qtrad-format-help">' . esc_html__( 'Date and time formats use the PHP date syntax of Settings → General, for example j. F Y. Leave them empty to use the site formats. Formats saved by qTranslate-X in strftime style keep working.', 'qtrad' ) . '</p>';
 	echo '</details><fieldset><legend><h2>' . esc_html__( 'Add a language', 'qtrad' ) . '</h2></legend><p>' . esc_html__( 'Provide a two- or three-letter code, native name and WordPress locale, for example: is, Íslenska, is_IS. The language will be enabled when you save.', 'qtrad' ) . '</p>';
 	foreach ( array( 'code' => __( 'Language code', 'qtrad' ), 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
 		echo '<p><label for="qtrad-new-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-new-' . esc_attr( $key ) . '" name="new_language[' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['new_language'][ $key ] ) && is_string( $_POST['new_language'][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['new_language'][ $key ] ) ) : '' ) . '" /></p>';

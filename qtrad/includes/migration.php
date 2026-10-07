@@ -93,12 +93,6 @@ function qtrad_migration_scan( $apply = false ) {
 	}
 	// phpcs:enable
 
-	foreach ( array( 'qtranslate_date_formats', 'qtranslate_time_formats' ) as $option ) {
-		if ( array_filter( (array) get_option( $option, array() ) ) ) {
-			$items[] = __( 'Per-language date and time formats are set. qTrad uses the WordPress date and time formats with each language\'s locale.', 'qtrad' );
-			break;
-		}
-	}
 	if ( 2 === (int) get_option( 'qtranslate_editor_mode', 0 ) ) {
 		$items[] = __( 'qTranslate-XT was set to single-language editing. qTrad shows language buttons in the editor instead; the setting is kept for qTranslate-XT.', 'qtrad' );
 	}

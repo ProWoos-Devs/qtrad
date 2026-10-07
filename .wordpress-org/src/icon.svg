@@ -1,14 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">qTrad</title>
+  <desc id="desc">The original qT monogram and overlapping speech bubbles, with a language marker on the backing bubble.</desc>
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#123a8c"/>
-      <stop offset="1" stop-color="#0b1f4d"/>
+      <stop offset="0" stop-color="#17479e"/>
+      <stop offset="1" stop-color="#091d47"/>
     </linearGradient>
+    <linearGradient id="bubble" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#b7d5ff"/>
+      <stop offset="1" stop-color="#7cafff"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#eaf2ff"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="170%" height="170%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#041432" flood-opacity="0.22"/>
+    </filter>
   </defs>
   <rect width="256" height="256" rx="48" fill="url(#bg)"/>
+  <rect x="1" y="1" width="254" height="254" rx="47" fill="none" stroke="#9cc3ff" stroke-opacity="0.16"/>
   <g transform="translate(-9 -7)">
-  <path d="M58 44 h104 a26 26 0 0 1 26 26 v52 a26 26 0 0 1 -26 26 h-56 l-30 26 v-26 h-18 a26 26 0 0 1 -26 -26 v-52 a26 26 0 0 1 26 -26 z" fill="#9cc3ff"/>
-  <path d="M100 96 h106 a26 26 0 0 1 26 26 v58 a26 26 0 0 1 -26 26 h-18 v28 l-32 -28 h-56 a26 26 0 0 1 -26 -26 v-58 a26 26 0 0 1 26 -26 z" fill="#ffffff"/>
-  <text x="153" y="184" text-anchor="middle" font-family="Noto Sans CJK JP" font-weight="700" font-size="84" letter-spacing="-3" fill="#1d4ed8">qT</text>
+    <path d="M58 44H162A26 26 0 0 1 188 70V122A26 26 0 0 1 162 148H106L76 174V148H58A26 26 0 0 1 32 122V70A26 26 0 0 1 58 44Z" fill="url(#bubble)"/>
+    <text x="54" y="85" font-family="DejaVu Sans Mono" font-size="29" font-weight="700" fill="#164182" opacity="0.78">[:]</text>
+    <path d="M100 96H206A26 26 0 0 1 232 122V180A26 26 0 0 1 206 206H188V234L156 206H100A26 26 0 0 1 74 180V122A26 26 0 0 1 100 96Z" fill="url(#paper)" filter="url(#shadow)"/>
+    <text x="153" y="184" text-anchor="middle" font-family="Noto Sans CJK JP" font-weight="700" font-size="84" letter-spacing="-3" fill="#1d4ed8">qT</text>
   </g>
 </svg>

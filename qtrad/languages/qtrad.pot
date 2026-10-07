@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: qTrad: qTranslate compatible multilingual sites 1.11.0\n"
+"Project-Id-Version: qTrad: qTranslate compatible multilingual sites 1.12.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/qtrad\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-07T14:44:45+00:00\n"
+"POT-Creation-Date: 2026-10-07T14:53:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: qtrad\n"
@@ -125,6 +125,7 @@ msgstr ""
 
 #: includes/admin.php:269
 #: includes/admin.php:275
+#: includes/overview.php:68
 msgid "Translations"
 msgstr ""
 
@@ -596,6 +597,56 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
+#: includes/overview.php:37
+msgid "Filter by missing translation"
+msgstr ""
+
+#: includes/overview.php:38
+msgid "All translations"
+msgstr ""
+
+#. translators: %s: language name
+#: includes/overview.php:41
+#, php-format
+msgid "Missing in %s"
+msgstr ""
+
+#: includes/overview.php:116
+msgid "There is no published content yet."
+msgstr ""
+
+#: includes/overview.php:120
+msgid "Published content missing a translation, by language"
+msgstr ""
+
+#: includes/overview.php:120
+msgid "Content"
+msgstr ""
+
+#. translators: %d: number of published items
+#: includes/overview.php:127
+#, php-format
+msgid "(%d published)"
+msgid_plural "(%d published)"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/overview.php:131
+msgid "Complete"
+msgstr ""
+
+#. translators: %d: number of items without a translation
+#: includes/overview.php:136
+#, php-format
+msgid "%d missing"
+msgid_plural "%d missing"
+msgstr[0] ""
+msgstr[1] ""
+
+#: includes/overview.php:141
+msgid "Missing means the title or content has no text in that language, so visitors see the fallback."
+msgstr ""
+
 #: includes/seo.php:315
 msgid "SEO translations"
 msgstr ""
@@ -697,20 +748,20 @@ msgid "Hide title"
 msgstr ""
 
 #. translators: %s: plugin basename
-#: qtrad.php:123
+#: qtrad.php:127
 #, php-format
 msgid "qTrad did not start because %s is still active. Deactivate the other qTranslate implementation before using this plugin. Your posts and qtranslate_* settings are left untouched."
 msgstr ""
 
-#: qtrad.php:124
+#: qtrad.php:128
 msgid "another qTranslate build"
 msgstr ""
 
-#: qtrad.php:132
+#: qtrad.php:136
 msgid "Deactivate the other qTranslate implementation first."
 msgstr ""
 
-#: qtrad.php:132
+#: qtrad.php:136
 msgid "qTrad"
 msgstr ""
 

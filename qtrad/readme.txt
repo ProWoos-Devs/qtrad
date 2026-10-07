@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.11.0
+Stable tag: 1.12.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,9 +131,14 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.11.0 =
+= 1.12.0 =
 
 * First public release on WordPress.org.
+* Translation overview: a "Missing in …" filter on the post lists and a Translations box on the dashboard.
+* WooCommerce email texts, payment method titles, purchase notes and attribute labels get one input per language.
+
+= 1.11.0 =
+
 * Language switcher block for block themes and any block area.
 
 = 1.10.2 =

@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.10.0
+Stable tag: 1.10.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -123,9 +123,15 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.10.0 =
+= 1.10.1 =
 
 * First public release on WordPress.org.
+* Password-protected posts no longer expose their text in SEO descriptions.
+* Advanced Custom Fields: saving keeps translations of languages that are not enabled, fields detected by their language markers are stored as text, and other validators are no longer overridden.
+* Options that are not autoloaded are translated as well.
+
+= 1.10.0 =
+
 * Date and time formats per language, including the ones stored by qTranslate-X and qTranslate-XT.
 * qTranslate-XT's helper functions qtranxf_use_language, qtranxf_translate_deep, qtranxf_translate_post, qtranxf_get_url_for_language and others, its QTX_Translator object and the translate_text, translate_term and translate_url filters.
 

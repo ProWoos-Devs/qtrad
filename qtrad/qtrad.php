@@ -63,6 +63,8 @@ require_once QTRAD_DIR . 'includes/blocks.php';
 require_once QTRAD_DIR . 'includes/slugs.php';
 require_once QTRAD_DIR . 'includes/slugs-admin.php';
 require_once QTRAD_DIR . 'includes/migration.php';
+require_once QTRAD_DIR . 'includes/overview.php';
+require_once QTRAD_DIR . 'includes/admin-fields.php';
 
 /**
  * Language has to be known before WordPress parses the request.
@@ -87,6 +89,8 @@ function qtrad_boot() {
 	qtrad_register_seo_hooks();
 	qtrad_register_admin_hooks();
 	qtrad_register_migration_hooks();
+	qtrad_register_overview_hooks();
+	qtrad_register_admin_field_hooks();
 	qtrad_register_widget();
 	qtrad_register_menu_hooks();
 	qtrad_register_block_hooks();

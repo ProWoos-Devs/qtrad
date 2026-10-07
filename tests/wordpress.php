@@ -700,6 +700,34 @@ check_case('translate_term and translate_url filters', array('Bücher', 'http://
 check_case('get_language and set_language filters', array('de', 'de', 'es'), array(apply_filters('get_language', null), apply_filters('set_language', 'es'), qtrad_current_language()));
 foreach (array('translate_text', 'translate_term', 'translate_url', 'get_language', 'set_language') as $translator_filter) remove_all_filters($translator_filter);
 delete_option('qtranslate_date_formats'); delete_option('qtranslate_time_formats');
+// Translation overview: missing-translation filter and dashboard counts.
+settings(array('qtranslate_enabled_languages'=>array('en','de','es')));
+register_post_type('qtrad_ovw', array('public'=>true, 'label'=>'Overview items', 'supports'=>array('title','editor')));
+$ovw = array();
+foreach (array('all'=>array('[:en]A[:de]B[:es]C[:]', '[:en]Body[:de]Inhalt[:es]Cuerpo[:]'), 'english'=>array('[:en]Only English[:]', '[:en]Body[:]'), 'plain'=>array('Plain', 'Plain body'), 'empty_de'=>array('[:en]E[:de][:es]S[:]', '[:en]Body[:de]  [:es]Cuerpo[:]')) as $ovw_key => $ovw_fields) {
+    $ovw[$ovw_key] = wp_insert_post(wp_slash(array('post_type'=>'qtrad_ovw', 'post_status'=>'publish', 'post_title'=>$ovw_fields[0], 'post_content'=>$ovw_fields[1])));
+}
+wp_insert_post(wp_slash(array('post_type'=>'qtrad_ovw', 'post_status'=>'draft', 'post_title'=>'[:en]Draft[:]', 'post_content'=>'[:en]Draft[:]')));
+check_case('overview counts published items missing each language', array('total'=>4, 'missing'=>array('en'=>0, 'de'=>2, 'es'=>1)), qtrad_overview_counts('qtrad_ovw'));
+add_filter('posts_where', 'qtrad_missing_filter_where', 10, 2);
+$ovw_query = new WP_Query(array('post_type'=>'qtrad_ovw', 'post_status'=>'publish', 'fields'=>'ids', 'orderby'=>'ID', 'order'=>'ASC', 'qtrad_missing_language'=>'de', 'posts_per_page'=>-1));
+check_case('missing-translation filter lists the posts without German', array($ovw['english'], $ovw['empty_de']), $ovw_query->posts);
+remove_filter('posts_where', 'qtrad_missing_filter_where', 10);
+$_GET['qtrad_missing'] = 'xx';
+check_case('an unknown language in the filter is ignored', '', qtrad_missing_filter_language());
+$_GET = array();
+foreach ($ovw as $ovw_id) wp_delete_post($ovw_id, true);
+unregister_post_type('qtrad_ovw');
+// Per-language inputs on WooCommerce and other admin screens.
+$field_rule = qtrad_admin_field_rules('woocommerce_page_wc-settings');
+$field_regex = '/' . str_replace('/', '\/', $field_rule['namePattern']) . '/';
+check_case('WooCommerce text settings get language inputs, addresses do not', array(1, 1, 1, 1, 0, 0), array(preg_match($field_regex, 'woocommerce_customer_processing_order_subject'), preg_match($field_regex, 'woocommerce_customer_processing_order_additional_content'), preg_match($field_regex, 'woocommerce_cod_title'), preg_match($field_regex, 'woocommerce_email_footer_text'), preg_match($field_regex, 'woocommerce_customer_processing_order_cc'), preg_match($field_regex, 'woocommerce_email_from_address')));
+check_case('purchase notes and attribute labels always get language inputs', array('#_purchase_note', true, '#attribute_label'), array(qtrad_admin_field_rules('product')['selector'], qtrad_admin_field_rules('product')['always'], qtrad_admin_field_rules('product_page_product_attributes')['selector']));
+check_case('other screens get none', null, qtrad_admin_field_rules('dashboard'));
+$field_extra = function ($rules) { $rules['settings_page_example'] = array('selector'=>'#example', 'namePattern'=>'', 'always'=>true); return $rules; };
+add_filter('qtrad_admin_field_rules', $field_extra);
+check_case('integrations can add screens', '#example', qtrad_admin_field_rules('settings_page_example')['selector']);
+remove_filter('qtrad_admin_field_rules', $field_extra);
 unset($GLOBALS['qtrad_translates_values']);
 settings();
 if (in_array('--prepare-browser', $argv, true)) {

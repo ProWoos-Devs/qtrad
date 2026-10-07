@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: qTrad: qTranslate compatible multilingual sites 1.10.1\n"
+"Project-Id-Version: qTrad: qTranslate compatible multilingual sites 1.10.2\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/qtrad\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-07T09:37:09+00:00\n"
+"POT-Creation-Date: 2026-10-07T13:54:06+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: qtrad\n"
@@ -596,19 +596,19 @@ msgstr ""
 msgid "Dismiss"
 msgstr ""
 
-#: includes/seo.php:256
+#: includes/seo.php:315
 msgid "SEO translations"
 msgstr ""
 
-#: includes/seo.php:263
+#: includes/seo.php:322
 msgid "Optional titles and descriptions for search engines and social sharing. Leave blank to use existing SEO settings or automatically generated text."
 msgstr ""
 
-#: includes/seo.php:266
+#: includes/seo.php:325
 msgid "SEO title"
 msgstr ""
 
-#: includes/seo.php:266
+#: includes/seo.php:325
 msgid "SEO description"
 msgstr ""
 

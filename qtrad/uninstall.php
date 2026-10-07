@@ -23,6 +23,7 @@ foreach ( $qtrad_sites as $qtrad_site ) {
 	delete_transient( 'qtrad_conflict_scan' );
 	delete_option( 'qtrad_migration_report' );
 	delete_option( 'qtrad_slugs_present' );
+	delete_option( 'qtrad_marked_options' );
 	if ( is_multisite() ) {
 		restore_current_blog();
 	}

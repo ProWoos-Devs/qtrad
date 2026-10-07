@@ -20,6 +20,8 @@ function qtrad_register_value_hooks() {
 		add_filter( 'update_post_metadata', 'qtrad_filter_update_meta_all', 11, 5 );
 		add_filter( 'update_user_metadata', 'qtrad_filter_update_meta_all', 11, 5 );
 	}
+	add_action( 'added_option', 'qtrad_note_added_option', 10, 2 );
+	add_action( 'updated_option', 'qtrad_note_updated_option', 10, 3 );
 	if ( qtrad_translates_values() ) {
 		foreach ( qtrad_option_names_to_translate() as $name ) {
 			add_filter( 'option_' . $name, 'qtrad_translate_option', 5 );
@@ -57,7 +59,7 @@ function qtrad_option_patterns() {
 
 /** Options qTrad reads itself or that are no content. */
 function qtrad_option_is_raw( $name ) {
-	return in_array( $name, array( 'cron', 'blogname', 'blogdescription', 'rewrite_rules', 'active_plugins' ), true ) || (bool) preg_match( '/^(?:qtranslate_|qtrad_|_transient_|_site_transient_)/', $name );
+	return in_array( $name, array( 'cron', 'blogname', 'blogdescription', 'rewrite_rules', 'active_plugins' ), true ) || (bool) preg_match( '/^(?:qtranslate_|qtrad_|_transient_|_site_transient_)/', (string) $name );
 }
 
 function qtrad_option_names_to_translate() {
@@ -67,14 +69,17 @@ function qtrad_option_names_to_translate() {
 	}
 	$options = wp_load_alloptions();
 	$names   = array();
+	$stored  = qtrad_marked_option_index();
 	if ( 'all' === $mode ) {
-		// Autoloaded options are in memory already, so this costs no query.
+		// Autoloaded options are in memory already, so this costs no query; the others come from the index.
 		foreach ( $options as $name => $value ) {
-			if ( is_string( $value ) && ( false !== strpos( $value, '[:' ) || false !== strpos( $value, '<!--:' ) || false !== strpos( $value, '{:' ) ) && qtrad_has_lang_tags( $value ) ) {
+			if ( qtrad_value_has_markers( $value ) ) {
 				$names[] = (string) $name;
 			}
 		}
+		$names = array_merge( $names, $stored );
 	} else {
+		$options = array_merge( $options, array_fill_keys( $stored, '' ) );
 		foreach ( qtrad_option_patterns() as $pattern ) {
 			if ( false === strpos( $pattern, '%' ) ) {
 				$names[] = $pattern;
@@ -89,6 +94,53 @@ function qtrad_option_names_to_translate() {
 		}
 	}
 	return array_values( array_unique( array_filter( $names, function ( $name ) { return ! qtrad_option_is_raw( $name ); } ) ) );
+}
+
+function qtrad_value_has_markers( $value ) {
+	if ( ! is_string( $value ) ) {
+		$value = maybe_serialize( $value );
+	}
+	return is_string( $value ) && ( false !== strpos( $value, '[:' ) || false !== strpos( $value, '<!--:' ) || false !== strpos( $value, '{:' ) ) && qtrad_has_lang_tags( $value );
+}
+
+/**
+ * Names of options that are not autoloaded and hold language markers. They are
+ * not in memory, so they are found once by one query and kept up to date when
+ * an option is added or changed.
+ */
+function qtrad_marked_option_index() {
+	$index = get_option( 'qtrad_marked_options', false );
+	if ( is_array( $index ) ) {
+		return array_values( array_filter( $index, 'is_string' ) );
+	}
+	global $wpdb;
+	$like = array( '%' . $wpdb->esc_like( '[:' ) . '%', '%' . $wpdb->esc_like( '<!--:' ) . '%', '%' . $wpdb->esc_like( '{:' ) . '%' );
+	// One-time scan; no core API finds options by value. Autoload values: yes/no before WordPress 6.6, on/off/auto* since.
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
+	$names = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE autoload NOT IN ('yes', 'on', 'auto', 'auto-on') AND option_name NOT LIKE %s AND option_name NOT LIKE %s AND ( option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s ) LIMIT 500", $wpdb->esc_like( '_transient_' ) . '%', $wpdb->esc_like( '_site_transient_' ) . '%', $like[0], $like[1], $like[2] ) );
+	$names = array_values( array_filter( array_map( 'strval', (array) $names ), function ( $name ) { return ! qtrad_option_is_raw( $name ); } ) );
+	update_option( 'qtrad_marked_options', $names, true );
+	return $names;
+}
+
+/** Keep the index current when an option with markers is saved. */
+function qtrad_note_marked_option( $name, $value ) {
+	if ( ! is_string( $name ) || qtrad_option_is_raw( $name ) || 'qtrad_marked_options' === $name ) {
+		return;
+	}
+	$index = get_option( 'qtrad_marked_options', false );
+	if ( is_array( $index ) && ! in_array( $name, $index, true ) && qtrad_value_has_markers( $value ) ) {
+		$index[] = $name;
+		update_option( 'qtrad_marked_options', $index, true );
+	}
+}
+
+function qtrad_note_added_option( $name, $value ) {
+	qtrad_note_marked_option( $name, $value );
+}
+
+function qtrad_note_updated_option( $name, $old_value, $value ) {
+	qtrad_note_marked_option( $name, $value );
 }
 
 /** Strings with language markers, anywhere in nested arrays, in the current language. */

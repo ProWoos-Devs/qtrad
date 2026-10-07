@@ -1,48 +1,47 @@
 #0 building with "default" instance using docker driver
 
 #1 [internal] load build definition from Dockerfile
-#1 transferring dockerfile: 142B done
+#1 transferring dockerfile: 142B 0.0s done
 #1 DONE 0.0s
 
 #2 [auth] library/php:pull token for registry-1.docker.io
 #2 DONE 0.0s
 
 #3 [internal] load metadata for docker.io/library/php:8.4-cli
-#3 DONE 0.5s
+#3 DONE 0.4s
 
 #4 [internal] load .dockerignore
 #4 transferring context: 2B done
 #4 DONE 0.0s
 
-#5 [1/3] FROM docker.io/library/php:8.4-cli@sha256:43f7d0151e05f830723af673115e6e0fc0d8251d52e79597359e5e935f8112c1
-#5 resolve docker.io/library/php:8.4-cli@sha256:43f7d0151e05f830723af673115e6e0fc0d8251d52e79597359e5e935f8112c1 done
-#5 sha256:43f7d0151e05f830723af673115e6e0fc0d8251d52e79597359e5e935f8112c1 10.30kB / 10.30kB done
-#5 sha256:ef8588b7f07557d74960770e414433eced07b7db279695ecf93afc823b0d9bd4 2.87kB / 2.87kB done
+#5 [1/3] FROM docker.io/library/php:8.4-cli@sha256:1d2cf2b7d715b5b3aa959f0150ccbcc7b71e0181b637e443abf40a7fb56bf79a
+#5 resolve docker.io/library/php:8.4-cli@sha256:1d2cf2b7d715b5b3aa959f0150ccbcc7b71e0181b637e443abf40a7fb56bf79a done
+#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 18.87MB / 117.84MB 0.1s
+#5 sha256:1d2cf2b7d715b5b3aa959f0150ccbcc7b71e0181b637e443abf40a7fb56bf79a 10.30kB / 10.30kB done
 #5 sha256:d70c0a34d499ce38086238c8c79efc181603d0a3700b78f452f69db5fd4fe3e9 8.97kB / 8.97kB done
-#5 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 0B / 29.84MB 0.1s
-#5 sha256:3548197d4ec200f50a3cfb7eb08e85217010d293cafe09081af3209284798fcc 225B / 225B 0.1s done
+#5 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 27.26MB / 29.84MB 0.1s
 #5 sha256:404f5b9d23096b7c4bf210730039a138d7bca6d297ef714471e735930a64df8d 226B / 226B 0.0s done
-#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 1.05MB / 117.84MB 0.1s
-#5 sha256:aef193d5eb1c94a09a3092c35e6e2528fee5b8e083ba1d423d374a0092fc21cc 0B / 13.94MB 0.1s
-#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 27.26MB / 117.84MB 0.2s
-#5 sha256:aef193d5eb1c94a09a3092c35e6e2528fee5b8e083ba1d423d374a0092fc21cc 4.19MB / 13.94MB 0.2s
-#5 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 19.92MB / 29.84MB 0.4s
-#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 69.21MB / 117.84MB 0.4s
-#5 sha256:aef193d5eb1c94a09a3092c35e6e2528fee5b8e083ba1d423d374a0092fc21cc 13.94MB / 13.94MB 0.3s done
-#5 sha256:4903c7c48893bfd3e939dc46bb7a7f25750a0f8af4515d27a8d39a77ee4291cb 487B / 487B 0.3s done
-#5 sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 15.73MB / 23.84MB 0.4s
-#5 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 29.84MB / 29.84MB 0.5s done
-#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 90.18MB / 117.84MB 0.5s
-#5 sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 23.84MB / 23.84MB 0.5s done
-#5 sha256:02b7e1e6822d14d07259edc2b75da1e1c281793e08cad31076c2ad805a5e75cb 0B / 244B 0.5s
-#5 sha256:a44e589d5e08ed709d1bec57abce3191f9cf04c97e8951d832f8c4e57331444c 249B / 249B 0.5s done
-#5 sha256:9449eddfe6b02e2b73d237e910112ddee8e55bb5046e70da5f05b0bdd9bc8541 2.45kB / 2.45kB 0.5s done
+#5 sha256:ef8588b7f07557d74960770e414433eced07b7db279695ecf93afc823b0d9bd4 2.87kB / 2.87kB done
+#5 sha256:3548197d4ec200f50a3cfb7eb08e85217010d293cafe09081af3209284798fcc 225B / 225B 0.0s done
+#5 sha256:aef193d5eb1c94a09a3092c35e6e2528fee5b8e083ba1d423d374a0092fc21cc 1.05MB / 13.94MB 0.1s
+#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 52.43MB / 117.84MB 0.2s
+#5 sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 29.84MB / 29.84MB 0.1s done
+#5 sha256:aef193d5eb1c94a09a3092c35e6e2528fee5b8e083ba1d423d374a0092fc21cc 11.53MB / 13.94MB 0.2s
+#5 sha256:4903c7c48893bfd3e939dc46bb7a7f25750a0f8af4515d27a8d39a77ee4291cb 487B / 487B 0.2s done
+#5 sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 1.05MB / 23.84MB 0.2s
 #5 extracting sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e
-#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 110.10MB / 117.84MB 0.6s
-#5 sha256:02b7e1e6822d14d07259edc2b75da1e1c281793e08cad31076c2ad805a5e75cb 244B / 244B 0.5s done
-#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 117.84MB / 117.84MB 0.7s
-#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 117.84MB / 117.84MB 1.0s done
-#5 extracting sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 1.2s done
+#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 78.64MB / 117.84MB 0.3s
+#5 sha256:aef193d5eb1c94a09a3092c35e6e2528fee5b8e083ba1d423d374a0092fc21cc 13.94MB / 13.94MB 0.2s done
+#5 sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 23.84MB / 23.84MB 0.3s
+#5 sha256:9449eddfe6b02e2b73d237e910112ddee8e55bb5046e70da5f05b0bdd9bc8541 2.45kB / 2.45kB 0.3s done
+#5 sha256:a44e589d5e08ed709d1bec57abce3191f9cf04c97e8951d832f8c4e57331444c 249B / 249B 0.3s done
+#5 sha256:02b7e1e6822d14d07259edc2b75da1e1c281793e08cad31076c2ad805a5e75cb 0B / 244B 0.3s
+#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 116.39MB / 117.84MB 0.4s
+#5 sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 23.84MB / 23.84MB 0.3s done
+#5 sha256:02b7e1e6822d14d07259edc2b75da1e1c281793e08cad31076c2ad805a5e75cb 244B / 244B 0.3s done
+#5 sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 117.84MB / 117.84MB 0.8s done
+#5 extracting sha256:ecc510c1e359bdc007b39802570bb7e4dec7d6ebccf357c3201a74299113e05e 1.3s done
+#5 extracting sha256:404f5b9d23096b7c4bf210730039a138d7bca6d297ef714471e735930a64df8d
 #5 extracting sha256:404f5b9d23096b7c4bf210730039a138d7bca6d297ef714471e735930a64df8d done
 #5 extracting sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a
 #5 extracting sha256:cef9ca64145e80fe9a30cbd0084ad2573f4191bb63d3542fc1935fbd15b84b8a 3.7s done
@@ -52,172 +51,172 @@
 #5 extracting sha256:4903c7c48893bfd3e939dc46bb7a7f25750a0f8af4515d27a8d39a77ee4291cb
 #5 extracting sha256:4903c7c48893bfd3e939dc46bb7a7f25750a0f8af4515d27a8d39a77ee4291cb done
 #5 extracting sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 0.1s
-#5 extracting sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 0.6s done
+#5 extracting sha256:209ba656102f5151453afb1565099ecdfb63a2c29a3f5c94686b9011c53be26f 0.7s done
 #5 extracting sha256:9449eddfe6b02e2b73d237e910112ddee8e55bb5046e70da5f05b0bdd9bc8541
 #5 extracting sha256:9449eddfe6b02e2b73d237e910112ddee8e55bb5046e70da5f05b0bdd9bc8541 done
 #5 extracting sha256:a44e589d5e08ed709d1bec57abce3191f9cf04c97e8951d832f8c4e57331444c done
 #5 extracting sha256:02b7e1e6822d14d07259edc2b75da1e1c281793e08cad31076c2ad805a5e75cb done
-#5 DONE 9.9s
+#5 DONE 10.5s
 
 #6 [2/3] RUN docker-php-ext-install -j2 mysqli
-#6 2.151 Configuring for:
-#6 2.151 PHP Version:             8.4
-#6 2.151 PHP Api Version:         20240924
-#6 2.151 Zend Module Api No:      20240924
-#6 2.151 Zend Extension Api No:   420240924
-#6 2.775 checking for grep that handles long lines and -e... /usr/bin/grep
-#6 2.778 checking for egrep... /usr/bin/grep -E
-#6 2.780 checking for a sed that does not truncate output... /usr/bin/sed
-#6 2.810 checking build system type... x86_64-pc-linux-gnu
-#6 2.815 checking host system type... x86_64-pc-linux-gnu
-#6 2.815 checking target system type... x86_64-pc-linux-gnu
-#6 2.842 shtool:echo:Warning: unable to determine terminal sequence for bold mode
-#6 2.880 shtool:echo:Warning: unable to determine terminal sequence for bold mode
-#6 2.891 checking for gawk... no
-#6 2.892 checking for nawk... nawk
-#6 2.893 checking if nawk is broken... no
-#6 2.895 checking for pkg-config... /usr/bin/pkg-config
-#6 2.896 checking pkg-config is at least version 0.9.0... yes
-#6 2.898 checking for cc... cc
-#6 2.924 checking whether the C compiler works... yes
-#6 2.958 checking for C compiler default output file name... a.out
-#6 2.960 checking for suffix of executables... 
-#6 2.995 checking whether we are cross compiling... no
-#6 3.035 checking for suffix of object files... o
-#6 3.054 checking whether the compiler supports GNU C... yes
-#6 3.072 checking whether cc accepts -g... yes
-#6 3.088 checking for cc option to enable C11 features... none needed
-#6 3.128 checking how to run the C preprocessor... cc -E
-#6 3.173 checking for egrep -e... (cached) /usr/bin/grep -E
-#6 3.173 checking for icc... no
-#6 3.182 checking for suncc... no
-#6 3.192 checking for system library directory... lib
-#6 3.192 checking if compiler supports -Wl,-rpath,... yes
-#6 3.246 checking for PHP prefix... /usr/local
-#6 3.246 checking for PHP includes... -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib
-#6 3.246 checking for PHP extension directory... /usr/local/lib/php/extensions/no-debug-non-zts-20240924
-#6 3.247 checking for PHP installed headers prefix... /usr/local/include/php
-#6 3.247 checking if debugging is enabled... no
-#6 3.262 checking if PHP is built with thread safety (ZTS)... no
-#6 3.278 
-#6 3.278 Configuring extension
-#6 3.279 checking for MySQLi support... yes, shared
-#6 3.279 checking for specified location of the MySQL Unix socket... no
-#6 3.279 checking for MySQL Unix socket location... no
-#6 3.297 
-#6 3.297 Configuring libtool
-#6 3.297 checking for a sed that does not truncate output... /usr/bin/sed
-#6 3.301 checking for ld used by cc... /usr/bin/ld
-#6 3.305 checking if the linker (/usr/bin/ld) is GNU ld... yes
-#6 3.308 checking for /usr/bin/ld option to reload object files... -r
-#6 3.309 checking for BSD-compatible nm... /usr/bin/nm -B
-#6 3.311 checking whether ln -s works... yes
-#6 3.312 checking how to recognize dependent libraries... pass_all
-#6 3.326 checking for stdio.h... yes
-#6 3.342 checking for stdlib.h... yes
-#6 3.363 checking for string.h... yes
-#6 3.384 checking for inttypes.h... yes
-#6 3.406 checking for stdint.h... yes
-#6 3.428 checking for strings.h... yes
-#6 3.452 checking for sys/stat.h... yes
-#6 3.476 checking for sys/types.h... yes
-#6 3.500 checking for unistd.h... yes
-#6 3.525 checking for dlfcn.h... yes
-#6 3.551 checking the maximum length of command line arguments... 3145728
-#6 3.556 checking command to parse /usr/bin/nm -B output from cc object... ok
-#6 3.620 checking for objdir... .libs
-#6 3.624 checking for ar... ar
-#6 3.625 checking for ranlib... ranlib
-#6 3.626 checking for strip... strip
-#6 3.676 checking if cc supports -fno-rtti -fno-exceptions... no
-#6 3.696 checking for cc option to produce PIC... -fPIC
-#6 3.696 checking if cc PIC flag -fPIC works... yes
-#6 3.716 checking if cc static flag -static works... yes
-#6 3.782 checking if cc supports -c -o file.o... yes
-#6 3.807 checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
-#6 3.821 checking whether -lc should be explicitly linked in... no
-#6 3.844 checking dynamic linker characteristics... GNU/Linux ld.so
-#6 3.861 checking how to hardcode library paths into programs... immediate
-#6 3.861 checking whether stripping libraries is possible... yes
-#6 3.865 checking if libtool supports shared libraries... yes
-#6 3.865 checking whether to build shared libraries... yes
-#6 3.865 checking whether to build static libraries... no
-#6 4.004 
-#6 4.004 creating libtool
-#6 4.022 appending configuration tag "CXX" to libtool
-#6 4.028 
-#6 4.028 Generating files
-#6 4.050 configure: creating build directories
-#6 4.069 configure: creating Makefile
-#6 4.072 configure: patching config.h.in
-#6 4.075 configure: creating ./config.status
-#6 4.124 config.status: creating config.h
-#6 4.162 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_api.c -o mysqli_api.lo  -MMD -MF mysqli_api.dep -MT mysqli_api.lo
-#6 4.162 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_driver.c -o mysqli_driver.lo  -MMD -MF mysqli_driver.dep -MT mysqli_driver.lo
-#6 4.287 mkdir .libs
-#6 4.287 mkdir .libs
-#6 4.289 mkdir: cannot create directory '.libs': File exists
-#6 4.290  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_api.c -MMD -MF mysqli_api.dep -MT mysqli_api.lo  -fPIC -DPIC -o .libs/mysqli_api.o
-#6 4.292  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_driver.c -MMD -MF mysqli_driver.dep -MT mysqli_driver.lo  -fPIC -DPIC -o .libs/mysqli_driver.o
-#6 4.503 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_exception.c -o mysqli_exception.lo  -MMD -MF mysqli_exception.dep -MT mysqli_exception.lo
-#6 4.638  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_exception.c -MMD -MF mysqli_exception.dep -MT mysqli_exception.lo  -fPIC -DPIC -o .libs/mysqli_exception.o
-#6 4.840 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_nonapi.c -o mysqli_nonapi.lo  -MMD -MF mysqli_nonapi.dep -MT mysqli_nonapi.lo
-#6 4.973  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_nonapi.c -MMD -MF mysqli_nonapi.dep -MT mysqli_nonapi.lo  -fPIC -DPIC -o .libs/mysqli_nonapi.o
-#6 5.677 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_prop.c -o mysqli_prop.lo  -MMD -MF mysqli_prop.dep -MT mysqli_prop.lo
-#6 5.807  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_prop.c -MMD -MF mysqli_prop.dep -MT mysqli_prop.lo  -fPIC -DPIC -o .libs/mysqli_prop.o
-#6 5.821 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_report.c -o mysqli_report.lo  -MMD -MF mysqli_report.dep -MT mysqli_report.lo
-#6 5.952  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_report.c -MMD -MF mysqli_report.dep -MT mysqli_report.lo  -fPIC -DPIC -o .libs/mysqli_report.o
-#6 6.140 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_result_iterator.c -o mysqli_result_iterator.lo  -MMD -MF mysqli_result_iterator.dep -MT mysqli_result_iterator.lo
-#6 6.278  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_result_iterator.c -MMD -MF mysqli_result_iterator.dep -MT mysqli_result_iterator.lo  -fPIC -DPIC -o .libs/mysqli_result_iterator.o
-#6 6.362 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_warning.c -o mysqli_warning.lo  -MMD -MF mysqli_warning.dep -MT mysqli_warning.lo
-#6 6.486 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli.c -o mysqli.lo  -MMD -MF mysqli.dep -MT mysqli.lo
-#6 6.496  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_warning.c -MMD -MF mysqli_warning.dep -MT mysqli_warning.lo  -fPIC -DPIC -o .libs/mysqli_warning.o
-#6 6.620  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli.c -MMD -MF mysqli.dep -MT mysqli.lo  -fPIC -DPIC -o .libs/mysqli.o
-#6 7.176 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=link cc -shared -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE  -Wl,-O1 -pie  -o mysqli.la -export-dynamic -avoid-version -prefer-pic -module -rpath /usr/src/php/ext/mysqli/modules  mysqli_api.lo mysqli_driver.lo mysqli_exception.lo mysqli_nonapi.lo mysqli_prop.lo mysqli_report.lo mysqli_result_iterator.lo mysqli_warning.lo mysqli.lo 
-#6 7.289 cc -shared  .libs/mysqli_api.o .libs/mysqli_driver.o .libs/mysqli_exception.o .libs/mysqli_nonapi.o .libs/mysqli_prop.o .libs/mysqli_report.o .libs/mysqli_result_iterator.o .libs/mysqli_warning.o .libs/mysqli.o   -Wl,-O1 -Wl,-soname -Wl,mysqli.so -o .libs/mysqli.so
-#6 7.311 creating mysqli.la
-#6 7.320 (cd .libs && rm -f mysqli.la && ln -s ../mysqli.la mysqli.la)
-#6 7.322 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=install cp ./mysqli.la /usr/src/php/ext/mysqli/modules
-#6 7.349 cp ./.libs/mysqli.so /usr/src/php/ext/mysqli/modules/mysqli.so
-#6 7.352 cp ./.libs/mysqli.lai /usr/src/php/ext/mysqli/modules/mysqli.la
-#6 7.370 PATH="$PATH:/sbin" ldconfig -n /usr/src/php/ext/mysqli/modules
-#6 7.373 ----------------------------------------------------------------------
-#6 7.373 Libraries have been installed in:
-#6 7.373    /usr/src/php/ext/mysqli/modules
-#6 7.373 
-#6 7.373 If you ever happen to want to link against installed libraries
-#6 7.373 in a given directory, LIBDIR, you must either use libtool, and
-#6 7.373 specify the full pathname of the library, or use the `-LLIBDIR'
-#6 7.373 flag during linking and do at least one of the following:
-#6 7.373    - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
-#6 7.373      during execution
-#6 7.373    - add LIBDIR to the `LD_RUN_PATH' environment variable
-#6 7.373      during linking
-#6 7.373    - use the `-Wl,--rpath -Wl,LIBDIR' linker flag
-#6 7.373    - have your system administrator add LIBDIR to `/etc/ld.so.conf'
-#6 7.373 
-#6 7.373 See any operating system documentation about shared libraries for
-#6 7.373 more information, such as the ld(1) and ld.so(8) manual pages.
-#6 7.375 ----------------------------------------------------------------------
-#6 7.376 
-#6 7.378 Build complete.
-#6 7.379 Don't forget to run 'make test'.
-#6 7.381 
-#6 7.399 + strip --strip-all modules/mysqli.so
-#6 7.431 Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20240924/
-#6 7.486 Installing header files:          /usr/local/include/php/
-#6 7.575 find . -name \*.gcno -o -name \*.gcda | xargs rm -f
-#6 7.579 find . -name \*.lo -o -name \*.o -o -name \*.dep | xargs rm -f
-#6 7.584 find . -name \*.la -o -name \*.a | xargs rm -f
-#6 7.588 find . -name \*.so | xargs rm -f
-#6 7.593 find . -name .libs -a -type d|xargs rm -rf
-#6 7.597 rm -f libphp.la      modules/* libs/*
-#6 7.599 rm -f ext/opcache/jit/ir/gen_ir_fold_hash
-#6 7.601 rm -f ext/opcache/jit/ir/minilua
-#6 7.602 rm -f ext/opcache/jit/ir/ir_fold_hash.h
-#6 7.604 rm -f ext/opcache/jit/ir/ir_emit_x86.h
-#6 7.606 rm -f ext/opcache/jit/ir/ir_emit_aarch64.h
-#6 DONE 8.7s
+#6 2.178 Configuring for:
+#6 2.178 PHP Version:             8.4
+#6 2.178 PHP Api Version:         20240924
+#6 2.178 Zend Module Api No:      20240924
+#6 2.178 Zend Extension Api No:   420240924
+#6 2.801 checking for grep that handles long lines and -e... /usr/bin/grep
+#6 2.804 checking for egrep... /usr/bin/grep -E
+#6 2.806 checking for a sed that does not truncate output... /usr/bin/sed
+#6 2.835 checking build system type... x86_64-pc-linux-gnu
+#6 2.841 checking host system type... x86_64-pc-linux-gnu
+#6 2.841 checking target system type... x86_64-pc-linux-gnu
+#6 2.868 shtool:echo:Warning: unable to determine terminal sequence for bold mode
+#6 2.904 shtool:echo:Warning: unable to determine terminal sequence for bold mode
+#6 2.915 checking for gawk... no
+#6 2.916 checking for nawk... nawk
+#6 2.916 checking if nawk is broken... no
+#6 2.919 checking for pkg-config... /usr/bin/pkg-config
+#6 2.919 checking pkg-config is at least version 0.9.0... yes
+#6 2.921 checking for cc... cc
+#6 2.947 checking whether the C compiler works... yes
+#6 2.981 checking for C compiler default output file name... a.out
+#6 2.982 checking for suffix of executables... 
+#6 3.016 checking whether we are cross compiling... no
+#6 3.054 checking for suffix of object files... o
+#6 3.072 checking whether the compiler supports GNU C... yes
+#6 3.089 checking whether cc accepts -g... yes
+#6 3.107 checking for cc option to enable C11 features... none needed
+#6 3.147 checking how to run the C preprocessor... cc -E
+#6 3.191 checking for egrep -e... (cached) /usr/bin/grep -E
+#6 3.192 checking for icc... no
+#6 3.201 checking for suncc... no
+#6 3.209 checking for system library directory... lib
+#6 3.210 checking if compiler supports -Wl,-rpath,... yes
+#6 3.263 checking for PHP prefix... /usr/local
+#6 3.263 checking for PHP includes... -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib
+#6 3.263 checking for PHP extension directory... /usr/local/lib/php/extensions/no-debug-non-zts-20240924
+#6 3.263 checking for PHP installed headers prefix... /usr/local/include/php
+#6 3.263 checking if debugging is enabled... no
+#6 3.279 checking if PHP is built with thread safety (ZTS)... no
+#6 3.294 
+#6 3.294 Configuring extension
+#6 3.294 checking for MySQLi support... yes, shared
+#6 3.295 checking for specified location of the MySQL Unix socket... no
+#6 3.295 checking for MySQL Unix socket location... no
+#6 3.313 
+#6 3.313 Configuring libtool
+#6 3.313 checking for a sed that does not truncate output... /usr/bin/sed
+#6 3.316 checking for ld used by cc... /usr/bin/ld
+#6 3.321 checking if the linker (/usr/bin/ld) is GNU ld... yes
+#6 3.323 checking for /usr/bin/ld option to reload object files... -r
+#6 3.324 checking for BSD-compatible nm... /usr/bin/nm -B
+#6 3.327 checking whether ln -s works... yes
+#6 3.327 checking how to recognize dependent libraries... pass_all
+#6 3.340 checking for stdio.h... yes
+#6 3.357 checking for stdlib.h... yes
+#6 3.377 checking for string.h... yes
+#6 3.399 checking for inttypes.h... yes
+#6 3.421 checking for stdint.h... yes
+#6 3.443 checking for strings.h... yes
+#6 3.465 checking for sys/stat.h... yes
+#6 3.487 checking for sys/types.h... yes
+#6 3.508 checking for unistd.h... yes
+#6 3.532 checking for dlfcn.h... yes
+#6 3.557 checking the maximum length of command line arguments... 3145728
+#6 3.562 checking command to parse /usr/bin/nm -B output from cc object... ok
+#6 3.622 checking for objdir... .libs
+#6 3.626 checking for ar... ar
+#6 3.627 checking for ranlib... ranlib
+#6 3.628 checking for strip... strip
+#6 3.674 checking if cc supports -fno-rtti -fno-exceptions... no
+#6 3.693 checking for cc option to produce PIC... -fPIC
+#6 3.694 checking if cc PIC flag -fPIC works... yes
+#6 3.711 checking if cc static flag -static works... yes
+#6 3.777 checking if cc supports -c -o file.o... yes
+#6 3.803 checking whether the cc linker (/usr/bin/ld -m elf_x86_64) supports shared libraries... yes
+#6 3.816 checking whether -lc should be explicitly linked in... no
+#6 3.841 checking dynamic linker characteristics... GNU/Linux ld.so
+#6 3.857 checking how to hardcode library paths into programs... immediate
+#6 3.857 checking whether stripping libraries is possible... yes
+#6 3.860 checking if libtool supports shared libraries... yes
+#6 3.861 checking whether to build shared libraries... yes
+#6 3.861 checking whether to build static libraries... no
+#6 3.997 
+#6 3.997 creating libtool
+#6 4.014 appending configuration tag "CXX" to libtool
+#6 4.020 
+#6 4.020 Generating files
+#6 4.042 configure: creating build directories
+#6 4.060 configure: creating Makefile
+#6 4.064 configure: patching config.h.in
+#6 4.067 configure: creating ./config.status
+#6 4.115 config.status: creating config.h
+#6 4.152 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_api.c -o mysqli_api.lo  -MMD -MF mysqli_api.dep -MT mysqli_api.lo
+#6 4.153 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_driver.c -o mysqli_driver.lo  -MMD -MF mysqli_driver.dep -MT mysqli_driver.lo
+#6 4.277 mkdir .libs
+#6 4.278 mkdir .libs
+#6 4.280 mkdir: cannot create directory '.libs' cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_driver.c -MMD -MF mysqli_driver.dep -MT mysqli_driver.lo  -fPIC -DPIC -o .libs/mysqli_driver.o
+#6 4.281 : File exists
+#6 4.283  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_api.c -MMD -MF mysqli_api.dep -MT mysqli_api.lo  -fPIC -DPIC -o .libs/mysqli_api.o
+#6 4.493 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_exception.c -o mysqli_exception.lo  -MMD -MF mysqli_exception.dep -MT mysqli_exception.lo
+#6 4.626  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_exception.c -MMD -MF mysqli_exception.dep -MT mysqli_exception.lo  -fPIC -DPIC -o .libs/mysqli_exception.o
+#6 4.823 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_nonapi.c -o mysqli_nonapi.lo  -MMD -MF mysqli_nonapi.dep -MT mysqli_nonapi.lo
+#6 4.956  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_nonapi.c -MMD -MF mysqli_nonapi.dep -MT mysqli_nonapi.lo  -fPIC -DPIC -o .libs/mysqli_nonapi.o
+#6 5.743 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_prop.c -o mysqli_prop.lo  -MMD -MF mysqli_prop.dep -MT mysqli_prop.lo
+#6 5.798 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_report.c -o mysqli_report.lo  -MMD -MF mysqli_report.dep -MT mysqli_report.lo
+#6 5.871  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_prop.c -MMD -MF mysqli_prop.dep -MT mysqli_prop.lo  -fPIC -DPIC -o .libs/mysqli_prop.o
+#6 5.973  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_report.c -MMD -MF mysqli_report.dep -MT mysqli_report.lo  -fPIC -DPIC -o .libs/mysqli_report.o
+#6 6.160 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_result_iterator.c -o mysqli_result_iterator.lo  -MMD -MF mysqli_result_iterator.dep -MT mysqli_result_iterator.lo
+#6 6.294  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_result_iterator.c -MMD -MF mysqli_result_iterator.dep -MT mysqli_result_iterator.lo  -fPIC -DPIC -o .libs/mysqli_result_iterator.o
+#6 6.426 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_warning.c -o mysqli_warning.lo  -MMD -MF mysqli_warning.dep -MT mysqli_warning.lo
+#6 6.496 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=compile cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE   -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli.c -o mysqli.lo  -MMD -MF mysqli.dep -MT mysqli.lo
+#6 6.559  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli_warning.c -MMD -MF mysqli_warning.dep -MT mysqli_warning.lo  -fPIC -DPIC -o .libs/mysqli_warning.o
+#6 6.627  cc -I. -I/usr/src/php/ext/mysqli -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE -DZEND_ENABLE_STATIC_TSRMLS_CACHE=1 -DZEND_COMPILE_DL_EXT=1 -c /usr/src/php/ext/mysqli/mysqli.c -MMD -MF mysqli.dep -MT mysqli.lo  -fPIC -DPIC -o .libs/mysqli.o
+#6 7.213 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=link cc -shared -I/usr/local/include/php -I/usr/local/include/php/main -I/usr/local/include/php/TSRM -I/usr/local/include/php/Zend -I/usr/local/include/php/ext -I/usr/local/include/php/ext/date/lib  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -DHAVE_CONFIG_H  -fstack-protector-strong -fpic -fpie -O2 -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -D_GNU_SOURCE  -Wl,-O1 -pie  -o mysqli.la -export-dynamic -avoid-version -prefer-pic -module -rpath /usr/src/php/ext/mysqli/modules  mysqli_api.lo mysqli_driver.lo mysqli_exception.lo mysqli_nonapi.lo mysqli_prop.lo mysqli_report.lo mysqli_result_iterator.lo mysqli_warning.lo mysqli.lo 
+#6 7.326 cc -shared  .libs/mysqli_api.o .libs/mysqli_driver.o .libs/mysqli_exception.o .libs/mysqli_nonapi.o .libs/mysqli_prop.o .libs/mysqli_report.o .libs/mysqli_result_iterator.o .libs/mysqli_warning.o .libs/mysqli.o   -Wl,-O1 -Wl,-soname -Wl,mysqli.so -o .libs/mysqli.so
+#6 7.347 creating mysqli.la
+#6 7.356 (cd .libs && rm -f mysqli.la && ln -s ../mysqli.la mysqli.la)
+#6 7.358 /bin/bash /usr/src/php/ext/mysqli/libtool --tag=CC --mode=install cp ./mysqli.la /usr/src/php/ext/mysqli/modules
+#6 7.384 cp ./.libs/mysqli.so /usr/src/php/ext/mysqli/modules/mysqli.so
+#6 7.388 cp ./.libs/mysqli.lai /usr/src/php/ext/mysqli/modules/mysqli.la
+#6 7.405 PATH="$PATH:/sbin" ldconfig -n /usr/src/php/ext/mysqli/modules
+#6 7.407 ----------------------------------------------------------------------
+#6 7.408 Libraries have been installed in:
+#6 7.408    /usr/src/php/ext/mysqli/modules
+#6 7.408 
+#6 7.408 If you ever happen to want to link against installed libraries
+#6 7.408 in a given directory, LIBDIR, you must either use libtool, and
+#6 7.408 specify the full pathname of the library, or use the `-LLIBDIR'
+#6 7.408 flag during linking and do at least one of the following:
+#6 7.408    - add LIBDIR to the `LD_LIBRARY_PATH' environment variable
+#6 7.408      during execution
+#6 7.408    - add LIBDIR to the `LD_RUN_PATH' environment variable
+#6 7.408      during linking
+#6 7.408    - use the `-Wl,--rpath -Wl,LIBDIR' linker flag
+#6 7.408    - have your system administrator add LIBDIR to `/etc/ld.so.conf'
+#6 7.408 
+#6 7.408 See any operating system documentation about shared libraries for
+#6 7.408 more information, such as the ld(1) and ld.so(8) manual pages.
+#6 7.410 ----------------------------------------------------------------------
+#6 7.411 
+#6 7.413 Build complete.
+#6 7.414 Don't forget to run 'make test'.
+#6 7.415 
+#6 7.433 + strip --strip-all modules/mysqli.so
+#6 7.465 Installing shared extensions:     /usr/local/lib/php/extensions/no-debug-non-zts-20240924/
+#6 7.520 Installing header files:          /usr/local/include/php/
+#6 7.608 find . -name \*.gcno -o -name \*.gcda | xargs rm -f
+#6 7.613 find . -name \*.lo -o -name \*.o -o -name \*.dep | xargs rm -f
+#6 7.618 find . -name \*.la -o -name \*.a | xargs rm -f
+#6 7.622 find . -name \*.so | xargs rm -f
+#6 7.627 find . -name .libs -a -type d|xargs rm -rf
+#6 7.631 rm -f libphp.la      modules/* libs/*
+#6 7.633 rm -f ext/opcache/jit/ir/gen_ir_fold_hash
+#6 7.635 rm -f ext/opcache/jit/ir/minilua
+#6 7.636 rm -f ext/opcache/jit/ir/ir_fold_hash.h
+#6 7.638 rm -f ext/opcache/jit/ir/ir_emit_x86.h
+#6 7.640 rm -f ext/opcache/jit/ir/ir_emit_aarch64.h
+#6 DONE 9.0s
 
 #7 [3/3] WORKDIR /workspace
 #7 DONE 0.0s
@@ -225,6 +224,7 @@
 #8 exporting to image
 #8 exporting layers
 #8 exporting layers 0.7s done
-#8 writing image sha256:b5a0d3f7d0a9282e332eb207de1c40bf6999d9a56806749c6d7b4f2061ad1775 done
+#8 writing image sha256:81621180b8e1e8fa0f5301d552e11e883a3552f30eba7db124f42c38685a0374
+#8 writing image sha256:81621180b8e1e8fa0f5301d552e11e883a3552f30eba7db124f42c38685a0374 done
 #8 naming to docker.io/library/qtrad-matrix-php:8.4 done
 #8 DONE 0.7s

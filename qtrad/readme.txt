@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.10.2
+Stable tag: 1.11.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -127,9 +127,13 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.10.2 =
+= 1.11.0 =
 
 * First public release on WordPress.org.
+* Language switcher block for block themes and any block area.
+
+= 1.10.2 =
+
 * Archives list an alternate language, and appear in that language's sitemap entries, only when one of their posts is translated into it; otherwise they are noindex in that language.
 
 = 1.10.1 =

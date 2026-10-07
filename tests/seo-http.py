@@ -60,6 +60,14 @@ try:
         _,_,body=fetch(base+prefix+fixtures['password']['slug']+'/')
         at=body.find('SECRET_')
         checks.append(dict({'case':'Protected post text absent from the whole page '+prefix,'pass':at<0},**({} if at<0 else {'detail':' '.join(body[max(0,at-200):at+80].split())})))
+    english_tag=fixtures['english_tag']['slug']
+    _,_,body=fetch(base+'/tag/'+english_tag+'/');head=Head();head.feed(body)
+    check('English-only archive claims only English',{link.get('hreflang') for link in head.links if link.get('hreflang')}=={'en-US','x-default'})
+    _,_,body=fetch(base+'/de/tag/'+english_tag+'/');head=Head();head.feed(body)
+    check('English-only archive in German is noindex',any('noindex' in value for value in meta(head,'robots')))
+    check('English-only archive in German claims no alternates',not any(l.get('hreflang') for l in head.links))
+    _,_,body=fetch(base+'/de/tag/'+fixtures['translated_tag']['slug']+'/');head=Head();head.feed(body)
+    check('Translated archive claims every language',{link.get('hreflang') for link in head.links if link.get('hreflang')}=={'en-US','de-DE','es-ES','x-default'})
     missing=base+'/de/'+fixtures['missing']['slug']+'/'
     _,_,body=fetch(missing);head=Head();head.feed(body)
     check('Missing translation noindex',any('noindex' in value for value in meta(head,'robots')))
@@ -108,6 +116,7 @@ try:
     check('Sitemap contains translated category slug',translated_category in urls)
     check('Sitemap contains German-only version',base+'/de/'+fixtures['german']['slug']+'/' in urls)
     check('Sitemap omits missing translation',missing not in urls)
+    check('Sitemap omits archive languages without posts',base+'/de/tag/'+english_tag+'/' not in urls)
     for slug in ('draft','private','password','empty','disabled'):check('Sitemap omits '+slug,not any(fixtures[slug]['slug']+'/' in url for url in urls))
     check('Sitemap translated custom post type',base+'/de/qtrad_book/'+fixtures['book']['slug']+'/' in urls or base+'/de/'+fixtures['book']['slug']+'/' in urls)
     Path(sys.argv[1]).with_name(owner+'-sitemap-urls.json').write_text(json.dumps(urls,indent=2))

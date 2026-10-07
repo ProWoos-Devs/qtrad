@@ -73,7 +73,7 @@ Slugs and bases are stored the way qTranslate-XT stores them, so a site that use
 
 = SEO =
 
-Alternate language links and multilingual sitemap entries use canonical URLs and only list languages a post is actually translated into. Adapters for WordPress core, Yoast SEO and Rank Math cover metadata, social sharing and schema output. Pages missing a translation keep the configured visitor fallback and receive noindex. The SEO translations panel takes optional per-language titles and descriptions.
+Alternate language links and multilingual sitemap entries use canonical URLs and only list languages a post is actually translated into. Category, tag, author and post type archives list a language only when at least one of their posts is translated into it. Adapters for WordPress core, Yoast SEO and Rank Math cover metadata, social sharing and schema output. Pages missing a translation keep the configured visitor fallback and receive noindex. The SEO translations panel takes optional per-language titles and descriptions.
 
 Full-page caches should bypass the personalized bare homepage or vary it by the language cookie and Accept-Language. Browser negotiation can be turned off for a stable homepage.
 

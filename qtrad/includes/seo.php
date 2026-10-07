@@ -73,7 +73,65 @@ function qtrad_seo_post_languages( $post ) {
 }
 
 function qtrad_seo_missing_translation() {
-	return is_singular() && ! in_array( qtrad_current_language(), qtrad_post_available_languages( get_post( get_queried_object_id() ) ), true );
+	if ( is_singular() ) {
+		return ! in_array( qtrad_current_language(), qtrad_post_available_languages( get_post( get_queried_object_id() ) ), true );
+	}
+	$languages = qtrad_seo_archive_languages();
+	return is_array( $languages ) && ! in_array( qtrad_current_language(), $languages, true );
+}
+
+/**
+ * Languages an archive of a term, an author or a post type has content in:
+ * those in which at least one of its published posts is translated. Null for
+ * other pages, which keep all languages.
+ */
+function qtrad_seo_archive_languages() {
+	if ( is_category() || is_tag() || is_tax() ) {
+		$object = get_queried_object();
+		return $object instanceof WP_Term ? qtrad_seo_term_languages( $object ) : null;
+	}
+	if ( is_author() ) {
+		return qtrad_seo_languages_with_posts( array( 'author' => (int) get_queried_object_id(), 'post_type' => 'post' ), 'author:' . (int) get_queried_object_id() );
+	}
+	if ( is_post_type_archive() ) {
+		$type = get_queried_object();
+		return isset( $type->name ) ? qtrad_seo_languages_with_posts( array( 'post_type' => $type->name ), 'type:' . $type->name ) : null;
+	}
+	return null;
+}
+
+function qtrad_seo_term_languages( $term ) {
+	$taxonomy = get_taxonomy( $term->taxonomy );
+	$types    = $taxonomy ? array_values( array_filter( (array) $taxonomy->object_type, 'is_post_type_viewable' ) ) : array();
+	if ( ! $types ) {
+		return qtrad_enabled_languages();
+	}
+	$args = array( 'post_type' => $types, 'tax_query' => array( array( 'taxonomy' => $term->taxonomy, 'terms' => (int) $term->term_id, 'include_children' => true ) ) ); // phpcs:ignore WordPress.DB.SlowDBQuery.slow_db_query_tax_query -- One small existence check per language, cached.
+	return qtrad_seo_languages_with_posts( $args, 'term:' . (int) $term->term_id );
+}
+
+/** Enabled languages in which at least one published post matching $args has content. Cached until posts change. */
+function qtrad_seo_languages_with_posts( $args, $key ) {
+	$cache_key = $key . ':' . md5( implode( ',', qtrad_enabled_languages() ) ) . ':' . wp_cache_get_last_changed( 'posts' ) . ':' . wp_cache_get_last_changed( 'terms' );
+	$found     = wp_cache_get( $cache_key, 'qtrad_seo' );
+	if ( is_array( $found ) ) {
+		return $found;
+	}
+	$found = array();
+	foreach ( qtrad_enabled_languages() as $language ) {
+		$query = new WP_Query( array_merge( $args, array( 'post_status' => 'publish', 'has_password' => false, 'posts_per_page' => 1, 'fields' => 'ids', 'no_found_rows' => true, 'ignore_sticky_posts' => true, 'qtrad_language_probe' => $language ) ) );
+		if ( $query->posts ) {
+			$found[] = $language;
+		}
+	}
+	wp_cache_set( $cache_key, $found, 'qtrad_seo' );
+	return $found;
+}
+
+/** The probe queries above only count posts with content in their language. */
+function qtrad_seo_language_probe_where( $where, $query ) {
+	$language = $query instanceof WP_Query ? $query->get( 'qtrad_language_probe' ) : '';
+	return is_string( $language ) && qtrad_is_enabled( $language ) ? $where . qtrad_available_language_where( $language ) : $where;
 }
 
 function qtrad_seo_canonical( $url ) {
@@ -122,7 +180,8 @@ function qtrad_seo_vendor_robots( $robots ) {
 function qtrad_seo_head_links() {
 	if ( is_admin() || is_feed() || is_404() || is_search() || qtrad_is_rest_request() || qtrad_is_sitemap_request() || ! get_option( 'blog_public' ) || qtrad_seo_missing_translation() ) { return; }
 	$post = is_singular() ? get_post( get_queried_object_id() ) : null;
-	$languages = $post ? qtrad_seo_post_languages( $post ) : qtrad_enabled_languages();
+	$archive = $post ? null : qtrad_seo_archive_languages();
+	$languages = $post ? qtrad_seo_post_languages( $post ) : ( is_array( $archive ) ? array_values( array_filter( $archive, function ( $language ) { return qtrad_seo_language_tag( $language ) !== ''; } ) ) : qtrad_enabled_languages() );
 	$tags = array();
 	foreach ( $languages as $language ) {
 		$tag = qtrad_seo_language_tag( $language );
@@ -327,7 +386,8 @@ function qtrad_seo_rankmath_sitemap_options( $options ) {
 function qtrad_seo_sitemap_entry( $entry, $type, $object ) {
 	if ( ! is_array( $entry ) || empty( $entry['loc'] ) ) { return $entry; }
 	$post = $type === 'post' && is_object( $object ) && isset( $object->ID ) ? get_post( (int) $object->ID ) : null;
-	$entry['_qtrad_languages'] = $post ? qtrad_seo_post_languages( $post ) : qtrad_enabled_languages();
+	$term = ! $post && $type === 'term' && $object instanceof WP_Term ? $object : null;
+	$entry['_qtrad_languages'] = $post ? qtrad_seo_post_languages( $post ) : ( $term ? qtrad_seo_term_languages( $term ) : qtrad_enabled_languages() );
 	if ( $post ) { $entry['_qtrad_object'] = array( 'post', (int) $post->ID ); }
 	elseif ( $type === 'term' && $object instanceof WP_Term ) { $entry['_qtrad_object'] = array( 'term', (int) $object->term_id ); }
 	return $entry;
@@ -419,6 +479,7 @@ function qtrad_register_seo_hooks() {
 	add_filter( 'wp_sitemaps_taxonomies_entry', 'qtrad_seo_core_term_entry', 99, 3 );
 	add_filter( 'wp_sitemaps_posts_query_args', 'qtrad_seo_sitemap_query_args', 99 );
 	add_filter( 'posts_where_request', 'qtrad_seo_sitemap_where', 99, 2 );
+	add_filter( 'posts_where', 'qtrad_seo_language_probe_where', 99, 2 );
 	foreach ( array( 'wpseo_title', 'wpseo_metadesc', 'wpseo_opengraph_title', 'wpseo_opengraph_desc', 'wpseo_opengraph_site_name', 'wpseo_twitter_title', 'wpseo_twitter_description', 'rank_math/frontend/title', 'rank_math/frontend/description', 'rank_math/opengraph/facebook/og_title', 'rank_math/opengraph/facebook/og_description', 'rank_math/opengraph/facebook/og_site_name', 'rank_math/opengraph/twitter/twitter_title', 'rank_math/opengraph/twitter/twitter_description' ) as $hook ) {
 		add_filter( $hook, 'qtrad_seo_vendor_text', 99 );
 	}

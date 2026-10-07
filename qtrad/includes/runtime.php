@@ -439,7 +439,7 @@ function qtrad_index_languages( $post_id, $post ) {
 }
 
 function qtrad_hide_untranslated_where( $where, $query ) {
-	if ( is_admin() || ! qtrad_config( 'hide_untranslated' ) || ! ( $query instanceof WP_Query ) || $query->is_singular() || $query->get( 'qtrad_seo_sitemap' ) || qtrad_is_sitemap_request() || ! empty( $GLOBALS['qtrad_seo_sitemap_build'] ) ) { return $where; }
+	if ( is_admin() || ! qtrad_config( 'hide_untranslated' ) || ! ( $query instanceof WP_Query ) || $query->is_singular() || $query->get( 'qtrad_seo_sitemap' ) || $query->get( 'qtrad_language_probe' ) || qtrad_is_sitemap_request() || ! empty( $GLOBALS['qtrad_seo_sitemap_build'] ) ) { return $where; }
 	return $where . qtrad_available_language_where( qtrad_current_language() );
 }
 

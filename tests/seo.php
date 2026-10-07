@@ -87,6 +87,23 @@ $_COOKIE['wp-postpass_' . COOKIEHASH] = (new PasswordHash(8, true))->HashPasswor
 seo_check('Description returns once the password was entered', 'SECRET_DE_q7 Override', qtrad_seo_description());
 unset($_COOKIE['wp-postpass_' . COOKIEHASH]);
 $GLOBALS['wp_query'] = new WP_Query(array('p'=>$id)); $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
+// Archives claim only the languages their posts are translated into.
+$english_tag = wp_insert_term('English only tag', 'post_tag', array('slug'=>'qtrad-seo-english-tag'));
+$english_tag_id = is_wp_error($english_tag) ? (int) $english_tag->get_error_data('term_exists') : (int) $english_tag['term_id'];
+wp_set_post_terms($posts['missing']['id'], array($english_tag_id), 'post_tag');
+$both_tag = wp_insert_term('Translated tag', 'post_tag', array('slug'=>'qtrad-seo-translated-tag'));
+$both_tag_id = is_wp_error($both_tag) ? (int) $both_tag->get_error_data('term_exists') : (int) $both_tag['term_id'];
+wp_set_post_terms($posts['translated']['id'], array($both_tag_id), 'post_tag', true);
+$posts['english_tag'] = array('id'=>$english_tag_id, 'slug'=>'qtrad-seo-english-tag');
+$posts['translated_tag'] = array('id'=>$both_tag_id, 'slug'=>'qtrad-seo-translated-tag');
+$GLOBALS['wp_query'] = new WP_Query(array('tag_id'=>$english_tag_id)); $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
+seo_check('Archive languages follow its posts', array('en'), qtrad_seo_archive_languages());
+seo_check('Archive without German posts is a missing translation in German', true, qtrad_seo_missing_translation());
+seo_check('Archive term sitemap languages follow its posts', array('en'), qtrad_seo_term_languages(get_term($english_tag_id, 'post_tag')));
+$GLOBALS['wp_query'] = new WP_Query(array('tag_id'=>$both_tag_id)); $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
+seo_check('Archive with translated posts keeps every language', array('en','de','es'), qtrad_seo_archive_languages());
+seo_check('Probe queries are not narrowed by hide-untranslated', array('en','de','es'), qtrad_seo_term_languages(get_term($both_tag_id, 'post_tag')));
+$GLOBALS['wp_query'] = new WP_Query(array('p'=>$id)); $GLOBALS['wp_the_query'] = $GLOBALS['wp_query'];
 ob_start(); qtrad_head_links(); $head = ob_get_clean();
 seo_check('Alternates include current language',true,strpos($head,'hreflang="de-DE"') !== false);
 seo_check('Alternates include canonical default',true,strpos($head,'hreflang="en-US" href="'.$posts['translated']['url'].'"') !== false);

@@ -66,7 +66,8 @@ function qtrad_migration_scan( $apply = false ) {
 	$markers = array( '%' . $wpdb->esc_like( '[:' ) . '%' . $wpdb->esc_like( ']' ) . '%', '%' . $wpdb->esc_like( '<!--:' ) . '%', '%' . $wpdb->esc_like( '{:' ) . '%' . $wpdb->esc_like( '}' ) . '%' );
 	$extra   = array_merge( qtrad_extra_field_keys(), array( '_qtrad_seo_title', '_qtrad_seo_description' ) );
 	$keys    = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT meta_key FROM {$wpdb->postmeta} WHERE meta_key NOT LIKE %s AND ( meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s ) LIMIT 50", $wpdb->esc_like( '_menu_item_' ) . '%', $markers[0], $markers[1], $markers[2] ) );
-	$keys    = array_values( array_diff( $keys, $extra ) );
+	// Keys qTrad reads as stored on purpose, such as WooCommerce attribute data, are not listed.
+	$keys    = array_values( array_filter( array_diff( $keys, $extra ), function ( $key ) { return ! qtrad_meta_key_is_raw( $key ) && 0 !== strpos( $key, 'attribute_' ); } ) );
 	$options = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM {$wpdb->options} WHERE option_name NOT LIKE %s AND option_name NOT LIKE %s AND option_name NOT LIKE %s AND option_name NOT IN ('blogname', 'blogdescription') AND ( option_value LIKE %s OR option_value LIKE %s OR option_value LIKE %s ) LIMIT 50", $wpdb->esc_like( 'qtranslate_' ) . '%', $wpdb->esc_like( '_transient' ) . '%', $wpdb->esc_like( 'widget_' ) . '%', $markers[0], $markers[1], $markers[2] ) );
 	$users = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(DISTINCT user_id) FROM {$wpdb->usermeta} WHERE meta_value LIKE %s OR meta_value LIKE %s OR meta_value LIKE %s", $markers[0], $markers[1], $markers[2] ) );
 	if ( $apply && ( $keys || $users ) && ! array_key_exists( 'translate_meta', $own ) ) {
@@ -112,11 +113,11 @@ function qtrad_migration_notice() {
 		return;
 	}
 	$dismiss = wp_nonce_url( add_query_arg( 'qtrad_dismiss_report', '1' ), 'qtrad_dismiss_report' );
-	echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'qTrad found qTranslate data it keeps but does not display', 'qtrad' ) . '</strong></p><ul class="ul-disc">';
+	echo '<div class="notice notice-warning"><p><strong>' . esc_html__( 'qTrad checked the qTranslate data on this site', 'qtrad' ) . '</strong></p><ul class="ul-disc">';
 	foreach ( $report['items'] as $item ) {
 		echo '<li>' . esc_html( $item ) . '</li>';
 	}
-	echo '</ul><p>' . esc_html__( 'Nothing was changed or deleted. Reactivating qTranslate-XT shows this data again.', 'qtrad' ) . ' <a href="' . esc_url( $dismiss ) . '">' . esc_html__( 'Dismiss', 'qtrad' ) . '</a></p></div>';
+	echo '</ul><p>' . esc_html__( 'No content was changed or deleted, so qTranslate-XT can still be reactivated.', 'qtrad' ) . ' <a href="' . esc_url( $dismiss ) . '">' . esc_html__( 'Dismiss', 'qtrad' ) . '</a></p></div>';
 }
 
 function qtrad_migration_dismiss() {

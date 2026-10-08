@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.12.0
+Stable tag: 1.12.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -131,9 +131,13 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.12.0 =
+= 1.12.1 =
 
 * First public release on WordPress.org.
+* The migration notice names the qTranslate plugin the site used.
+
+= 1.12.0 =
+
 * Translation overview: a "Missing in …" filter on the post lists and a Translations box on the dashboard.
 * WooCommerce email texts, payment method titles, purchase notes and attribute labels get one input per language.
 

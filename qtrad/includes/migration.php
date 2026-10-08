@@ -117,7 +117,28 @@ function qtrad_migration_notice() {
 	foreach ( $report['items'] as $item ) {
 		echo '<li>' . esc_html( $item ) . '</li>';
 	}
-	echo '</ul><p>' . esc_html__( 'No content was changed or deleted, so qTranslate-XT can still be reactivated.', 'qtrad' ) . ' <a href="' . esc_url( $dismiss ) . '">' . esc_html__( 'Dismiss', 'qtrad' ) . '</a></p></div>';
+	$previous = qtrad_migration_predecessor();
+	/* translators: %s: plugin name, such as qTranslate-X */
+	$footer = '' !== $previous ? sprintf( __( 'No content was changed or deleted, so %s can still be reactivated.', 'qtrad' ), $previous ) : __( 'No content was changed or deleted, so the previous qTranslate plugin can still be reactivated.', 'qtrad' );
+	echo '</ul><p>' . esc_html( $footer ) . ' <a href="' . esc_url( $dismiss ) . '">' . esc_html__( 'Dismiss', 'qtrad' ) . '</a></p></div>';
+}
+
+/**
+ * Name of the qTranslate plugin the site used, from the plugins still
+ * installed: the newest of qTranslate-XT, qTranslate-X and qTranslate.
+ */
+function qtrad_migration_predecessor() {
+	$folders = array(
+		'qtranslate-xt' => 'qTranslate-XT',
+		'qtranslate-x'  => 'qTranslate-X',
+		'qtranslate'    => 'qTranslate',
+	);
+	foreach ( $folders as $folder => $name ) {
+		if ( is_file( WP_PLUGIN_DIR . '/' . $folder . '/qtranslate.php' ) ) {
+			return $name;
+		}
+	}
+	return '';
 }
 
 function qtrad_migration_dismiss() {

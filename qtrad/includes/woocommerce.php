@@ -66,6 +66,8 @@ function qtrad_register_woocommerce_hooks() {
 	add_action( 'woocommerce_email_sent', 'qtrad_wc_email_done' );
 	add_action( 'woocommerce_email_skipped', 'qtrad_wc_email_done' );
 	add_filter( 'woocommerce_email_restore_locale', 'qtrad_wc_email_restore', 1 );
+	add_filter( 'woocommerce_allow_switching_email_locale', 'qtrad_wc_email_sending_start', 1, 2 );
+	add_filter( 'woocommerce_allow_restoring_email_locale', 'qtrad_wc_email_sending_end', 1, 2 );
 }
 
 /** Whether a request goes to the Store API, which the cart and checkout blocks use. */
@@ -167,7 +169,7 @@ function qtrad_wc_email_hooks( $emails ) {
  * content, which is when a customer email switches to the order's language.
  */
 function qtrad_wc_email_start( $recipient, $object = null, $email = null ) {
-	if ( ! empty( $GLOBALS['qtrad_wc_email'] ) || ! qtrad_wc_sending() ) {
+	if ( ! empty( $GLOBALS['qtrad_wc_email'] ) || ! qtrad_wc_sending( $email ) ) {
 		return $recipient;
 	}
 	// Customer emails go out in the order's language, emails to the shop in the site's default language.
@@ -192,14 +194,27 @@ function qtrad_wc_email_start( $recipient, $object = null, $email = null ) {
 	return $recipient;
 }
 
-/** The recipient is also read to display settings; only a send switches the language. */
-function qtrad_wc_sending() {
-	foreach ( debug_backtrace( DEBUG_BACKTRACE_IGNORE_ARGS, 12 ) as $frame ) { // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_debug_backtrace -- Finds the caller, nothing is printed.
-		if ( isset( $frame['class'], $frame['function'] ) && in_array( $frame['function'], array( 'trigger', 'send_notification' ), true ) && is_a( $frame['class'], 'WC_Email', true ) ) {
-			return true;
-		}
+/**
+ * The recipient is also read to display settings; only a send switches the
+ * language. WooCommerce emails call setup_locale() when a send starts and
+ * restore_locale() when it ends, and each applies a filter with the email.
+ */
+function qtrad_wc_sending( $email ) {
+	return is_object( $email ) && ! empty( $GLOBALS['qtrad_wc_sending'][ spl_object_hash( $email ) ] );
+}
+
+function qtrad_wc_email_sending_start( $allow, $email = null ) {
+	if ( is_object( $email ) ) {
+		$GLOBALS['qtrad_wc_sending'][ spl_object_hash( $email ) ] = true;
 	}
-	return false;
+	return $allow;
+}
+
+function qtrad_wc_email_sending_end( $allow, $email = null ) {
+	if ( is_object( $email ) ) {
+		unset( $GLOBALS['qtrad_wc_sending'][ spl_object_hash( $email ) ] );
+	}
+	return $allow;
 }
 
 function qtrad_wc_email_done() {

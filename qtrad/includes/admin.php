@@ -340,12 +340,48 @@ function qtrad_language_choice_label( $code, $meta ) {
 	return '<span class="qtrad-lang-text">' . $html . ' <span class="qtrad-lang-code">(' . esc_html( $code ) . ')</span></span>';
 }
 
+/**
+ * The settings form fields, each read and sanitized on its own. qtrad_save_settings()
+ * then validates the values (codes, locales, domains) against what it accepts.
+ */
+function qtrad_settings_posted_input() {
+	if ( ! isset( $_POST['_wpnonce'] ) || ! is_string( $_POST['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_wpnonce'] ) ), 'qtrad_settings' ) ) {
+		return array();
+	}
+	$input = array( 'qtrad_settings' => '1' );
+	foreach ( array( 'default', 'url_mode', 'write_format', 'editor_mode', 'translate_options', 'filter_options', 'text_field_filters' ) as $key ) {
+		if ( isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ) {
+			$input[ $key ] = sanitize_text_field( wp_unslash( $_POST[ $key ] ) );
+		}
+	}
+	foreach ( array( 'extra_fields', 'domains' ) as $key ) {
+		if ( isset( $_POST[ $key ] ) && is_string( $_POST[ $key ] ) ) {
+			$input[ $key ] = sanitize_textarea_field( wp_unslash( $_POST[ $key ] ) );
+		}
+	}
+	foreach ( array( 'hide_default', 'detect_browser', 'hide_untranslated', 'show_prefix', 'show_alt_content', 'show_alt_message', 'force_markers', 'translate_meta' ) as $key ) {
+		if ( ! empty( $_POST[ $key ] ) ) {
+			$input[ $key ] = '1';
+		}
+	}
+	if ( isset( $_POST['enabled'] ) && is_array( $_POST['enabled'] ) ) {
+		$input['enabled'] = map_deep( wp_unslash( $_POST['enabled'] ), 'sanitize_key' );
+	}
+	foreach ( array( 'languages', 'new_language', 'slug_bases' ) as $key ) {
+		if ( isset( $_POST[ $key ] ) && is_array( $_POST[ $key ] ) ) {
+			$input[ $key ] = map_deep( wp_unslash( $_POST[ $key ] ), 'sanitize_text_field' );
+		}
+	}
+	return $input;
+}
+
 function qtrad_settings_page() {
 	if ( ! current_user_can( 'manage_options' ) ) {
 		return;
 	}
-	if ( isset( $_POST['qtrad_settings'] ) && check_admin_referer( 'qtrad_settings' ) ) {
-		$result = qtrad_save_settings( wp_unslash( $_POST ) );
+	$posted = isset( $_POST['qtrad_settings'] ) && check_admin_referer( 'qtrad_settings' ) ? qtrad_settings_posted_input() : array();
+	if ( $posted ) {
+		$result = qtrad_save_settings( $posted );
 		if ( is_wp_error( $result ) ) {
 			echo '<div id="qtrad-errors" class="notice notice-error" role="alert" tabindex="-1"><p>' . esc_html( $result->get_error_message() ) . '</p></div>';
 		} else {
@@ -397,7 +433,7 @@ function qtrad_settings_page() {
 		echo '<fieldset class="qtrad-lang-group qtrad-lang-group--' . esc_attr( $group ) . '"><legend>' . esc_html( $list[0] ) . '</legend><div class="qtrad-lang-grid">';
 		foreach ( $list[1] as $code ) {
 			echo '<label class="qtrad-lang-choice"><input type="checkbox" name="enabled[]" value="' . esc_attr( $code ) . '"' . checked( 'enabled' === $group, true, false ) . ' /> ';
-			echo qtrad_language_choice_label( $code, $catalog[ $code ] ) . '</label>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Escaped in qtrad_language_choice_label().
+			echo wp_kses( qtrad_language_choice_label( $code, $catalog[ $code ] ), array( 'span' => array( 'class' => true ), 'bdi' => array( 'lang' => true ) ) ) . '</label>';
 		}
 		echo '</div></fieldset>';
 	}

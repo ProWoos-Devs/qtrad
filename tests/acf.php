@@ -73,15 +73,28 @@ acf_check('URL validated per language', true, qtrad_acf_validate_standard(true, 
 acf_check('invalid URL in one language is reported with its name', 'Deutsch: Value must be a valid URL', qtrad_acf_validate_standard(true, '[:en]https://example.com/en[:de]nope[:]', acf_get_field('field_qtrad_url'), 'acf[field_qtrad_url]'));
 acf_check('required field needs the default language', 'English: Subtitle is required', acf_get_field_type('qtranslate_text')->validate_value(true, '[:de]Hallo[:]', acf_get_field('field_qtrad_text'), 'acf[field_qtrad_text]'));
 acf_check('character limit applies per language', 'Deutsch: Value must not exceed 20 characters', qtrad_acf_validate_standard(true, '[:en]short[:de]' . str_repeat('x', 30) . '[:]', acf_get_field('field_qtrad_std'), 'acf[field_qtrad_std]'));
-$_POST = array('acf'=>array('field_qtrad_text'=>array('en'=>'A', 'de'=>"B\\'s"), 'field_qtrad_plain'=>'p', 'field_rows'=>array('row-0'=>array('field_qtrad_std'=>array('en'=>'x', 'de'=>'y')))));
+// ACF posts its nonce with the screen name; a form save checks it and sets it to false before validating.
+$_POST = array('_acf_screen'=>'post', '_acf_nonce'=>wp_create_nonce('post'), 'acf'=>array('field_qtrad_text'=>array('en'=>'A', 'de'=>"B\\'s"), 'field_qtrad_plain'=>'p', 'field_rows'=>array('row-0'=>array('field_qtrad_std'=>array('en'=>'x', 'de'=>'y')))));
 qtrad_acf_join_posted_values();
 acf_check('posted language arrays are joined, also inside rows', array("[:en]A[:de]B\\'s[:]", 'p', '[:en]x[:de]y[:]'), array($_POST['acf']['field_qtrad_text'], $_POST['acf']['field_qtrad_plain'], $_POST['acf']['field_rows']['row-0']['field_qtrad_std']));
-$_POST = array('acf'=>array('field_qtrad_text'=>array('en'=>'Saved', 'de'=>'Gespeichert'), 'field_qtrad_url'=>array('en'=>'https://example.com/a', 'de'=>'https://example.com/b')));
+$_POST = array('acf'=>array('field_qtrad_text'=>array('en'=>'A', 'de'=>'B')));
+qtrad_acf_join_posted_values();
+acf_check('posted values without ACF nonce are left alone', array('en'=>'A', 'de'=>'B'), $_POST['acf']['field_qtrad_text']);
+$_POST = array('_acf_screen'=>'post', '_acf_nonce'=>'forged', 'acf'=>array('field_qtrad_text'=>array('en'=>'A', 'de'=>'B')));
+qtrad_acf_join_posted_values();
+acf_check('posted values with a wrong ACF nonce are left alone', array('en'=>'A', 'de'=>'B'), $_POST['acf']['field_qtrad_text']);
+require_once ABSPATH . 'wp-admin/includes/user.php';
+$acf_editor = wp_insert_user(array('user_login'=>'qtrad_acf_author', 'user_pass'=>wp_generate_password(), 'role'=>'author')); wp_set_current_user($acf_editor);
+$_POST = array('_acf_screen'=>'post', '_acf_nonce'=>wp_create_nonce('post'), 'acf'=>array('field_qtrad_text'=>array('en'=>'<b>A</b><script>x()</script>', 'de'=>'B'), 'field_qtrad_url'=>array('en'=>'https://example.com/<i>a</i>', 'de'=>'')));
+if (is_multisite() || !current_user_can('unfiltered_html')) { qtrad_acf_join_posted_values(); $acf_sanitized = array($_POST['acf']['field_qtrad_text'], $_POST['acf']['field_qtrad_url']); } else { $acf_sanitized = 'author has unfiltered_html'; }
+wp_set_current_user(1); wp_delete_user($acf_editor);
+acf_check('posted language values are sanitized for users without unfiltered_html', array('[:en]<b>A</b>x()[:de]B[:]', '[:en]https://example.com/a[:]'), $acf_sanitized);
+$_POST = array('_acf_screen'=>'post', '_acf_nonce'=>false, 'acf'=>array('field_qtrad_text'=>array('en'=>'Saved', 'de'=>'Gespeichert'), 'field_qtrad_url'=>array('en'=>'https://example.com/a', 'de'=>'https://example.com/b')));
 acf_check('ACF accepts valid per-language values', true, acf_validate_save_post());
 acf_save_post($post_id);
 acf_check('ACF saves per-language values as one string', array('[:en]Saved[:de]Gespeichert[:]', '[:en]https://example.com/a[:de]https://example.com/b[:]'), array(get_post_meta($post_id, 'qtrad_text', true), get_post_meta($post_id, 'qtrad_url', true)));
 acf_reset_validation_errors();
-$_POST = array('acf'=>array('field_qtrad_text'=>array('en'=>'', 'de'=>'Nur'), 'field_qtrad_url'=>array('en'=>'bad', 'de'=>'')));
+$_POST = array('_acf_screen'=>'post', '_acf_nonce'=>wp_create_nonce('post'), 'acf'=>array('field_qtrad_text'=>array('en'=>'', 'de'=>'Nur'), 'field_qtrad_url'=>array('en'=>'bad', 'de'=>'')));
 acf_check('ACF rejects a missing default language and an invalid URL', array(false, 2), array(acf_validate_save_post(), count(acf_get_validation_errors())));
 acf_reset_validation_errors();
 // Saving keeps languages that are not enabled, and fields detected by their markers stay strings.
@@ -89,7 +102,7 @@ $keep_id = wp_insert_post(array('post_type'=>'post', 'post_status'=>'draft', 'po
 update_post_meta($keep_id, 'qtrad_std', '[:en]Hello[:de]Hallo[:es]Hola[:]'); update_post_meta($keep_id, '_qtrad_std', 'field_qtrad_std');
 update_post_meta($keep_id, 'qtrad_plain', '[:en]Hello[:de]Hallo[:es]Hola[:]'); update_post_meta($keep_id, '_qtrad_plain', 'field_qtrad_plain');
 update_option('qtranslate_enabled_languages', array('en','de')); qtrad_reset_config();
-$_POST = array('acf'=>array('field_qtrad_std'=>array('en'=>'Hello edited', 'de'=>'Hallo'), 'field_qtrad_plain'=>array('en'=>'Plain edited', 'de'=>'')));
+$_POST = array('_acf_screen'=>'post', '_acf_nonce'=>false, 'acf'=>array('field_qtrad_std'=>array('en'=>'Hello edited', 'de'=>'Hallo'), 'field_qtrad_plain'=>array('en'=>'Plain edited', 'de'=>'')));
 acf_check('ACF accepts per-language values of a marker-detected field', true, acf_validate_save_post());
 acf_save_post($keep_id);
 acf_check('saving keeps the translation of a language that is not enabled', '[:en]Hello edited[:de]Hallo[:es]Hola[:]', get_post_meta($keep_id, 'qtrad_std', true));

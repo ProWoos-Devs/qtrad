@@ -449,17 +449,18 @@ function qtrad_available_language_where( $lang ) {
 	$marker = '(\\[:[a-z]{2,3}\\]|<!--:[a-z]{2,3}-->|\\{:[a-z]{2,3}\\})';
 	// Exclude whitespace and immediately following markers, including empty blocks.
 	$content = '(\\[:' . $lang . '\\][[:space:]]*([^[:space:]\\[]|\\[[^:])|<!--:' . $lang . '-->[[:space:]]*([^[:space:]<]|<[^!]|<![^-]|<!-[^-]|<!--[^:])|\\{:' . $lang . '\\}[[:space:]]*([^[:space:]{}]|\\{[^:]))';
-	$field = "CASE WHEN {$wpdb->posts}.post_content REGEXP %s THEN {$wpdb->posts}.post_content ELSE {$wpdb->posts}.post_title END";
-	// $field holds one %s placeholder and appears twice, so five values fill five placeholders. $lang is an enabled two- or three-letter code.
-	// phpcs:disable WordPress.DB.PreparedSQLPlaceholders.ReplacementsWrongNumber, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
-	$where = $wpdb->prepare(
+	// The text checked is the content when it has language markers, otherwise the title. $lang is an enabled two- or three-letter code.
+	return $wpdb->prepare(
 		" AND (EXISTS (SELECT 1 FROM {$wpdb->postmeta} qtrad_available WHERE qtrad_available.post_id = {$wpdb->posts}.ID AND qtrad_available.meta_key = '_qtrad_available_languages' AND (qtrad_available.meta_value = '*' OR qtrad_available.meta_value LIKE %s))
 		OR (NOT EXISTS (SELECT 1 FROM {$wpdb->postmeta} qtrad_index WHERE qtrad_index.post_id = {$wpdb->posts}.ID AND qtrad_index.meta_key = '_qtrad_available_languages')
-		AND (($field) NOT REGEXP %s OR ($field) REGEXP %s)))",
-		'%|' . $lang . '|%', $marker, $marker, $marker, $content
+		AND ((CASE WHEN {$wpdb->posts}.post_content REGEXP %s THEN {$wpdb->posts}.post_content ELSE {$wpdb->posts}.post_title END) NOT REGEXP %s
+		OR (CASE WHEN {$wpdb->posts}.post_content REGEXP %s THEN {$wpdb->posts}.post_content ELSE {$wpdb->posts}.post_title END) REGEXP %s)))",
+		'%|' . $lang . '|%',
+		$marker,
+		$marker,
+		$marker,
+		$content
 	);
-	// phpcs:enable
-	return $where;
 }
 
 function qtrad_filter_get_term( $term ) {

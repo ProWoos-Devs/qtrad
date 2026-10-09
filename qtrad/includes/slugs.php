@@ -427,8 +427,7 @@ function qtrad_slugs_resolve_request( $parse ) {
 	if ( ! $parse || ! empty( $GLOBALS['qtrad_slugs_rewritten'] ) || is_admin() || ! get_option( 'permalink_structure' ) || ! qtrad_slugs_active() || ! isset( $_SERVER['REQUEST_URI'] ) || ! is_string( $_SERVER['REQUEST_URI'] ) ) {
 		return $parse;
 	}
-	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Compared with stored slugs and written back as a request path.
-	$uri   = wp_unslash( $_SERVER['REQUEST_URI'] );
+	$uri   = qtrad_request_uri();
 	$query = strpos( $uri, '?' );
 	$path  = false === $query ? $uri : substr( $uri, 0, $query );
 	$rel   = qtrad_relative_path( $path );

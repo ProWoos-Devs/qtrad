@@ -73,12 +73,6 @@ function qtrad_request_edit_lang() {
 	return is_admin() ? qtrad_admin_language() : qtrad_current_language();
 }
 
-function qtrad_sanitize_posted_text( $value, $kind ) {
-	$value = is_string( $value ) ? $value : '';
-	if ( $kind === 'title' ) { return sanitize_text_field( $value ); }
-	return current_user_can( 'unfiltered_html' ) ? $value : wp_kses_post( $value );
-}
-
 function qtrad_parent_for_merge( $data, $postarr ) {
 	if ( isset( $data['post_type'] ) && $data['post_type'] === 'revision' && ! empty( $postarr['post_parent'] ) ) {
 		return get_post( (int) $postarr['post_parent'] );
@@ -106,7 +100,16 @@ function qtrad_filter_insert_post( $data, $postarr ) {
 			$texts = qtrad_split( $previous, null, false );
 			foreach ( qtrad_enabled_languages() as $lang ) {
 				if ( array_key_exists( $lang, $_POST['qtrad_field'][ $key ] ) ) {
-					$texts[ $lang ] = qtrad_sanitize_posted_text( wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ), $key ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Sanitized by qtrad_sanitize_posted_text() (sanitize_text_field or wp_kses_post).
+					if ( ! is_string( $_POST['qtrad_field'][ $key ][ $lang ] ) ) {
+						$texts[ $lang ] = '';
+					} elseif ( 'title' === $key ) {
+						$texts[ $lang ] = sanitize_text_field( wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ) );
+					} elseif ( ! current_user_can( 'unfiltered_html' ) ) {
+						$texts[ $lang ] = wp_kses_post( wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ) );
+					} else {
+						// Users with unfiltered_html save post content and excerpts as written, as core lets them.
+						$texts[ $lang ] = wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+					}
 				}
 			}
 			$format = qtrad_resolve_format( $previous, qtrad_setting( 'write_format', 'keep' ) );

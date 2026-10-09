@@ -160,9 +160,8 @@ function qtrad_acf_raw_value( $post_id, $field ) {
 	try {
 		return acf_get_metadata( $post_id, $field['name'] );
 	} finally {
-		foreach ( $flags as $flag => $previous ) {
-			$GLOBALS[ $flag ] = $previous;
-		}
+		$GLOBALS['qtrad_raw_meta']    = $flags['qtrad_raw_meta'];
+		$GLOBALS['qtrad_raw_options'] = $flags['qtrad_raw_options'];
 		if ( false !== $priority ) {
 			add_filter( 'get_post_metadata', 'qtrad_filter_get_meta', $priority, 4 );
 		}
@@ -197,28 +196,76 @@ function qtrad_acf_merge( $new, $old ) {
  * checks run on the stored form. Repeater and group rows are walked as well.
  */
 function qtrad_acf_join_posted_values() {
-	if ( empty( $_POST['acf'] ) || ! is_array( $_POST['acf'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Missing -- ACF verifies its nonce before this action.
+	// ACF checks its form nonce before it validates: AJAX validation with the
+	// acf_nonce action, a form save with the screen name, after which ACF sets
+	// _acf_nonce to false so it is used only once.
+	if ( wp_doing_ajax() ) {
+		$verified = isset( $_REQUEST['nonce'] ) && is_string( $_REQUEST['nonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['nonce'] ) ), 'acf_nonce' );
+	} elseif ( isset( $_POST['_acf_nonce'] ) && is_string( $_POST['_acf_nonce'] ) ) {
+		$screen   = isset( $_POST['_acf_screen'] ) && is_string( $_POST['_acf_screen'] ) ? sanitize_key( wp_unslash( $_POST['_acf_screen'] ) ) : '';
+		$verified = '' !== $screen && wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['_acf_nonce'] ) ), $screen );
+	} else {
+		$verified = isset( $_POST['_acf_nonce'] ) && false === $_POST['_acf_nonce'];
+	}
+	if ( ! $verified || empty( $_POST['acf'] ) || ! is_array( $_POST['acf'] ) ) {
 		return;
 	}
-	$_POST['acf'] = qtrad_acf_join_tree( wp_unslash( $_POST['acf'] ), true ); // phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Values stay as posted for ACF to sanitize; only language arrays are joined.
+	// Only the language arrays of multilingual fields are used, and each value is sanitized for its field type before it goes back.
+	$posted = wp_unslash( $_POST['acf'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	foreach ( qtrad_acf_posted_language_values( $posted, array() ) as $item ) {
+		list( $path, $field, $values ) = $item;
+		$joined = wp_slash( qtrad_acf_join( qtrad_acf_sanitize_languages( $values, $field ) ) );
+		$target = &$_POST['acf']; // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- Written to, not read: the joined value replaces the language array.
+		foreach ( $path as $key ) {
+			$target = &$target[ $key ];
+		}
+		$target = $joined;
+		unset( $target );
+	}
 }
 
-function qtrad_acf_join_tree( $values, $slash ) {
-	if ( ! is_array( $values ) ) {
-		return $values;
-	}
+/**
+ * The posted language arrays of multilingual fields, with their place in the
+ * posted tree. Repeater and group rows are walked as well.
+ *
+ * @return array List of array( path, field, values by language ).
+ */
+function qtrad_acf_posted_language_values( $values, $path ) {
+	$found = array();
 	foreach ( $values as $key => $value ) {
 		if ( is_string( $key ) && 0 === strpos( $key, 'field_' ) && qtrad_acf_is_language_array( $value ) ) {
 			$field = acf_get_field( $key );
 			if ( $field && qtrad_acf_is_multilingual( $field ) ) {
-				$values[ $key ] = $slash ? wp_slash( qtrad_acf_join( $value ) ) : qtrad_acf_join( $value );
+				$found[] = array( array_merge( $path, array( $key ) ), $field, $value );
 				continue;
 			}
 		}
 		if ( is_array( $value ) ) {
-			$values[ $key ] = qtrad_acf_join_tree( $value, $slash );
-		} elseif ( $slash && is_string( $value ) ) {
-			$values[ $key ] = wp_slash( $value );
+			$found = array_merge( $found, qtrad_acf_posted_language_values( $value, array_merge( $path, array( $key ) ) ) );
+		}
+	}
+	return $found;
+}
+
+/**
+ * Each language value sanitized for the field's base type. Text keeps the
+ * HTML a user may save in post content: any for users with unfiltered_html,
+ * as core allows, otherwise what wp_kses_post() permits.
+ */
+function qtrad_acf_sanitize_languages( $values, $field ) {
+	$types = qtrad_acf_field_types();
+	$base  = isset( $types[ $field['type'] ] ) ? $types[ $field['type'] ] : $field['type'];
+	foreach ( $values as $lang => $value ) {
+		$value = is_scalar( $value ) ? (string) $value : '';
+		if ( 'url' === $base ) {
+			// Tags removed only; ACF's URL check of each language then rejects anything that is not a URL.
+			$values[ $lang ] = trim( wp_strip_all_tags( $value ) );
+		} elseif ( in_array( $base, array( 'image', 'file', 'post_object' ), true ) ) {
+			$values[ $lang ] = '' === $value ? '' : (string) absint( $value );
+		} elseif ( ! current_user_can( 'unfiltered_html' ) ) {
+			$values[ $lang ] = wp_kses_post( $value );
+		} else {
+			$values[ $lang ] = $value;
 		}
 	}
 	return $values;

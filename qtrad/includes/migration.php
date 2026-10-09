@@ -105,7 +105,8 @@ function qtrad_migration_scan( $apply = false ) {
 }
 
 function qtrad_migration_notice() {
-	if ( ! current_user_can( 'manage_options' ) ) {
+	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+	if ( ! current_user_can( 'manage_options' ) || ! $screen || ! in_array( $screen->id, array( 'dashboard', 'plugins', 'settings_page_qtrad' ), true ) ) {
 		return;
 	}
 	$report = get_option( 'qtrad_migration_report', false );

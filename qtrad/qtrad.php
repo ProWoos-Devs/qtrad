@@ -75,8 +75,9 @@ function qtrad_boot() {
 		add_action( 'admin_notices', 'qtrad_conflict_notice' );
 		return;
 	}
+	// qTranslate, qTranslate-X and qTranslate-XT define QTRANS_INIT once loaded; integrations such as Dynamic Widgets check it.
 	if ( ! defined( 'QTRANS_INIT' ) ) {
-		define( 'QTRANS_INIT', true );
+		define( 'QTRANS_INIT', true ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- qTranslate public constant.
 	}
 	qtrad_normalize_request();
 	qtrad_register_front_filters();

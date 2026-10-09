@@ -114,6 +114,10 @@ Posts, pages, titles, excerpts, term names, the site title and tagline, widgets 
 
 Language markers are reserved syntax. To show an example such as [:en] in a post, encode it with HTML entities, for example &#91;:en&#93;.
 
+== Privacy ==
+
+qTrad sends no data anywhere and loads nothing from other sites. It stores the language a visitor chose in the cookie qtrans_front_language, and the language an administrator edits in, in the cookie qtrans_admin_language, under the names qTranslate used, so a site that switches plugins keeps them.
+
 == Credits ==
 
 qTrad continues the work of qTranslate by Qian Qin and qTranslate-X by the qTranslate Team, both licensed GPLv2 or later. It is an independent project and is not endorsed by the original authors.

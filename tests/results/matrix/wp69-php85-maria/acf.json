@@ -4,8 +4,8 @@
         "php": "8.5.11",
         "acf": "6.8.10"
     },
-    "passed": 28,
-    "total": 28,
+    "passed": 31,
+    "total": 31,
     "cases": [
         {
             "case": "qTranslate-XT field types are registered",
@@ -187,6 +187,42 @@
                 "[:en]A[:de]B\\'s[:]",
                 "p",
                 "[:en]x[:de]y[:]"
+            ]
+        },
+        {
+            "case": "posted values without ACF nonce are left alone",
+            "pass": true,
+            "expected": {
+                "en": "A",
+                "de": "B"
+            },
+            "actual": {
+                "en": "A",
+                "de": "B"
+            }
+        },
+        {
+            "case": "posted values with a wrong ACF nonce are left alone",
+            "pass": true,
+            "expected": {
+                "en": "A",
+                "de": "B"
+            },
+            "actual": {
+                "en": "A",
+                "de": "B"
+            }
+        },
+        {
+            "case": "posted language values are sanitized for users without unfiltered_html",
+            "pass": true,
+            "expected": [
+                "[:en]<b>A</b>x()[:de]B[:]",
+                "[:en]https://example.com/a[:]"
+            ],
+            "actual": [
+                "[:en]<b>A</b>x()[:de]B[:]",
+                "[:en]https://example.com/a[:]"
             ]
         },
         {

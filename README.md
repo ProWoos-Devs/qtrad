@@ -1,5 +1,7 @@
 # qTrad
 
+![qTrad, multilingual content for WordPress](.wordpress-org/banner-1544x500.png)
+
 [![Version](https://img.shields.io/badge/Version-1.12.2-red.svg)](https://github.com/ProWoos-Devs/qtrad/releases)
 [![WordPress](https://img.shields.io/badge/WordPress-5.8+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4+-purple.svg)](https://php.net/)

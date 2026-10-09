@@ -108,7 +108,7 @@ function qtrad_filter_insert_post( $data, $postarr ) {
 						$texts[ $lang ] = wp_kses_post( wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ) );
 					} else {
 						// Users with unfiltered_html save post content and excerpts as written, as core lets them.
-						$texts[ $lang ] = wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+						$texts[ $lang ] = wp_unslash( $_POST['qtrad_field'][ $key ][ $lang ] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- unfiltered_html, as core treats post content.
 					}
 				}
 			}

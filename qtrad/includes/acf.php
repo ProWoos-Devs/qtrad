@@ -211,7 +211,7 @@ function qtrad_acf_join_posted_values() {
 		return;
 	}
 	// Only the language arrays of multilingual fields are used, and each value is sanitized for its field type before it goes back.
-	$posted = wp_unslash( $_POST['acf'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$posted = wp_unslash( $_POST['acf'] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Each used value is sanitized in qtrad_acf_sanitize_languages(); the rest is not used.
 	foreach ( qtrad_acf_posted_language_values( $posted, array() ) as $item ) {
 		list( $path, $field, $values ) = $item;
 		$joined = wp_slash( qtrad_acf_join( qtrad_acf_sanitize_languages( $values, $field ) ) );

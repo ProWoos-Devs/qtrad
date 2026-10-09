@@ -424,7 +424,11 @@ if ( ! function_exists( 'qtranxf_term_use' ) ) {
 
 if ( ! defined( 'QTX_TRANSLATOR_SHOW_DEFAULT' ) ) {
 	define( 'QTX_TRANSLATOR_SHOW_DEFAULT', 1 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- qTranslate-XT constant.
+}
+if ( ! defined( 'QTX_TRANSLATOR_SHOW_AVAILABLE' ) ) {
 	define( 'QTX_TRANSLATOR_SHOW_AVAILABLE', 2 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- qTranslate-XT constant.
+}
+if ( ! defined( 'QTX_TRANSLATOR_SHOW_EMPTY' ) ) {
 	define( 'QTX_TRANSLATOR_SHOW_EMPTY', 4 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedConstantFound -- qTranslate-XT constant.
 }
 

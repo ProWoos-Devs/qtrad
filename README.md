@@ -38,6 +38,32 @@ The `qtranslate_*` settings, the `qtrans_*` and `qtranxf_*` functions themes cal
 
 The full description is in [`qtrad/readme.txt`](qtrad/readme.txt).
 
+## Screenshots
+
+**The block editor shows one language at a time. Language buttons switch between translations, and saving keeps every other translation.**
+
+![The block editor shows one language at a time. Language buttons switch between translations, and saving keeps every other translation.](.wordpress-org/screenshot-1.png)
+
+**Settings → Languages, with the qTranslate URL modes and language list.**
+
+![Settings → Languages, with the qTranslate URL modes and language list.](.wordpress-org/screenshot-2.png)
+
+**The accessible language chooser on the front end, with full language names.**
+
+![The accessible language chooser on the front end, with full language names.](.wordpress-org/screenshot-3.png)
+
+**After a switch from qTranslate-XT, administrators see what qTrad found and which settings it turned on.**
+
+![After a switch from qTranslate-XT, administrators see what qTrad found and which settings it turned on.](.wordpress-org/screenshot-4.png)
+
+**Translated URL bases, custom fields, options and text filters in Settings → Languages.**
+
+![Translated URL bases, custom fields, options and text filters in Settings → Languages.](.wordpress-org/screenshot-5.png)
+
+**Native name, locale, and date and time formats of each language.**
+
+![Native name, locale, and date and time formats of each language.](.wordpress-org/screenshot-6.png)
+
 ## Installation
 
 1. Back up the site and try the switch on a staging copy first.

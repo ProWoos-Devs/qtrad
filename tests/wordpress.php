@@ -32,7 +32,7 @@ foreach (glob(QTRAD_DIR . '*.php') as $entry) {
     if ($header['name'] !== '') $entries[basename($entry)] = $header['name'];
 }
 check_case('Canonical activation file is qtrad.php', 'qtrad.php', basename(QTRAD_FILE));
-check_case('WordPress discovers only one activatable entry', array('qtrad.php'=>'qTrad: qTranslate compatible multilingual sites'), $entries);
+check_case('WordPress discovers only one activatable entry', array('qtrad.php'=>'qTrad'), $entries);
 function settings($overrides = array()) {
     global $q_config, $current_screen;
     $current_screen = null;
@@ -231,6 +231,27 @@ settings(array('permalink_structure' => '/index.php/%postname%/'));
 check_case('index.php permalinks get query URLs', 'http://127.0.0.1:8931/index.php/hello/?lang=de', qtrad_convert_url('http://127.0.0.1:8931/index.php/hello/', 'de'));
 settings();
 check_case('pretty permalinks keep path URLs', 'http://127.0.0.1:8931/de/hello/', qtrad_convert_url('http://127.0.0.1:8931/hello/', 'de'));
+$qtrad_cdn = function () { return 'https://cdn.other.test/blog'; };
+add_filter('content_url', $qtrad_cdn);
+qtrad_core_paths(true);
+check_case('content directory on another host leaves the same local path routed', false, qtrad_is_neutral_path('/blog/my-post/'));
+remove_filter('content_url', $qtrad_cdn);
+$qtrad_localized_admin = function () { return 'http://127.0.0.1:8931/de/secret-admin/'; };
+add_filter('admin_url', $qtrad_localized_admin);
+qtrad_core_paths(true);
+check_case('core path that comes back with a language segment is stored without it', true, qtrad_is_neutral_path('/secret-admin/options.php'));
+remove_filter('admin_url', $qtrad_localized_admin);
+qtrad_core_paths(true);
+ob_start();
+qtrad_settings_page();
+$qtrad_page = ob_get_clean();
+check_case('settings page does not mention query fallback with pretty permalinks', false, strpos($qtrad_page, '/index.php/ permalinks') !== false);
+settings(array('permalink_structure' => ''));
+ob_start();
+qtrad_settings_page();
+$qtrad_page = ob_get_clean();
+check_case('settings page says Path mode uses query URLs with plain permalinks', true, strpos($qtrad_page, '/index.php/ permalinks') !== false);
+settings();
 $qtrad_login_filter = function () { return home_url('/secret-entry/'); };
 add_filter('login_url', $qtrad_login_filter);
 qtrad_login_admin_paths(true);

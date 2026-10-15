@@ -87,15 +87,21 @@ function qtrad_core_paths( $reset = false ) {
 	$busy = true;
 	// REST is served under the home URL, as get_rest_url() builds it.
 	$found = array( '/' . rest_get_url_prefix(), '/index.php/' . rest_get_url_prefix() );
-	foreach ( array( admin_url(), content_url(), plugins_url(), includes_url() ) as $url ) {
-		$found[] = (string) wp_parse_url( $url, PHP_URL_PATH );
-	}
+	$urls  = array( admin_url(), content_url(), plugins_url(), includes_url() );
 	if ( defined( 'WPMU_PLUGIN_URL' ) ) {
-		$found[] = (string) wp_parse_url( WPMU_PLUGIN_URL, PHP_URL_PATH );
+		$urls[] = WPMU_PLUGIN_URL;
+	}
+	// A directory served from another host (a CDN) has no path on this site.
+	$hosts = array( qtrad_home_parts()['host'], strtolower( (string) wp_parse_url( site_url(), PHP_URL_HOST ) ) );
+	foreach ( $urls as $url ) {
+		$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
+		if ( $host === '' || in_array( $host, $hosts, true ) ) {
+			$found[] = (string) wp_parse_url( $url, PHP_URL_PATH );
+		}
 	}
 	$paths = array();
 	foreach ( $found as $path ) {
-		$path = untrailingslashit( qtrad_relative_path( $path ) );
+		$path = untrailingslashit( qtrad_strip_path_language( qtrad_relative_path( $path ) ) );
 		if ( $path !== '' && $path !== '/' ) {
 			$paths[] = $path;
 		}

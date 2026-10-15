@@ -1,4 +1,4 @@
-=== qTrad: qTranslate compatible multilingual sites ===
+=== qTrad ===
 Contributors: rafaelminuesa
 Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
@@ -138,8 +138,10 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 = 1.12.5 =
 
 * First public release on WordPress.org.
+* Plugin name is now just qTrad.
 * Sites with /index.php/ permalinks get query URLs for languages, since path URLs there need server rewriting.
-* Core paths are computed once per request without recursion when a URL filter calls home_url(), and a REST prefix filtered by the theme is honored.
+* Core paths are computed once per request without recursion when a URL filter calls home_url(), skip directories served from another host, and follow a REST prefix changed after the plugins load when links are built.
+* Settings → Languages says when Path mode uses query URLs because of the permalink settings.
 
 = 1.12.4 =
 

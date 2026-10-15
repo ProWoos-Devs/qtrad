@@ -6,7 +6,7 @@
 	"category": "widgets",
 	"icon": "translation",
 	"description": "Links to the current page in each enabled language.",
-	"keywords": [ "language", "translation", "qtranslate" ],
+	"keywords": [ "language", "translation", "multilingual" ],
 	"textdomain": "qtrad",
 	"attributes": {
 		"display": {

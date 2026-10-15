@@ -455,6 +455,9 @@ function qtrad_settings_page() {
 	foreach ( $modes as $value => $label ) {
 		echo '<label class="qtrad-choice"><input type="radio" name="url_mode" value="' . esc_attr( (string) $value ) . '"' . checked( $url_mode, $value, false ) . ' /> ' . esc_html( $label ) . '</label><br />';
 	}
+	if ( ! qtrad_path_urls_served() ) {
+		echo '<p class="description">' . esc_html__( 'This site uses plain or /index.php/ permalinks, which work without server rewriting, so Path mode links use query URLs (?lang=de) here.', 'qtrad' ) . '</p>';
+	}
 	echo '</fieldset></td></tr>';
 
 	echo '<tr><th scope="row">' . esc_html__( 'URL options', 'qtrad' ) . '</th><td>';

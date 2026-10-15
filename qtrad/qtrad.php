@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: qTrad: qTranslate compatible multilingual sites
+ * Plugin Name: qTrad
  * Description: Multilingual content for WordPress. An independent continuation of qTranslate and qTranslate-X that keeps their translations and adds accessible editing and multilingual SEO.
  * Version: 1.12.5
  * Requires at least: 5.8
@@ -73,6 +73,7 @@ require_once QTRAD_DIR . 'includes/admin-fields.php';
 function qtrad_boot() {
 	if ( qtrad_conflicting_plugin() ) {
 		add_action( 'admin_notices', 'qtrad_conflict_notice' );
+		add_action( 'network_admin_notices', 'qtrad_conflict_notice' );
 		return;
 	}
 	// qTranslate, qTranslate-X and qTranslate-XT define QTRANS_INIT once loaded; integrations such as Dynamic Widgets check it.

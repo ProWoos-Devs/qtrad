@@ -235,6 +235,7 @@ $qtrad_cdn = function () { return 'https://cdn.other.test/blog'; };
 add_filter('content_url', $qtrad_cdn);
 qtrad_core_paths(true);
 check_case('content directory on another host leaves the same local path routed', false, qtrad_is_neutral_path('/blog/my-post/'));
+check_case('content directory on another host keeps its local directory neutral', true, qtrad_is_neutral_path('/' . basename(WP_CONTENT_DIR) . '/cache/endpoint.php'));
 remove_filter('content_url', $qtrad_cdn);
 $qtrad_localized_admin = function () { return 'http://127.0.0.1:8931/de/secret-admin/'; };
 add_filter('admin_url', $qtrad_localized_admin);

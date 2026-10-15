@@ -87,16 +87,30 @@ function qtrad_core_paths( $reset = false ) {
 	$busy = true;
 	// REST is served under the home URL, as get_rest_url() builds it.
 	$found = array( '/' . rest_get_url_prefix(), '/index.php/' . rest_get_url_prefix() );
-	$urls  = array( admin_url(), content_url(), plugins_url(), includes_url() );
-	if ( defined( 'WPMU_PLUGIN_URL' ) ) {
-		$urls[] = WPMU_PLUGIN_URL;
+	// URL => directory on disk; the directory is used when the URL is on another host.
+	$urls = array(
+		array( admin_url(), '' ),
+		array( content_url(), WP_CONTENT_DIR ),
+		array( plugins_url(), WP_PLUGIN_DIR ),
+		array( includes_url(), '' ),
+	);
+	if ( defined( 'WPMU_PLUGIN_URL' ) && defined( 'WPMU_PLUGIN_DIR' ) ) {
+		$urls[] = array( WPMU_PLUGIN_URL, WPMU_PLUGIN_DIR );
 	}
-	// A directory served from another host (a CDN) has no path on this site.
 	$hosts = array( qtrad_home_parts()['host'], strtolower( (string) wp_parse_url( site_url(), PHP_URL_HOST ) ) );
-	foreach ( $urls as $url ) {
+	$root  = wp_normalize_path( untrailingslashit( ABSPATH ) );
+	$site  = untrailingslashit( (string) wp_parse_url( site_url( '/' ), PHP_URL_PATH ) );
+	foreach ( $urls as $entry ) {
+		list( $url, $dir ) = $entry;
 		$host = strtolower( (string) wp_parse_url( $url, PHP_URL_HOST ) );
 		if ( $host === '' || in_array( $host, $hosts, true ) ) {
 			$found[] = (string) wp_parse_url( $url, PHP_URL_PATH );
+			continue;
+		}
+		// Served from a CDN: the origin still answers the same directory on this site.
+		$dir = wp_normalize_path( untrailingslashit( (string) $dir ) );
+		if ( $dir !== '' && strpos( $dir, $root . '/' ) === 0 ) {
+			$found[] = $site . substr( $dir, strlen( $root ) );
 		}
 	}
 	$paths = array();

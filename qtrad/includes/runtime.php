@@ -94,6 +94,12 @@ function qtrad_core_paths( $reset = false ) {
 			$paths[] = $path;
 		}
 	}
+	// With WordPress in a subdirectory, core redirects the admin path typed at the home root (wp_redirect_admin_locations()).
+	$base  = qtrad_site_relative_path();
+	$admin = untrailingslashit( qtrad_relative_path( (string) wp_parse_url( admin_url(), PHP_URL_PATH ) ) );
+	if ( $base !== '' && strpos( $admin, $base . '/' ) === 0 ) {
+		$paths[] = substr( $admin, strlen( $base ) );
+	}
 	$paths = array_values( array_unique( $paths ) );
 	$key = $current;
 	return $paths;
@@ -105,13 +111,14 @@ function qtrad_site_relative_path() {
 	return $path === '/' ? '' : $path;
 }
 
-/** A PHP file of WordPress's own directory, such as the login, cron or comment endpoints, but not the front controller. */
+/**
+ * A PHP file of WordPress's own directory, such as the login, cron or comment
+ * endpoints, but not the front controller. With WordPress in a subdirectory the
+ * same name at the home root counts too, as core redirects the login page from there.
+ */
 function qtrad_is_core_script( $path ) {
 	$base = qtrad_site_relative_path();
-	if ( $base !== '' && strpos( $path, $base . '/' ) !== 0 ) {
-		return false;
-	}
-	$file = substr( $path, strlen( $base ) + 1 );
+	$file = $base !== '' && strpos( $path, $base . '/' ) === 0 ? substr( $path, strlen( $base ) + 1 ) : substr( $path, 1 );
 	if ( ! preg_match( '/^[a-z0-9_.-]+\.php$/i', $file ) || 'index.php' === strtolower( $file ) ) {
 		return false;
 	}

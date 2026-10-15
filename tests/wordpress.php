@@ -199,8 +199,19 @@ $qtrad_siteurl = get_option('siteurl');
 update_option('siteurl', untrailingslashit(home_url('/')) . '/wp');
 check_case('REST stays under home with WordPress in a subdirectory', true, qtrad_is_neutral_path('/wp-json/wp/v2/posts'));
 check_case('admin path follows the WordPress subdirectory', true, qtrad_is_neutral_path('/wp/wp-admin/'));
+check_case('admin path at the home root stays neutral with WordPress in a subdirectory', true, qtrad_is_neutral_path('/wp-admin/'));
+check_case('login file at the home root stays neutral with WordPress in a subdirectory', true, qtrad_is_neutral_path('/wp-login.php'));
+check_case('front controller stays routed with WordPress in a subdirectory', false, qtrad_is_neutral_path('/wp/index.php'));
+check_case('ordinary page stays routed with WordPress in a subdirectory', false, qtrad_is_neutral_path('/wp-guide/'));
 update_option('siteurl', $qtrad_siteurl);
 qtrad_core_paths(true);
+foreach (array('edit-post' => false, 'plugins' => true, 'dashboard' => true) as $qtrad_screen => $qtrad_shown) {
+    set_current_screen($qtrad_screen);
+    ob_start();
+    qtrad_conflict_notice();
+    check_case('conflict notice on ' . $qtrad_screen . ($qtrad_shown ? ' is shown' : ' is not shown'), $qtrad_shown, ob_get_clean() !== '');
+}
+$GLOBALS['current_screen'] = null;
 $qtrad_login_filter = function () { return home_url('/secret-entry/'); };
 add_filter('login_url', $qtrad_login_filter);
 qtrad_login_admin_paths(true);

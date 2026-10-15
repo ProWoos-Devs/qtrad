@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.12.4
+Stable tag: 1.12.5
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -67,7 +67,7 @@ The URL modes are the same as in qTranslate-X:
 3. Subdomain
 4. One domain per language
 
-Sites with plain permalinks use query URLs. Subdomains and separate domains need the matching DNS, certificates and server configuration.
+Sites with plain permalinks or /index.php/ permalinks use query URLs, since those work without server rewriting. Subdomains and separate domains need the matching DNS, certificates and server configuration.
 
 An explicit language URL always wins. Cookies and browser negotiation apply only to the bare homepage, and other bare URLs serve the default language when its prefix is hidden. REST endpoints, assets, admin URLs, feeds and XML sitemaps never receive language prefixes.
 
@@ -135,9 +135,14 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.12.4 =
+= 1.12.5 =
 
 * First public release on WordPress.org.
+* Sites with /index.php/ permalinks get query URLs for languages, since path URLs there need server rewriting.
+* Core paths are computed once per request without recursion when a URL filter calls home_url(), and a REST prefix filtered by the theme is honored.
+
+= 1.12.4 =
+
 * The notice shown while another qTranslate plugin is active appears only on the dashboard and the plugins screen.
 * With WordPress in a subdirectory, the admin path and the login page typed at the home root stay language neutral.
 

@@ -195,6 +195,12 @@ check_case('moved content directory is neutral', true, qtrad_is_neutral_path('/a
 remove_filter('content_url', $qtrad_content_filter);
 qtrad_core_paths(true);
 check_case('former content path is not neutral once moved back', false, qtrad_is_neutral_path('/assets/uploads/report'));
+$qtrad_siteurl = get_option('siteurl');
+update_option('siteurl', untrailingslashit(home_url('/')) . '/wp');
+check_case('REST stays under home with WordPress in a subdirectory', true, qtrad_is_neutral_path('/wp-json/wp/v2/posts'));
+check_case('admin path follows the WordPress subdirectory', true, qtrad_is_neutral_path('/wp/wp-admin/'));
+update_option('siteurl', $qtrad_siteurl);
+qtrad_core_paths(true);
 $qtrad_login_filter = function () { return home_url('/secret-entry/'); };
 add_filter('login_url', $qtrad_login_filter);
 qtrad_login_admin_paths(true);

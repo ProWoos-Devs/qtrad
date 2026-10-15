@@ -138,7 +138,7 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 = 1.12.3 =
 
 * First public release on WordPress.org.
-* Admin, content, plugin, includes and REST paths are taken from WordPress (admin_url(), content_url(), plugins_url(), includes_url(), rest_get_url_prefix()), so moved directories and WordPress in a subdirectory stay language neutral.
+* Admin, content, plugin, includes and REST paths are taken from WordPress (admin_url(), content_url(), plugins_url(), includes_url(), rest_get_url_prefix() under the home URL), so moved directories and WordPress in a subdirectory stay language neutral.
 
 = 1.12.2 =
 

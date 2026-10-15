@@ -79,7 +79,8 @@ function qtrad_core_paths( $reset = false ) {
 	if ( $key === $current ) {
 		return $paths;
 	}
-	$found = array( qtrad_site_relative_path() . '/' . rest_get_url_prefix() );
+	// REST is served under the home URL, as get_rest_url() builds it.
+	$found = array( '/' . rest_get_url_prefix(), '/index.php/' . rest_get_url_prefix() );
 	foreach ( array( admin_url(), content_url(), plugins_url(), includes_url() ) as $url ) {
 		$found[] = (string) wp_parse_url( $url, PHP_URL_PATH );
 	}

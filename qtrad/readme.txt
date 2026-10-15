@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.12.2
+Stable tag: 1.12.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,9 +135,13 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.12.2 =
+= 1.12.3 =
 
 * First public release on WordPress.org.
+* Admin, content, plugin, includes and REST paths are taken from WordPress (admin_url(), content_url(), plugins_url(), includes_url(), rest_get_url_prefix()), so moved directories and WordPress in a subdirectory stay language neutral.
+
+= 1.12.2 =
+
 * Posted settings, editor fields and ACF values are sanitized where they are read; ACF values are joined only after ACF's own nonce checks out.
 * The migration notice shows on the dashboard, the plugins screen and Settings → Languages.
 * Readme: privacy section.

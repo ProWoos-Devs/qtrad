@@ -69,16 +69,22 @@ function qtrad_is_neutral_path( $path ) {
  * so moved directories and WordPress in a subdirectory are covered.
  */
 function qtrad_core_paths( $reset = false ) {
-	static $paths = array(), $key = null;
+	static $paths = array(), $key = null, $busy = false;
 	if ( $reset ) {
 		$paths = array();
 		$key = null;
 		return array();
 	}
-	$current = get_option( 'home' ) . '|' . get_option( 'siteurl' );
+	// The REST prefix is part of the key because themes may filter it after plugins_loaded.
+	$current = get_option( 'home' ) . '|' . get_option( 'siteurl' ) . '|' . rest_get_url_prefix();
 	if ( $key === $current ) {
 		return $paths;
 	}
+	// URL filters run from here may call home_url(), which asks for these paths again.
+	if ( $busy ) {
+		return array();
+	}
+	$busy = true;
 	// REST is served under the home URL, as get_rest_url() builds it.
 	$found = array( '/' . rest_get_url_prefix(), '/index.php/' . rest_get_url_prefix() );
 	foreach ( array( admin_url(), content_url(), plugins_url(), includes_url() ) as $url ) {
@@ -102,13 +108,30 @@ function qtrad_core_paths( $reset = false ) {
 	}
 	$paths = array_values( array_unique( $paths ) );
 	$key = $current;
+	$busy = false;
 	return $paths;
 }
 
-/** Path of the WordPress directory relative to the home path, '' when they match. */
-function qtrad_site_relative_path() {
-	$path = untrailingslashit( qtrad_relative_path( (string) wp_parse_url( site_url( '/' ), PHP_URL_PATH ) ) );
-	return $path === '/' ? '' : $path;
+/** Path of the WordPress directory relative to the home path, '' when they match. Cached per home and site URL. */
+function qtrad_site_relative_path( $reset = false ) {
+	static $path = '', $key = null, $busy = false;
+	if ( $reset ) {
+		$key = null;
+		return '';
+	}
+	$current = get_option( 'home' ) . '|' . get_option( 'siteurl' );
+	if ( $key === $current ) {
+		return $path;
+	}
+	if ( $busy ) {
+		return '';
+	}
+	$busy = true;
+	$found = untrailingslashit( qtrad_relative_path( (string) wp_parse_url( site_url( '/' ), PHP_URL_PATH ) ) );
+	$path = $found === '/' ? '' : $found;
+	$key = $current;
+	$busy = false;
+	return $path;
 }
 
 /**
@@ -117,6 +140,9 @@ function qtrad_site_relative_path() {
  * same name at the home root counts too, as core redirects the login page from there.
  */
 function qtrad_is_core_script( $path ) {
+	if ( ! preg_match( '/\.php$/i', $path ) ) {
+		return false;
+	}
 	$base = qtrad_site_relative_path();
 	$file = $base !== '' && strpos( $path, $base . '/' ) === 0 ? substr( $path, strlen( $base ) + 1 ) : substr( $path, 1 );
 	if ( ! preg_match( '/^[a-z0-9_.-]+\.php$/i', $file ) || 'index.php' === strtolower( $file ) ) {
@@ -305,12 +331,22 @@ function qtrad_strip_query_lang( $query ) {
 	return implode( '&', array_filter( $parts, function ( $part ) { return rawurldecode( explode( '=', $part, 2 )[0] ) !== 'lang'; } ) );
 }
 
+/**
+ * Path URLs need the web server to rewrite. Plain permalinks and /index.php/
+ * permalinks (the same test as WP_Rewrite::using_index_permalinks()) work
+ * without it, so those sites get query URLs.
+ */
+function qtrad_path_urls_served() {
+	$structure = (string) get_option( 'permalink_structure', '' );
+	return $structure !== '' && ! preg_match( '#^/*index\.php#', $structure );
+}
+
 function qtrad_url_for_language( $url, $lang, $show_language ) {
 	$parts = qtrad_parse_local_url( $url );
 	if ( ! $parts || ! qtrad_is_local_url( $parts ) ) { return $url; }
 	$home = qtrad_home_parts();
 	$mode = (int) qtrad_config( 'url_mode' );
-	if ( $mode === QTRAD_URL_PATH && get_option( 'permalink_structure', '' ) === '' ) { $mode = QTRAD_URL_QUERY; }
+	if ( $mode === QTRAD_URL_PATH && ! qtrad_path_urls_served() ) { $mode = QTRAD_URL_QUERY; }
 	$parts['query'] = qtrad_strip_query_lang( $parts['query'] );
 	$rel = qtrad_strip_path_language( qtrad_relative_path( $parts['path'] ) );
 	$parts['path'] = $home['path'] . $rel;

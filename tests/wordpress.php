@@ -212,6 +212,25 @@ foreach (array('edit-post' => false, 'plugins' => true, 'dashboard' => true) as 
     check_case('conflict notice on ' . $qtrad_screen . ($qtrad_shown ? ' is shown' : ' is not shown'), $qtrad_shown, ob_get_clean() !== '');
 }
 $GLOBALS['current_screen'] = null;
+$qtrad_recursive = function ($url) { qtrad_is_neutral_path('/sample/'); home_url('/'); return $url; };
+add_filter('admin_url', $qtrad_recursive);
+add_filter('site_url', $qtrad_recursive);
+qtrad_core_paths(true);
+qtrad_site_relative_path(true);
+check_case('URL filters that call home_url() do not recurse into the core paths', true, qtrad_is_neutral_path('/wp-admin/'));
+remove_filter('admin_url', $qtrad_recursive);
+remove_filter('site_url', $qtrad_recursive);
+qtrad_core_paths(true);
+qtrad_site_relative_path(true);
+$qtrad_prefix = function () { return 'api'; };
+add_filter('rest_url_prefix', $qtrad_prefix);
+check_case('REST prefix filtered after the paths were cached is neutral', true, qtrad_is_neutral_path('/api/wp/v2/posts'));
+remove_filter('rest_url_prefix', $qtrad_prefix);
+check_case('default REST prefix is neutral again', true, qtrad_is_neutral_path('/wp-json/wp/v2/posts'));
+settings(array('permalink_structure' => '/index.php/%postname%/'));
+check_case('index.php permalinks get query URLs', 'http://127.0.0.1:8931/index.php/hello/?lang=de', qtrad_convert_url('http://127.0.0.1:8931/index.php/hello/', 'de'));
+settings();
+check_case('pretty permalinks keep path URLs', 'http://127.0.0.1:8931/de/hello/', qtrad_convert_url('http://127.0.0.1:8931/hello/', 'de'));
 $qtrad_login_filter = function () { return home_url('/secret-entry/'); };
 add_filter('login_url', $qtrad_login_filter);
 qtrad_login_admin_paths(true);

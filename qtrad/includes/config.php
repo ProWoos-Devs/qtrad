@@ -278,6 +278,7 @@ function qtrad_switch_blog( $new_blog_id, $previous_blog_id, $context = 'switch'
 	if ( function_exists( 'qtrad_login_admin_paths' ) ) {
 		qtrad_login_admin_paths( true );
 		qtrad_core_paths( true );
+		qtrad_site_relative_path( true );
 	}
 	if ( $context === 'restore' && ! empty( $GLOBALS['qtrad_blog_configs'] ) ) {
 		$previous = array_pop( $GLOBALS['qtrad_blog_configs'] );

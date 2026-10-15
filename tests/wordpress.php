@@ -183,6 +183,18 @@ foreach (array('/wp-comments-post.php', '/wp-cron.php', '/wp-signup.php', '/wp-a
     check_case('neutral path ' . $qtrad_path, true, qtrad_is_neutral_path($qtrad_path));
 }
 check_case('ordinary page is not neutral', false, qtrad_is_neutral_path('/wp-guide/'));
+foreach (array('/wp-admin/', '/wp-includes/js/jquery/jquery.min.js', '/wp-content/uploads/report', '/wp-json/wp/v2/posts', '/xmlrpc.php', '/wp-login.php') as $qtrad_path) {
+    check_case('core path ' . $qtrad_path, true, qtrad_is_neutral_path($qtrad_path));
+}
+check_case('front controller is not neutral', false, qtrad_is_neutral_path('/index.php'));
+check_case('PHP name outside the WordPress directory is not neutral', false, qtrad_is_neutral_path('/wp-guide.php'));
+$qtrad_content_filter = function () { return home_url('/assets'); };
+add_filter('content_url', $qtrad_content_filter);
+qtrad_core_paths(true);
+check_case('moved content directory is neutral', true, qtrad_is_neutral_path('/assets/uploads/report'));
+remove_filter('content_url', $qtrad_content_filter);
+qtrad_core_paths(true);
+check_case('former content path is not neutral once moved back', false, qtrad_is_neutral_path('/assets/uploads/report'));
 $qtrad_login_filter = function () { return home_url('/secret-entry/'); };
 add_filter('login_url', $qtrad_login_filter);
 qtrad_login_admin_paths(true);

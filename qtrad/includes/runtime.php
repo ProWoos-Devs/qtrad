@@ -53,15 +53,68 @@ function qtrad_strip_path_info_language() {
 
 function qtrad_is_neutral_path( $path ) {
 	$path = qtrad_strip_path_language( qtrad_relative_path( $path ) );
-	if ( preg_match( '#^/(?:wp-admin|wp-json|wp-content|wp-includes|wp-[a-z0-9_-]+\.php|xmlrpc\.php|oauth|feed)(?:/|$)|/(?:feed|rss2?|atom|rdf)/?$|^/(?:[a-z0-9_-]*sitemap[a-z0-9_-]*\.(?:xml|xsl)|robots\.txt|favicon\.ico)$|\.(?:css|js|png|gif|jpe?g|svg|webp|tiff?|ico|woff2?|pdf|zip|rar|7z|swf|mpe?g|divx|avi|mp3|mp4|apk)$#i', $path ) ) {
+	if ( preg_match( '#^/(?:oauth|feed)(?:/|$)|/(?:feed|rss2?|atom|rdf)/?$|^/(?:[a-z0-9_-]*sitemap[a-z0-9_-]*\.(?:xml|xsl)|robots\.txt|favicon\.ico)$|\.(?:css|js|png|gif|jpe?g|svg|webp|tiff?|ico|woff2?|pdf|zip|rar|7z|swf|mpe?g|divx|avi|mp3|mp4|apk)$#i', $path ) ) {
 		return true;
 	}
-	foreach ( qtrad_login_admin_paths() as $neutral ) {
+	foreach ( array_merge( qtrad_core_paths(), qtrad_login_admin_paths() ) as $neutral ) {
 		if ( $path === $neutral || strpos( $path, $neutral . '/' ) === 0 ) {
 			return true;
 		}
 	}
-	return false;
+	return qtrad_is_core_script( $path );
+}
+
+/**
+ * Admin, content, plugin, includes and REST paths as WordPress reports them,
+ * so moved directories and WordPress in a subdirectory are covered.
+ */
+function qtrad_core_paths( $reset = false ) {
+	static $paths = array(), $key = null;
+	if ( $reset ) {
+		$paths = array();
+		$key = null;
+		return array();
+	}
+	$current = get_option( 'home' ) . '|' . get_option( 'siteurl' );
+	if ( $key === $current ) {
+		return $paths;
+	}
+	$found = array( qtrad_site_relative_path() . '/' . rest_get_url_prefix() );
+	foreach ( array( admin_url(), content_url(), plugins_url(), includes_url() ) as $url ) {
+		$found[] = (string) wp_parse_url( $url, PHP_URL_PATH );
+	}
+	if ( defined( 'WPMU_PLUGIN_URL' ) ) {
+		$found[] = (string) wp_parse_url( WPMU_PLUGIN_URL, PHP_URL_PATH );
+	}
+	$paths = array();
+	foreach ( $found as $path ) {
+		$path = untrailingslashit( qtrad_relative_path( $path ) );
+		if ( $path !== '' && $path !== '/' ) {
+			$paths[] = $path;
+		}
+	}
+	$paths = array_values( array_unique( $paths ) );
+	$key = $current;
+	return $paths;
+}
+
+/** Path of the WordPress directory relative to the home path, '' when they match. */
+function qtrad_site_relative_path() {
+	$path = untrailingslashit( qtrad_relative_path( (string) wp_parse_url( site_url( '/' ), PHP_URL_PATH ) ) );
+	return $path === '/' ? '' : $path;
+}
+
+/** A PHP file of WordPress's own directory, such as the login, cron or comment endpoints, but not the front controller. */
+function qtrad_is_core_script( $path ) {
+	$base = qtrad_site_relative_path();
+	if ( $base !== '' && strpos( $path, $base . '/' ) !== 0 ) {
+		return false;
+	}
+	$file = substr( $path, strlen( $base ) + 1 );
+	if ( ! preg_match( '/^[a-z0-9_.-]+\.php$/i', $file ) || 'index.php' === strtolower( $file ) ) {
+		return false;
+	}
+	return is_file( ABSPATH . $file );
 }
 
 /**
@@ -126,7 +179,7 @@ function qtrad_is_rest_request() {
 	if ( isset( $_GET['rest_route'] ) ) { return true; } // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only request routing.
 	$uri = qtrad_request_uri();
 	$path = qtrad_strip_path_language( qtrad_relative_path( (string) wp_parse_url( $uri, PHP_URL_PATH ) ) );
-	$prefix = function_exists( 'rest_get_url_prefix' ) ? rest_get_url_prefix() : 'wp-json';
+	$prefix = rest_get_url_prefix();
 	return (bool) preg_match( '#^/(?:index\.php/)?' . preg_quote( $prefix, '#' ) . '(?:/|$)#', $path );
 }
 

@@ -1,49 +1,49 @@
-2026-10-15 05:08:11+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
-2026-10-15 05:08:11+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
-2026-10-15 05:08:11+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
-2026-10-15 05:08:11+00:00 [Note] [Entrypoint]: Initializing database files
-2026-10-15 05:08:13+00:00 [Note] [Entrypoint]: Database files initialized
-2026-10-15 05:08:13+00:00 [Note] [Entrypoint]: Starting temporary server
-2026-10-15 05:08:14+00:00 [Note] [Entrypoint]: Temporary server started.
+2026-10-15 05:17:37+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+2026-10-15 05:17:37+00:00 [Note] [Entrypoint]: Switching to dedicated user 'mysql'
+2026-10-15 05:17:37+00:00 [Note] [Entrypoint]: Entrypoint script for MySQL Server 8.0.46-1.el9 started.
+2026-10-15 05:17:37+00:00 [Note] [Entrypoint]: Initializing database files
+2026-10-15 05:17:40+00:00 [Note] [Entrypoint]: Database files initialized
+2026-10-15 05:17:40+00:00 [Note] [Entrypoint]: Starting temporary server
+2026-10-15 05:17:40+00:00 [Note] [Entrypoint]: Temporary server started.
 '/var/lib/mysql/mysql.sock' -> '/var/run/mysqld/mysqld.sock'
-2026-10-15 05:08:15+00:00 [Note] [Entrypoint]: GENERATED ROOT PASSWORD: LTK8e7stUXOHMbKdKLOlSSNtjgWL8A0K
-2026-10-15 05:08:15+00:00 [Note] [Entrypoint]: Creating database qtrad
-2026-10-15 05:08:15+00:00 [Note] [Entrypoint]: Creating user qtrad
-2026-10-15 05:08:15+00:00 [Note] [Entrypoint]: Giving user qtrad access to schema qtrad
+2026-10-15 05:17:41+00:00 [Note] [Entrypoint]: GENERATED ROOT PASSWORD: y+LXyrzFhJSjMbrs1UFMOZZxWYFnaSwE
+2026-10-15 05:17:42+00:00 [Note] [Entrypoint]: Creating database qtrad
+2026-10-15 05:17:42+00:00 [Note] [Entrypoint]: Creating user qtrad
+2026-10-15 05:17:42+00:00 [Note] [Entrypoint]: Giving user qtrad access to schema qtrad
 
-2026-10-15 05:08:15+00:00 [Note] [Entrypoint]: Stopping temporary server
-2026-10-15 05:08:16+00:00 [Note] [Entrypoint]: Temporary server stopped
+2026-10-15 05:17:42+00:00 [Note] [Entrypoint]: Stopping temporary server
+2026-10-15 05:17:44+00:00 [Note] [Entrypoint]: Temporary server stopped
 
-2026-10-15 05:08:16+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
+2026-10-15 05:17:44+00:00 [Note] [Entrypoint]: MySQL init process done. Ready for start up.
 
-2026-10-15T05:08:11.488134Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
-2026-10-15T05:08:11.488190Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.46) initializing of server in progress as process 87
-2026-10-15T05:08:11.491356Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
-2026-10-15T05:08:11.925350Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
-2026-10-15T05:08:12.346434Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
-2026-10-15T05:08:14.162368Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
-2026-10-15T05:08:14.162903Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 143
-2026-10-15T05:08:14.170141Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
-2026-10-15T05:08:14.299040Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
-2026-10-15T05:08:14.369785Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2026-10-15T05:08:14.369811Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
-2026-10-15T05:08:14.370831Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
-2026-10-15T05:08:14.377333Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
-2026-10-15T05:08:14.377396Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
+2026-10-15T05:17:37.316717Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-10-15T05:17:37.316792Z 0 [System] [MY-013169] [Server] /usr/sbin/mysqld (mysqld 8.0.46) initializing of server in progress as process 87
+2026-10-15T05:17:37.321012Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-15T05:17:37.445568Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-10-15T05:17:38.092650Z 6 [Warning] [MY-010453] [Server] root@localhost is created with an empty password ! Please consider switching off the --initialize-insecure option.
+2026-10-15T05:17:40.360294Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-10-15T05:17:40.361584Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 142
+2026-10-15T05:17:40.370329Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-15T05:17:40.449814Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-10-15T05:17:40.570074Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2026-10-15T05:17:40.570103Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2026-10-15T05:17:40.571428Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2026-10-15T05:17:40.583534Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Socket: /var/run/mysqld/mysqlx.sock
+2026-10-15T05:17:40.583622Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 0  MySQL Community Server - GPL.
 Warning: Unable to load '/usr/share/zoneinfo/iso3166.tab' as time zone. Skipping it.
 Warning: Unable to load '/usr/share/zoneinfo/leap-seconds.list' as time zone. Skipping it.
 Warning: Unable to load '/usr/share/zoneinfo/leapseconds' as time zone. Skipping it.
 Warning: Unable to load '/usr/share/zoneinfo/tzdata.zi' as time zone. Skipping it.
 Warning: Unable to load '/usr/share/zoneinfo/zone.tab' as time zone. Skipping it.
 Warning: Unable to load '/usr/share/zoneinfo/zone1970.tab' as time zone. Skipping it.
-2026-10-15T05:08:15.186873Z 13 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.46).
-2026-10-15T05:08:15.965455Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.46)  MySQL Community Server - GPL.
-2026-10-15T05:08:16.351093Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
-2026-10-15T05:08:16.352103Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 1
-2026-10-15T05:08:16.355617Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
-2026-10-15T05:08:16.472358Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
-2026-10-15T05:08:16.534105Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
-2026-10-15T05:08:16.534763Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
-2026-10-15T05:08:16.536352Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
-2026-10-15T05:08:16.543625Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
-2026-10-15T05:08:16.543670Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.
+2026-10-15T05:17:42.033761Z 13 [System] [MY-013172] [Server] Received SHUTDOWN from user root. Shutting down mysqld (Version: 8.0.46).
+2026-10-15T05:17:43.063839Z 0 [System] [MY-010910] [Server] /usr/sbin/mysqld: Shutdown complete (mysqld 8.0.46)  MySQL Community Server - GPL.
+2026-10-15T05:17:44.228177Z 0 [Warning] [MY-011068] [Server] The syntax '--skip-host-cache' is deprecated and will be removed in a future release. Please use SET GLOBAL host_cache_size=0 instead.
+2026-10-15T05:17:44.229020Z 0 [System] [MY-010116] [Server] /usr/sbin/mysqld (mysqld 8.0.46) starting as process 1
+2026-10-15T05:17:44.233423Z 1 [System] [MY-013576] [InnoDB] InnoDB initialization has started.
+2026-10-15T05:17:44.308602Z 1 [System] [MY-013577] [InnoDB] InnoDB initialization has ended.
+2026-10-15T05:17:44.401308Z 0 [Warning] [MY-010068] [Server] CA certificate ca.pem is self signed.
+2026-10-15T05:17:44.401338Z 0 [System] [MY-013602] [Server] Channel mysql_main configured to support TLS. Encrypted connections are now supported for this channel.
+2026-10-15T05:17:44.403065Z 0 [Warning] [MY-011810] [Server] Insecure configuration for --pid-file: Location '/var/run/mysqld' in the path is accessible to all OS users. Consider choosing a different directory.
+2026-10-15T05:17:44.415347Z 0 [System] [MY-011323] [Server] X Plugin ready for connections. Bind-address: '::' port: 33060, socket: /var/run/mysqld/mysqlx.sock
+2026-10-15T05:17:44.415395Z 0 [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.46'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.

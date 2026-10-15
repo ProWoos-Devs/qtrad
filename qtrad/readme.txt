@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.12.3
+Stable tag: 1.12.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,9 +135,14 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.12.3 =
+= 1.12.4 =
 
 * First public release on WordPress.org.
+* The notice shown while another qTranslate plugin is active appears only on the dashboard and the plugins screen.
+* With WordPress in a subdirectory, the admin path and the login page typed at the home root stay language neutral.
+
+= 1.12.3 =
+
 * Admin, content, plugin, includes and REST paths are taken from WordPress (admin_url(), content_url(), plugins_url(), includes_url(), rest_get_url_prefix() under the home URL), so moved directories and WordPress in a subdirectory stay language neutral.
 
 = 1.12.2 =

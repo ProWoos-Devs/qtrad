@@ -2,7 +2,7 @@
 /**
  * Plugin Name: qTrad: qTranslate compatible multilingual sites
  * Description: Multilingual content for WordPress. An independent continuation of qTranslate and qTranslate-X that keeps their translations and adds accessible editing and multilingual SEO.
- * Version: 1.12.3
+ * Version: 1.12.4
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * Author: Rafael Minuesa
@@ -24,7 +24,7 @@ if ( defined( 'QTRAD_VERSION' ) ) {
 	return;
 }
 
-define( 'QTRAD_VERSION', '1.12.3' );
+define( 'QTRAD_VERSION', '1.12.4' );
 define( 'QTRAD_FILE', __FILE__ );
 define( 'QTRAD_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -116,8 +116,10 @@ function qtrad_enqueue_front() {
 	wp_enqueue_style( 'qtrad-front', plugins_url( 'assets/css/front.css', QTRAD_FILE ), array(), QTRAD_VERSION );
 }
 
+/** Shown on the dashboard and the plugins screen, where the other plugin can be deactivated. */
 function qtrad_conflict_notice() {
-	if ( ! current_user_can( 'activate_plugins' ) ) {
+	$screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+	if ( ! current_user_can( 'activate_plugins' ) || ! $screen || ! in_array( $screen->id, array( 'dashboard', 'dashboard-network', 'plugins', 'plugins-network' ), true ) ) {
 		return;
 	}
 	$other = qtrad_conflicting_plugin();

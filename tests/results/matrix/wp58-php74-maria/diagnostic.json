@@ -1,0 +1,15 @@
+{
+    "active": [
+        "qtrad\/qtrad.php"
+    ],
+    "seo_owner": "",
+    "yoast_xml": null,
+    "yoast_sitemaps": false,
+    "sitemap_rewrites": {
+        "^wp-sitemap\\.xml$": "index.php?sitemap=index",
+        "^wp-sitemap\\.xsl$": "index.php?sitemap-stylesheet=sitemap",
+        "^wp-sitemap-index\\.xsl$": "index.php?sitemap-stylesheet=index",
+        "^wp-sitemap-([a-z]+?)-([a-z\\d_-]+?)-(\\d+?)\\.xml$": "index.php?sitemap=$matches[1]&sitemap-subtype=$matches[2]&paged=$matches[3]",
+        "^wp-sitemap-([a-z]+?)-(\\d+?)\\.xml$": "index.php?sitemap=$matches[1]&paged=$matches[2]"
+    }
+}

@@ -152,6 +152,10 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   check('Settings error receives focus', await page.evaluate(() => document.activeElement.id), 'qtrad-errors');
   check('Invalid language value is retained', await page.locator('#qtrad-new-code').inputValue(), 'invalid');
   check('A validation error opens the tab that holds the field', await page.getByRole('tab', {name:'Languages'}).getAttribute('aria-selected'), 'true');
+  await page.getByRole('tab', {name:'URLs'}).click();
+  await page.getByRole('button', {name:'Save languages', exact:true}).click();
+  await page.locator('#qtrad-errors').waitFor();
+  check('A validation error on another tab opens that tab, not the remembered one', [await page.getByRole('tab', {name:'Languages'}).getAttribute('aria-selected'), await page.locator('#qtrad-panel-languages').isVisible(), await page.evaluate(() => window.location.hash)], ['true', true, '#qtrad-panel-languages']);
   await axe('#qtrad-errors', 'Settings error notice');
   await page.locator('#qtrad-new-code').fill('zz');
   await page.locator('#qtrad-new-name').fill('Test language');

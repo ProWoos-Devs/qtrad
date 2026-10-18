@@ -48,10 +48,11 @@
       tabs[next].focus();
     });
   });
-  var current = 0, hash = window.location.hash.slice(1);
+  var current = 0, hash = window.location.hash.slice(1), errors = document.getElementById('qtrad-errors');
   tabs.forEach(function (tab, i) { if (tab.classList.contains('nav-tab-active')) current = i; });
-  panels.forEach(function (panel, i) { if (panel.id === hash) current = i; });
-  activate(current, false);
+  // A remembered tab wins over the server's default, except after a validation error, where the server opened the tab that holds the field.
+  if (!errors) panels.forEach(function (panel, i) { if (panel.id === hash) current = i; });
+  activate(current, !!errors);
   // The section sits right under the tabs, so a remembered tab starts at the top of the page, where notices are.
-  if (hash && panels[current].id === hash) window.scrollTo(0, 0);
+  if (hash) window.scrollTo(0, 0);
 })();

@@ -669,9 +669,12 @@ foreach (array('post', 'user') as $value_type) {
 $value_saved = array('qtranslate_filter_options'=>get_option('qtranslate_filter_options', null), 'qtranslate_text_field_filters'=>get_option('qtranslate_text_field_filters', null));
 update_option('value_test_mods', array('note'=>'[:en]Thanks[:de]Danke[:]', 'n'=>1));
 update_option('value_test_plain', 'plain');
+update_option('connectors_ai_value_test_api_key', '[:en]key[:de]key[:]');
+update_option('value_test_secret', '[:en]key[:de]key[:]');
 settings(array('qtranslate_enabled_languages'=>array('en','de','es'), 'qtrad_settings'=>$value_settings + array('translate_options'=>'all')));
 $value_names = qtrad_option_names_to_translate();
 check_case('every option with markers is translated, except the ones qTrad reads itself', array(true, false, false), array(in_array('value_test_mods', $value_names, true), in_array('value_test_plain', $value_names, true), in_array('blogname', $value_names, true)));
+check_case('options holding credentials are never translated', array(false, false), array(in_array('connectors_ai_value_test_api_key', $value_names, true), in_array('value_test_secret', $value_names, true)));
 update_option('qtranslate_filter_options', array('value_test_%', 'value_exact', 'blogname', 'bad name!'));
 settings(array('qtranslate_enabled_languages'=>array('en','de','es'), 'qtrad_settings'=>$value_settings + array('translate_options'=>'list')));
 $value_names = qtrad_option_names_to_translate();
@@ -731,6 +734,8 @@ check_case('scan leaves a choice the admin made', array('translate_meta'=>false,
 foreach ($value_saved as $value_name => $value_before) { if (null === $value_before) delete_option($value_name); else update_option($value_name, $value_before); }
 delete_option('value_test_mods');
 delete_option('value_test_plain');
+delete_option('connectors_ai_value_test_api_key');
+delete_option('value_test_secret');
 unset($GLOBALS['qtrad_translates_values']);
 // Date and time formats per language, and qTranslate-XT helpers.
 settings(array('qtranslate_enabled_languages'=>array('en','de','es'), 'date_format'=>'F j, Y', 'time_format'=>'g:i a'));

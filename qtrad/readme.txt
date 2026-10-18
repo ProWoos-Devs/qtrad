@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.12.5
+Stable tag: 1.12.6
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,9 +135,13 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.12.5 =
+= 1.12.6 =
 
 * First public release on WordPress.org.
+* Options that hold credentials (API keys, secrets, tokens, passwords, the WordPress connector settings) are never translated, whatever the Options setting lists.
+
+= 1.12.5 =
+
 * Sites with /index.php/ permalinks get query URLs for languages, since path URLs there need server rewriting.
 * Core paths are computed once per request without recursion when a URL filter calls home_url(), use the local path of directories served from another host (a CDN), and follow a REST prefix changed after the plugins load when links are built.
 * Settings → Languages says when Path mode uses query URLs because of the permalink settings.

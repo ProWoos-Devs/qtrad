@@ -57,9 +57,16 @@ function qtrad_option_patterns() {
 	return qtrad_name_list( qtrad_config( 'filter_options' ), '/^[A-Za-z0-9_.:%\-]+$/D' );
 }
 
-/** Options qTrad reads itself or that are no content. */
+/**
+ * Options qTrad reads itself, that are no content, or that hold credentials.
+ * API keys, secrets, tokens and passwords, including the settings of the
+ * WordPress connectors, are never hooked, whatever the Options setting lists.
+ */
 function qtrad_option_is_raw( $name ) {
-	return in_array( $name, array( 'cron', 'blogname', 'blogdescription', 'rewrite_rules', 'active_plugins' ), true ) || (bool) preg_match( '/^(?:qtranslate_|qtrad_|_transient_|_site_transient_)/', (string) $name );
+	$name = (string) $name;
+	return in_array( $name, array( 'cron', 'blogname', 'blogdescription', 'rewrite_rules', 'active_plugins' ), true )
+		|| (bool) preg_match( '/^(?:qtranslate_|qtrad_|_transient_|_site_transient_|connectors_)/', $name )
+		|| (bool) preg_match( '/(?:api_key|apikey|secret|token|password|credential)/i', $name );
 }
 
 function qtrad_option_names_to_translate() {

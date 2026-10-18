@@ -2,14 +2,14 @@
 
 ![qTrad, multilingual content for WordPress](.wordpress-org/banner-1544x500.png)
 
-[![Version](https://img.shields.io/badge/Version-1.12.5-red.svg)](https://github.com/ProWoos-Devs/qtrad/releases)
+[![Version](https://img.shields.io/badge/Version-1.12.6-red.svg)](https://github.com/ProWoos-Devs/qtrad/releases)
 [![WordPress](https://img.shields.io/badge/WordPress-5.8+-blue.svg)](https://wordpress.org/)
 [![PHP Version](https://img.shields.io/badge/PHP-7.4+-purple.svg)](https://php.net/)
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-green.svg)](https://www.gnu.org/licenses/gpl-2.0.html)
 
 **qTranslate compatible multilingual sites.** qTrad is an independent continuation of qTranslate and qTranslate-X. Every translation of a post lives in that same post, so there are no duplicate posts to keep in sync, and switching languages in the editor is one click. Sites built on qTranslate, qTranslate-X or qTranslate-XT keep their translations and settings as they are, and gain modern editing, accessible language controls and multilingual SEO.
 
-> **Current Version: 1.12.5** | **Released: October 15, 2026** | Prepared for wordpress.org, slug `qtrad`
+> **Current Version: 1.12.6** | **Released: October 18, 2026** | Prepared for wordpress.org, slug `qtrad`
 
 ## What it reads
 

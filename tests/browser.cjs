@@ -132,6 +132,17 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   await page.goto(base + '/wp-admin/options-general.php?page=qtrad');
   await axe('.qtrad-settings', 'Language settings');
   check('Settings stylesheet loads', await page.locator('.qtrad-lang-grid').first().evaluate(n => getComputedStyle(n).display), 'grid');
+  check('Settings tabs use tab semantics', await page.locator('.qtrad-tabs a[role="tab"]').count(), 4);
+  check('Only the selected section is shown', [await page.locator('#qtrad-panel-languages').isVisible(), await page.locator('#qtrad-panel-advanced').isVisible()], [true, false]);
+  await page.getByRole('tab', {name:'Advanced'}).click();
+  check('Clicking a tab shows its section', [await page.locator('#qtrad-panel-languages').isVisible(), await page.locator('#qtrad-panel-advanced').isVisible(), await page.getByRole('tab', {name:'Advanced'}).getAttribute('aria-selected')], [false, true, 'true']);
+  await page.getByRole('tab', {name:'Advanced'}).press('ArrowLeft');
+  check('Arrow keys move the selection and the focus', [await page.getByRole('tab', {name:'Content'}).getAttribute('aria-selected'), await page.evaluate(() => document.activeElement.id)], ['true', 'qtrad-tab-content']);
+  await axe('.qtrad-settings', 'Language settings, Content tab');
+  await page.getByRole('button', {name:'Save languages', exact:true}).click();
+  await page.locator('.qtrad-settings .notice-success').waitFor();
+  check('Saving returns to the same tab', await page.getByRole('tab', {name:'Content'}).getAttribute('aria-selected'), 'true');
+  await page.getByRole('tab', {name:'Languages'}).click();
   await page.locator('#qtrad-new-code').fill('invalid');
   await page.locator('#qtrad-new-name').fill('Invalid language');
   await page.locator('#qtrad-new-locale').fill('invalid!');
@@ -140,6 +151,7 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   await page.waitForFunction(() => document.activeElement.id === 'qtrad-errors');
   check('Settings error receives focus', await page.evaluate(() => document.activeElement.id), 'qtrad-errors');
   check('Invalid language value is retained', await page.locator('#qtrad-new-code').inputValue(), 'invalid');
+  check('A validation error opens the tab that holds the field', await page.getByRole('tab', {name:'Languages'}).getAttribute('aria-selected'), 'true');
   await axe('#qtrad-errors', 'Settings error notice');
   await page.locator('#qtrad-new-code').fill('zz');
   await page.locator('#qtrad-new-name').fill('Test language');
@@ -149,7 +161,7 @@ let chromium; try { ({chromium} = require('playwright')); } catch { ({chromium} 
   check('New language becomes enabled', await page.locator('input[name="enabled[]"][value="zz"]').isChecked());
   await page.locator('input[name="enabled[]"][value="es"]').check();
   await page.getByRole('button', {name:'Save languages', exact:true}).click();
-  await page.locator('input[name="blogname[es]"]').waitFor();
+  await page.locator('input[name="blogname[es]"]').waitFor({state:'attached'});
   check('Settings preserve disabled Spanish site title', await page.locator('input[name="blogname[es]"]').inputValue(), 'Título español');
   await page.screenshot({path: 'tests/results/settings.png', fullPage:true});
   await page.goto(base + '/wp-admin/edit-tags.php?taxonomy=category');

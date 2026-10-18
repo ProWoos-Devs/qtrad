@@ -2,14 +2,14 @@
 # This file is distributed under the GPL-2.0-or-later.
 msgid ""
 msgstr ""
-"Project-Id-Version: qTrad 1.12.7\n"
+"Project-Id-Version: qTrad 1.13.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/qtrad\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-18T19:50:30+00:00\n"
+"POT-Creation-Date: 2026-10-18T20:42:59+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: qtrad\n"
@@ -86,7 +86,8 @@ msgstr ""
 #: includes/admin.php:156
 #: includes/admin.php:213
 #: includes/admin.php:421
-#: includes/admin.php:431
+#: includes/admin.php:424
+#: includes/admin.php:457
 msgid "Languages"
 msgstr ""
 
@@ -286,225 +287,242 @@ msgstr ""
 msgid "Reads qTranslate comments, qTranslate-X brackets and swirly brackets. Shared language settings are retained. For compatibility with the original qTranslate, use comment markers for posts."
 msgstr ""
 
-#: includes/admin.php:432
+#: includes/admin.php:425
+msgid "URLs"
+msgstr ""
+
+#: includes/admin.php:426
+#: includes/overview.php:120
+msgid "Content"
+msgstr ""
+
+#: includes/admin.php:427
+msgid "Advanced"
+msgstr ""
+
+#: includes/admin.php:437
+msgid "Settings sections"
+msgstr ""
+
+#: includes/admin.php:458
 msgid "Your languages"
 msgstr ""
 
-#: includes/admin.php:432
+#: includes/admin.php:458
 msgid "Add languages"
 msgstr ""
 
-#: includes/admin.php:442
+#: includes/admin.php:468
 msgid "Default language"
 msgstr ""
 
-#: includes/admin.php:448
-msgid "URL mode"
-msgstr ""
-
-#: includes/admin.php:450
-msgid "Query (?lang=en) — qTranslate mode 1"
-msgstr ""
-
-#: includes/admin.php:451
-msgid "Path (/en/page/) — qTranslate mode 2, the usual choice"
-msgstr ""
-
-#: includes/admin.php:452
-msgid "Subdomain (en.example.com) — mode 3"
-msgstr ""
-
-#: includes/admin.php:453
-msgid "One domain per language — qTranslate-X mode 4"
-msgstr ""
-
-#: includes/admin.php:459
-msgid "This site uses plain or /index.php/ permalinks, which work without server rewriting, so Path mode links use query URLs (?lang=de) here."
-msgstr ""
-
-#: includes/admin.php:463
-msgid "URL options"
-msgstr ""
-
-#: includes/admin.php:464
-msgid "Hide the default language in the URL"
-msgstr ""
-
-#: includes/admin.php:465
-msgid "On the first visit to the home page, use the browser language"
-msgstr ""
-
-#: includes/admin.php:466
-msgid "Hide posts that have no translation in the current language"
-msgstr ""
-
-#: includes/admin.php:469
-msgid "When a translation is missing"
-msgstr ""
-
-#: includes/admin.php:470
-msgid "Prefix the fallback with the language name"
-msgstr ""
-
-#: includes/admin.php:471
-msgid "On content and excerpts, show “only available in …”"
-msgstr ""
-
-#: includes/admin.php:472
-msgid "Also show the available translation below the message"
-msgstr ""
-
 #: includes/admin.php:475
-msgid "Write format"
-msgstr ""
-
-#: includes/admin.php:477
-msgid "Keep the format already in the field"
-msgstr ""
-
-#: includes/admin.php:478
-msgid "qTranslate-X brackets [:en]"
-msgstr ""
-
-#: includes/admin.php:479
-msgid "qTranslate comments <!--:en-->"
-msgstr ""
-
-#: includes/admin.php:480
-msgid "Swirly brackets {:en}"
-msgstr ""
-
-#: includes/admin.php:485
-msgid "Keep preserves each existing field’s format and uses qTranslate comments for new translations. Brackets and swirly brackets require qTranslate-X or qTrad."
-msgstr ""
-
-#: includes/admin.php:487
-msgid "Editor"
-msgstr ""
-
-#: includes/admin.php:487
-msgid "Editor mode"
-msgstr ""
-
-#: includes/admin.php:488
-msgid "Language switching buttons"
-msgstr ""
-
-#: includes/admin.php:489
-msgid "Raw tags in the editor"
-msgstr ""
-
-#: includes/admin.php:492
-msgid "Site title"
-msgstr ""
-
-#: includes/admin.php:496
-msgid "Saved with bracket tags so WordPress does not strip them. The same string is what qTranslate-X would have stored in blogname."
-msgstr ""
-
-#: includes/admin.php:499
-msgid "Tagline"
-msgstr ""
-
-#: includes/admin.php:505
-msgid "Domains"
-msgstr ""
-
-#: includes/admin.php:507
-msgid "Used by URL mode 4. One per line: de = de.example.com"
-msgstr ""
-
-#: includes/admin.php:512
-msgid "Custom fields"
-msgstr ""
-
-#: includes/admin.php:514
-msgid "Meta keys, one per line. On the public site their values are shown in the current language. A plain update merges into the language you are editing in the admin bar."
-msgstr ""
-
-#: includes/admin.php:515
-msgid "On the public site, also show every other custom field and user profile field that contains language markers in the current language"
-msgstr ""
-
-#: includes/admin.php:519
-msgid "Options"
-msgstr ""
-
-#: includes/admin.php:521
-msgid "Translate only the site title and tagline"
-msgstr ""
-
-#: includes/admin.php:522
-msgid "Translate every option that contains language markers, such as theme and widget settings"
-msgstr ""
-
-#: includes/admin.php:523
-msgid "Translate only the options listed below"
-msgstr ""
-
-#: includes/admin.php:528
-msgid "Option names"
-msgstr ""
-
-#: includes/admin.php:529
-msgid "Separated by spaces, with % for any characters, for example widget_%. Options are translated on the public site only; wp-admin keeps showing what is stored."
-msgstr ""
-
-#: includes/admin.php:532
-msgid "Text filters"
-msgstr ""
-
-#: includes/admin.php:534
-msgid "Filter hooks of your theme or other plugins whose text should be shown in the current language, separated by spaces."
-msgstr ""
-
-#: includes/admin.php:537
-msgid "Language markers"
-msgstr ""
-
-#: includes/admin.php:537
-msgid "Keep markers even when translations are identical"
-msgstr ""
-
-#: includes/admin.php:539
 msgid "Language names and locales"
 msgstr ""
 
-#: includes/admin.php:546
-#: includes/admin.php:553
+#: includes/admin.php:482
+#: includes/admin.php:489
 msgid "Native name"
 msgstr ""
 
-#: includes/admin.php:546
-#: includes/admin.php:553
+#: includes/admin.php:482
+#: includes/admin.php:489
 msgid "WordPress locale"
 msgstr ""
 
-#: includes/admin.php:546
+#: includes/admin.php:482
 msgid "Date format"
 msgstr ""
 
-#: includes/admin.php:546
+#: includes/admin.php:482
 msgid "Time format"
 msgstr ""
 
-#: includes/admin.php:551
+#: includes/admin.php:487
 msgid "Date and time formats use the PHP date syntax of Settings → General, for example j. F Y. Leave them empty to use the site formats. Formats saved by qTranslate-X in strftime style keep working."
 msgstr ""
 
-#: includes/admin.php:552
+#: includes/admin.php:488
 msgid "Add a language"
 msgstr ""
 
-#: includes/admin.php:552
+#: includes/admin.php:488
 msgid "Provide a two- or three-letter code, native name and WordPress locale, for example: is, Íslenska, is_IS. The language will be enabled when you save."
 msgstr ""
 
-#: includes/admin.php:553
+#: includes/admin.php:489
 msgid "Language code"
 msgstr ""
 
-#: includes/admin.php:557
+#: includes/admin.php:496
+msgid "URL mode"
+msgstr ""
+
+#: includes/admin.php:498
+msgid "Query (?lang=en) — qTranslate mode 1"
+msgstr ""
+
+#: includes/admin.php:499
+msgid "Path (/en/page/) — qTranslate mode 2, the usual choice"
+msgstr ""
+
+#: includes/admin.php:500
+msgid "Subdomain (en.example.com) — mode 3"
+msgstr ""
+
+#: includes/admin.php:501
+msgid "One domain per language — qTranslate-X mode 4"
+msgstr ""
+
+#: includes/admin.php:507
+msgid "This site uses plain or /index.php/ permalinks, which work without server rewriting, so Path mode links use query URLs (?lang=de) here."
+msgstr ""
+
+#: includes/admin.php:511
+msgid "URL options"
+msgstr ""
+
+#: includes/admin.php:512
+msgid "Hide the default language in the URL"
+msgstr ""
+
+#: includes/admin.php:513
+msgid "On the first visit to the home page, use the browser language"
+msgstr ""
+
+#: includes/admin.php:514
+msgid "Hide posts that have no translation in the current language"
+msgstr ""
+
+#: includes/admin.php:517
+msgid "Domains"
+msgstr ""
+
+#: includes/admin.php:519
+msgid "Used by URL mode 4. One per line: de = de.example.com"
+msgstr ""
+
+#: includes/admin.php:527
+msgid "When a translation is missing"
+msgstr ""
+
+#: includes/admin.php:528
+msgid "Prefix the fallback with the language name"
+msgstr ""
+
+#: includes/admin.php:529
+msgid "On content and excerpts, show “only available in …”"
+msgstr ""
+
+#: includes/admin.php:530
+msgid "Also show the available translation below the message"
+msgstr ""
+
+#: includes/admin.php:533
+msgid "Write format"
+msgstr ""
+
+#: includes/admin.php:535
+msgid "Keep the format already in the field"
+msgstr ""
+
+#: includes/admin.php:536
+msgid "qTranslate-X brackets [:en]"
+msgstr ""
+
+#: includes/admin.php:537
+msgid "qTranslate comments <!--:en-->"
+msgstr ""
+
+#: includes/admin.php:538
+msgid "Swirly brackets {:en}"
+msgstr ""
+
+#: includes/admin.php:543
+msgid "Keep preserves each existing field’s format and uses qTranslate comments for new translations. Brackets and swirly brackets require qTranslate-X or qTrad."
+msgstr ""
+
+#: includes/admin.php:545
+msgid "Editor"
+msgstr ""
+
+#: includes/admin.php:545
+msgid "Editor mode"
+msgstr ""
+
+#: includes/admin.php:546
+msgid "Language switching buttons"
+msgstr ""
+
+#: includes/admin.php:547
+msgid "Raw tags in the editor"
+msgstr ""
+
+#: includes/admin.php:550
+msgid "Language markers"
+msgstr ""
+
+#: includes/admin.php:550
+msgid "Keep markers even when translations are identical"
+msgstr ""
+
+#: includes/admin.php:551
+msgid "Site title"
+msgstr ""
+
+#: includes/admin.php:555
+msgid "Saved with bracket tags so WordPress does not strip them. The same string is what qTranslate-X would have stored in blogname."
+msgstr ""
+
+#: includes/admin.php:558
+msgid "Tagline"
+msgstr ""
+
+#: includes/admin.php:567
+msgid "Custom fields"
+msgstr ""
+
+#: includes/admin.php:569
+msgid "Meta keys, one per line. On the public site their values are shown in the current language. A plain update merges into the language you are editing in the admin bar."
+msgstr ""
+
+#: includes/admin.php:570
+msgid "On the public site, also show every other custom field and user profile field that contains language markers in the current language"
+msgstr ""
+
+#: includes/admin.php:574
+msgid "Options"
+msgstr ""
+
+#: includes/admin.php:576
+msgid "Translate only the site title and tagline"
+msgstr ""
+
+#: includes/admin.php:577
+msgid "Translate every option that contains language markers, such as theme and widget settings"
+msgstr ""
+
+#: includes/admin.php:578
+msgid "Translate only the options listed below"
+msgstr ""
+
+#: includes/admin.php:583
+msgid "Option names"
+msgstr ""
+
+#: includes/admin.php:584
+msgid "Separated by spaces, with % for any characters, for example widget_%. Options are translated on the public site only; wp-admin keeps showing what is stored."
+msgstr ""
+
+#: includes/admin.php:587
+msgid "Text filters"
+msgstr ""
+
+#: includes/admin.php:589
+msgid "Filter hooks of your theme or other plugins whose text should be shown in the current language, separated by spaces."
+msgstr ""
+
+#: includes/admin.php:593
 msgid "Save languages"
 msgstr ""
 
@@ -629,10 +647,6 @@ msgstr ""
 
 #: includes/overview.php:120
 msgid "Published content missing a translation, by language"
-msgstr ""
-
-#: includes/overview.php:120
-msgid "Content"
 msgstr ""
 
 #. translators: %d: number of published items

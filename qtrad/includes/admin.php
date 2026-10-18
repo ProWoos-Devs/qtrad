@@ -420,11 +420,37 @@ function qtrad_settings_page() {
 	echo '<div class="wrap qtrad-settings">';
 	echo '<h1>' . esc_html__( 'Languages', 'qtrad' ) . '</h1>';
 	echo '<p class="description">' . esc_html__( 'Reads qTranslate comments, qTranslate-X brackets and swirly brackets. Shared language settings are retained. For compatibility with the original qTranslate, use comment markers for posts.', 'qtrad' ) . '</p>';
+	$tabs = array(
+		'languages' => __( 'Languages', 'qtrad' ),
+		'urls'      => __( 'URLs', 'qtrad' ),
+		'content'   => __( 'Content', 'qtrad' ),
+		'advanced'  => __( 'Advanced', 'qtrad' ),
+	);
+	$active = $posted && isset( $_POST['qtrad_tab'] ) && is_string( $_POST['qtrad_tab'] ) ? sanitize_key( wp_unslash( $_POST['qtrad_tab'] ) ) : 'languages';
+	if ( $invalid ) {
+		// A validation error opens the tab that holds the field.
+		$active = in_array( $result->get_error_code(), array( 'qtrad_domain', 'qtrad_domain_duplicate' ), true ) ? 'urls' : 'languages';
+	}
+	if ( ! isset( $tabs[ $active ] ) ) {
+		$active = 'languages';
+	}
+	echo '<nav class="nav-tab-wrapper qtrad-tabs" aria-label="' . esc_attr__( 'Settings sections', 'qtrad' ) . '">';
+	foreach ( $tabs as $id => $label ) {
+		echo '<a class="nav-tab' . ( $id === $active ? ' nav-tab-active' : '' ) . '" id="qtrad-tab-' . esc_attr( $id ) . '" href="#qtrad-panel-' . esc_attr( $id ) . '">' . esc_html( $label ) . '</a>';
+	}
+	echo '</nav>';
+	// One form for every tab: the tabs only show one section at a time, Save keeps the whole form.
+	$panel = function ( $id ) use ( $tabs, $active ) {
+		echo '<section id="qtrad-panel-' . esc_attr( $id ) . '" class="qtrad-panel' . ( $id === $active ? ' qtrad-panel--active' : '' ) . '" aria-labelledby="qtrad-tab-' . esc_attr( $id ) . '">';
+		echo '<h2 class="qtrad-panel__title">' . esc_html( $tabs[ $id ] ) . '</h2>';
+		echo '<table class="form-table" role="presentation">';
+	};
 	echo '<form method="post">';
 	wp_nonce_field( 'qtrad_settings' );
 	echo '<input type="hidden" name="qtrad_settings" value="1" />';
-	echo '<table class="form-table" role="presentation">';
+	echo '<input type="hidden" name="qtrad_tab" id="qtrad-tab-field" value="' . esc_attr( $active ) . '" />';
 
+	$panel( 'languages' );
 	// Enabled languages first, in their stored order; the rest A to Z by name in the admin's language.
 	$available = array_diff( array_keys( $catalog ), $enabled );
 	usort( $available, function ( $a, $b ) { return strnatcasecmp( qtrad_language_admin_name( $a ), qtrad_language_admin_name( $b ) ); } );
@@ -445,6 +471,28 @@ function qtrad_settings_page() {
 	}
 	echo '</select></td></tr>';
 
+	echo '</table>';
+	echo '<details><summary>' . esc_html__( 'Language names and locales', 'qtrad' ) . '</summary>';
+	foreach ( $catalog as $code => $meta ) {
+		if ( ! in_array( $code, $enabled, true ) ) { continue; }
+		echo '<fieldset><legend>' . esc_html( $meta['name'] . ' (' . $code . ')' ) . '</legend>';
+		$formats = array( 'date_format' => get_option( 'qtranslate_date_formats', array() ), 'time_format' => get_option( 'qtranslate_time_formats', array() ) );
+		$meta['date_format'] = is_array( $formats['date_format'] ) && isset( $formats['date_format'][ $code ] ) && is_string( $formats['date_format'][ $code ] ) ? $formats['date_format'][ $code ] : '';
+		$meta['time_format'] = is_array( $formats['time_format'] ) && isset( $formats['time_format'][ $code ] ) && is_string( $formats['time_format'][ $code ] ) ? $formats['time_format'][ $code ] : '';
+		foreach ( array( 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ), 'date_format' => __( 'Date format', 'qtrad' ), 'time_format' => __( 'Time format', 'qtrad' ) ) as $key => $label ) {
+			echo '<p><label for="qtrad-' . esc_attr( $code . '-' . $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-' . esc_attr( $code . '-' . $key ) . '" name="languages[' . esc_attr( $code ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['languages'][ $code ][ $key ] ) && is_string( $_POST['languages'][ $code ][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['languages'][ $code ][ $key ] ) ) : $meta[ $key ] ) . '"' . ( in_array( $key, array( 'date_format', 'time_format' ), true ) ? ' aria-describedby="qtrad-format-help" placeholder="' . esc_attr( get_option( $key ) ) . '"' : '' ) . ' /></p>';
+		}
+		echo '</fieldset>';
+	}
+	echo '<p class="description" id="qtrad-format-help">' . esc_html__( 'Date and time formats use the PHP date syntax of Settings → General, for example j. F Y. Leave them empty to use the site formats. Formats saved by qTranslate-X in strftime style keep working.', 'qtrad' ) . '</p>';
+	echo '</details><fieldset><legend><h2>' . esc_html__( 'Add a language', 'qtrad' ) . '</h2></legend><p>' . esc_html__( 'Provide a two- or three-letter code, native name and WordPress locale, for example: is, Íslenska, is_IS. The language will be enabled when you save.', 'qtrad' ) . '</p>';
+	foreach ( array( 'code' => __( 'Language code', 'qtrad' ), 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
+		echo '<p><label for="qtrad-new-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-new-' . esc_attr( $key ) . '" name="new_language[' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['new_language'][ $key ] ) && is_string( $_POST['new_language'][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['new_language'][ $key ] ) ) : '' ) . '" /></p>';
+	}
+	echo '</fieldset>';
+	echo '</section>';
+
+	$panel( 'urls' );
 	echo '<tr><th scope="row">' . esc_html__( 'URL mode', 'qtrad' ) . '</th><td><fieldset><legend class="screen-reader-text">' . esc_html__( 'URL mode', 'qtrad' ) . '</legend>';
 	$modes = array(
 		1 => __( 'Query (?lang=en) — qTranslate mode 1', 'qtrad' ),
@@ -466,6 +514,16 @@ function qtrad_settings_page() {
 	echo '<label class="qtrad-choice"><input type="checkbox" name="hide_untranslated" value="1"' . checked( (bool) qtrad_config( 'hide_untranslated' ), true, false ) . ' /> ' . esc_html__( 'Hide posts that have no translation in the current language', 'qtrad' ) . '</label>';
 	echo '</td></tr>';
 
+	echo '<tr><th scope="row"><label for="qtrad-domains">' . esc_html__( 'Domains', 'qtrad' ) . '</label></th><td>';
+	echo '<textarea name="domains" id="qtrad-domains" rows="5" class="large-text code">' . esc_textarea( trim( $domain_lines ) ) . '</textarea>';
+	echo '<p class="description">' . esc_html__( 'Used by URL mode 4. One per line: de = de.example.com', 'qtrad' ) . '</p>';
+	echo '</td></tr>';
+
+	qtrad_slugs_settings_row();
+
+	echo '</table></section>';
+
+	$panel( 'content' );
 	echo '<tr><th scope="row">' . esc_html__( 'When a translation is missing', 'qtrad' ) . '</th><td>';
 	echo '<label class="qtrad-choice"><input type="checkbox" name="show_prefix" value="1"' . checked( (bool) qtrad_setting( 'show_prefix', true ), true, false ) . ' /> ' . esc_html__( 'Prefix the fallback with the language name', 'qtrad' ) . '</label><br />';
 	echo '<label class="qtrad-choice"><input type="checkbox" name="show_alt_message" value="1"' . checked( (bool) qtrad_setting( 'show_alt_message', true ), true, false ) . ' /> ' . esc_html__( 'On content and excerpts, show “only available in …”', 'qtrad' ) . '</label>';
@@ -489,6 +547,7 @@ function qtrad_settings_page() {
 	echo '<label class="qtrad-choice"><input type="radio" name="editor_mode" value="raw"' . checked( $editor, 'raw', false ) . ' /> ' . esc_html__( 'Raw tags in the editor', 'qtrad' ) . '</label>';
 	echo '</fieldset></td></tr>';
 
+	echo '<tr><th scope="row">' . esc_html__( 'Language markers', 'qtrad' ) . '</th><td><label class="qtrad-choice"><input type="checkbox" name="force_markers" value="1"' . checked( (bool) qtrad_setting( 'force_markers', false ), true, false ) . ' /> ' . esc_html__( 'Keep markers even when translations are identical', 'qtrad' ) . '</label></td></tr>';
 	echo '<tr><th scope="row">' . esc_html__( 'Site title', 'qtrad' ) . '</th><td>';
 	foreach ( $enabled as $code ) {
 		echo '<p><label>' . esc_html( qtrad_language_name( $code ) ) . '<br /><input type="text" class="regular-text" lang="' . esc_attr( str_replace( '_', '-', qtrad_config( 'locale' )[ $code ] ) ) . '" dir="' . esc_attr( qtrad_language_direction( $code ) ) . '" name="blogname[' . esc_attr( $code ) . ']" value="' . esc_attr( isset( $names[ $code ] ) ? $names[ $code ] : '' ) . '" /></label></p>';
@@ -502,13 +561,9 @@ function qtrad_settings_page() {
 	}
 	echo '</td></tr>';
 
-	echo '<tr><th scope="row"><label for="qtrad-domains">' . esc_html__( 'Domains', 'qtrad' ) . '</label></th><td>';
-	echo '<textarea name="domains" id="qtrad-domains" rows="5" class="large-text code">' . esc_textarea( trim( $domain_lines ) ) . '</textarea>';
-	echo '<p class="description">' . esc_html__( 'Used by URL mode 4. One per line: de = de.example.com', 'qtrad' ) . '</p>';
-	echo '</td></tr>';
+	echo '</table></section>';
 
-	qtrad_slugs_settings_row();
-
+	$panel( 'advanced' );
 	echo '<tr><th scope="row"><label for="qtrad-extra">' . esc_html__( 'Custom fields', 'qtrad' ) . '</label></th><td>';
 	echo '<textarea name="extra_fields" id="qtrad-extra" rows="4" class="large-text code">' . esc_textarea( (string) qtrad_setting( 'extra_fields', '' ) ) . '</textarea>';
 	echo '<p class="description">' . esc_html__( 'Meta keys, one per line. On the public site their values are shown in the current language. A plain update merges into the language you are editing in the admin bar.', 'qtrad' ) . '</p>';
@@ -534,26 +589,7 @@ function qtrad_settings_page() {
 	echo '<p class="description">' . esc_html__( 'Filter hooks of your theme or other plugins whose text should be shown in the current language, separated by spaces.', 'qtrad' ) . '</p>';
 	echo '</td></tr>';
 
-	echo '<tr><th scope="row">' . esc_html__( 'Language markers', 'qtrad' ) . '</th><td><label class="qtrad-choice"><input type="checkbox" name="force_markers" value="1"' . checked( (bool) qtrad_setting( 'force_markers', false ), true, false ) . ' /> ' . esc_html__( 'Keep markers even when translations are identical', 'qtrad' ) . '</label></td></tr>';
-	echo '</table>';
-	echo '<details><summary>' . esc_html__( 'Language names and locales', 'qtrad' ) . '</summary>';
-	foreach ( $catalog as $code => $meta ) {
-		if ( ! in_array( $code, $enabled, true ) ) { continue; }
-		echo '<fieldset><legend>' . esc_html( $meta['name'] . ' (' . $code . ')' ) . '</legend>';
-		$formats = array( 'date_format' => get_option( 'qtranslate_date_formats', array() ), 'time_format' => get_option( 'qtranslate_time_formats', array() ) );
-		$meta['date_format'] = is_array( $formats['date_format'] ) && isset( $formats['date_format'][ $code ] ) && is_string( $formats['date_format'][ $code ] ) ? $formats['date_format'][ $code ] : '';
-		$meta['time_format'] = is_array( $formats['time_format'] ) && isset( $formats['time_format'][ $code ] ) && is_string( $formats['time_format'][ $code ] ) ? $formats['time_format'][ $code ] : '';
-		foreach ( array( 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ), 'date_format' => __( 'Date format', 'qtrad' ), 'time_format' => __( 'Time format', 'qtrad' ) ) as $key => $label ) {
-			echo '<p><label for="qtrad-' . esc_attr( $code . '-' . $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-' . esc_attr( $code . '-' . $key ) . '" name="languages[' . esc_attr( $code ) . '][' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['languages'][ $code ][ $key ] ) && is_string( $_POST['languages'][ $code ][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['languages'][ $code ][ $key ] ) ) : $meta[ $key ] ) . '"' . ( in_array( $key, array( 'date_format', 'time_format' ), true ) ? ' aria-describedby="qtrad-format-help" placeholder="' . esc_attr( get_option( $key ) ) . '"' : '' ) . ' /></p>';
-		}
-		echo '</fieldset>';
-	}
-	echo '<p class="description" id="qtrad-format-help">' . esc_html__( 'Date and time formats use the PHP date syntax of Settings → General, for example j. F Y. Leave them empty to use the site formats. Formats saved by qTranslate-X in strftime style keep working.', 'qtrad' ) . '</p>';
-	echo '</details><fieldset><legend><h2>' . esc_html__( 'Add a language', 'qtrad' ) . '</h2></legend><p>' . esc_html__( 'Provide a two- or three-letter code, native name and WordPress locale, for example: is, Íslenska, is_IS. The language will be enabled when you save.', 'qtrad' ) . '</p>';
-	foreach ( array( 'code' => __( 'Language code', 'qtrad' ), 'name' => __( 'Native name', 'qtrad' ), 'locale' => __( 'WordPress locale', 'qtrad' ) ) as $key => $label ) {
-		echo '<p><label for="qtrad-new-' . esc_attr( $key ) . '">' . esc_html( $label ) . '</label> <input id="qtrad-new-' . esc_attr( $key ) . '" name="new_language[' . esc_attr( $key ) . ']" value="' . esc_attr( $invalid && isset( $_POST['new_language'][ $key ] ) && is_string( $_POST['new_language'][ $key ] ) ? sanitize_text_field( wp_unslash( $_POST['new_language'][ $key ] ) ) : '' ) . '" /></p>';
-	}
-	echo '</fieldset>';
+	echo '</table></section>';
 	submit_button( __( 'Save languages', 'qtrad' ) );
 	echo '</form></div>';
 }

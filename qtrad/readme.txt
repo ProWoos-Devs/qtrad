@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.12.7
+Stable tag: 1.13.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -46,7 +46,7 @@ The post lists have a "Missing in …" filter that shows the items without text 
 
 = Custom fields, user profiles and options =
 
-List custom fields under "Custom fields" in Settings → Languages to show them in the visitor's language and to merge edits into the language you are editing. A checkbox below that list also shows every other custom field and user profile field that holds language markers in the visitor's language. Under "Options" you can do the same for options, such as theme and widget settings, either all of them or a list of names. "Text filters" takes filter hooks of your theme or other plugins whose text should be shown in the current language. These three work on the public site only: wp-admin, the REST API and WP-CLI keep reading what is stored. If code on the public site writes a value back after reading it translated, qTrad keeps the stored translations of everything that did not change.
+List custom fields under "Custom fields" on the Advanced tab of Settings → Languages to show them in the visitor's language and to merge edits into the language you are editing. A checkbox below that list also shows every other custom field and user profile field that holds language markers in the visitor's language. Under "Options" you can do the same for options, such as theme and widget settings, either all of them or a list of names. "Text filters" takes filter hooks of your theme or other plugins whose text should be shown in the current language. These three work on the public site only: wp-admin, the REST API and WP-CLI keep reading what is stored. If code on the public site writes a value back after reading it translated, qTrad keeps the stored translations of everything that did not change.
 
 = Advanced Custom Fields =
 
@@ -71,7 +71,7 @@ Sites with plain permalinks or /index.php/ permalinks use query URLs, since thos
 
 An explicit language URL always wins. Cookies and browser negotiation apply only to the bare homepage, and other bare URLs serve the default language when its prefix is hidden. REST endpoints, assets, admin URLs, feeds and XML sitemaps never receive language prefixes.
 
-Each language can have its own slug for a post, page, custom post type entry, category, tag or other term. Edit them in the "Translated slugs" box of the editor and on the term screens; an empty field uses the WordPress slug. Post types and taxonomies can also have a translated base, such as "kategorie" instead of "category", under Settings → Languages. Links, the language switcher, canonical and hreflang tags and sitemaps use the translated address, and the WordPress address under another language redirects to it. The WordPress admin and the REST API keep working with the WordPress slug.
+Each language can have its own slug for a post, page, custom post type entry, category, tag or other term. Edit them in the "Translated slugs" box of the editor and on the term screens; an empty field uses the WordPress slug. Post types and taxonomies can also have a translated base, such as "kategorie" instead of "category", on the URLs tab of Settings → Languages. Links, the language switcher, canonical and hreflang tags and sitemaps use the translated address, and the WordPress address under another language redirects to it. The WordPress admin and the REST API keep working with the WordPress slug.
 
 Slugs and bases are stored the way qTranslate-XT stores them, so a site that used its Slugs module keeps its addresses, and slugs left by the older qTranslate Slug plugin are read as well.
 
@@ -127,17 +127,22 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 == Screenshots ==
 
 1. The block editor shows one language at a time. Language buttons switch between translations, and saving keeps every other translation.
-2. Settings → Languages, with the qTranslate URL modes and language list.
+2. Settings → Languages, the Languages tab with the language list.
 3. The accessible language chooser on the front end, with full language names.
 4. After a switch from qTranslate-XT, administrators see what qTrad found and which settings it turned on.
-5. Translated URL bases, custom fields, options and text filters in Settings → Languages.
+5. The URLs tab with the qTranslate URL modes and the translated URL bases.
 6. Native name, locale, and date and time formats of each language.
+7. The Advanced tab: custom fields, options and text filters.
 
 == Changelog ==
 
-= 1.12.7 =
+= 1.13.0 =
 
 * First public release on WordPress.org.
+* Settings → Languages is split into four tabs (Languages, URLs, Content, Advanced). One Save button still saves everything, a validation error opens the tab that holds the field, and without JavaScript all sections stay visible.
+
+= 1.12.7 =
+
 * Custom fields listed under "Custom fields" are read as stored in wp-admin, AJAX, REST, cron and WP-CLI, like every other translated value; only the public site reads them in the visitor's language.
 
 = 1.12.6 =

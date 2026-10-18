@@ -8,6 +8,10 @@
 .qtrad-settings label { line-height:1.8; }
 .qtrad-settings summary { cursor:pointer; min-height:44px; line-height:44px; font-weight:600; }
 .qtrad-settings fieldset { margin-block-end:12px; }
+.qtrad-tabs { margin-block-start:1em; }
+.qtrad-tabs .nav-tab { min-height:44px; box-sizing:border-box; }
+body.js .qtrad-panel:not(.qtrad-panel--active) { display:none; }
+.qtrad-panel__title { margin-block:1.2em .2em; }
 .qtrad-settings input:not([type="checkbox"]):not([type="radio"]), .qtrad-settings textarea, .qtrad-settings select { max-width:100%; }
 @media (forced-colors:active) { .qtrad-lsb__btn[aria-pressed="true"] { border-color:Highlight; color:Highlight; background:Canvas; } .qtrad-lsb__btn:focus-visible { outline-color:Highlight; } }
 

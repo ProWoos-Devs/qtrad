@@ -297,6 +297,20 @@
       "pass": true
     },
     {
+      "name": "A validation error on another tab opens that tab, not the remembered one",
+      "actual": [
+        "true",
+        true,
+        "#qtrad-panel-languages"
+      ],
+      "expected": [
+        "true",
+        true,
+        "#qtrad-panel-languages"
+      ],
+      "pass": true
+    },
+    {
       "name": "New language becomes enabled",
       "actual": true,
       "expected": true,

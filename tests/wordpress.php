@@ -110,6 +110,11 @@ settings();
 qtrad_set_language('de');
 $id = fixture();
 add_post_meta($id, 'audit_field', '[:en]Hello[:de]Hallo[:]');
+// This suite runs under WP_CLI, so without the override the listed field is read as stored.
+check_case('WP-CLI reads a listed custom field as stored', '[:en]Hello[:de]Hallo[:]', get_post_meta($id, 'audit_field', true));
+$GLOBALS['qtrad_translates_values'] = false;
+check_case('REST and cron read a listed custom field as stored', array('[:en]Hello[:de]Hallo[:]'), get_post_meta($id, 'audit_field', false));
+$GLOBALS['qtrad_translates_values'] = true;
 check_case('metadata display uses selected German', 'Hallo', get_post_meta($id, 'audit_field', true));
 update_post_meta($id, 'audit_field', 'Neu');
 global $wpdb;
@@ -132,6 +137,7 @@ add_post_meta($id, 'audit_field', '[:en]Second[:de]Zweite[:]');
 $current_screen = null;
 check_case('metadata non-single read returns every row', array('Hello', 'Second'), get_post_meta($id, 'audit_field', false));
 check_case('metadata existence is false for absent configured field', false, metadata_exists('post', $id + 100000, 'audit_field'));
+unset($GLOBALS['qtrad_translates_values']);
 
 settings(array('qtranslate_term_name' => array('News' => array('en' => 'News', 'de' => 'Nachrichten'))));
 qtrad_set_language('de');
@@ -372,6 +378,7 @@ check_case('wrong form identity cannot overwrite target', 'Full value', get_post
 settings();
 $id = fixture();
 qtrad_set_language('de');
+$GLOBALS['qtrad_translates_values'] = true;
 add_post_meta($id, 'audit_field', '[:en]First[:de]Erste[:]');
 add_post_meta($id, 'audit_field', '[:en]Second[:de]Zweite[:]');
 update_post_meta($id, 'audit_field', wp_slash('C:\\temp'), '[:en]Second[:de]Zweite[:]');
@@ -383,6 +390,7 @@ function preceding_meta_provider($value,$post_id,$key) { return $key === 'audit_
 add_filter('get_post_metadata','preceding_meta_provider',5,3);
 check_case('metadata respects earlier provider', 'Provider value', get_post_meta($id,'audit_field',true));
 remove_filter('get_post_metadata','preceding_meta_provider',5);
+unset($GLOBALS['qtrad_translates_values']);
 settings(array('qtranslate_na_messages'=>array('de'=>'Nur %LANG:, : und %.'), 'qtranslate_show_alternative_content_message'=>true));
 qtrad_set_language('de');
 $notice = qtrad_use_current('[:en]English[:]',true);

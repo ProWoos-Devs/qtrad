@@ -224,8 +224,9 @@ function qtrad_raw_post_meta( $object_id, $key ) {
 	}
 }
 
+/** Listed custom fields are shown in the current language on the public site only; wp-admin, AJAX, REST, cron and WP-CLI read what is stored. */
 function qtrad_filter_get_meta( $value, $object_id, $meta_key, $single ) {
-	if ( $value !== null || ! is_string( $meta_key ) || ! in_array( $meta_key, qtrad_extra_field_keys(), true ) || ( is_admin() && ! wp_doing_ajax() ) ) { return $value; }
+	if ( $value !== null || ! is_string( $meta_key ) || ! qtrad_translates_values() || ! in_array( $meta_key, qtrad_extra_field_keys(), true ) ) { return $value; }
 	$raw = qtrad_raw_post_meta( $object_id, $meta_key );
 	if ( ! is_array( $raw ) || ! $raw ) { return $value; }
 	$translated = array_map( function ( $entry ) { return is_string( $entry ) ? qtrad_use_current( $entry ) : $entry; }, $raw );

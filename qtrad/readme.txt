@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.12.6
+Stable tag: 1.12.7
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,9 +135,13 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.12.6 =
+= 1.12.7 =
 
 * First public release on WordPress.org.
+* Custom fields listed under "Custom fields" are read as stored in wp-admin, AJAX, REST, cron and WP-CLI, like every other translated value; only the public site reads them in the visitor's language.
+
+= 1.12.6 =
+
 * Options that hold credentials (API keys, secrets, tokens, passwords, the WordPress connector settings) are never translated, whatever the Options setting lists.
 
 = 1.12.5 =

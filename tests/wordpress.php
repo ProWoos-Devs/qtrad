@@ -253,7 +253,7 @@ ob_start();
 qtrad_settings_page();
 $qtrad_page = ob_get_clean();
 check_case('settings page does not mention query fallback with pretty permalinks', false, strpos($qtrad_page, '/index.php/ permalinks') !== false);
-check_case('settings page has four tabs, one form and the Languages tab open', array(4, 1, 1), array(substr_count($qtrad_page, 'class="nav-tab'), substr_count($qtrad_page, '<form method="post">'), substr_count($qtrad_page, 'id="qtrad-tab-languages" href="#qtrad-panel-languages"') * (int) (strpos($qtrad_page, 'class="nav-tab nav-tab-active" id="qtrad-tab-languages"') !== false)));
+check_case('settings page has four tabs, one form and the Languages tab open', array(4, 1, 1), array(substr_count($qtrad_page, ' href="#qtrad-panel-'), substr_count($qtrad_page, '<form method="post">'), substr_count($qtrad_page, 'id="qtrad-tab-languages" href="#qtrad-panel-languages"') * (int) (strpos($qtrad_page, 'class="nav-tab nav-tab-active" id="qtrad-tab-languages"') !== false)));
 check_case('every settings section has its own table in the one form', 4, substr_count($qtrad_page, '<section id="qtrad-panel-'));
 settings(array('permalink_structure' => ''));
 ob_start();

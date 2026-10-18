@@ -5,7 +5,7 @@
     "php": "8.3",
     "database": "mariadb:10.11"
   },
-  "passed": false,
+  "passed": true,
   "suites": {
     "codec": [
       {
@@ -130,7 +130,4666 @@
         },
         "joined": "{:en}Hi{:deu}Hallo{:}"
       }
-    ]
+    ],
+    "wordpress": {
+      "environment": {
+        "wordpress": "6.8",
+        "php": "8.3.35"
+      },
+      "browser_post_id": 43,
+      "browser_post_slug": "qtrad-audit-browser",
+      "passed": 261,
+      "total": 261,
+      "cases": [
+        {
+          "case": "Canonical activation file is qtrad.php",
+          "pass": true,
+          "expected": "qtrad.php",
+          "actual": "qtrad.php"
+        },
+        {
+          "case": "WordPress discovers only one activatable entry",
+          "pass": true,
+          "expected": {
+            "qtrad.php": "qTrad"
+          },
+          "actual": {
+            "qtrad.php": "qTrad"
+          }
+        },
+        {
+          "case": "codec round trip bracket",
+          "pass": true,
+          "expected": {
+            "en": "Hello",
+            "de": "Hallo"
+          },
+          "actual": {
+            "en": "Hello",
+            "de": "Hallo"
+          }
+        },
+        {
+          "case": "codec round trip comment",
+          "pass": true,
+          "expected": {
+            "en": "Hello",
+            "de": "Hallo"
+          },
+          "actual": {
+            "en": "Hello",
+            "de": "Hallo"
+          }
+        },
+        {
+          "case": "codec round trip swirly",
+          "pass": true,
+          "expected": {
+            "en": "Hello",
+            "de": "Hallo"
+          },
+          "actual": {
+            "en": "Hello",
+            "de": "Hallo"
+          }
+        },
+        {
+          "case": "plain language merge preserves existing translation",
+          "pass": true,
+          "expected": "[:en]Hello[:de]Neu[:]",
+          "actual": "[:en]Hello[:de]Neu[:]"
+        },
+        {
+          "case": "classic save retains disabled Spanish translation",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "classic save preserves JSON escaping and backslashes",
+          "pass": true,
+          "expected": "<!-- wp:paragraph {\"metadata\":{\"name\":\"a\\\\b\"}} --><p>C:\\temp</p><!-- /wp:paragraph -->",
+          "actual": "<!-- wp:paragraph {\"metadata\":{\"name\":\"a\\\\b\"}} --><p>C:\\temp</p><!-- /wp:paragraph -->"
+        },
+        {
+          "case": "plain merge preserves backslash in untouched English",
+          "pass": true,
+          "expected": "<p>C:\\temp</p>",
+          "actual": "<p>C:\\temp</p>"
+        },
+        {
+          "case": "posted edit language without nonce is ignored",
+          "pass": true,
+          "expected": {
+            "en": "Neu",
+            "de": "Alt"
+          },
+          "actual": {
+            "en": "Neu",
+            "de": "Alt"
+          }
+        },
+        {
+          "case": "secondary insert does not inherit main form payload",
+          "pass": true,
+          "expected": "Secondary page",
+          "actual": "Secondary page"
+        },
+        {
+          "case": "WP-CLI reads a listed custom field as stored",
+          "pass": true,
+          "expected": "[:en]Hello[:de]Hallo[:]",
+          "actual": "[:en]Hello[:de]Hallo[:]"
+        },
+        {
+          "case": "REST and cron read a listed custom field as stored",
+          "pass": true,
+          "expected": [
+            "[:en]Hello[:de]Hallo[:]"
+          ],
+          "actual": [
+            "[:en]Hello[:de]Hallo[:]"
+          ]
+        },
+        {
+          "case": "metadata display uses selected German",
+          "pass": true,
+          "expected": "Hallo",
+          "actual": "Hallo"
+        },
+        {
+          "case": "metadata update retains both languages",
+          "pass": true,
+          "expected": {
+            "en": "Hello",
+            "de": "Neu"
+          },
+          "actual": {
+            "en": "Hello",
+            "de": "Neu"
+          }
+        },
+        {
+          "case": "metadata respects previous value condition",
+          "pass": true,
+          "expected": "[:en]Hello[:de]Hallo[:]",
+          "actual": "[:en]Hello[:de]Hallo[:]"
+        },
+        {
+          "case": "metadata reports rejected conditional update",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "metadata non-single read returns every row",
+          "pass": true,
+          "expected": [
+            "Hello",
+            "Second"
+          ],
+          "actual": [
+            "Hello",
+            "Second"
+          ]
+        },
+        {
+          "case": "metadata existence is false for absent configured field",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "legacy term library translates string",
+          "pass": true,
+          "expected": "Nachrichten",
+          "actual": "Nachrichten"
+        },
+        {
+          "case": "legacy term library translates array",
+          "pass": true,
+          "expected": [
+            "Nachrichten"
+          ],
+          "actual": [
+            "Nachrichten"
+          ]
+        },
+        {
+          "case": "term rename removes obsolete library key",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "term rename retains disabled Spanish",
+          "pass": true,
+          "expected": "Antiguo",
+          "actual": "Antiguo"
+        },
+        {
+          "case": "AJAX-style term save keeps default-language database name",
+          "pass": true,
+          "expected": "News",
+          "actual": "News"
+        },
+        {
+          "case": "settings retain custom legacy language, default first",
+          "pass": true,
+          "expected": [
+            "xx",
+            "en"
+          ],
+          "actual": [
+            "xx",
+            "en"
+          ]
+        },
+        {
+          "case": "languages show default first, then A to Z by native name",
+          "pass": true,
+          "expected": [
+            "en",
+            "de",
+            "es"
+          ],
+          "actual": [
+            "en",
+            "de",
+            "es"
+          ]
+        },
+        {
+          "case": "qTranslate-XT built-in Lithuanian has its locale",
+          "pass": true,
+          "expected": "lt_LT",
+          "actual": "lt_LT"
+        },
+        {
+          "case": "unchanged qTranslate-XT editor mode 2 is kept",
+          "pass": true,
+          "expected": 2,
+          "actual": 2
+        },
+        {
+          "case": "unchanged language names and locales are not written",
+          "pass": true,
+          "expected": [
+            [],
+            []
+          ],
+          "actual": [
+            [],
+            []
+          ]
+        },
+        {
+          "case": "changed editor mode is written",
+          "pass": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "case": "only the changed language name is written",
+          "pass": true,
+          "expected": {
+            "lt": "Lithuanian"
+          },
+          "actual": {
+            "lt": "Lithuanian"
+          }
+        },
+        {
+          "case": "legacy chooser echoes output",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "URL conversion leaves external host unchanged",
+          "pass": true,
+          "expected": "https://other.example/path?x=1",
+          "actual": "https://other.example/path?x=1"
+        },
+        {
+          "case": "URL conversion leaves mailto unchanged",
+          "pass": true,
+          "expected": "mailto:user@example.test",
+          "actual": "mailto:user@example.test"
+        },
+        {
+          "case": "neutral path /wp-comments-post.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /wp-cron.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /wp-signup.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /wp-activate.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /oauth/authorize",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /media/clip.mp4",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "neutral path /files/archive.7z",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "ordinary page is not neutral",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "core path /wp-admin/",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "core path /wp-includes/js/jquery/jquery.min.js",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "core path /wp-content/uploads/report",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "core path /wp-json/wp/v2/posts",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "core path /xmlrpc.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "core path /wp-login.php",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "front controller is not neutral",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "PHP name outside the WordPress directory is not neutral",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "moved content directory is neutral",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "former content path is not neutral once moved back",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "REST stays under home with WordPress in a subdirectory",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "admin path follows the WordPress subdirectory",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "admin path at the home root stays neutral with WordPress in a subdirectory",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "login file at the home root stays neutral with WordPress in a subdirectory",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "front controller stays routed with WordPress in a subdirectory",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "ordinary page stays routed with WordPress in a subdirectory",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "conflict notice on edit-post is not shown",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "conflict notice on plugins is shown",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "conflict notice on dashboard is shown",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "URL filters that call home_url() do not recurse into the core paths",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "REST prefix filtered after the paths were cached is neutral",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "default REST prefix is neutral again",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "index.php permalinks get query URLs",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/index.php/hello/?lang=de",
+          "actual": "http://127.0.0.1:8931/index.php/hello/?lang=de"
+        },
+        {
+          "case": "pretty permalinks keep path URLs",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/hello/",
+          "actual": "http://127.0.0.1:8931/de/hello/"
+        },
+        {
+          "case": "content directory on another host leaves the same local path routed",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "content directory on another host keeps its local directory neutral",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "core path that comes back with a language segment is stored without it",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "settings page does not mention query fallback with pretty permalinks",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "settings page has four tabs, one form and the Languages tab open",
+          "pass": true,
+          "expected": [
+            4,
+            1,
+            1
+          ],
+          "actual": [
+            4,
+            1,
+            1
+          ]
+        },
+        {
+          "case": "every settings section has its own table in the one form",
+          "pass": true,
+          "expected": 4,
+          "actual": 4
+        },
+        {
+          "case": "settings page says Path mode uses query URLs with plain permalinks",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "moved login page is neutral",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "XMLHttpRequest is recognized as a script request",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "ordinary request is not a script request",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "home_url is localized outside request parsing",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "home_url stays unlocalized while core parses the request (subdirectory installs)",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931",
+          "actual": "http://127.0.0.1:8931"
+        },
+        {
+          "case": "home_url is localized again after parsing",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/",
+          "actual": "http://127.0.0.1:8931/de/"
+        },
+        {
+          "case": "three-letter code is an enabled language",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "three-letter path prefix is stripped",
+          "pass": true,
+          "expected": "/sample/",
+          "actual": "/sample/"
+        },
+        {
+          "case": "three-letter path prefix leaves look-alike segments",
+          "pass": true,
+          "expected": "/space/",
+          "actual": "/space/"
+        },
+        {
+          "case": "URL conversion adds three-letter prefix",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/spa/sample/",
+          "actual": "http://127.0.0.1:8931/spa/sample/"
+        },
+        {
+          "case": "three-letter title is displayed",
+          "pass": true,
+          "expected": "Hola",
+          "actual": "Hola"
+        },
+        {
+          "case": "URL conversion leaves anchor unchanged",
+          "pass": true,
+          "expected": "#section",
+          "actual": "#section"
+        },
+        {
+          "case": "URL conversion preserves signed/repeated query bytes",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/path?a=1&a=2&v=a%20b",
+          "actual": "http://127.0.0.1:8931/de/path?a=1&a=2&v=a%20b"
+        },
+        {
+          "case": "qtrans URL wrapper respects visible default setting",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/en/page/",
+          "actual": "http://127.0.0.1:8931/en/page/"
+        },
+        {
+          "case": "neutral paths work with WordPress in subdirectory",
+          "pass": true,
+          "expected": "https://site.example/blog/wp-login.php",
+          "actual": "https://site.example/blog/wp-login.php"
+        },
+        {
+          "case": "home prefix needs path segment boundary",
+          "pass": true,
+          "expected": "/blogger/post",
+          "actual": "/blogger/post"
+        },
+        {
+          "case": "browser detection rejects q=0 languages",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "browser detection respects regional preference weights",
+          "pass": true,
+          "expected": "pt",
+          "actual": "pt"
+        },
+        {
+          "case": "zero survives joining",
+          "pass": true,
+          "expected": "0",
+          "actual": "0"
+        },
+        {
+          "case": "empty tagged translation honors show_empty",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "selected legacy public APIs exist",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "Catalan missing flag has visible text fallback",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "qTranslate-X plain text availability contract",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "qTranslate plain text availability contract",
+          "pass": true,
+          "expected": [
+            "en",
+            "de"
+          ],
+          "actual": [
+            "en",
+            "de"
+          ]
+        },
+        {
+          "case": "legacy join accepts string input",
+          "pass": true,
+          "expected": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->",
+          "actual": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->"
+        },
+        {
+          "case": "legacy force_markers option is respected",
+          "pass": true,
+          "expected": "[:en]Same[:de]Same[:]",
+          "actual": "[:en]Same[:de]Same[:]"
+        },
+        {
+          "case": "author classic save strips script and event handlers",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "hide_untranslated excludes empty tagged language",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "quicktags=false keeps bracket markers literal",
+          "pass": true,
+          "expected": {
+            "en": "[:en]Hello[:de]Hallo[:]",
+            "de": "[:en]Hello[:de]Hallo[:]"
+          },
+          "actual": {
+            "en": "[:en]Hello[:de]Hallo[:]",
+            "de": "[:en]Hello[:de]Hallo[:]"
+          }
+        },
+        {
+          "case": "use disabled language leaves complete source intact",
+          "pass": true,
+          "expected": "[:en]Hello[:es]Hola[:]",
+          "actual": "[:en]Hello[:es]Hola[:]"
+        },
+        {
+          "case": "shared footer survives in disabled language",
+          "pass": true,
+          "expected": "Hola footer",
+          "actual": "Hola footer"
+        },
+        {
+          "case": "new translated field uses original-compatible comments",
+          "pass": true,
+          "expected": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->",
+          "actual": "<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->"
+        },
+        {
+          "case": "more separator survives disabled language",
+          "pass": true,
+          "expected": {
+            "en": "Intro<!--more-->End",
+            "de": "Anfang<!--more-->Ende",
+            "es": "Inicio<!--more-->Fin"
+          },
+          "actual": {
+            "en": "Intro<!--more-->End",
+            "de": "Anfang<!--more-->Ende",
+            "es": "Inicio<!--more-->Fin"
+          }
+        },
+        {
+          "case": "chooser supports legacy options array",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "chooser boolean requests flags",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "qTrad widget preserves existing sidebar identity",
+          "pass": true,
+          "expected": "qtranslate",
+          "actual": "qtranslate"
+        },
+        {
+          "case": "qTranslate-X widget class preserves sidebar identity",
+          "pass": true,
+          "expected": "qtranslate",
+          "actual": "qtranslate"
+        },
+        {
+          "case": "widget retains unimplemented legacy options for rollback",
+          "pass": true,
+          "expected": "legacy-format",
+          "actual": "legacy-format"
+        },
+        {
+          "case": "widget updates hide-title",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "programmatic full replacement remains plain",
+          "pass": true,
+          "expected": "Full replacement",
+          "actual": "Full replacement"
+        },
+        {
+          "case": "programmatic partial update requires explicit context",
+          "pass": true,
+          "expected": {
+            "en": "Full replacement",
+            "de": "Neu"
+          },
+          "actual": {
+            "en": "Full replacement",
+            "de": "Neu"
+          }
+        },
+        {
+          "case": "wrong form identity cannot overwrite target",
+          "pass": true,
+          "expected": "Full value",
+          "actual": "Full value"
+        },
+        {
+          "case": "metadata conditional update selects one raw row",
+          "pass": true,
+          "expected": [
+            "[:en]First[:de]Erste[:]",
+            "[:en]Second[:de]C:\\temp[:]"
+          ],
+          "actual": [
+            "[:en]First[:de]Erste[:]",
+            "[:en]Second[:de]C:\\temp[:]"
+          ]
+        },
+        {
+          "case": "zero metadata exists",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "zero metadata is displayed",
+          "pass": true,
+          "expected": "0",
+          "actual": "0"
+        },
+        {
+          "case": "metadata respects earlier provider",
+          "pass": true,
+          "expected": "Provider value",
+          "actual": "Provider value"
+        },
+        {
+          "case": "legacy missing-translation message is retained",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "legacy policy does not append alternative content",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "legacy alternative content policy is honored",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "invalid custom language returns an error",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "invalid settings do not change enabled languages",
+          "pass": true,
+          "expected": [
+            "en",
+            "de"
+          ],
+          "actual": [
+            "en",
+            "de"
+          ]
+        },
+        {
+          "case": "invalid mapped domain returns an error",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "invalid domains do not partially save",
+          "pass": true,
+          "expected": [
+            "en",
+            "de"
+          ],
+          "actual": [
+            "en",
+            "de"
+          ]
+        },
+        {
+          "case": "domain map switches configured language origins",
+          "pass": true,
+          "expected": "http://de.example:8931/path?x=1",
+          "actual": "http://de.example:8931/path?x=1"
+        },
+        {
+          "case": "mapped default always uses its mapped origin",
+          "pass": true,
+          "expected": "http://en.example:8931/path",
+          "actual": "http://en.example:8931/path"
+        },
+        {
+          "case": "different port is an external origin",
+          "pass": true,
+          "expected": "http://127.0.0.1:9999/path",
+          "actual": "http://127.0.0.1:9999/path"
+        },
+        {
+          "case": "credential-bearing URL is preserved",
+          "pass": true,
+          "expected": "http://user:pass@127.0.0.1:8931/path",
+          "actual": "http://user:pass@127.0.0.1:8931/path"
+        },
+        {
+          "case": "tel URL is preserved",
+          "pass": true,
+          "expected": "tel:+34000000000",
+          "actual": "tel:+34000000000"
+        },
+        {
+          "case": "language query removal preserves duplicate bytes",
+          "pass": true,
+          "expected": "x=1&x=2&v=a%20b",
+          "actual": "x=1&x=2&v=a%20b"
+        },
+        {
+          "case": "unindexed legacy empty translation is excluded",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "indexed zero translation remains visible",
+          "pass": true,
+          "expected": [
+            25
+          ],
+          "actual": [
+            25
+          ]
+        },
+        {
+          "case": "legacy zero translation remains visible",
+          "pass": true,
+          "expected": [
+            25
+          ],
+          "actual": [
+            25
+          ]
+        },
+        {
+          "case": "custom post type REST update succeeds",
+          "pass": true,
+          "expected": 200,
+          "actual": 200
+        },
+        {
+          "case": "custom post type REST preserves disabled language",
+          "pass": true,
+          "expected": "[:en]Hello[:de]REST title[:es]Hola[:]",
+          "actual": "[:en]Hello[:de]REST title[:es]Hola[:]"
+        },
+        {
+          "case": "custom post type REST autosave succeeds",
+          "pass": true,
+          "expected": 200,
+          "actual": 200
+        },
+        {
+          "case": "autosave retains multilingual title",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "raw mode REST permits full plain replacement",
+          "pass": true,
+          "expected": "Raw replacement",
+          "actual": "Raw replacement"
+        },
+        {
+          "case": "deleting a displayed translation cleans the raw library key",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "root custom language attribute survives",
+          "pass": true,
+          "expected": "data-lang=\"custom\" lang=\"de-DE\" dir=\"ltr\"",
+          "actual": "data-lang=\"custom\" lang=\"de-DE\" dir=\"ltr\""
+        },
+        {
+          "case": "root language attributes retain unrelated and XHTML attributes",
+          "pass": true,
+          "expected": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\"",
+          "actual": "data-test=\"kept\" lang=\"de-DE\" xml:lang=\"de-DE\" dir=\"ltr\""
+        },
+        {
+          "case": "language menu lists every enabled language under its item",
+          "pass": true,
+          "expected": [
+            "#",
+            "http://127.0.0.1:8931/contact/",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/de/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ],
+          "actual": [
+            "#",
+            "http://127.0.0.1:8931/contact/",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/de/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ]
+        },
+        {
+          "case": "language menu children belong to the switcher item",
+          "pass": true,
+          "expected": [
+            "501",
+            "501",
+            "501"
+          ],
+          "actual": [
+            "501",
+            "501",
+            "501"
+          ]
+        },
+        {
+          "case": "language menu children sort after the stored items",
+          "pass": true,
+          "expected": [
+            3,
+            4,
+            5
+          ],
+          "actual": [
+            3,
+            4,
+            5
+          ]
+        },
+        {
+          "case": "language menu item keeps the default title and shows the current flag",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "language menu keeps qTranslate-X classes",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "language menu is not expanded twice",
+          "pass": true,
+          "expected": 5,
+          "actual": 5
+        },
+        {
+          "case": "current language item is marked for assistive technology",
+          "pass": true,
+          "expected": [
+            "de-DE",
+            "de-DE",
+            "true"
+          ],
+          "actual": [
+            "de-DE",
+            "de-DE",
+            "true"
+          ]
+        },
+        {
+          "case": "ordinary menu items get no language attributes",
+          "pass": true,
+          "expected": {
+            "href": "/x"
+          },
+          "actual": {
+            "href": "/x"
+          }
+        },
+        {
+          "case": "alternative language item links to the first other language",
+          "pass": true,
+          "expected": [
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ],
+          "actual": [
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ]
+        },
+        {
+          "case": "alternative language item is named after its language",
+          "pass": true,
+          "expected": [
+            "English",
+            "Español"
+          ],
+          "actual": [
+            "English",
+            "Español"
+          ]
+        },
+        {
+          "case": "hidden current language is left out of the language menu",
+          "pass": true,
+          "expected": [
+            "#",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ],
+          "actual": [
+            "#",
+            "http://127.0.0.1:8931/en/sample/?x=1",
+            "http://127.0.0.1:8931/es/sample/?x=1"
+          ]
+        },
+        {
+          "case": "flag-only language items carry the name as text alternative",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "translated switcher title is used without the top flag",
+          "pass": true,
+          "expected": "Sprachen",
+          "actual": "Sprachen"
+        },
+        {
+          "case": "custom links follow the current language",
+          "pass": true,
+          "expected": [
+            "http://127.0.0.1:8931/de/contact/",
+            "/contact/",
+            "http://127.0.0.1:8931/es/sample/?x=1",
+            "https://example.org/contact/",
+            "#top",
+            "http://127.0.0.1:8931/wp-content/uploads/a.pdf"
+          ],
+          "actual": [
+            "http://127.0.0.1:8931/de/contact/",
+            "/contact/",
+            "http://127.0.0.1:8931/es/sample/?x=1",
+            "https://example.org/contact/",
+            "#top",
+            "http://127.0.0.1:8931/wp-content/uploads/a.pdf"
+          ]
+        },
+        {
+          "case": "link to another language declares it without claiming the text language",
+          "pass": true,
+          "expected": {
+            "hreflang": "es-ES"
+          },
+          "actual": {
+            "hreflang": "es-ES"
+          }
+        },
+        {
+          "case": "only custom links are converted",
+          "pass": true,
+          "expected": [
+            "http://127.0.0.1:8931/de/contact/"
+          ],
+          "actual": [
+            "http://127.0.0.1:8931/de/contact/"
+          ]
+        },
+        {
+          "case": "language switcher block is registered with its display setting",
+          "pass": true,
+          "expected": [
+            true,
+            "text"
+          ],
+          "actual": [
+            true,
+            "text"
+          ]
+        },
+        {
+          "case": "block renders the accessible chooser for the current page",
+          "pass": true,
+          "expected": [
+            true,
+            true,
+            true,
+            true
+          ],
+          "actual": [
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "case": "an unknown display falls back to text",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "storing a translated slug turns slug handling on",
+          "pass": true,
+          "expected": [
+            true,
+            "1"
+          ],
+          "actual": [
+            true,
+            "1"
+          ]
+        },
+        {
+          "case": "post link takes the slug of its language",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-hallo/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-hallo/"
+        },
+        {
+          "case": "qTranslate Slug meta is read",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-hola/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-hola/"
+        },
+        {
+          "case": "language without a translated slug keeps the stored one",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-hello/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-hello/"
+        },
+        {
+          "case": "links follow the current language",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-hallo/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-hallo/"
+        },
+        {
+          "case": "language-neutral links keep the stored slug",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-hello/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-hello/"
+        },
+        {
+          "case": "SEO URL of another language uses its slug",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "child page link uses the translated slug of its parent",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-eltern/s6ad5308a95579-child/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-eltern/s6ad5308a95579-child/"
+        },
+        {
+          "case": "page link translates every level",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-eltern/s6ad5308a95579-kind/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-eltern/s6ad5308a95579-kind/"
+        },
+        {
+          "case": "category link uses the translated slug of its parent",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/category/s6ad5308a95579-kategorie/s6ad5308a95579-sub/",
+          "actual": "http://127.0.0.1:8931/category/s6ad5308a95579-kategorie/s6ad5308a95579-sub/"
+        },
+        {
+          "case": "category link without a translation is unchanged",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/category/s6ad5308a95579-cat/s6ad5308a95579-sub/",
+          "actual": "http://127.0.0.1:8931/category/s6ad5308a95579-cat/s6ad5308a95579-sub/"
+        },
+        {
+          "case": "path swap leaves host and query alone",
+          "pass": true,
+          "expected": "http://news.example/x/nachrichten/?news=1",
+          "actual": "http://news.example/x/nachrichten/?news=1"
+        },
+        {
+          "case": "translated post address maps to the stored one",
+          "pass": true,
+          "expected": "/s6ad5308a95579-hello/",
+          "actual": "/s6ad5308a95579-hello/"
+        },
+        {
+          "case": "page number and query string survive the mapping",
+          "pass": true,
+          "expected": "/s6ad5308a95579-hello/2/?x=1",
+          "actual": "/s6ad5308a95579-hello/2/?x=1"
+        },
+        {
+          "case": "slug of another language is not mapped",
+          "pass": true,
+          "expected": "/s6ad5308a95579-hallo/",
+          "actual": "/s6ad5308a95579-hallo/"
+        },
+        {
+          "case": "stored address is left alone",
+          "pass": true,
+          "expected": "/s6ad5308a95579-hello/",
+          "actual": "/s6ad5308a95579-hello/"
+        },
+        {
+          "case": "translated page path maps to the stored path",
+          "pass": true,
+          "expected": "/s6ad5308a95579-parent/s6ad5308a95579-child/",
+          "actual": "/s6ad5308a95579-parent/s6ad5308a95579-child/"
+        },
+        {
+          "case": "translated parent with a stored child maps",
+          "pass": true,
+          "expected": "/s6ad5308a95579-parent/s6ad5308a95579-child/",
+          "actual": "/s6ad5308a95579-parent/s6ad5308a95579-child/"
+        },
+        {
+          "case": "translated category feed maps to the stored path",
+          "pass": true,
+          "expected": "/category/s6ad5308a95579-cat/s6ad5308a95579-sub/feed/",
+          "actual": "/category/s6ad5308a95579-cat/s6ad5308a95579-sub/feed/"
+        },
+        {
+          "case": "PATH_INFO and PHP_SELF follow the mapped path",
+          "pass": true,
+          "expected": [
+            "/s6ad5308a95579-hello/",
+            "/index.php/s6ad5308a95579-hello/"
+          ],
+          "actual": [
+            "/s6ad5308a95579-hello/",
+            "/index.php/s6ad5308a95579-hello/"
+          ]
+        },
+        {
+          "case": "category in the post address is translated",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-kategorie/s6ad5308a95579-sub/s6ad5308a95579-hallo/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-kategorie/s6ad5308a95579-sub/s6ad5308a95579-hallo/"
+        },
+        {
+          "case": "post under a translated category maps to the stored address",
+          "pass": true,
+          "expected": "/s6ad5308a95579-cat/s6ad5308a95579-sub/s6ad5308a95579-plain/",
+          "actual": "/s6ad5308a95579-cat/s6ad5308a95579-sub/s6ad5308a95579-plain/"
+        },
+        {
+          "case": "post slug stays stored where a request could not be mapped back",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-hello-28/",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-hello-28/"
+        },
+        {
+          "case": "post name with an extension is translated",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/s6ad5308a95579-hallo.html",
+          "actual": "http://127.0.0.1:8931/s6ad5308a95579-hallo.html"
+        },
+        {
+          "case": "post name with an extension maps to the stored address",
+          "pass": true,
+          "expected": "/s6ad5308a95579-hello.html",
+          "actual": "/s6ad5308a95579-hello.html"
+        },
+        {
+          "case": "new translated slug is stored in the qTranslate-XT key",
+          "pass": true,
+          "expected": [
+            "s6ad5308a95579-neu",
+            "s6ad5308a95579-neu"
+          ],
+          "actual": [
+            "s6ad5308a95579-neu",
+            "s6ad5308a95579-neu"
+          ]
+        },
+        {
+          "case": "slug taken by a translation in that language gets a suffix",
+          "pass": true,
+          "expected": "s6ad5308a95579-hallo-2",
+          "actual": "s6ad5308a95579-hallo-2"
+        },
+        {
+          "case": "slug taken by a stored slug gets a suffix",
+          "pass": true,
+          "expected": "s6ad5308a95579-plain-2",
+          "actual": "s6ad5308a95579-plain-2"
+        },
+        {
+          "case": "same slug is free in another language",
+          "pass": true,
+          "expected": "s6ad5308a95579-hallo",
+          "actual": "s6ad5308a95579-hallo"
+        },
+        {
+          "case": "unchanged slug keeps its value",
+          "pass": true,
+          "expected": "s6ad5308a95579-plain-2",
+          "actual": "s6ad5308a95579-plain-2"
+        },
+        {
+          "case": "feed names are not usable as slugs",
+          "pass": true,
+          "expected": "feed-2",
+          "actual": "feed-2"
+        },
+        {
+          "case": "empty slug removes the translation",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "slug equal to the stored one is not kept",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "clearing hides an older qTranslate Slug value without deleting it",
+          "pass": true,
+          "expected": [
+            "",
+            "s6ad5308a95579-hola",
+            "http://127.0.0.1:8931/s6ad5308a95579-hello/"
+          ],
+          "actual": [
+            "",
+            "s6ad5308a95579-hola",
+            "http://127.0.0.1:8931/s6ad5308a95579-hello/"
+          ]
+        },
+        {
+          "case": "page slug is unique among pages with the same parent",
+          "pass": true,
+          "expected": "s6ad5308a95579-kind-2",
+          "actual": "s6ad5308a95579-kind-2"
+        },
+        {
+          "case": "page slug may repeat under another parent",
+          "pass": true,
+          "expected": "s6ad5308a95579-kind",
+          "actual": "s6ad5308a95579-kind"
+        },
+        {
+          "case": "term slug is unique within its taxonomy",
+          "pass": true,
+          "expected": "s6ad5308a95579-kategorie-2",
+          "actual": "s6ad5308a95579-kategorie-2"
+        },
+        {
+          "case": "meta box saves a sanitized slug",
+          "pass": true,
+          "expected": "s6ad5308a95579-uber-uns",
+          "actual": "s6ad5308a95579-uber-uns"
+        },
+        {
+          "case": "meta box ignores a wrong nonce or another post",
+          "pass": true,
+          "expected": "s6ad5308a95579-uber-uns",
+          "actual": "s6ad5308a95579-uber-uns"
+        },
+        {
+          "case": "term form saves a sanitized slug",
+          "pass": true,
+          "expected": "s6ad5308a95579-unter",
+          "actual": "s6ad5308a95579-unter"
+        },
+        {
+          "case": "bases are saved sanitized, next to settings qTrad does not own",
+          "pass": true,
+          "expected": {
+            "other_setting": "kept",
+            "taxonomy_category": {
+              "de": "rubrik/thema"
+            },
+            "post_type_qtrad_slugbook": {
+              "de": "bucher"
+            }
+          },
+          "actual": {
+            "other_setting": "kept",
+            "taxonomy_category": {
+              "de": "rubrik/thema"
+            },
+            "post_type_qtrad_slugbook": {
+              "de": "bucher"
+            }
+          }
+        },
+        {
+          "case": "category link uses the translated base",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/rubrik/thema/s6ad5308a95579-kategorie/s6ad5308a95579-sub/",
+          "actual": "http://127.0.0.1:8931/rubrik/thema/s6ad5308a95579-kategorie/s6ad5308a95579-sub/"
+        },
+        {
+          "case": "language without a translated base keeps the stored one",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/category/s6ad5308a95579-cat/s6ad5308a95579-sub/",
+          "actual": "http://127.0.0.1:8931/category/s6ad5308a95579-cat/s6ad5308a95579-sub/"
+        },
+        {
+          "case": "address under a translated base maps to the stored one",
+          "pass": true,
+          "expected": "/category/s6ad5308a95579-cat/s6ad5308a95579-sub/",
+          "actual": "/category/s6ad5308a95579-cat/s6ad5308a95579-sub/"
+        },
+        {
+          "case": "address from before the base was translated still maps",
+          "pass": true,
+          "expected": "/category/s6ad5308a95579-cat/s6ad5308a95579-sub/page/2/",
+          "actual": "/category/s6ad5308a95579-cat/s6ad5308a95579-sub/page/2/"
+        },
+        {
+          "case": "term without a translated slug maps under a translated base",
+          "pass": true,
+          "expected": "/category/s6ad5308a95579-plaincat/",
+          "actual": "/category/s6ad5308a95579-plaincat/"
+        },
+        {
+          "case": "custom post type link uses the translated base",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/bucher/s6ad5308a95579-book/",
+          "actual": "http://127.0.0.1:8931/bucher/s6ad5308a95579-book/"
+        },
+        {
+          "case": "custom post type address under a translated base maps to the stored one",
+          "pass": true,
+          "expected": "/slugbooks/s6ad5308a95579-book/",
+          "actual": "/slugbooks/s6ad5308a95579-book/"
+        },
+        {
+          "case": "custom post type address with translated base and slug maps",
+          "pass": true,
+          "expected": "/slugbooks/s6ad5308a95579-book/",
+          "actual": "/slugbooks/s6ad5308a95579-book/"
+        },
+        {
+          "case": "custom field with markers is read in the current language",
+          "pass": true,
+          "expected": [
+            "Unter"
+          ],
+          "actual": [
+            "Unter"
+          ]
+        },
+        {
+          "case": "nested custom field values are translated",
+          "pass": true,
+          "expected": [
+            {
+              "label": "Eins",
+              "n": 3,
+              "deep": [
+                "Zwei"
+              ]
+            }
+          ],
+          "actual": [
+            {
+              "label": "Eins",
+              "n": 3,
+              "deep": [
+                "Zwei"
+              ]
+            }
+          ]
+        },
+        {
+          "case": "custom field without markers is left to WordPress",
+          "pass": true,
+          "expected": null,
+          "actual": null
+        },
+        {
+          "case": "all custom fields at once come translated, as stored rows",
+          "pass": true,
+          "expected": [
+            "Unter",
+            "a:3:{s:5:\"label\";s:4:\"Eins\";s:1:\"n\";i:3;s:4:\"deep\";a:1:{i:0;s:4:\"Zwei\";}}",
+            "Plain"
+          ],
+          "actual": [
+            "Unter",
+            "a:3:{s:5:\"label\";s:4:\"Eins\";s:1:\"n\";i:3;s:4:\"deep\";a:1:{i:0;s:4:\"Zwei\";}}",
+            "Plain"
+          ]
+        },
+        {
+          "case": "value of an earlier metadata provider is kept",
+          "pass": true,
+          "expected": "given",
+          "actual": "given"
+        },
+        {
+          "case": "wp-admin, REST and cron read custom fields as stored",
+          "pass": true,
+          "expected": null,
+          "actual": null
+        },
+        {
+          "case": "get_post_meta returns the current language",
+          "pass": true,
+          "expected": "Unter",
+          "actual": "Unter"
+        },
+        {
+          "case": "raw reads still see every language",
+          "pass": true,
+          "expected": [
+            "[:en]Sub[:de]Unter[:]"
+          ],
+          "actual": [
+            "[:en]Sub[:de]Unter[:]"
+          ]
+        },
+        {
+          "case": "writing back a translated custom field keeps the other languages",
+          "pass": true,
+          "expected": [
+            "[:en]Sub[:de]Unter[:]"
+          ],
+          "actual": [
+            "[:en]Sub[:de]Unter[:]"
+          ]
+        },
+        {
+          "case": "changing one part of a nested custom field keeps the stored rest",
+          "pass": true,
+          "expected": [
+            {
+              "label": "[:en]One[:de]Eins[:]",
+              "n": 4,
+              "deep": [
+                "<!--:en-->Two<!--:--><!--:de-->Zwei<!--:-->"
+              ]
+            }
+          ],
+          "actual": [
+            {
+              "label": "[:en]One[:de]Eins[:]",
+              "n": 4,
+              "deep": [
+                "<!--:en-->Two<!--:--><!--:de-->Zwei<!--:-->"
+              ]
+            }
+          ]
+        },
+        {
+          "case": "a changed custom field is stored as given",
+          "pass": true,
+          "expected": [
+            "C:\\neu"
+          ],
+          "actual": [
+            "C:\\neu"
+          ]
+        },
+        {
+          "case": "user profile field is read in the current language",
+          "pass": true,
+          "expected": "Biografie",
+          "actual": "Biografie"
+        },
+        {
+          "case": "writing back a translated profile field keeps the other languages",
+          "pass": true,
+          "expected": "[:en]Bio[:de]Biografie[:]",
+          "actual": "[:en]Bio[:de]Biografie[:]"
+        },
+        {
+          "case": "every option with markers is translated, except the ones qTrad reads itself",
+          "pass": true,
+          "expected": [
+            true,
+            false,
+            false
+          ],
+          "actual": [
+            true,
+            false,
+            false
+          ]
+        },
+        {
+          "case": "options holding credentials are never translated",
+          "pass": true,
+          "expected": [
+            false,
+            false
+          ],
+          "actual": [
+            false,
+            false
+          ]
+        },
+        {
+          "case": "listed options are matched by name and by pattern",
+          "pass": true,
+          "expected": [
+            "value_exact",
+            "value_test_mods",
+            "value_test_plain"
+          ],
+          "actual": [
+            "value_exact",
+            "value_test_mods",
+            "value_test_plain"
+          ]
+        },
+        {
+          "case": "options stay as stored unless translation is turned on",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "translated option is read in the current language",
+          "pass": true,
+          "expected": {
+            "note": "Danke",
+            "n": 1
+          },
+          "actual": {
+            "note": "Danke",
+            "n": 1
+          }
+        },
+        {
+          "case": "saving a translated option keeps the other languages of what did not change",
+          "pass": true,
+          "expected": {
+            "note": "[:en]Thanks[:de]Danke[:]",
+            "n": 2
+          },
+          "actual": {
+            "note": "[:en]Thanks[:de]Danke[:]",
+            "n": 2
+          }
+        },
+        {
+          "case": "an option that is not autoloaded is translated in all mode",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "an option saved later joins the index",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "a listed pattern matches options that are not autoloaded",
+          "pass": true,
+          "expected": [
+            "value_test_lazy",
+            "value_test_lazy_late"
+          ],
+          "actual": [
+            "value_test_lazy",
+            "value_test_lazy_late"
+          ]
+        },
+        {
+          "case": "an option that is not autoloaded is read in the current language",
+          "pass": true,
+          "expected": "Sichtbar",
+          "actual": "Sichtbar"
+        },
+        {
+          "case": "text filter names are validated",
+          "pass": true,
+          "expected": [
+            "value_test_filter"
+          ],
+          "actual": [
+            "value_test_filter"
+          ]
+        },
+        {
+          "case": "extra text filter shows the current language",
+          "pass": true,
+          "expected": "B",
+          "actual": "B"
+        },
+        {
+          "case": "settings form saves the value translation choices",
+          "pass": true,
+          "expected": [
+            true,
+            "all",
+            [
+              "widget_%",
+              "my_option"
+            ],
+            [
+              "my_filter"
+            ]
+          ],
+          "actual": [
+            true,
+            "all",
+            [
+              "widget_%",
+              "my_option"
+            ],
+            [
+              "my_filter"
+            ]
+          ]
+        },
+        {
+          "case": "a partial settings save keeps the value translation choices",
+          "pass": true,
+          "expected": [
+            true,
+            "all"
+          ],
+          "actual": [
+            true,
+            "all"
+          ]
+        },
+        {
+          "case": "first scan turns value translation on where such data exists",
+          "pass": true,
+          "expected": [
+            true,
+            "all"
+          ],
+          "actual": [
+            true,
+            "all"
+          ]
+        },
+        {
+          "case": "scan leaves a choice the admin made",
+          "pass": true,
+          "expected": {
+            "translate_meta": false,
+            "translate_options": "none"
+          },
+          "actual": {
+            "translate_meta": false,
+            "translate_options": "none"
+          }
+        },
+        {
+          "case": "strftime formats of qTranslate-X become PHP date formats",
+          "pass": true,
+          "expected": [
+            "l, \\d\\e\\r j. F Y",
+            "l F jS, Y",
+            "h:i A",
+            "d \\d\\e F \\d\\e Y",
+            "Y-m-d \\a\\t H:i",
+            "j. F Y"
+          ],
+          "actual": [
+            "l, \\d\\e\\r j. F Y",
+            "l F jS, Y",
+            "h:i A",
+            "d \\d\\e F \\d\\e Y",
+            "Y-m-d \\a\\t H:i",
+            "j. F Y"
+          ]
+        },
+        {
+          "case": "site date and time formats follow the current language",
+          "pass": true,
+          "expected": [
+            "j. F Y",
+            "H:i"
+          ],
+          "actual": [
+            "j. F Y",
+            "H:i"
+          ]
+        },
+        {
+          "case": "a language without a format keeps the site format",
+          "pass": true,
+          "expected": [
+            "F j, Y",
+            "g:i a"
+          ],
+          "actual": [
+            "F j, Y",
+            "g:i a"
+          ]
+        },
+        {
+          "case": "wp-admin keeps the site formats",
+          "pass": true,
+          "expected": "F j, Y",
+          "actual": "F j, Y"
+        },
+        {
+          "case": "settings save formats per enabled language, empty removes one",
+          "pass": true,
+          "expected": [
+            {
+              "de": "d.m.Y",
+              "es": "j \\d\\e F"
+            },
+            []
+          ],
+          "actual": [
+            {
+              "de": "d.m.Y",
+              "es": "j \\d\\e F"
+            },
+            []
+          ]
+        },
+        {
+          "case": "qtranxf_use_language takes the language first",
+          "pass": true,
+          "expected": "Hallo",
+          "actual": "Hallo"
+        },
+        {
+          "case": "qtranxf_split_languages builds the language map from blocks",
+          "pass": true,
+          "expected": {
+            "en": "Hello",
+            "de": "Hallo"
+          },
+          "actual": {
+            "en": "Hello",
+            "de": "Hallo"
+          }
+        },
+        {
+          "case": "qtranxf_translate_deep handles nested arrays",
+          "pass": true,
+          "expected": {
+            "a": [
+              "Hallo"
+            ]
+          },
+          "actual": {
+            "a": [
+              "Hallo"
+            ]
+          }
+        },
+        {
+          "case": "qtranxf_translate_post translates the object in place",
+          "pass": true,
+          "expected": [
+            "Hallo",
+            "Inhalt"
+          ],
+          "actual": [
+            "Hallo",
+            "Inhalt"
+          ]
+        },
+        {
+          "case": "qtranxf_get_url_for_language",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/es/sample/",
+          "actual": "http://127.0.0.1:8931/es/sample/"
+        },
+        {
+          "case": "qtranxf_term_use reads markers and the term library",
+          "pass": true,
+          "expected": [
+            "Bücher",
+            "Rot"
+          ],
+          "actual": [
+            "Bücher",
+            "Rot"
+          ]
+        },
+        {
+          "case": "translate_text filter",
+          "pass": true,
+          "expected": [
+            "Hallo",
+            "Hola",
+            ""
+          ],
+          "actual": [
+            "Hallo",
+            "Hola",
+            ""
+          ]
+        },
+        {
+          "case": "translate_term and translate_url filters",
+          "pass": true,
+          "expected": [
+            "Bücher",
+            "http://127.0.0.1:8931/es/sample/"
+          ],
+          "actual": [
+            "Bücher",
+            "http://127.0.0.1:8931/es/sample/"
+          ]
+        },
+        {
+          "case": "get_language and set_language filters",
+          "pass": true,
+          "expected": [
+            "de",
+            "de",
+            "es"
+          ],
+          "actual": [
+            "de",
+            "de",
+            "es"
+          ]
+        },
+        {
+          "case": "overview counts published items missing each language",
+          "pass": true,
+          "expected": {
+            "total": 4,
+            "missing": {
+              "en": 0,
+              "de": 2,
+              "es": 1
+            }
+          },
+          "actual": {
+            "total": 4,
+            "missing": {
+              "en": 0,
+              "de": 2,
+              "es": 1
+            }
+          }
+        },
+        {
+          "case": "missing-translation filter lists the posts without German",
+          "pass": true,
+          "expected": [
+            39,
+            41
+          ],
+          "actual": [
+            39,
+            41
+          ]
+        },
+        {
+          "case": "an unknown language in the filter is ignored",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "WooCommerce text settings get language inputs, addresses do not",
+          "pass": true,
+          "expected": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0
+          ],
+          "actual": [
+            1,
+            1,
+            1,
+            1,
+            0,
+            0
+          ]
+        },
+        {
+          "case": "purchase notes and attribute labels always get language inputs",
+          "pass": true,
+          "expected": [
+            "#_purchase_note",
+            true,
+            "#attribute_label"
+          ],
+          "actual": [
+            "#_purchase_note",
+            true,
+            "#attribute_label"
+          ]
+        },
+        {
+          "case": "other screens get none",
+          "pass": true,
+          "expected": null,
+          "actual": null
+        },
+        {
+          "case": "integrations can add screens",
+          "pass": true,
+          "expected": "#example",
+          "actual": "#example"
+        }
+      ]
+    },
+    "seo": {
+      "environment": {
+        "wordpress": "6.8",
+        "php": "8.3.35"
+      },
+      "passed": 112,
+      "total": 112,
+      "cases": [
+        {
+          "case": "Translated base and slug are used for a category",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/qtrad-seo-rubrik/qtrad-seo-kategorie/",
+          "actual": "http://127.0.0.1:8931/qtrad-seo-rubrik/qtrad-seo-kategorie/"
+        },
+        {
+          "case": "Translated slug is used for its language",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/qtrad-seo-slug-deutsch/",
+          "actual": "http://127.0.0.1:8931/de/qtrad-seo-slug-deutsch/"
+        },
+        {
+          "case": "Legacy translated slug is used for its language",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/es/qtrad-seo-slug-espanol/",
+          "actual": "http://127.0.0.1:8931/es/qtrad-seo-slug-espanol/"
+        },
+        {
+          "case": "Default language keeps the stored slug",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/qtrad-seo-slugged/",
+          "actual": "http://127.0.0.1:8931/qtrad-seo-slugged/"
+        },
+        {
+          "case": "Legacy Brazilian code has valid hreflang",
+          "pass": true,
+          "expected": "pt-BR",
+          "actual": "pt-BR"
+        },
+        {
+          "case": "Legacy Taiwanese code has valid hreflang",
+          "pass": true,
+          "expected": "zh-TW",
+          "actual": "zh-TW"
+        },
+        {
+          "case": "WordPress locale suffix is omitted",
+          "pass": true,
+          "expected": "en-US",
+          "actual": "en-US"
+        },
+        {
+          "case": "Unknown ISO language is omitted",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "Custom storage code uses real locale",
+          "pass": true,
+          "expected": "en-GB",
+          "actual": "en-GB"
+        },
+        {
+          "case": "Stable English URL from German context",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/qtrad-seo-translated/",
+          "actual": "http://127.0.0.1:8931/qtrad-seo-translated/"
+        },
+        {
+          "case": "Canonical uses requested language",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/qtrad-seo-translated/",
+          "actual": "http://127.0.0.1:8931/de/qtrad-seo-translated/"
+        },
+        {
+          "case": "External canonical is respected",
+          "pass": true,
+          "expected": "https://external.example/canonical",
+          "actual": "https://external.example/canonical"
+        },
+        {
+          "case": "Canonical retains unrelated query bytes",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/path?a=1&a=2&x=a%20b",
+          "actual": "http://127.0.0.1:8931/de/path?a=1&a=2&x=a%20b"
+        },
+        {
+          "case": "SEO selection does not show fallback",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "Disabled translation is not an alternate",
+          "pass": true,
+          "expected": [
+            "en",
+            "de",
+            "es"
+          ],
+          "actual": [
+            "en",
+            "de",
+            "es"
+          ]
+        },
+        {
+          "case": "Empty translation is not an alternate",
+          "pass": true,
+          "expected": [
+            "en"
+          ],
+          "actual": [
+            "en"
+          ]
+        },
+        {
+          "case": "Zero translation remains indexable",
+          "pass": true,
+          "expected": [
+            "en",
+            "de"
+          ],
+          "actual": [
+            "en",
+            "de"
+          ]
+        },
+        {
+          "case": "draft omitted",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "private omitted",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "password omitted",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "empty omitted",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "disabled omitted",
+          "pass": true,
+          "expected": [],
+          "actual": []
+        },
+        {
+          "case": "Missing translation adds noindex",
+          "pass": true,
+          "expected": {
+            "max-image-preview": "large",
+            "noindex": true
+          },
+          "actual": {
+            "max-image-preview": "large",
+            "noindex": true
+          }
+        },
+        {
+          "case": "Vendor string robots retains directives",
+          "pass": true,
+          "expected": "follow, max-image-preview:large, noindex",
+          "actual": "follow, max-image-preview:large, noindex"
+        },
+        {
+          "case": "Vendor array robots retains directives",
+          "pass": true,
+          "expected": {
+            "follow": "follow",
+            "index": "noindex"
+          },
+          "actual": {
+            "follow": "follow",
+            "index": "noindex"
+          }
+        },
+        {
+          "case": "Description selects current language",
+          "pass": true,
+          "expected": "Deutsche Beschreibung",
+          "actual": "Deutsche Beschreibung"
+        },
+        {
+          "case": "Protected post has no description",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "Protected post description override is withheld",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "Description returns once the password was entered",
+          "pass": true,
+          "expected": "SECRET_DE_q7 Override",
+          "actual": "SECRET_DE_q7 Override"
+        },
+        {
+          "case": "Archive languages follow its posts",
+          "pass": true,
+          "expected": [
+            "en"
+          ],
+          "actual": [
+            "en"
+          ]
+        },
+        {
+          "case": "Archive without German posts is a missing translation in German",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Archive term sitemap languages follow its posts",
+          "pass": true,
+          "expected": [
+            "en"
+          ],
+          "actual": [
+            "en"
+          ]
+        },
+        {
+          "case": "Archive with translated posts keeps every language",
+          "pass": true,
+          "expected": [
+            "en",
+            "de",
+            "es"
+          ],
+          "actual": [
+            "en",
+            "de",
+            "es"
+          ]
+        },
+        {
+          "case": "Probe queries are not narrowed by hide-untranslated",
+          "pass": true,
+          "expected": [
+            "en",
+            "de",
+            "es"
+          ],
+          "actual": [
+            "en",
+            "de",
+            "es"
+          ]
+        },
+        {
+          "case": "Alternates include current language",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Alternates include canonical default",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Yoast title adapter selects raw translation",
+          "pass": true,
+          "expected": "Deutscher SEO Titel",
+          "actual": "Deutscher SEO Titel"
+        },
+        {
+          "case": "Rank Math description adapter selects raw translation",
+          "pass": true,
+          "expected": "Deutsche SEO Beschreibung",
+          "actual": "Deutsche SEO Beschreibung"
+        },
+        {
+          "case": "SEO reads leave stored metadata intact",
+          "pass": true,
+          "expected": [
+            "[:en]English SEO title[:de]Deutscher SEO Titel[:es]Título SEO español[:]"
+          ],
+          "actual": [
+            "[:en]English SEO title[:de]Deutscher SEO Titel[:es]Título SEO español[:]"
+          ]
+        },
+        {
+          "case": "SEO field retains disabled language",
+          "pass": true,
+          "expected": "Antiguo",
+          "actual": "Antiguo"
+        },
+        {
+          "case": "SEO field selects requested translation",
+          "pass": true,
+          "expected": "qTrad German title",
+          "actual": "qTrad German title"
+        },
+        {
+          "case": "SEO field rejects invalid nonce",
+          "pass": true,
+          "expected": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]",
+          "actual": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]"
+        },
+        {
+          "case": "SEO field rejects mismatched identity",
+          "pass": true,
+          "expected": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]",
+          "actual": "[:en]qTrad English title[:de]qTrad German title[:spa]Antiguo[:]"
+        },
+        {
+          "case": "Schema text translated",
+          "pass": true,
+          "expected": "Deutsch",
+          "actual": "Deutsch"
+        },
+        {
+          "case": "Schema locale translated",
+          "pass": true,
+          "expected": "de-DE",
+          "actual": "de-DE"
+        },
+        {
+          "case": "Schema identifiers translated",
+          "pass": true,
+          "expected": "http://127.0.0.1:8931/de/qtrad-seo-translated/#webpage",
+          "actual": "http://127.0.0.1:8931/de/qtrad-seo-translated/#webpage"
+        },
+        {
+          "case": "Legacy flag alias en",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Legacy flag alias ar",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Legacy flag alias gl",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Legacy flag alias ca",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Vendor sitemap path is neutral",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Plain sitemap query is neutral",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Core provider wrapped",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Internal sitemap data removed post/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/2",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/2",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/2",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/3",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/3",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/3",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/4",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/4",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/4",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/5",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/5",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/5",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/6",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/6",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/6",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/7",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/8",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/9",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/9",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/10",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/10",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed post/10",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/2",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/2",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/2",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/3",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/3",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/3",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/4",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/4",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/4",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/5",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/5",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed page/5",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed qtrad_book/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed qtrad_book/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Internal sitemap data removed qtrad_book/1",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Expanded pages respect configured six-URL bound",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Sitemap contains translated en",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Sitemap contains translated de",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Sitemap contains translated es",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Sitemap includes German-only post",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "Sitemap excludes missing German",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Sitemap excludes draft",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Sitemap excludes private",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Sitemap excludes password",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Sitemap excludes empty",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Sitemap excludes disabled",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "Paginated sitemap has no duplicates",
+          "pass": true,
+          "expected": 46,
+          "actual": 46
+        },
+        {
+          "case": "XML expansion retains extensions",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        }
+      ],
+      "fixtures": {
+        "translated": {
+          "id": 44,
+          "slug": "qtrad-seo-translated",
+          "url": "http://127.0.0.1:8931/qtrad-seo-translated/"
+        },
+        "missing": {
+          "id": 45,
+          "slug": "qtrad-seo-missing",
+          "url": "http://127.0.0.1:8931/qtrad-seo-missing/"
+        },
+        "german": {
+          "id": 46,
+          "slug": "qtrad-seo-german",
+          "url": "http://127.0.0.1:8931/qtrad-seo-german/"
+        },
+        "zero": {
+          "id": 47,
+          "slug": "qtrad-seo-zero",
+          "url": "http://127.0.0.1:8931/qtrad-seo-zero/"
+        },
+        "empty": {
+          "id": 48,
+          "slug": "qtrad-seo-empty",
+          "url": "http://127.0.0.1:8931/qtrad-seo-empty/"
+        },
+        "disabled": {
+          "id": 49,
+          "slug": "qtrad-seo-disabled",
+          "url": "http://127.0.0.1:8931/qtrad-seo-disabled/"
+        },
+        "draft": {
+          "id": 50,
+          "slug": "qtrad-seo-draft",
+          "url": "http://127.0.0.1:8931/?p=50"
+        },
+        "private": {
+          "id": 51,
+          "slug": "qtrad-seo-private",
+          "url": "http://127.0.0.1:8931/qtrad-seo-private/"
+        },
+        "password": {
+          "id": 52,
+          "slug": "qtrad-seo-password",
+          "url": "http://127.0.0.1:8931/qtrad-seo-password/"
+        },
+        "book": {
+          "id": 53,
+          "slug": "qtrad-seo-book",
+          "url": "http://127.0.0.1:8931/qtrad_book/qtrad-seo-book/"
+        },
+        "slugged": {
+          "id": 54,
+          "slug": "qtrad-seo-slugged",
+          "url": "http://127.0.0.1:8931/qtrad-seo-slugged/",
+          "slugs": {
+            "de": "qtrad-seo-slug-deutsch",
+            "es": "qtrad-seo-slug-espanol"
+          }
+        },
+        "category": {
+          "id": 8,
+          "slug": "qtrad-seo-category",
+          "slugs": {
+            "de": "qtrad-seo-kategorie"
+          },
+          "bases": {
+            "de": "qtrad-seo-rubrik"
+          }
+        },
+        "english_tag": {
+          "id": 9,
+          "slug": "qtrad-seo-english-tag"
+        },
+        "translated_tag": {
+          "id": 10,
+          "slug": "qtrad-seo-translated-tag"
+        }
+      }
+    },
+    "seo-http": {
+      "owner": "core",
+      "passed": 93,
+      "total": 93,
+      "cases": [
+        {
+          "case": "en canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "en reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "en no language markers",
+          "pass": true
+        },
+        {
+          "case": "en one description",
+          "pass": true
+        },
+        {
+          "case": "en localized description",
+          "pass": true
+        },
+        {
+          "case": "en localized social URL",
+          "pass": true
+        },
+        {
+          "case": "en schema present",
+          "pass": true
+        },
+        {
+          "case": "de canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "de reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "de no language markers",
+          "pass": true
+        },
+        {
+          "case": "de one description",
+          "pass": true
+        },
+        {
+          "case": "de localized description",
+          "pass": true
+        },
+        {
+          "case": "de localized social URL",
+          "pass": true
+        },
+        {
+          "case": "de schema present",
+          "pass": true
+        },
+        {
+          "case": "es canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "es reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "es no language markers",
+          "pass": true
+        },
+        {
+          "case": "es one description",
+          "pass": true
+        },
+        {
+          "case": "es localized description",
+          "pass": true
+        },
+        {
+          "case": "es localized social URL",
+          "pass": true
+        },
+        {
+          "case": "es schema present",
+          "pass": true
+        },
+        {
+          "case": "de canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "de reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "de no language markers",
+          "pass": true
+        },
+        {
+          "case": "de one description",
+          "pass": true
+        },
+        {
+          "case": "de localized description",
+          "pass": true
+        },
+        {
+          "case": "de localized social URL",
+          "pass": true
+        },
+        {
+          "case": "de schema present",
+          "pass": true
+        },
+        {
+          "case": "en canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "en reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "en no language markers",
+          "pass": true
+        },
+        {
+          "case": "en one description",
+          "pass": true
+        },
+        {
+          "case": "en localized description",
+          "pass": true
+        },
+        {
+          "case": "en localized social URL",
+          "pass": true
+        },
+        {
+          "case": "en schema present",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /de/",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /es/",
+          "pass": true
+        },
+        {
+          "case": "English-only archive claims only English",
+          "pass": true
+        },
+        {
+          "case": "English-only archive in German is noindex",
+          "pass": true
+        },
+        {
+          "case": "English-only archive in German claims no alternates",
+          "pass": true
+        },
+        {
+          "case": "Translated archive claims every language",
+          "pass": true
+        },
+        {
+          "case": "Missing translation noindex",
+          "pass": true
+        },
+        {
+          "case": "Missing translation has no alternate claims",
+          "pass": true
+        },
+        {
+          "case": "qTrad SEO description override used",
+          "pass": true
+        },
+        {
+          "case": "qTrad SEO title override used",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "Stored slug moves to the translated address",
+          "pass": true
+        },
+        {
+          "case": "Slug of another language is not found",
+          "pass": true
+        },
+        {
+          "case": "Translated category base and slug resolve",
+          "pass": true
+        },
+        {
+          "case": "Translated category canonical",
+          "pass": true
+        },
+        {
+          "case": "Category address /de/category/qtrad-seo-kategorie/ moves to the translated one",
+          "pass": true
+        },
+        {
+          "case": "Category address /de/category/qtrad-seo-category/ moves to the translated one",
+          "pass": true
+        },
+        {
+          "case": "Sitemap response sets no language cookie",
+          "pass": true
+        },
+        {
+          "case": "Sitemap index populated",
+          "pass": true
+        },
+        {
+          "case": "Sitemap endpoints remain neutral",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/wp-sitemap-posts-post-1.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/wp-sitemap-posts-page-1.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/wp-sitemap-posts-qtrad_book-1.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/wp-sitemap-taxonomies-category-1.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/wp-sitemap-taxonomies-post_tag-1.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/wp-sitemap-users-1.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains en-US",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains de-DE",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains es-ES",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains x-default",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug en-US",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug de-DE",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug es-ES",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug x-default",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits the stored slug in other languages",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated category slug",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains German-only version",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits missing translation",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits archive languages without posts",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits draft",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits private",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits password",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits empty",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits disabled",
+          "pass": true
+        },
+        {
+          "case": "Sitemap translated custom post type",
+          "pass": true
+        },
+        {
+          "case": "Sitemap content locs are unique",
+          "pass": true
+        }
+      ]
+    },
+    "yoast-http": {
+      "owner": "yoast",
+      "passed": 98,
+      "total": 98,
+      "cases": [
+        {
+          "case": "en canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "en reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "en no language markers",
+          "pass": true
+        },
+        {
+          "case": "en one description",
+          "pass": true
+        },
+        {
+          "case": "en localized description",
+          "pass": true
+        },
+        {
+          "case": "en localized social URL",
+          "pass": true
+        },
+        {
+          "case": "en schema present",
+          "pass": true
+        },
+        {
+          "case": "en localized social title",
+          "pass": true
+        },
+        {
+          "case": "de canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "de reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "de no language markers",
+          "pass": true
+        },
+        {
+          "case": "de one description",
+          "pass": true
+        },
+        {
+          "case": "de localized description",
+          "pass": true
+        },
+        {
+          "case": "de localized social URL",
+          "pass": true
+        },
+        {
+          "case": "de schema present",
+          "pass": true
+        },
+        {
+          "case": "de localized social title",
+          "pass": true
+        },
+        {
+          "case": "es canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "es reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "es no language markers",
+          "pass": true
+        },
+        {
+          "case": "es one description",
+          "pass": true
+        },
+        {
+          "case": "es localized description",
+          "pass": true
+        },
+        {
+          "case": "es localized social URL",
+          "pass": true
+        },
+        {
+          "case": "es schema present",
+          "pass": true
+        },
+        {
+          "case": "es localized social title",
+          "pass": true
+        },
+        {
+          "case": "de canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "de reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "de no language markers",
+          "pass": true
+        },
+        {
+          "case": "de one description",
+          "pass": true
+        },
+        {
+          "case": "de localized description",
+          "pass": true
+        },
+        {
+          "case": "de localized social URL",
+          "pass": true
+        },
+        {
+          "case": "de schema present",
+          "pass": true
+        },
+        {
+          "case": "de localized social title",
+          "pass": true
+        },
+        {
+          "case": "en canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "en reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "en no language markers",
+          "pass": true
+        },
+        {
+          "case": "en one description",
+          "pass": true
+        },
+        {
+          "case": "en localized description",
+          "pass": true
+        },
+        {
+          "case": "en localized social URL",
+          "pass": true
+        },
+        {
+          "case": "en schema present",
+          "pass": true
+        },
+        {
+          "case": "en localized social title",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /de/",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /es/",
+          "pass": true
+        },
+        {
+          "case": "English-only archive claims only English",
+          "pass": true
+        },
+        {
+          "case": "English-only archive in German is noindex",
+          "pass": true
+        },
+        {
+          "case": "English-only archive in German claims no alternates",
+          "pass": true
+        },
+        {
+          "case": "Translated archive claims every language",
+          "pass": true
+        },
+        {
+          "case": "Missing translation noindex",
+          "pass": true
+        },
+        {
+          "case": "Missing translation has no alternate claims",
+          "pass": true
+        },
+        {
+          "case": "qTrad SEO description override used",
+          "pass": true
+        },
+        {
+          "case": "qTrad SEO title override used",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "Stored slug moves to the translated address",
+          "pass": true
+        },
+        {
+          "case": "Slug of another language is not found",
+          "pass": true
+        },
+        {
+          "case": "Translated category base and slug resolve",
+          "pass": true
+        },
+        {
+          "case": "Translated category canonical",
+          "pass": true
+        },
+        {
+          "case": "Category address /de/category/qtrad-seo-kategorie/ moves to the translated one",
+          "pass": true
+        },
+        {
+          "case": "Category address /de/category/qtrad-seo-category/ moves to the translated one",
+          "pass": true
+        },
+        {
+          "case": "Sitemap response sets no language cookie",
+          "pass": true
+        },
+        {
+          "case": "Sitemap index populated",
+          "pass": true
+        },
+        {
+          "case": "Sitemap endpoints remain neutral",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/post-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/page-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/qtrad_book-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/category-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/post_tag-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/author-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains en-US",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains de-DE",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains es-ES",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains x-default",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug en-US",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug de-DE",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug es-ES",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug x-default",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits the stored slug in other languages",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated category slug",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains German-only version",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits missing translation",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits archive languages without posts",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits draft",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits private",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits password",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits empty",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits disabled",
+          "pass": true
+        },
+        {
+          "case": "Sitemap translated custom post type",
+          "pass": true
+        },
+        {
+          "case": "Sitemap content locs are unique",
+          "pass": true
+        }
+      ]
+    },
+    "rankmath-http": {
+      "owner": "rankmath",
+      "passed": 96,
+      "total": 96,
+      "cases": [
+        {
+          "case": "en canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "en reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "en no language markers",
+          "pass": true
+        },
+        {
+          "case": "en one description",
+          "pass": true
+        },
+        {
+          "case": "en localized description",
+          "pass": true
+        },
+        {
+          "case": "en localized social URL",
+          "pass": true
+        },
+        {
+          "case": "en schema present",
+          "pass": true
+        },
+        {
+          "case": "en localized social title",
+          "pass": true
+        },
+        {
+          "case": "de canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "de reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "de no language markers",
+          "pass": true
+        },
+        {
+          "case": "de one description",
+          "pass": true
+        },
+        {
+          "case": "de localized description",
+          "pass": true
+        },
+        {
+          "case": "de localized social URL",
+          "pass": true
+        },
+        {
+          "case": "de schema present",
+          "pass": true
+        },
+        {
+          "case": "de localized social title",
+          "pass": true
+        },
+        {
+          "case": "es canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "es reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "es no language markers",
+          "pass": true
+        },
+        {
+          "case": "es one description",
+          "pass": true
+        },
+        {
+          "case": "es localized description",
+          "pass": true
+        },
+        {
+          "case": "es localized social URL",
+          "pass": true
+        },
+        {
+          "case": "es schema present",
+          "pass": true
+        },
+        {
+          "case": "es localized social title",
+          "pass": true
+        },
+        {
+          "case": "de canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "de reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "de no language markers",
+          "pass": true
+        },
+        {
+          "case": "de one description",
+          "pass": true
+        },
+        {
+          "case": "de localized description",
+          "pass": true
+        },
+        {
+          "case": "de localized social URL",
+          "pass": true
+        },
+        {
+          "case": "de schema present",
+          "pass": true
+        },
+        {
+          "case": "de localized social title",
+          "pass": true
+        },
+        {
+          "case": "en canonical appears once and matches",
+          "pass": true
+        },
+        {
+          "case": "en reciprocal alternates",
+          "pass": true
+        },
+        {
+          "case": "en no language markers",
+          "pass": true
+        },
+        {
+          "case": "en one description",
+          "pass": true
+        },
+        {
+          "case": "en localized description",
+          "pass": true
+        },
+        {
+          "case": "en localized social URL",
+          "pass": true
+        },
+        {
+          "case": "en schema present",
+          "pass": true
+        },
+        {
+          "case": "en localized social title",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /de/",
+          "pass": true
+        },
+        {
+          "case": "Protected post text absent from the whole page /es/",
+          "pass": true
+        },
+        {
+          "case": "English-only archive claims only English",
+          "pass": true
+        },
+        {
+          "case": "English-only archive in German is noindex",
+          "pass": true
+        },
+        {
+          "case": "English-only archive in German claims no alternates",
+          "pass": true
+        },
+        {
+          "case": "Translated archive claims every language",
+          "pass": true
+        },
+        {
+          "case": "Missing translation noindex",
+          "pass": true
+        },
+        {
+          "case": "Missing translation has no alternate claims",
+          "pass": true
+        },
+        {
+          "case": "qTrad SEO description override used",
+          "pass": true
+        },
+        {
+          "case": "qTrad SEO title override used",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "en-US translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "de-DE translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug resolves",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug canonical",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug alternates",
+          "pass": true
+        },
+        {
+          "case": "es-ES translated slug social URL",
+          "pass": true
+        },
+        {
+          "case": "Stored slug moves to the translated address",
+          "pass": true
+        },
+        {
+          "case": "Slug of another language is not found",
+          "pass": true
+        },
+        {
+          "case": "Translated category base and slug resolve",
+          "pass": true
+        },
+        {
+          "case": "Translated category canonical",
+          "pass": true
+        },
+        {
+          "case": "Category address /de/category/qtrad-seo-kategorie/ moves to the translated one",
+          "pass": true
+        },
+        {
+          "case": "Category address /de/category/qtrad-seo-category/ moves to the translated one",
+          "pass": true
+        },
+        {
+          "case": "Sitemap response sets no language cookie",
+          "pass": true
+        },
+        {
+          "case": "Sitemap index populated",
+          "pass": true
+        },
+        {
+          "case": "Sitemap endpoints remain neutral",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/post-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/page-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/qtrad_book-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap file has unique locs http://127.0.0.1:8931/category-sitemap.xml",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains en-US",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains de-DE",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains es-ES",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains x-default",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug en-US",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug de-DE",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug es-ES",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated slug x-default",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits the stored slug in other languages",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains translated category slug",
+          "pass": true
+        },
+        {
+          "case": "Sitemap contains German-only version",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits missing translation",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits archive languages without posts",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits draft",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits private",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits password",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits empty",
+          "pass": true
+        },
+        {
+          "case": "Sitemap omits disabled",
+          "pass": true
+        },
+        {
+          "case": "Sitemap translated custom post type",
+          "pass": true
+        },
+        {
+          "case": "Sitemap content locs are unique",
+          "pass": true
+        }
+      ]
+    },
+    "acf": {
+      "environment": {
+        "wordpress": "6.8",
+        "php": "8.3.35",
+        "acf": "6.8.10"
+      },
+      "passed": 31,
+      "total": 31,
+      "cases": [
+        {
+          "case": "qTranslate-XT field types are registered",
+          "pass": true,
+          "expected": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "actual": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "case": "values are stored with bracket markers",
+          "pass": true,
+          "expected": [
+            "[:en]Hello[:de]Hallo[:]",
+            "[:en]Std[:de]Standard[:]",
+            "[:en]https://example.com/en[:de]https://example.com/de[:]",
+            "Just text",
+            "[:en]65[:]",
+            "[:en]64[:de]63[:]"
+          ],
+          "actual": [
+            "[:en]Hello[:de]Hallo[:]",
+            "[:en]Std[:de]Standard[:]",
+            "[:en]https://example.com/en[:de]https://example.com/de[:]",
+            "Just text",
+            "[:en]65[:]",
+            "[:en]64[:de]63[:]"
+          ]
+        },
+        {
+          "case": "get_field returns the current language",
+          "pass": true,
+          "expected": [
+            "Hallo",
+            "Standard",
+            "https://example.com/de",
+            "Just text",
+            63
+          ],
+          "actual": [
+            "Hallo",
+            "Standard",
+            "https://example.com/de",
+            "Just text",
+            63
+          ]
+        },
+        {
+          "case": "missing translation falls back to the default language without a prefix",
+          "pass": true,
+          "expected": [
+            "Hello",
+            65,
+            64
+          ],
+          "actual": [
+            "Hello",
+            65,
+            64
+          ]
+        },
+        {
+          "case": "image without a translation in the language falls back too",
+          "pass": true,
+          "expected": 65,
+          "actual": 65
+        },
+        {
+          "case": "with every custom field translated, ACF fields still fall back without a prefix",
+          "pass": true,
+          "expected": [
+            "Hello",
+            64
+          ],
+          "actual": [
+            "Hello",
+            64
+          ]
+        },
+        {
+          "case": "ACF field read as plain custom field falls back without a prefix",
+          "pass": true,
+          "expected": "Hello",
+          "actual": "Hello"
+        },
+        {
+          "case": "standard field with the Translate setting renders per language",
+          "pass": true,
+          "expected": "qtranslate_text",
+          "actual": "qtranslate_text"
+        },
+        {
+          "case": "standard field whose value has markers renders per language",
+          "pass": true,
+          "expected": "qtranslate_text",
+          "actual": "qtranslate_text"
+        },
+        {
+          "case": "plain standard field stays as it is",
+          "pass": true,
+          "expected": "text",
+          "actual": "text"
+        },
+        {
+          "case": "field label is shown in the admin language",
+          "pass": true,
+          "expected": "Subtitle",
+          "actual": "Subtitle"
+        },
+        {
+          "case": "one input per language, the default language keeps the field id",
+          "pass": true,
+          "expected": [
+            3,
+            true,
+            true,
+            true
+          ],
+          "actual": [
+            3,
+            true,
+            true,
+            true
+          ]
+        },
+        {
+          "case": "only the default language input is required",
+          "pass": true,
+          "expected": 1,
+          "actual": 1
+        },
+        {
+          "case": "URL validated per language",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "invalid URL in one language is reported with its name",
+          "pass": true,
+          "expected": "Deutsch: Value must be a valid URL",
+          "actual": "Deutsch: Value must be a valid URL"
+        },
+        {
+          "case": "required field needs the default language",
+          "pass": true,
+          "expected": "English: Subtitle is required",
+          "actual": "English: Subtitle is required"
+        },
+        {
+          "case": "character limit applies per language",
+          "pass": true,
+          "expected": "Deutsch: Value must not exceed 20 characters",
+          "actual": "Deutsch: Value must not exceed 20 characters"
+        },
+        {
+          "case": "posted language arrays are joined, also inside rows",
+          "pass": true,
+          "expected": [
+            "[:en]A[:de]B\\'s[:]",
+            "p",
+            "[:en]x[:de]y[:]"
+          ],
+          "actual": [
+            "[:en]A[:de]B\\'s[:]",
+            "p",
+            "[:en]x[:de]y[:]"
+          ]
+        },
+        {
+          "case": "posted values without ACF nonce are left alone",
+          "pass": true,
+          "expected": {
+            "en": "A",
+            "de": "B"
+          },
+          "actual": {
+            "en": "A",
+            "de": "B"
+          }
+        },
+        {
+          "case": "posted values with a wrong ACF nonce are left alone",
+          "pass": true,
+          "expected": {
+            "en": "A",
+            "de": "B"
+          },
+          "actual": {
+            "en": "A",
+            "de": "B"
+          }
+        },
+        {
+          "case": "posted language values are sanitized for users without unfiltered_html",
+          "pass": true,
+          "expected": [
+            "[:en]<b>A</b>x()[:de]B[:]",
+            "[:en]https://example.com/a[:]"
+          ],
+          "actual": [
+            "[:en]<b>A</b>x()[:de]B[:]",
+            "[:en]https://example.com/a[:]"
+          ]
+        },
+        {
+          "case": "ACF accepts valid per-language values",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "ACF saves per-language values as one string",
+          "pass": true,
+          "expected": [
+            "[:en]Saved[:de]Gespeichert[:]",
+            "[:en]https://example.com/a[:de]https://example.com/b[:]"
+          ],
+          "actual": [
+            "[:en]Saved[:de]Gespeichert[:]",
+            "[:en]https://example.com/a[:de]https://example.com/b[:]"
+          ]
+        },
+        {
+          "case": "ACF rejects a missing default language and an invalid URL",
+          "pass": true,
+          "expected": [
+            false,
+            2
+          ],
+          "actual": [
+            false,
+            2
+          ]
+        },
+        {
+          "case": "ACF accepts per-language values of a marker-detected field",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "saving keeps the translation of a language that is not enabled",
+          "pass": true,
+          "expected": "[:en]Hello edited[:de]Hallo[:es]Hola[:]",
+          "actual": "[:en]Hello edited[:de]Hallo[:es]Hola[:]"
+        },
+        {
+          "case": "marker-detected standard field is stored as a string, an emptied language is cleared",
+          "pass": true,
+          "expected": "[:en]Plain edited[:es]Hola[:]",
+          "actual": "[:en]Plain edited[:es]Hola[:]"
+        },
+        {
+          "case": "a field key validator still rejects a multilingual value",
+          "pass": true,
+          "expected": [
+            false,
+            "Rejected by custom rule"
+          ],
+          "actual": [
+            false,
+            "Rejected by custom rule"
+          ]
+        },
+        {
+          "case": "a later type validator returning false still rejects",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        },
+        {
+          "case": "a per-language URL check is not tripped by the markers",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "a qTranslate-XT field type keeps its key validators too",
+          "pass": true,
+          "expected": false,
+          "actual": false
+        }
+      ]
+    },
+    "woocommerce": {
+      "environment": {
+        "wordpress": "6.8",
+        "php": "8.3.35",
+        "woocommerce": "9.9.7"
+      },
+      "passed": 20,
+      "total": 20,
+      "cases": [
+        {
+          "case": "product name, short description and purchase note in the current language",
+          "pass": true,
+          "expected": [
+            "Rotwein",
+            "Ein trockener Roter.",
+            "Danke"
+          ],
+          "actual": [
+            "Rotwein",
+            "Ein trockener Roter.",
+            "Danke"
+          ]
+        },
+        {
+          "case": "edit context keeps the stored value",
+          "pass": true,
+          "expected": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]",
+          "actual": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]"
+        },
+        {
+          "case": "missing translation falls back with the language name, like titles",
+          "pass": true,
+          "expected": "(English) Thanks",
+          "actual": "(English) Thanks"
+        },
+        {
+          "case": "attribute labels in the current language",
+          "pass": true,
+          "expected": [
+            "Farbe",
+            "Größe"
+          ],
+          "actual": [
+            "Farbe",
+            "Größe"
+          ]
+        },
+        {
+          "case": "global attribute term names in the current language",
+          "pass": true,
+          "expected": "Rot",
+          "actual": "Rot"
+        },
+        {
+          "case": "custom option text in the current language, its value stays stored",
+          "pass": true,
+          "expected": [
+            "Klein",
+            "[:en]Small[:de]Klein[:]"
+          ],
+          "actual": [
+            "Klein",
+            "[:en]Small[:de]Klein[:]"
+          ]
+        },
+        {
+          "case": "attribute meta stays raw when every custom field is translated",
+          "pass": true,
+          "expected": "[:en]Size[:de]Größe[:]",
+          "actual": "[:en]Size[:de]Größe[:]"
+        },
+        {
+          "case": "variation attribute meta stays raw",
+          "pass": true,
+          "expected": "[:en]Small[:de]Klein[:]",
+          "actual": "[:en]Small[:de]Klein[:]"
+        },
+        {
+          "case": "gateway title in the current language",
+          "pass": true,
+          "expected": "Nachnahme",
+          "actual": "Nachnahme"
+        },
+        {
+          "case": "structured data in the current language",
+          "pass": true,
+          "expected": [
+            "Rotwein",
+            "B"
+          ],
+          "actual": [
+            "Rotwein",
+            "B"
+          ]
+        },
+        {
+          "case": "cart hash differs per language",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "empty cart hash stays empty",
+          "pass": true,
+          "expected": "",
+          "actual": ""
+        },
+        {
+          "case": "order stores the language in _user_language",
+          "pass": true,
+          "expected": "de",
+          "actual": "de"
+        },
+        {
+          "case": "custom attribute value of an order item is stored in the customer language",
+          "pass": true,
+          "expected": "Klein",
+          "actual": "Klein"
+        },
+        {
+          "case": "thank-you address opens in the order language",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "customer email is sent",
+          "pass": true,
+          "expected": true,
+          "actual": true
+        },
+        {
+          "case": "customer email uses the order language for markers and the locale",
+          "pass": true,
+          "expected": [
+            true,
+            true,
+            false,
+            "de_DE"
+          ],
+          "actual": [
+            true,
+            true,
+            false,
+            "de_DE"
+          ]
+        },
+        {
+          "case": "shop email uses the default language",
+          "pass": true,
+          "expected": [
+            false,
+            true,
+            false
+          ],
+          "actual": [
+            false,
+            true,
+            false
+          ]
+        },
+        {
+          "case": "language and locale are restored after sending",
+          "pass": true,
+          "expected": [
+            "en",
+            "en_US"
+          ],
+          "actual": [
+            "en",
+            "en_US"
+          ]
+        },
+        {
+          "case": "wp-admin keeps stored values",
+          "pass": true,
+          "expected": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]",
+          "actual": "[:en]Red wine[:de]Rotwein[:es]Vino tinto[:]"
+        }
+      ],
+      "fixtures": {
+        "simple": "qtrad-red-wine",
+        "variable": "qtrad-tshirt",
+        "size_key": "ensizedegrose"
+      }
+    },
+    "woocommerce-http": {
+      "passed": 14,
+      "total": 14,
+      "cases": [
+        {
+          "case": "en product page shows no language markers",
+          "pass": true
+        },
+        {
+          "case": "en product name",
+          "pass": true
+        },
+        {
+          "case": "en structured data has no markers",
+          "pass": true
+        },
+        {
+          "case": "en variable product page shows no language markers",
+          "pass": true
+        },
+        {
+          "case": "en custom attribute label",
+          "pass": true
+        },
+        {
+          "case": "en global attribute label",
+          "pass": true
+        },
+        {
+          "case": "en custom option values stay stored for matching",
+          "pass": true
+        },
+        {
+          "case": "de product page shows no language markers",
+          "pass": true
+        },
+        {
+          "case": "de product name",
+          "pass": true
+        },
+        {
+          "case": "de structured data has no markers",
+          "pass": true
+        },
+        {
+          "case": "de variable product page shows no language markers",
+          "pass": true
+        },
+        {
+          "case": "de custom attribute label",
+          "pass": true
+        },
+        {
+          "case": "de global attribute label",
+          "pass": true
+        },
+        {
+          "case": "de custom option values stay stored for matching",
+          "pass": true
+        }
+      ]
+    }
   },
   "source_sha256": {
     "qtrad/LICENSE": "edaef632cbb643e4e7a221717a6c441a4c1a7c918e6e4d56debc3d8739b233f6",
@@ -214,7 +4873,7 @@
     "qtrad/readme.txt": "703e03e680ba55cb60684053f5b4710562cb3b91d9b7e89a1b6fa36f6180ef81",
     "qtrad/uninstall.php": "13350de35d5c50e1d7d0cce65ffa452fb0d58f4719a45dd565f3d9598e9a24b8"
   },
-  "started_utc": "2026-10-18T20:45:07.465607+00:00",
+  "started_utc": "2026-10-18T20:47:43.372194+00:00",
   "test_sha256": {
     "tests/README.md": "2d1ce5adcd2f1f5e55c2ac2375691d302dd5b43edf12254197a513ba38db89d6",
     "tests/acf.php": "0b83b02d02851ae07122350cfbed8f9d285d51b673203192de92a523eb68cfa2",
@@ -241,11 +4900,28 @@
     "tests/seo.php": "5bf869e90d41d44ce3f5e717eac63f00c4f92b183d94f8bc66929a84ea885b62",
     "tests/woocommerce-http.py": "f32dd45b52fb1a1bbf639cf6c628a80c6981aa228e0486d37a7f8fcd6ee5d343",
     "tests/woocommerce.php": "097b32606b69d7101efe8e2459f7c21929e530283f7b04f59d40dbd94bb20ccf",
-    "tests/wordpress.php": "b33949e2b48f2719982c3fe9f8c74167d0cea0f45c754261d26683a81a510dcc"
+    "tests/wordpress.php": "33374fbb93914faccc89d255632e4db0dc08035ddaaba7c7142bf08167840682"
   },
-  "php_image": "sha256:d5ace5729855c3dcdc72f618cbceeff1e3610799b49838e5029b4c34cf677c69",
+  "php_image": "sha256:1505a3d8875c926fecee7eb7fd2f72557137d15f337edd1bb4f19f444d449fdb",
   "wordpress_archive_sha256": "f7dbedc423ddb3f2f3e98e9140f1720bfd6d4a8f4873c85da2e62f6a078de10a",
   "database_image": "sha256:4e667183d5236dbbecf88167a0f1f49dc0c116aa46990309e920e663e2fdc348",
-  "error": "wordpress failed; see /home/runner/work/qtrad/qtrad/tests/results/matrix/wp68-php83-maria",
-  "completed_utc": "2026-10-18T20:45:45.463284+00:00"
+  "seo_plugins": {
+    "yoast": {
+      "version": "25.9",
+      "archive_sha256": "6b131399f0edc441984b1f6d4afbd90c0e712ad8061b136a6e1b0460b7a06711"
+    },
+    "rankmath": {
+      "version": "1.0.279",
+      "archive_sha256": "535e69223f26a412b486dadc4a6b4ee0cf897ea3732756d7682263e1fa2240f5"
+    }
+  },
+  "acf": {
+    "version": "6.8.10",
+    "archive_sha256": "92d51a8f1d839f60aee4efb6a9cd269b37d1599a9fb44d03f792352dfe34c744"
+  },
+  "woocommerce": {
+    "version": "9.9.7",
+    "archive_sha256": "96facedd12e32b6e0b120dcaa4a62b9c6b1ae12159d32510ea416c8e9b44f4dd"
+  },
+  "completed_utc": "2026-10-18T20:48:28.627456+00:00"
 }

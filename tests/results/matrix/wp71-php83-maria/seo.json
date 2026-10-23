@@ -1,7 +1,7 @@
 {
     "environment": {
         "wordpress": "7.1.2",
-        "php": "8.3.35"
+        "php": "8.3.36"
     },
     "passed": 112,
     "total": 112,

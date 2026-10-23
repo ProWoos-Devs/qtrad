@@ -1,7 +1,7 @@
 {
     "environment": {
         "wordpress": "6.9",
-        "php": "8.5.11",
+        "php": "8.5.12",
         "woocommerce": "10.9.4"
     },
     "passed": 20,

@@ -1,7 +1,7 @@
 {
     "environment": {
         "wordpress": "7.1.2",
-        "php": "8.2.34",
+        "php": "8.2.35",
         "acf": "6.8.10"
     },
     "passed": 31,

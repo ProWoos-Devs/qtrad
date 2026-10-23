@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.13.0
+Stable tag: 1.13.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -122,7 +122,7 @@ qTrad sends no data anywhere and loads nothing from other sites. It stores the l
 
 qTrad continues the work of qTranslate by Qian Qin and qTranslate-X by the qTranslate Team, both licensed GPLv2 or later. It is an independent project and is not endorsed by the original authors.
 
-The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis Lipiridis, licensed MIT. The full notice is in flags/LICENSE.flag-icons and the source of each file is recorded in flags/manifest.json.
+The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis Lipiridis, licensed MIT. The full notice is in flags/license-flag-icons.txt and the source of each file is recorded in flags/manifest.json.
 
 == Screenshots ==
 
@@ -136,9 +136,13 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.13.0 =
+= 1.13.1 =
 
 * First public release on WordPress.org.
+* The license files are named license.txt and flags/license-flag-icons.txt.
+
+= 1.13.0 =
+
 * Settings → Languages is split into four tabs (Languages, URLs, Content, Advanced). One Save button still saves everything, a validation error opens the tab that holds the field, and without JavaScript all sections stay visible.
 
 = 1.12.7 =

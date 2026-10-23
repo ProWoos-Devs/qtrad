@@ -3,7 +3,7 @@
   "version": "7.3.2",
   "commit": "fe15c16e7463d0c66d6c5730e9d0e832438d98e1",
   "source_archive_sha256": "99dc1f2a3f4a7312a981e3edba1457f36b34c5ab2b2b3779df7814949c106742",
-  "license_file": "LICENSE.flag-icons",
+  "license_file": "license-flag-icons.txt",
   "license_sha256": "8f1195d55a2fd315a07d812328470ca9ba2abb78c8d317ff19619d5125e00cea",
   "assets": [
     {

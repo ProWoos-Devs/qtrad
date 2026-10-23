@@ -1,6 +1,6 @@
 # License and provenance
 
-qTrad is distributed under GPL-2.0-or-later. The complete GNU GPL version 2 text is included in LICENSE.
+qTrad is distributed under GPL-2.0-or-later. The complete GNU GPL version 2 text is included in license.txt.
 
 Copyright 2008 Qian Qin (mail@qianqin.de). Copyright 2014 qTranslate Team (qTranslateTeam@gmail.com). Their applicable copyright and license notices remain attached to reused/derived material. qTrad is an independent continuation with subsequent code and corrections; the name does not claim endorsement by the original authors.
 
@@ -19,7 +19,7 @@ Upstream GPLv3 README/license-file labels are inconsistent with those GPLv2-or-l
 
 All 38 inherited PNG flags have been removed from the distributed plugin. Original qTranslate credits many flags to Luc Balemans through Flags of the World, but this does not establish the individual origin/terms of the supplied files. Their original hashes and replacement mappings are retained in `../audit/results/replaced-flags.json`; no claim is made that these old images were covered by the PHP code's GPL grant.
 
-The distribution now contains 41 unchanged SVGs from [lipis/flag-icons 7.3.2](https://github.com/lipis/flag-icons/tree/fe15c16e7463d0c66d6c5730e9d0e832438d98e1), commit `fe15c16e7463d0c66d6c5730e9d0e832438d98e1`. They come from `flags/4x3/` and carry that project's MIT license, copyright 2013 Panayiotis Lipiridis. Its complete, unchanged notice is included as `flags/LICENSE.flag-icons`. GPL-2.0-or-later applies to qTrad's code; the bundled flag artwork retains its MIT notice.
+The distribution now contains 41 unchanged SVGs from [lipis/flag-icons 7.3.2](https://github.com/lipis/flag-icons/tree/fe15c16e7463d0c66d6c5730e9d0e832438d98e1), commit `fe15c16e7463d0c66d6c5730e9d0e832438d98e1`. They come from `flags/4x3/` and carry that project's MIT license, copyright 2013 Panayiotis Lipiridis. Its complete, unchanged notice is included as `flags/license-flag-icons.txt`. GPL-2.0-or-later applies to qTrad's code; the bundled flag artwork retains its MIT notice.
 
 `flags/manifest.json` records each image's exact upstream URL, source path, SHA-256, license and absence of modifications, plus the source archive/license hashes. `python3 tests/assets.py` verifies the inventory, hashes, notices and absence of active/external SVG content without network access. The package builder runs this gate before producing a ZIP.
 

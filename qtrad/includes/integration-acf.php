@@ -53,7 +53,7 @@ function qtrad_acf_field_types() {
 }
 
 function qtrad_acf_register_field_types() {
-	require_once QTRAD_DIR . 'includes/acf-fields.php';
+	require_once QTRAD_DIR . 'includes/integration-acf-fields.php';
 	foreach ( array( 'Qtrad_Acf_Field_Text', 'Qtrad_Acf_Field_Textarea', 'Qtrad_Acf_Field_Url', 'Qtrad_Acf_Field_Wysiwyg', 'Qtrad_Acf_Field_Image', 'Qtrad_Acf_Field_File', 'Qtrad_Acf_Field_Post_Object' ) as $class ) {
 		if ( class_exists( $class ) ) {
 			acf_register_field_type( $class );

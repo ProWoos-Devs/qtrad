@@ -110,9 +110,22 @@ function qtrad_seo_term_languages( $term ) {
 	return qtrad_seo_languages_with_posts( $args, 'term:' . (int) $term->term_id );
 }
 
+/**
+ * When a cache group last changed, the stamp core keeps in the object cache
+ * under 'last_changed'. Set to now when the group has none yet.
+ */
+function qtrad_cache_last_changed( $group ) {
+	$stamp = wp_cache_get( 'last_changed', $group );
+	if ( ! $stamp ) {
+		$stamp = microtime();
+		wp_cache_set( 'last_changed', $stamp, $group );
+	}
+	return (string) $stamp;
+}
+
 /** Enabled languages in which at least one published post matching $args has content. Cached until posts change. */
 function qtrad_seo_languages_with_posts( $args, $key ) {
-	$cache_key = $key . ':' . md5( implode( ',', qtrad_enabled_languages() ) ) . ':' . wp_cache_get_last_changed( 'posts' ) . ':' . wp_cache_get_last_changed( 'terms' );
+	$cache_key = $key . ':' . md5( implode( ',', qtrad_enabled_languages() ) ) . ':' . qtrad_cache_last_changed( 'posts' ) . ':' . qtrad_cache_last_changed( 'terms' );
 	$found     = wp_cache_get( $cache_key, 'qtrad_seo' );
 	if ( is_array( $found ) ) {
 		return $found;

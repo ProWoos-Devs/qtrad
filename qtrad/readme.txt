@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.13.1
+Stable tag: 1.13.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -136,9 +136,14 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 == Changelog ==
 
-= 1.13.1 =
+= 1.13.2 =
 
 * First public release on WordPress.org.
+* The dashboard Translations box and the archive language checks read the "last changed" stamp of the posts and terms cache groups through a plugin helper.
+* The Advanced Custom Fields integration files are named integration-acf.php and integration-acf-fields.php.
+
+= 1.13.1 =
+
 * The license files are named license.txt and flags/license-flag-icons.txt.
 
 = 1.13.0 =

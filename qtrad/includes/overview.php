@@ -77,7 +77,7 @@ function qtrad_dashboard_setup() {
  * @return array{total:int,missing:array<string,int>}
  */
 function qtrad_overview_counts( $post_type ) {
-	$key    = 'counts:' . $post_type . ':' . md5( implode( ',', qtrad_enabled_languages() ) ) . ':' . wp_cache_get_last_changed( 'posts' );
+	$key    = 'counts:' . $post_type . ':' . md5( implode( ',', qtrad_enabled_languages() ) ) . ':' . qtrad_cache_last_changed( 'posts' );
 	$counts = wp_cache_get( $key, 'qtrad_overview' );
 	if ( is_array( $counts ) ) {
 		return $counts;

@@ -2,7 +2,7 @@
 /**
  * Plugin Name: qTrad
  * Description: Multilingual content for WordPress. An independent continuation of qTranslate and qTranslate-X that keeps their translations and adds accessible editing and multilingual SEO.
- * Version: 1.13.1
+ * Version: 1.13.2
  * Requires at least: 5.8
  * Requires PHP: 7.4
  * Author: Rafael Minuesa
@@ -24,7 +24,7 @@ if ( defined( 'QTRAD_VERSION' ) ) {
 	return;
 }
 
-define( 'QTRAD_VERSION', '1.13.1' );
+define( 'QTRAD_VERSION', '1.13.2' );
 define( 'QTRAD_FILE', __FILE__ );
 define( 'QTRAD_DIR', plugin_dir_path( __FILE__ ) );
 
@@ -52,7 +52,7 @@ require_once QTRAD_DIR . 'includes/runtime.php';
 require_once QTRAD_DIR . 'includes/compat.php';
 require_once QTRAD_DIR . 'includes/fields.php';
 require_once QTRAD_DIR . 'includes/values.php';
-require_once QTRAD_DIR . 'includes/acf.php';
+require_once QTRAD_DIR . 'includes/integration-acf.php';
 require_once QTRAD_DIR . 'includes/woocommerce.php';
 require_once QTRAD_DIR . 'includes/dates.php';
 require_once QTRAD_DIR . 'includes/seo.php';

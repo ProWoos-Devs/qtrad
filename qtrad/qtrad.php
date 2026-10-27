@@ -52,7 +52,7 @@ require_once QTRAD_DIR . 'includes/runtime.php';
 require_once QTRAD_DIR . 'includes/compat.php';
 require_once QTRAD_DIR . 'includes/fields.php';
 require_once QTRAD_DIR . 'includes/values.php';
-require_once QTRAD_DIR . 'includes/integration-acf.php';
+require_once QTRAD_DIR . 'includes/acf-integration.php';
 require_once QTRAD_DIR . 'includes/woocommerce.php';
 require_once QTRAD_DIR . 'includes/dates.php';
 require_once QTRAD_DIR . 'includes/seo.php';

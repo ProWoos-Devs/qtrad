@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T19:35:22+00:00\n"
+"POT-Creation-Date: 2026-10-27T19:50:41+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: qtrad\n"
@@ -33,6 +33,48 @@ msgstr ""
 #. Author URI of the plugin
 #: qtrad.php
 msgid "https://github.com/rafael-minuesa"
+msgstr ""
+
+#: includes/acf-integration-fields.php:42
+msgid "Text (per language)"
+msgstr ""
+
+#: includes/acf-integration-fields.php:65
+msgid "Text area (per language)"
+msgstr ""
+
+#: includes/acf-integration-fields.php:88
+msgid "URL (per language)"
+msgstr ""
+
+#: includes/acf-integration-fields.php:111
+msgid "WYSIWYG editor (per language)"
+msgstr ""
+
+#: includes/acf-integration-fields.php:134
+msgid "Image (per language)"
+msgstr ""
+
+#: includes/acf-integration-fields.php:163
+msgid "File (per language)"
+msgstr ""
+
+#: includes/acf-integration-fields.php:210
+msgid "Post object (per language)"
+msgstr ""
+
+#. translators: 1: language name, 2: field label
+#: includes/acf-integration.php:288
+#, php-format
+msgid "%1$s: %2$s is required"
+msgstr ""
+
+#: includes/acf-integration.php:334
+msgid "Translate"
+msgstr ""
+
+#: includes/acf-integration.php:335
+msgid "One value per language, stored with language markers."
 msgstr ""
 
 #: includes/admin.php:48
@@ -508,48 +550,6 @@ msgstr ""
 
 #: includes/config.php:380
 msgid "Give each language a different domain."
-msgstr ""
-
-#: includes/integration-acf-fields.php:42
-msgid "Text (per language)"
-msgstr ""
-
-#: includes/integration-acf-fields.php:65
-msgid "Text area (per language)"
-msgstr ""
-
-#: includes/integration-acf-fields.php:88
-msgid "URL (per language)"
-msgstr ""
-
-#: includes/integration-acf-fields.php:111
-msgid "WYSIWYG editor (per language)"
-msgstr ""
-
-#: includes/integration-acf-fields.php:134
-msgid "Image (per language)"
-msgstr ""
-
-#: includes/integration-acf-fields.php:163
-msgid "File (per language)"
-msgstr ""
-
-#: includes/integration-acf-fields.php:210
-msgid "Post object (per language)"
-msgstr ""
-
-#. translators: 1: language name, 2: field label
-#: includes/integration-acf.php:288
-#, php-format
-msgid "%1$s: %2$s is required"
-msgstr ""
-
-#: includes/integration-acf.php:334
-msgid "Translate"
-msgstr ""
-
-#: includes/integration-acf.php:335
-msgid "One value per language, stored with language markers."
 msgstr ""
 
 #. translators: %s: title of the language menu item, a flag follows the colon

@@ -140,7 +140,7 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 
 * First public release on WordPress.org.
 * The dashboard Translations box and the archive language checks read the "last changed" stamp of the posts and terms cache groups through a plugin helper.
-* The Advanced Custom Fields integration files are named integration-acf.php and integration-acf-fields.php.
+* The Advanced Custom Fields integration files are named acf-integration.php and acf-integration-fields.php.
 
 = 1.13.1 =
 

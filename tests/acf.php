@@ -53,6 +53,16 @@ qtrad_register_value_hooks();
 acf_language('es');
 acf_check('with every custom field translated, ACF fields still fall back without a prefix', array('Hello', $related), array(get_field('qtrad_text', $post_id), get_field('qtrad_post', $post_id)));
 acf_check('ACF field read as plain custom field falls back without a prefix', 'Hello', get_post_meta($post_id, 'qtrad_text', true));
+$prev_id = wp_insert_post(array('post_title'=>'Previous value write', 'post_status'=>'draft'));
+add_post_meta($prev_id, 'qtrad_text', '[:en]Hello[:de]Hallo[:]'); add_post_meta($prev_id, '_qtrad_text', 'field_qtrad_text');
+add_post_meta($prev_id, 'qtrad_group', array('label'=>'[:en]Hello[:de]Hallo[:]', 'n'=>1)); add_post_meta($prev_id, '_qtrad_group', 'field_qtrad_text');
+$prev_shown = get_post_meta($prev_id, 'qtrad_text', true);
+update_post_meta($prev_id, 'qtrad_text', $prev_shown, '[:en]Hello[:de]Hallo[:]');
+$prev_group = get_post_meta($prev_id, 'qtrad_group', true); $prev_group['n'] = 2;
+update_post_meta($prev_id, 'qtrad_group', $prev_group);
+acf_check('ACF fallback written back with a previous value keeps the other translations', array('Hello', '[:en]Hello[:de]Hallo[:]'), array($prev_shown, qtrad_raw_post_meta($prev_id, 'qtrad_text')[0]));
+acf_check('ACF array with an unrelated edit keeps the untranslated fallback leaf', array('label'=>'[:en]Hello[:de]Hallo[:]', 'n'=>2), qtrad_raw_post_meta($prev_id, 'qtrad_group')[0]);
+wp_delete_post($prev_id, true);
 foreach (array('post') as $type) { remove_filter('get_'.$type.'_metadata', 'qtrad_filter_meta_all', 11); remove_filter('update_'.$type.'_metadata', 'qtrad_filter_update_meta_all', 11); }
 remove_filter('get_user_metadata', 'qtrad_filter_meta_all', 11); remove_filter('update_user_metadata', 'qtrad_filter_update_meta_all', 11);
 update_option('qtrad_settings', array('write_format'=>'keep', 'extra_fields'=>'', 'translate_meta'=>false, 'translate_options'=>'none'));

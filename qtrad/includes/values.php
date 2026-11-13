@@ -174,16 +174,17 @@ function qtrad_translate_deep( $value, $show_prefix = null ) {
  * Undo the translation of everything that was not changed: where a new value
  * equals the stored one as shown in the current language, the stored
  * multilingual value is kept. Code that reads a translated value and writes
- * it back then leaves the other languages in place.
+ * it back then leaves the other languages in place. $show_prefix must match
+ * the read path, as for qtrad_translate_deep().
  */
-function qtrad_restore_raw( $new, $raw ) {
+function qtrad_restore_raw( $new, $raw, $show_prefix = null ) {
 	if ( is_string( $raw ) ) {
-		return is_string( $new ) && qtrad_has_lang_tags( $raw ) && ! qtrad_has_lang_tags( $new ) && qtrad_translate_deep( $raw ) === $new ? $raw : $new;
+		return is_string( $new ) && qtrad_has_lang_tags( $raw ) && ! qtrad_has_lang_tags( $new ) && qtrad_translate_deep( $raw, $show_prefix ) === $new ? $raw : $new;
 	}
 	if ( is_array( $raw ) && is_array( $new ) ) {
 		foreach ( $new as $key => $item ) {
 			if ( array_key_exists( $key, $raw ) ) {
-				$new[ $key ] = qtrad_restore_raw( $item, $raw[ $key ] );
+				$new[ $key ] = qtrad_restore_raw( $item, $raw[ $key ], $show_prefix );
 			}
 		}
 	}
@@ -296,7 +297,7 @@ function qtrad_filter_update_meta_all( $check, $object_id, $meta_key, $meta_valu
 		return $check;
 	}
 	// WordPress has unslashed the value before this filter.
-	$restored = qtrad_restore_raw( $meta_value, maybe_unserialize( $rows[ $meta_key ][0] ) );
+	$restored = qtrad_restore_raw( $meta_value, maybe_unserialize( $rows[ $meta_key ][0] ), qtrad_meta_prefix( $rows, $meta_key ) );
 	if ( $restored === $meta_value ) {
 		return $check;
 	}

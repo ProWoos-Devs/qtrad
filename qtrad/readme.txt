@@ -4,7 +4,7 @@ Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
-Stable tag: 1.13.2
+Stable tag: 1.13.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -135,6 +135,11 @@ The bundled flag images are unchanged SVGs from flag-icons 7.3.2 by Panayiotis L
 7. The Advanced tab: custom fields, options and text filters.
 
 == Changelog ==
+
+= 1.13.3 =
+
+* Advanced Custom Fields values shown in the default language because a translation is missing keep their other translations when code writes them back with a previous value, or saves an array in which something else changed.
+* Readme: the marker examples are visible on WordPress.org.
 
 = 1.13.2 =
 

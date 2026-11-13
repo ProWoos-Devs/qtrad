@@ -1,6 +1,6 @@
 === qTrad ===
 Contributors: rafaelminuesa
-Tags: multilingual, language, translation, i18n
+Tags: multilingual, bilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4

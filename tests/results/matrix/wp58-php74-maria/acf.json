@@ -4,8 +4,8 @@
         "php": "7.4.33",
         "acf": "6.0.7"
     },
-    "passed": 31,
-    "total": 31,
+    "passed": 33,
+    "total": 33,
     "cases": [
         {
             "case": "qTranslate-XT field types are registered",
@@ -104,6 +104,30 @@
             "pass": true,
             "expected": "Hello",
             "actual": "Hello"
+        },
+        {
+            "case": "ACF fallback written back with a previous value keeps the other translations",
+            "pass": true,
+            "expected": [
+                "Hello",
+                "[:en]Hello[:de]Hallo[:]"
+            ],
+            "actual": [
+                "Hello",
+                "[:en]Hello[:de]Hallo[:]"
+            ]
+        },
+        {
+            "case": "ACF array with an unrelated edit keeps the untranslated fallback leaf",
+            "pass": true,
+            "expected": {
+                "label": "[:en]Hello[:de]Hallo[:]",
+                "n": 2
+            },
+            "actual": {
+                "label": "[:en]Hello[:de]Hallo[:]",
+                "n": 2
+            }
         },
         {
             "case": "standard field with the Translate setting renders per language",

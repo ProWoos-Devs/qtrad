@@ -1225,32 +1225,32 @@
         {
             "case": "post link takes the slug of its language",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-hallo/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-hallo/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-hallo/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-hallo/"
         },
         {
             "case": "qTranslate Slug meta is read",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-hola/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-hola/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-hola/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-hola/"
         },
         {
             "case": "language without a translated slug keeps the stored one",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-hello/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-hello/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-hello/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-hello/"
         },
         {
             "case": "links follow the current language",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-hallo/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-hallo/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-hallo/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-hallo/"
         },
         {
             "case": "language-neutral links keep the stored slug",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-hello/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-hello/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-hello/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-hello/"
         },
         {
             "case": "SEO URL of another language uses its slug",
@@ -1261,26 +1261,26 @@
         {
             "case": "child page link uses the translated slug of its parent",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-eltern/s6ae100c91026d-child/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-eltern/s6ae100c91026d-child/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-eltern/s6af79cb031a60-child/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-eltern/s6af79cb031a60-child/"
         },
         {
             "case": "page link translates every level",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-eltern/s6ae100c91026d-kind/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-eltern/s6ae100c91026d-kind/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-eltern/s6af79cb031a60-kind/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-eltern/s6af79cb031a60-kind/"
         },
         {
             "case": "category link uses the translated slug of its parent",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/category/s6ae100c91026d-kategorie/s6ae100c91026d-sub/",
-            "actual": "http://127.0.0.1:8931/category/s6ae100c91026d-kategorie/s6ae100c91026d-sub/"
+            "expected": "http://127.0.0.1:8931/category/s6af79cb031a60-kategorie/s6af79cb031a60-sub/",
+            "actual": "http://127.0.0.1:8931/category/s6af79cb031a60-kategorie/s6af79cb031a60-sub/"
         },
         {
             "case": "category link without a translation is unchanged",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/category/s6ae100c91026d-cat/s6ae100c91026d-sub/",
-            "actual": "http://127.0.0.1:8931/category/s6ae100c91026d-cat/s6ae100c91026d-sub/"
+            "expected": "http://127.0.0.1:8931/category/s6af79cb031a60-cat/s6af79cb031a60-sub/",
+            "actual": "http://127.0.0.1:8931/category/s6af79cb031a60-cat/s6af79cb031a60-sub/"
         },
         {
             "case": "path swap leaves host and query alone",
@@ -1291,122 +1291,122 @@
         {
             "case": "translated post address maps to the stored one",
             "pass": true,
-            "expected": "/s6ae100c91026d-hello/",
-            "actual": "/s6ae100c91026d-hello/"
+            "expected": "/s6af79cb031a60-hello/",
+            "actual": "/s6af79cb031a60-hello/"
         },
         {
             "case": "page number and query string survive the mapping",
             "pass": true,
-            "expected": "/s6ae100c91026d-hello/2/?x=1",
-            "actual": "/s6ae100c91026d-hello/2/?x=1"
+            "expected": "/s6af79cb031a60-hello/2/?x=1",
+            "actual": "/s6af79cb031a60-hello/2/?x=1"
         },
         {
             "case": "slug of another language is not mapped",
             "pass": true,
-            "expected": "/s6ae100c91026d-hallo/",
-            "actual": "/s6ae100c91026d-hallo/"
+            "expected": "/s6af79cb031a60-hallo/",
+            "actual": "/s6af79cb031a60-hallo/"
         },
         {
             "case": "stored address is left alone",
             "pass": true,
-            "expected": "/s6ae100c91026d-hello/",
-            "actual": "/s6ae100c91026d-hello/"
+            "expected": "/s6af79cb031a60-hello/",
+            "actual": "/s6af79cb031a60-hello/"
         },
         {
             "case": "translated page path maps to the stored path",
             "pass": true,
-            "expected": "/s6ae100c91026d-parent/s6ae100c91026d-child/",
-            "actual": "/s6ae100c91026d-parent/s6ae100c91026d-child/"
+            "expected": "/s6af79cb031a60-parent/s6af79cb031a60-child/",
+            "actual": "/s6af79cb031a60-parent/s6af79cb031a60-child/"
         },
         {
             "case": "translated parent with a stored child maps",
             "pass": true,
-            "expected": "/s6ae100c91026d-parent/s6ae100c91026d-child/",
-            "actual": "/s6ae100c91026d-parent/s6ae100c91026d-child/"
+            "expected": "/s6af79cb031a60-parent/s6af79cb031a60-child/",
+            "actual": "/s6af79cb031a60-parent/s6af79cb031a60-child/"
         },
         {
             "case": "translated category feed maps to the stored path",
             "pass": true,
-            "expected": "/category/s6ae100c91026d-cat/s6ae100c91026d-sub/feed/",
-            "actual": "/category/s6ae100c91026d-cat/s6ae100c91026d-sub/feed/"
+            "expected": "/category/s6af79cb031a60-cat/s6af79cb031a60-sub/feed/",
+            "actual": "/category/s6af79cb031a60-cat/s6af79cb031a60-sub/feed/"
         },
         {
             "case": "PATH_INFO and PHP_SELF follow the mapped path",
             "pass": true,
             "expected": [
-                "/s6ae100c91026d-hello/",
-                "/index.php/s6ae100c91026d-hello/"
+                "/s6af79cb031a60-hello/",
+                "/index.php/s6af79cb031a60-hello/"
             ],
             "actual": [
-                "/s6ae100c91026d-hello/",
-                "/index.php/s6ae100c91026d-hello/"
+                "/s6af79cb031a60-hello/",
+                "/index.php/s6af79cb031a60-hello/"
             ]
         },
         {
             "case": "category in the post address is translated",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-kategorie/s6ae100c91026d-sub/s6ae100c91026d-hallo/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-kategorie/s6ae100c91026d-sub/s6ae100c91026d-hallo/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-kategorie/s6af79cb031a60-sub/s6af79cb031a60-hallo/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-kategorie/s6af79cb031a60-sub/s6af79cb031a60-hallo/"
         },
         {
             "case": "post under a translated category maps to the stored address",
             "pass": true,
-            "expected": "/s6ae100c91026d-cat/s6ae100c91026d-sub/s6ae100c91026d-plain/",
-            "actual": "/s6ae100c91026d-cat/s6ae100c91026d-sub/s6ae100c91026d-plain/"
+            "expected": "/s6af79cb031a60-cat/s6af79cb031a60-sub/s6af79cb031a60-plain/",
+            "actual": "/s6af79cb031a60-cat/s6af79cb031a60-sub/s6af79cb031a60-plain/"
         },
         {
             "case": "post slug stays stored where a request could not be mapped back",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-hello-28/",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-hello-28/"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-hello-28/",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-hello-28/"
         },
         {
             "case": "post name with an extension is translated",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/s6ae100c91026d-hallo.html",
-            "actual": "http://127.0.0.1:8931/s6ae100c91026d-hallo.html"
+            "expected": "http://127.0.0.1:8931/s6af79cb031a60-hallo.html",
+            "actual": "http://127.0.0.1:8931/s6af79cb031a60-hallo.html"
         },
         {
             "case": "post name with an extension maps to the stored address",
             "pass": true,
-            "expected": "/s6ae100c91026d-hello.html",
-            "actual": "/s6ae100c91026d-hello.html"
+            "expected": "/s6af79cb031a60-hello.html",
+            "actual": "/s6af79cb031a60-hello.html"
         },
         {
             "case": "new translated slug is stored in the qTranslate-XT key",
             "pass": true,
             "expected": [
-                "s6ae100c91026d-neu",
-                "s6ae100c91026d-neu"
+                "s6af79cb031a60-neu",
+                "s6af79cb031a60-neu"
             ],
             "actual": [
-                "s6ae100c91026d-neu",
-                "s6ae100c91026d-neu"
+                "s6af79cb031a60-neu",
+                "s6af79cb031a60-neu"
             ]
         },
         {
             "case": "slug taken by a translation in that language gets a suffix",
             "pass": true,
-            "expected": "s6ae100c91026d-hallo-2",
-            "actual": "s6ae100c91026d-hallo-2"
+            "expected": "s6af79cb031a60-hallo-2",
+            "actual": "s6af79cb031a60-hallo-2"
         },
         {
             "case": "slug taken by a stored slug gets a suffix",
             "pass": true,
-            "expected": "s6ae100c91026d-plain-2",
-            "actual": "s6ae100c91026d-plain-2"
+            "expected": "s6af79cb031a60-plain-2",
+            "actual": "s6af79cb031a60-plain-2"
         },
         {
             "case": "same slug is free in another language",
             "pass": true,
-            "expected": "s6ae100c91026d-hallo",
-            "actual": "s6ae100c91026d-hallo"
+            "expected": "s6af79cb031a60-hallo",
+            "actual": "s6af79cb031a60-hallo"
         },
         {
             "case": "unchanged slug keeps its value",
             "pass": true,
-            "expected": "s6ae100c91026d-plain-2",
-            "actual": "s6ae100c91026d-plain-2"
+            "expected": "s6af79cb031a60-plain-2",
+            "actual": "s6af79cb031a60-plain-2"
         },
         {
             "case": "feed names are not usable as slugs",
@@ -1431,50 +1431,50 @@
             "pass": true,
             "expected": [
                 "",
-                "s6ae100c91026d-hola",
-                "http://127.0.0.1:8931/s6ae100c91026d-hello/"
+                "s6af79cb031a60-hola",
+                "http://127.0.0.1:8931/s6af79cb031a60-hello/"
             ],
             "actual": [
                 "",
-                "s6ae100c91026d-hola",
-                "http://127.0.0.1:8931/s6ae100c91026d-hello/"
+                "s6af79cb031a60-hola",
+                "http://127.0.0.1:8931/s6af79cb031a60-hello/"
             ]
         },
         {
             "case": "page slug is unique among pages with the same parent",
             "pass": true,
-            "expected": "s6ae100c91026d-kind-2",
-            "actual": "s6ae100c91026d-kind-2"
+            "expected": "s6af79cb031a60-kind-2",
+            "actual": "s6af79cb031a60-kind-2"
         },
         {
             "case": "page slug may repeat under another parent",
             "pass": true,
-            "expected": "s6ae100c91026d-kind",
-            "actual": "s6ae100c91026d-kind"
+            "expected": "s6af79cb031a60-kind",
+            "actual": "s6af79cb031a60-kind"
         },
         {
             "case": "term slug is unique within its taxonomy",
             "pass": true,
-            "expected": "s6ae100c91026d-kategorie-2",
-            "actual": "s6ae100c91026d-kategorie-2"
+            "expected": "s6af79cb031a60-kategorie-2",
+            "actual": "s6af79cb031a60-kategorie-2"
         },
         {
             "case": "meta box saves a sanitized slug",
             "pass": true,
-            "expected": "s6ae100c91026d-uber-uns",
-            "actual": "s6ae100c91026d-uber-uns"
+            "expected": "s6af79cb031a60-uber-uns",
+            "actual": "s6af79cb031a60-uber-uns"
         },
         {
             "case": "meta box ignores a wrong nonce or another post",
             "pass": true,
-            "expected": "s6ae100c91026d-uber-uns",
-            "actual": "s6ae100c91026d-uber-uns"
+            "expected": "s6af79cb031a60-uber-uns",
+            "actual": "s6af79cb031a60-uber-uns"
         },
         {
             "case": "term form saves a sanitized slug",
             "pass": true,
-            "expected": "s6ae100c91026d-unter",
-            "actual": "s6ae100c91026d-unter"
+            "expected": "s6af79cb031a60-unter",
+            "actual": "s6af79cb031a60-unter"
         },
         {
             "case": "bases are saved sanitized, next to settings qTrad does not own",
@@ -1501,50 +1501,50 @@
         {
             "case": "category link uses the translated base",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/rubrik/thema/s6ae100c91026d-kategorie/s6ae100c91026d-sub/",
-            "actual": "http://127.0.0.1:8931/rubrik/thema/s6ae100c91026d-kategorie/s6ae100c91026d-sub/"
+            "expected": "http://127.0.0.1:8931/rubrik/thema/s6af79cb031a60-kategorie/s6af79cb031a60-sub/",
+            "actual": "http://127.0.0.1:8931/rubrik/thema/s6af79cb031a60-kategorie/s6af79cb031a60-sub/"
         },
         {
             "case": "language without a translated base keeps the stored one",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/category/s6ae100c91026d-cat/s6ae100c91026d-sub/",
-            "actual": "http://127.0.0.1:8931/category/s6ae100c91026d-cat/s6ae100c91026d-sub/"
+            "expected": "http://127.0.0.1:8931/category/s6af79cb031a60-cat/s6af79cb031a60-sub/",
+            "actual": "http://127.0.0.1:8931/category/s6af79cb031a60-cat/s6af79cb031a60-sub/"
         },
         {
             "case": "address under a translated base maps to the stored one",
             "pass": true,
-            "expected": "/category/s6ae100c91026d-cat/s6ae100c91026d-sub/",
-            "actual": "/category/s6ae100c91026d-cat/s6ae100c91026d-sub/"
+            "expected": "/category/s6af79cb031a60-cat/s6af79cb031a60-sub/",
+            "actual": "/category/s6af79cb031a60-cat/s6af79cb031a60-sub/"
         },
         {
             "case": "address from before the base was translated still maps",
             "pass": true,
-            "expected": "/category/s6ae100c91026d-cat/s6ae100c91026d-sub/page/2/",
-            "actual": "/category/s6ae100c91026d-cat/s6ae100c91026d-sub/page/2/"
+            "expected": "/category/s6af79cb031a60-cat/s6af79cb031a60-sub/page/2/",
+            "actual": "/category/s6af79cb031a60-cat/s6af79cb031a60-sub/page/2/"
         },
         {
             "case": "term without a translated slug maps under a translated base",
             "pass": true,
-            "expected": "/category/s6ae100c91026d-plaincat/",
-            "actual": "/category/s6ae100c91026d-plaincat/"
+            "expected": "/category/s6af79cb031a60-plaincat/",
+            "actual": "/category/s6af79cb031a60-plaincat/"
         },
         {
             "case": "custom post type link uses the translated base",
             "pass": true,
-            "expected": "http://127.0.0.1:8931/bucher/s6ae100c91026d-book/",
-            "actual": "http://127.0.0.1:8931/bucher/s6ae100c91026d-book/"
+            "expected": "http://127.0.0.1:8931/bucher/s6af79cb031a60-book/",
+            "actual": "http://127.0.0.1:8931/bucher/s6af79cb031a60-book/"
         },
         {
             "case": "custom post type address under a translated base maps to the stored one",
             "pass": true,
-            "expected": "/slugbooks/s6ae100c91026d-book/",
-            "actual": "/slugbooks/s6ae100c91026d-book/"
+            "expected": "/slugbooks/s6af79cb031a60-book/",
+            "actual": "/slugbooks/s6af79cb031a60-book/"
         },
         {
             "case": "custom post type address with translated base and slug maps",
             "pass": true,
-            "expected": "/slugbooks/s6ae100c91026d-book/",
-            "actual": "/slugbooks/s6ae100c91026d-book/"
+            "expected": "/slugbooks/s6af79cb031a60-book/",
+            "actual": "/slugbooks/s6af79cb031a60-book/"
         },
         {
             "case": "custom field with markers is read in the current language",

@@ -1,6 +1,6 @@
 === qTrad ===
 Contributors: rafaelminuesa
-Tags: multilingual, bilingual, language, translation, i18n
+Tags: multilingual, language, translation, i18n
 Requires at least: 5.8
 Tested up to: 7.1
 Requires PHP: 7.4
@@ -20,13 +20,13 @@ I liked the way qTranslate worked. Every translation of a post lives in that sam
 
 qTrad keeps all translations of a post title, content and excerpt together in the same field. It reads the qTranslate comment markers, the qTranslate-X bracket markers and the swirly markers.
 
-* <!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->
-* [:en]Hello[:de]Hallo[:]
-* {:en}Hello{:de}Hallo{:}
+* `<!--:en-->Hello<!--:--><!--:de-->Hallo<!--:-->`
+* `[:en]Hello[:de]Hallo[:]`
+* `{:en}Hello{:de}Hallo{:}`
 
 The classic and block editors show one language at a time. Saving preserves the other translations, including those of disabled languages. Public custom post types with a REST endpoint are supported. Raw mode shows the complete multilingual field for direct editing.
 
-Language controls use full names, keyboard-operable buttons, announced selection changes, visible focus, generous targets and right-to-left editing. Public switchers offer links, flags with accessible names, short codes, or a labelled dropdown with an explicit Go button. Dropdowns fall back to ordinary links without JavaScript.
+Language controls use full names, keyboard-operable buttons, announced selection changes, visible focus, generous targets and right-to-left editing. Public switchers offer links, flags with accessible names, language codes, or a labeled dropdown with an explicit Go button. Dropdowns fall back to ordinary links without JavaScript.
 
 The qtranslate_* language, locale, flag, URL, term and fallback settings are reused as they are. Existing qTranslate and qTranslate-X widgets keep their place in the sidebar. Imported custom languages remain available in Settings → Languages, where you can edit their names and locales and add new two- or three-letter language codes.
 
@@ -112,7 +112,7 @@ Posts, pages, titles, excerpts, term names, the site title and tagline, widgets 
 
 = How do I include a literal marker in content? =
 
-Language markers are reserved syntax. To show an example such as [:en] in a post, encode it with HTML entities, for example &#91;:en&#93;.
+Language markers are reserved syntax. To show an example such as `[:en]` in a post, encode its brackets as HTML entities, as in `&#91;:en&#93;`.
 
 == Privacy ==
 

@@ -29,7 +29,7 @@ The `qtranslate_*` settings, the `qtrans_*` and `qtranxf_*` functions themes cal
 - **Accessible language controls.** Full language names, keyboard-operable buttons, announced changes, visible focus and right-to-left editing.
 - **URLs.** Query, path, subdomain or one domain per language, as in qTranslate-X. Translated slugs per post and term, and translated bases such as `kategorie` instead of `category`.
 - **SEO.** Canonical alternate links, hreflang and multilingual sitemap entries that list only languages a page is translated into, with adapters for WordPress core, Yoast SEO and Rank Math.
-- **Switchers.** A Language switcher block, the `[qtrad_switcher]` shortcode and a widget, as text, flags, short codes or a labelled dropdown that falls back to links without JavaScript.
+- **Switchers.** A Language switcher block, the `[qtrad_switcher]` shortcode and a widget, as text, flags, language codes or a labeled dropdown that falls back to links without JavaScript.
 - **Custom fields, user profiles and options** in the visitor's language, with edits merged into the language being edited.
 - **Advanced Custom Fields.** One input per language, qTranslate-XT's `qtranslate_*` field types, per-language validation.
 - **WooCommerce.** Product, attribute, gateway, shipping and email texts in the visitor's language, also in the cart and checkout blocks. Orders keep the customer's language, and customer emails are sent in it.

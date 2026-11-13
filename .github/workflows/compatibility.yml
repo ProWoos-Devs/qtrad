@@ -7,7 +7,7 @@ permissions:
   contents: read
 jobs:
   plan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     outputs:
       cells: ${{ steps.matrix.outputs.cells }}
     steps:
@@ -16,7 +16,7 @@ jobs:
         run: echo "cells=$(jq -c '[.[] | .id]' tests/matrix/cells.json)" >> "$GITHUB_OUTPUT"
   integration:
     needs: plan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 30
     strategy:
       fail-fast: false
@@ -41,7 +41,7 @@ jobs:
           path: tests/results/matrix/${{ matrix.cell }}/
   release-check:
     needs: integration
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
       - uses: actions/download-artifact@v4
